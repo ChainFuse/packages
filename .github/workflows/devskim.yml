@@ -27,6 +27,11 @@ jobs:
           disable-sudo: true
           egress-policy: audit
       - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+      - uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        with:
+          node-version: lts/*
+          check-latest: true
+          cache: 'npm'
       - uses: microsoft/DevSkim-Action@b41921d947434b27f90b8949f8bfbe056e706bf6 # v1.0.11
       - uses: github/codeql-action/upload-sarif@ddccb873888234080b77e9bc2d4764d5ccaaccf9 # v2.21.9
         with:
