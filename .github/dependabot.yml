@@ -32,6 +32,18 @@ updates:
     ignore:
       - dependency-name: '*'
         update-types: ['version-update:semver-major', 'version-update:semver-minor']
+    groups:
+      typescript:
+        patterns:
+          - 'typescript'
+          - 'ts-node'
+          - '@types/*'
+          - '@cloudflare/workers-types'
+      code-management:
+        patterns:
+          - 'prettier'
+          - '@demosjarco/prettier-config'
+          - 'eslint'
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
@@ -41,3 +53,15 @@ updates:
     ignore:
       - dependency-name: '*'
         update-types: ['version-update:semver-patch']
+    groups:
+      typescript:
+        patterns:
+          - 'typescript'
+          - 'ts-node'
+          - '@types/*'
+          - '@cloudflare/workers-types'
+      code-management:
+        patterns:
+          - 'prettier'
+          - '@demosjarco/prettier-config'
+          - 'eslint'
