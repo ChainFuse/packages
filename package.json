@@ -1,0 +1,21 @@
+{
+	"name": "root",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ChainFuse/packages.git"
+	},
+	"author": "ChainFuse",
+	"license": "Apache-2.0",
+	"private": true,
+	"bugs": {
+		"url": "https://github.com/ChainFuse/packages/issues"
+	},
+	"homepage": "https://github.com/ChainFuse/packages#readme",
+	"workspaces": [
+		"packages/*"
+	],
+	"dependencies": {},
+	"devDependencies": {
+		"lerna": "^7.3.0"
+	}
+}
