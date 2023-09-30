@@ -19,7 +19,7 @@ jobs:
       - run: npm ci --include-workspace-root
       - name: Set Matrix
         id: set-matrix
-        run: echo "::set-output name=matrix::{\"package\":[$(lerna changed | tr ' ' ',')]}"
+        run: echo "matrix={\"package\":[$(lerna changed | tr ' ' ',')]}" >> $GITHUB_OUTPUT
   process-packages:
     needs: changed
     runs-on: ubuntu-latest
