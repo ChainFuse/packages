@@ -1,4 +1,10 @@
 {
 	"$schema": "node_modules/lerna/schemas/lerna-schema.json",
-	"version": "0.0.0"
+	"version": "independent",
+	"command": {
+		"version": {
+			"signGitCommit": true,
+			"signGitTag": true
+		}
+	}
 }
