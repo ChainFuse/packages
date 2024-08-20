@@ -14,8 +14,15 @@
 	"workspaces": [
 		"packages/*"
 	],
+	"prettier": "@demosjarco/prettier-config",
 	"dependencies": {},
 	"devDependencies": {
-		"lerna": "^7.3.0"
+		"@demosjarco/prettier-config": "^1.0.1",
+		"@swc/core": "^1.7.14",
+		"@types/node": "^22.4.1",
+		"lerna": "^8.1.8",
+		"prettier": "^3.3.3",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.5.4"
 	}
 }
