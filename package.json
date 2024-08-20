@@ -1,7 +1,7 @@
 {
 	"name": "root",
 	"scripts": {
-		"base": "node --disallow-code-generation-from-strings --enable-source-maps --trace-warnings --use-largepages=silent",
+		"base": "node --disallow-code-generation-from-strings --trace-warnings --use-largepages=silent",
 		"create": "npm run base -- --loader ts-node/esm ./lerna-custom-create.mts",
 		"build": "lerna run --stream build",
 		"build:clean": "lerna run --stream build:clean",
