@@ -21,10 +21,10 @@ name: 'Microsoft Defender For Devops'
 on:
   push:
     branches:
-      - latest
+      - main
   pull_request:
     branches:
-      - latest
+      - main
   schedule:
     - cron: '24 12 * * 4'
 

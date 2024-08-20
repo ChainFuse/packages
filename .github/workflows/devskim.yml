@@ -8,10 +8,10 @@ name: DevSkim
 on:
   push:
     branches:
-      - latest
+      - main
   pull_request:
     branches:
-      - latest
+      - main
   schedule:
     - cron: '38 7 * * 2'
 
