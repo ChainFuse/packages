@@ -1,5 +1,6 @@
 export * from './buffers.mjs';
 export * from './crypto.mjs';
+export * from './net.mjs';
 
 export class Helpers {
 	public static precisionFloat(input: string) {
