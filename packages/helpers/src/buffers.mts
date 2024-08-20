@@ -79,8 +79,6 @@ export class BufferHelpers {
 	public static uuidConvert(input: UuidExport['utf8']): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['hex']): Promise<UuidExport>;
 	public static uuidConvert(input: undefined): Promise<UndefinedProperties<UuidExport>>;
-	// Base needs to be duplicated here as overload or else it won't get exported
-	public static uuidConvert(input?: UuidExport['blob'] | PrefixedUuid | UuidExport['utf8'] | UuidExport['hex']): Promise<UuidExport | UndefinedProperties<UuidExport>>;
 	public static uuidConvert(input?: UuidExport['blob'] | PrefixedUuid | UuidExport['utf8'] | UuidExport['hex']): Promise<UuidExport | UndefinedProperties<UuidExport>> {
 		if (input) {
 			if (typeof input === 'string') {
