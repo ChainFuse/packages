@@ -1,5 +1,13 @@
 {
 	"name": "root",
+	"scripts": {
+		"base": "node --disallow-code-generation-from-strings --enable-source-maps --trace-warnings --use-largepages=silent",
+		"create": "npm run base -- --loader ts-node/esm ./lerna-custom-create.mts",
+		"build": "lerna run --stream build",
+		"build:clean": "lerna run --stream build:clean",
+		"test": "lerna run --parallel test",
+		"test:local": "lerna run --parallel test:local"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/ChainFuse/packages.git"
