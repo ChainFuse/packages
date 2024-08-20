@@ -28,9 +28,9 @@ class LernaCustomCreate {
 				} else {
 					// Regex to match the package.json path
 					const pathRegex = /Wrote to (.+package\.json)/i;
-					const match = pathRegex.exec(stdout);
+					const match = stdout.match(pathRegex);
 
-					if (match?.[1]) {
+					if (match && match[1]) {
 						// Normalize the path and get directory
 						const packageJsonPath = normalize(match[1].trim());
 						const packageDir = dirname(packageJsonPath);
@@ -107,14 +107,14 @@ class LernaCustomCreate {
 					const json = JSON.parse(fileData);
 
 					// Make your changes to the json object here
-					json.version = '0.0.0';
-					json.description = '';
-					delete json.keywords;
-					json.type = 'module';
-					json.main = './dist/index.mjs';
-					delete json.module;
-					json.types = './dist/index.d.mts';
-					json.scripts = {
+					json['version'] = '0.0.0';
+					json['description'] = '';
+					delete json['keywords'];
+					json['type'] = 'module';
+					json['main'] = './dist/index.mjs';
+					delete json['module'];
+					json['types'] = './dist/index.d.mts';
+					json['scripts'] = {
 						lint: 'eslint .',
 						'lint:fix': 'npm run lint -- --fix',
 						build: 'tsc',
@@ -123,20 +123,20 @@ class LernaCustomCreate {
 						test: 'node --enable-source-maps --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout',
 						'test:local': 'npm run test',
 					};
-					json.author = 'ChainFuse';
-					json.engines = {
+					json['author'] = 'ChainFuse';
+					json['engines'] = {
 						node: `>=${process.version.replace(/^v/, '')}`,
 					};
-					json.exports = {
+					json['exports'] = {
 						'.': {
 							import: './dist/index.mjs',
 							types: './dist/index.d.mts',
 						},
 					};
-					json.prettier = '@demosjarco/prettier-config';
-					json.dependencies = {};
-					json.devDependencies = {};
-					json.optionalDependencies = {};
+					json['prettier'] = '@demosjarco/prettier-config';
+					json['dependencies'] = {};
+					json['devDependencies'] = {};
+					json['optionalDependencies'] = {};
 
 					// Write the updated JSON back to a temporary file
 					const writeStream = createWriteStream(tempFilePath, { encoding: 'utf8' });
