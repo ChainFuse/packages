@@ -1,0 +1,37 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build",
+			"detail": "tsc",
+			"type": "npm",
+			"script": "build:clean",
+			"problemMatcher": "$tsc",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "TS Test",
+			"dependsOn": ["sample"],
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"isBackground": true
+		},
+		{
+			"label": "sample",
+			"type": "npm",
+			"script": "test:local",
+			"isBackground": true,
+			"group": {
+				"kind": "test"
+			},
+			"presentation": {
+				"group": "test"
+			}
+		}
+	]
+}
