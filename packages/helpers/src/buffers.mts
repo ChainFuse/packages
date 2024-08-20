@@ -56,7 +56,7 @@ export class BufferHelpers {
 	}
 
 	public static base16secret(length: number) {
-		return this.secretBytes(length).then(this.bufferToHex);
+		return this.secretBytes(length).then((bytes) => this.bufferToHex(bytes));
 	}
 
 	public static base62secret(length: number) {
