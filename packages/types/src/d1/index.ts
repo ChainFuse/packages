@@ -1,5 +1,8 @@
 import type { Buffer } from 'node:buffer';
 
+export * from './dataspaces/index.js';
+export * from './users/index.js';
+
 export type PrefixedUuid = `${'t_' | 'd_' | 'u_'}${UuidExport['utf8']}${'' | '_p'}`;
 export interface UuidExport {
 	utf8: ReturnType<typeof crypto.randomUUID>;
