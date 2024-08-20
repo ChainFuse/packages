@@ -74,9 +74,6 @@ export class BufferHelpers {
 		});
 	}
 
-	/**
-	 * @todo refactor with type guards
-	 */
 	public static uuidConvert(input: UuidExport['blob']): Promise<UuidExport>;
 	public static uuidConvert(prefixedUtf: PrefixedUuid): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['utf8']): Promise<UuidExport>;
