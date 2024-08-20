@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { UndefinedProperties } from '@chainfuse/types';
 import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
 import { v7 as uuidv7 } from 'uuid';
@@ -74,6 +78,9 @@ export class BufferHelpers {
 		});
 	}
 
+	/**
+	 * @todo refactor with type guards
+	 */
 	public static uuidConvert(input: UuidExport['blob']): Promise<UuidExport>;
 	public static uuidConvert(prefixedUtf: PrefixedUuid): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['utf8']): Promise<UuidExport>;
