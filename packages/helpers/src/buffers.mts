@@ -33,7 +33,7 @@ export class BufferHelpers {
 	}
 
 	public static get generateUuid(): Promise<UuidExport> {
-		return BufferHelpers.secretBytes(16).then((random) => {
+		return this.secretBytes(16).then((random) => {
 			const uuid = uuidv7({ random }) as UuidExport['utf8'];
 			const uuidHex = uuid.replaceAll('-', '');
 
@@ -56,7 +56,7 @@ export class BufferHelpers {
 	}
 
 	public static base16secret(length: number) {
-		return BufferHelpers.secretBytes(length).then(BufferHelpers.bufferToHex);
+		return this.secretBytes(length).then(this.bufferToHex);
 	}
 
 	public static base62secret(length: number) {
@@ -64,7 +64,7 @@ export class BufferHelpers {
 		const NUMBER_CHAR_SET = '0123456789';
 		const CHAR_SET = `${NUMBER_CHAR_SET}${LOWER_CHAR_SET}${LOWER_CHAR_SET.toUpperCase()}` as const;
 
-		return BufferHelpers.secretBytes(length).then((randomBytes) => {
+		return this.secretBytes(length).then((randomBytes) => {
 			/**
 			 * @link https://jsbm.dev/x1F2ITy7RU8T2
 			 */
