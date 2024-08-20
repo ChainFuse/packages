@@ -139,9 +139,9 @@ jobs:
           paths: packages/*/test-output.xml
           show: all
   # https://github.com/azu/monorepo-github-releases
-  release:
-    runs-on: ubuntu-latest
+  tagPublish:
     if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
     steps:
       - uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde # v2.9.1
         with:
