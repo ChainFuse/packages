@@ -7,9 +7,11 @@ name: DevSkim
 
 on:
   push:
-    branches: [ "latest" ]
+    branches:
+      - latest
   pull_request:
-    branches: [ "latest" ]
+    branches:
+      - latest
   schedule:
     - cron: '38 7 * * 2'
 
