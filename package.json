@@ -1,6 +1,8 @@
 {
 	"name": "root",
 	"scripts": {
+		"fmt": "prettier --check .",
+		"fmt:fix": "prettier --write .",
 		"lint": "eslint .",
 		"lint:fix": "npm run lint -- --fix",
 		"base": "node --disallow-code-generation-from-strings --trace-warnings --use-largepages=silent",

@@ -1,0 +1,82 @@
+name: Prettier
+
+on:
+  push:
+    paths:
+      - '**.*js*'
+      - '**.*ts*'
+      - '**.css'
+      - '**.less'
+      - '**.scss'
+      - '**.html'
+      - '**.hbs'
+      - '**.json'
+      - '**.gql'
+      - '**.graphql'
+      - '**.md*'
+      - '**.yaml'
+      - '**.yml'
+  pull_request:
+    paths:
+      - '**.*js*'
+      - '**.*ts*'
+      - '**.css'
+      - '**.less'
+      - '**.scss'
+      - '**.html'
+      - '**.hbs'
+      - '**.json'
+      - '**.gql'
+      - '**.graphql'
+      - '**.md*'
+      - '**.yaml'
+      - '**.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde # v2.9.1
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+          disable-sudo: true
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: lts/*
+          check-latest: true
+          cache: 'npm'
+      - run: npm install -D prettier @demosjarco/prettier-config
+      - run: npm run fmt:fix
+      - name: Check for Changes
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+      - run: git add --all
+        if: steps.changes.outputs.changes == 'true'
+      - name: Don't touch package files
+        if: steps.changes.outputs.changes == 'true'
+        run: git reset -- package*.json
+      - name: Git Setup
+        if: steps.changes.outputs.changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - run: git commit -m "Ran formatter"
+        if: steps.changes.outputs.changes == 'true'
+      - run: git push
+        if: steps.changes.outputs.changes == 'true'

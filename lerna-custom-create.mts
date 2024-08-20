@@ -115,6 +115,8 @@ class LernaCustomCreate {
 					delete json['module'];
 					json['types'] = './dist/index.d.mts';
 					json['scripts'] = {
+						fmt: 'prettier --check .',
+						'fmt:fix': 'prettier --write .',
 						lint: 'eslint .',
 						'lint:fix': 'npm run lint -- --fix',
 						build: 'tsc',
