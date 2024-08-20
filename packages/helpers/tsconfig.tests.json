@@ -1,0 +1,10 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"incremental": false,
+		"declaration": false,
+		"inlineSourceMap": true,
+		"types": ["node"]
+	},
+	"include": ["./__tests__"]
+}
