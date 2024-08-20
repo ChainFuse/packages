@@ -1,6 +1,39 @@
 import { BufferHelpers } from './buffers.mjs';
 
 export class CryptoHelpers {
+	public static secretBytes(length: number) {
+		return import('node:crypto')
+			.then(({ randomBytes }) => randomBytes(length))
+			.catch(() => {
+				const randomBytes = new Uint8Array(length);
+				crypto.getRandomValues(randomBytes);
+				return randomBytes;
+			});
+	}
+
+	public static base16secret(length: number) {
+		return this.secretBytes(length).then((bytes) => BufferHelpers.bufferToHex(bytes));
+	}
+
+	public static base62secret(length: number) {
+		const LOWER_CHAR_SET = 'abcdefghijklmnopqrstuvwxyz';
+		const NUMBER_CHAR_SET = '0123456789';
+		const CHAR_SET = `${NUMBER_CHAR_SET}${LOWER_CHAR_SET}${LOWER_CHAR_SET.toUpperCase()}` as const;
+
+		return this.secretBytes(length).then((randomBytes) => {
+			/**
+			 * @link https://jsbm.dev/x1F2ITy7RU8T2
+			 */
+			let randomText = '';
+			for (const byte of randomBytes) {
+				// Map each byte to a character in the character set
+				const charIndex = byte % CHAR_SET.length;
+				randomText += CHAR_SET.charAt(charIndex);
+			}
+			return randomText;
+		});
+	}
+
 	public static getHash(algorithm: 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512', input: string | ArrayBufferLike) {
 		return import('node:crypto')
 			.then(async ({ createHash }) => {

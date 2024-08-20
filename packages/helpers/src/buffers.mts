@@ -1,6 +1,7 @@
 import type { UndefinedProperties } from '@chainfuse/types';
 import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
 import { v7 as uuidv7 } from 'uuid';
+import { CryptoHelpers } from './crypto.mjs';
 
 export class BufferHelpers {
 	public static bufferFromHex(hex: UuidExport['hex']): Promise<UuidExport['blob']> {
@@ -29,7 +30,7 @@ export class BufferHelpers {
 	}
 
 	public static get generateUuid(): Promise<UuidExport> {
-		return this.secretBytes(16).then((random) => {
+		return CryptoHelpers.secretBytes(16).then((random) => {
 			const uuid = uuidv7({ random }) as UuidExport['utf8'];
 			const uuidHex = uuid.replaceAll('-', '');
 
@@ -38,39 +39,6 @@ export class BufferHelpers {
 				hex: uuidHex,
 				blob,
 			}));
-		});
-	}
-
-	private static secretBytes(length: number) {
-		return import('node:crypto')
-			.then(({ randomBytes }) => randomBytes(length))
-			.catch(() => {
-				const randomBytes = new Uint8Array(length);
-				crypto.getRandomValues(randomBytes);
-				return randomBytes;
-			});
-	}
-
-	public static base16secret(length: number) {
-		return this.secretBytes(length).then((bytes) => this.bufferToHex(bytes));
-	}
-
-	public static base62secret(length: number) {
-		const LOWER_CHAR_SET = 'abcdefghijklmnopqrstuvwxyz';
-		const NUMBER_CHAR_SET = '0123456789';
-		const CHAR_SET = `${NUMBER_CHAR_SET}${LOWER_CHAR_SET}${LOWER_CHAR_SET.toUpperCase()}` as const;
-
-		return this.secretBytes(length).then((randomBytes) => {
-			/**
-			 * @link https://jsbm.dev/x1F2ITy7RU8T2
-			 */
-			let randomText = '';
-			for (const byte of randomBytes) {
-				// Map each byte to a character in the character set
-				const charIndex = byte % CHAR_SET.length;
-				randomText += CHAR_SET.charAt(charIndex);
-			}
-			return randomText;
 		});
 	}
 
