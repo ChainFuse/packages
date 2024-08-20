@@ -1,0 +1,48 @@
+{
+	"name": "@chainfuse/types",
+	"version": "0.0.0",
+	"description": "",
+	"author": "ChainFuse",
+	"homepage": "https://github.com/ChainFuse/packages/tree/main/packages/types#readme",
+	"license": "Apache-2.0",
+	"main": "./dist/index.mjs",
+	"directories": {
+		"lib": "dist"
+	},
+	"files": [
+		"dist"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ChainFuse/packages.git"
+	},
+	"scripts": {
+		"fmt": "prettier --check .",
+		"fmt:fix": "prettier --write .",
+		"lint": "eslint .",
+		"lint:fix": "npm run lint -- --fix",
+		"build": "tsc",
+		"build:clean": "npm run build -- --build --clean && npm run build"
+	},
+	"type": "module",
+	"bugs": {
+		"url": "https://github.com/ChainFuse/packages/issues"
+	},
+	"types": "./dist/index.d.mts",
+	"engines": {
+		"node": ">=20.16.0"
+	},
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"types": "./dist/index.d.mts"
+		}
+	},
+	"prettier": "@demosjarco/prettier-config",
+	"dependencies": {},
+	"devDependencies": {},
+	"optionalDependencies": {}
+}
