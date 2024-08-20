@@ -1,8 +1,12 @@
-name: Dependabot Enhance
-on: pull_request
+name: Dependabot Addons
+on:
+  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
-  enhance:
+  label:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
     permissions:
@@ -21,3 +25,14 @@ jobs:
       - run: gh pr edit "${{ github.event.pull_request.html_url }}" --add-label "${{ steps.dependabot-metadata-update-type.outputs.SEMVER_UPDATE }}"
         env:
           GH_TOKEN: ${{ github.token }}
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde # v2.9.1
+        with:
+          disable-sudo: true
+          egress-policy: audit
+      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+      - uses: actions/dependency-review-action@5a2ce3f5b92ee19cbb1541a4984c76d921601d7c # v4.3.4
+        with:
+          comment-summary-in-pr: always
