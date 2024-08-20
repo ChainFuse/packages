@@ -79,6 +79,7 @@ export class BufferHelpers {
 	public static uuidConvert(input: UuidExport['utf8']): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['hex']): Promise<UuidExport>;
 	public static uuidConvert(input: undefined): Promise<UndefinedProperties<UuidExport>>;
+	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 	public static uuidConvert(input?: UuidExport['blob'] | PrefixedUuid | UuidExport['utf8'] | UuidExport['hex']): Promise<UuidExport | UndefinedProperties<UuidExport>> {
 		if (input) {
 			if (typeof input === 'string') {
