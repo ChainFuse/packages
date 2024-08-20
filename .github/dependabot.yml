@@ -5,63 +5,70 @@
 
 version: 2
 updates:
+  - package-ecosystem: 'devcontainers'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'tuesday'
+      time: '12:00'
+      timezone: 'America/Los_Angeles'
+    open-pull-requests-limit: 999
+  - package-ecosystem: 'docker'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'tuesday'
+      time: '12:00'
+      timezone: 'America/Los_Angeles'
+    open-pull-requests-limit: 999
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
+      day: 'tuesday'
+      time: '12:00'
+      timezone: 'America/Los_Angeles'
     open-pull-requests-limit: 999
-    target-branch: 'staging'
-    ignore:
-      - dependency-name: '*'
-        update-types: ['version-update:semver-major', 'version-update:semver-minor']
-  - package-ecosystem: 'github-actions'
-    directory: '/'
-    schedule:
-      interval: 'daily'
-    open-pull-requests-limit: 999
-    target-branch: 'dev'
-    ignore:
-      - dependency-name: '*'
-        update-types: ['version-update:semver-patch']
+    groups:
+      artifacts:
+        patterns:
+          - 'actions/*-artifact'
+      caches:
+        patterns:
+          - 'actions/cache'
+          - 'actions/cache/*'
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
+      day: 'tuesday'
+      time: '12:00'
+      timezone: 'America/Los_Angeles'
+    versioning-strategy: increase
     open-pull-requests-limit: 999
-    target-branch: 'staging'
-    ignore:
-      - dependency-name: '*'
-        update-types: ['version-update:semver-major', 'version-update:semver-minor']
     groups:
-      typescript:
+      cloudflare:
         patterns:
-          - 'typescript'
+          - 'cloudflare'
+          - '@cloudflare/*'
+          - 'wrangler'
+        exclude-patterns:
+          - '@cloudflare/workers-types'
+      typescript-core:
+        patterns:
           - 'ts-node'
+          - 'typescript'
+          - '@swc/*'
+      typescript-types:
+        patterns:
           - '@types/*'
           - '@cloudflare/workers-types'
       code-management:
         patterns:
           - 'prettier'
+          - 'prettier-plugin-*'
           - '@demosjarco/prettier-config'
           - 'eslint'
-  - package-ecosystem: 'npm'
-    directory: '/'
-    schedule:
-      interval: 'daily'
-    open-pull-requests-limit: 999
-    target-branch: 'dev'
-    ignore:
-      - dependency-name: '*'
-        update-types: ['version-update:semver-patch']
-    groups:
-      typescript:
-        patterns:
-          - 'typescript'
-          - 'ts-node'
-          - '@types/*'
-          - '@cloudflare/workers-types'
-      code-management:
-        patterns:
-          - 'prettier'
-          - '@demosjarco/prettier-config'
-          - 'eslint'
+          - 'eslint-plugin-*'
+          - '@eslint/*'
+          - 'typescript-eslint'
