@@ -56,8 +56,8 @@ export class BufferHelpers {
 	}
 
 	public static base62secret(length: number) {
-		const LOWER_CHAR_SET = 'abcdefghijklmnopqrstuvwxyz' as const;
-		const NUMBER_CHAR_SET = '0123456789' as const;
+		const LOWER_CHAR_SET = 'abcdefghijklmnopqrstuvwxyz';
+		const NUMBER_CHAR_SET = '0123456789';
 		const CHAR_SET = `${NUMBER_CHAR_SET}${LOWER_CHAR_SET}${LOWER_CHAR_SET.toUpperCase()}` as const;
 
 		return BufferHelpers.secretBytes(length).then((randomBytes) => {
