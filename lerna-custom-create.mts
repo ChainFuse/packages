@@ -115,6 +115,8 @@ class LernaCustomCreate {
 					delete json['module'];
 					json['types'] = './dist/index.d.mts';
 					json['scripts'] = {
+						lint: 'eslint .',
+						'lint:fix': 'npm run lint -- --fix',
 						build: 'tsc',
 						'build:clean': 'npm run build -- --build --clean && npm run build',
 						pretest: 'tsc --project tsconfig.tests.json',

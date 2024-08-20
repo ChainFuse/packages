@@ -1,6 +1,8 @@
 {
 	"name": "root",
 	"scripts": {
+		"lint": "eslint .",
+		"lint:fix": "npm run lint -- --fix",
 		"base": "node --disallow-code-generation-from-strings --trace-warnings --use-largepages=silent",
 		"create": "npm run base -- --loader ts-node/esm ./lerna-custom-create.mts",
 		"build": "lerna run --stream build",
@@ -26,11 +28,15 @@
 	"dependencies": {},
 	"devDependencies": {
 		"@demosjarco/prettier-config": "^1.0.1",
+		"@eslint/js": "^9.9.0",
 		"@swc/core": "^1.7.14",
+		"@types/eslint__js": "^8.42.3",
 		"@types/node": "^22.4.1",
+		"eslint": "^9.9.0",
 		"lerna": "^8.1.8",
 		"prettier": "^3.3.3",
 		"ts-node": "^10.9.2",
-		"typescript": "^5.5.4"
+		"typescript": "^5.5.4",
+		"typescript-eslint": "^8.2.0"
 	}
 }
