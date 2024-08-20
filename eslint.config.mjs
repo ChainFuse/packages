@@ -27,5 +27,6 @@ export default tseslint.config({
 		'@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true, ignoreVoidOperator: true }],
 		'@typescript-eslint/no-explicit-any': ['warn', { ignoreRestArgs: true }],
 		'@typescript-eslint/restrict-plus-operands': 'warn',
+		'@typescript-eslint/no-floating-promises': ['error', { checkThenables: true, ignoreIIFE: true }],
 	},
 });
