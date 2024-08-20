@@ -2,7 +2,6 @@ import { exec } from 'node:child_process';
 import { createReadStream, createWriteStream } from 'node:fs';
 import { mkdir, readdir, rename } from 'node:fs/promises';
 import { basename, dirname, join, normalize, relative } from 'node:path';
-import { promisify } from 'node:util';
 
 class LernaCustomCreate {
 	private static get arguments(): readonly string[] {
@@ -19,32 +18,37 @@ class LernaCustomCreate {
 	}
 
 	private lernaCreate(packageName: string) {
-		return promisify(exec)(['lerna', 'create', '--access restricted', '--es-module true', '--license Apache-2.0', '--yes', `@chainfuse/${packageName}`].join(' ')).then(({ stdout, stderr }) => {
-			if (stderr) {
-				throw new Error('lerna error', { cause: stderr });
-			}
+		return new Promise<{
+			packageName: string;
+			packagePath: string;
+		}>((resolve, reject) => {
+			exec(['lerna', 'create', '--access public', '--es-module true', '--license Apache-2.0', '--yes', `@chainfuse/${packageName}`].join(' '), (error, stdout) => {
+				if (error) {
+					reject(new Error('lerna error', { cause: error }));
+				} else {
+					// Regex to match the package.json path
+					const pathRegex = /Wrote to (.+package\.json)/i;
+					const match = stdout.match(pathRegex);
 
-			// Regex to match the package.json path
-			const pathRegex = /Wrote to (.+package\.json)/i;
-			const match = stdout.match(pathRegex);
+					if (match && match[1]) {
+						// Normalize the path and get directory
+						const packageJsonPath = normalize(match[1].trim());
+						const packageDir = dirname(packageJsonPath);
 
-			if (match && match[1]) {
-				// Normalize the path and get directory
-				const packageJsonPath = normalize(match[1].trim());
-				const packageDir = dirname(packageJsonPath);
+						// Get relative path from current working directory
+						const relativePath = relative(process.cwd(), packageDir);
 
-				// Get relative path from current working directory
-				const relativePath = relative(process.cwd(), packageDir);
+						// Extract package name from the path
+						const resolvedPackageName = basename(packageDir);
 
-				// Extract package name from the path
-				const resolvedPackageName = basename(packageDir);
+						console.info('Created', resolvedPackageName, 'at', relativePath);
 
-				console.info('Created', resolvedPackageName, 'at', relativePath);
-
-				return { packageName: resolvedPackageName, packagePath: relativePath };
-			} else {
-				throw new Error('Package path not found in lerna output');
-			}
+						resolve({ packageName: resolvedPackageName, packagePath: relativePath });
+					} else {
+						reject(new Error('Package path not found in lerna output'));
+					}
+				}
+			});
 		});
 	}
 
@@ -168,12 +172,15 @@ class LernaCustomCreate {
 	}
 
 	private syncPackageFiles(packagePath: string) {
-		return promisify(exec)(['npm', 'install'].join(' '), { cwd: packagePath }).then(({ stderr }) => {
-			if (stderr) {
-				throw new Error('lerna error', { cause: stderr });
-			}
-
-			console.info(`Package files synced for ${packagePath}`);
+		return new Promise<void>((resolve, reject) => {
+			exec(['npm', 'install'].join(' '), { cwd: packagePath }, (error, _stdout, _stderr) => {
+				if (error) {
+					reject(new Error('Error syncing package files', { cause: error }));
+				} else {
+					console.info(`Package files synced for ${packagePath}`);
+					resolve();
+				}
+			});
 		});
 	}
 }
