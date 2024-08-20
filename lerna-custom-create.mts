@@ -91,7 +91,7 @@ class LernaCustomCreate {
 		return LernaCustomCreate.copyDirectory(templateDir, packageDir);
 	}
 
-	private async editPackageJson(packageDir: string) {
+	private editPackageJson(packageDir: string) {
 		const packageJsonPath = join(packageDir, 'package.json');
 		const tempFilePath = join(packageDir, 'package.temp.json');
 
