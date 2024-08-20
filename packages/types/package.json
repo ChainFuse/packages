@@ -39,6 +39,10 @@
 		".": {
 			"import": "./dist/index.js",
 			"types": "./dist/index.d.ts"
+		},
+		"./d1": {
+			"import": "./dist/d1/index.js",
+			"types": "./dist/d1/index.d.ts"
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",

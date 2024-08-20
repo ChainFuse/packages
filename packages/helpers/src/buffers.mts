@@ -1,5 +1,5 @@
-import type { UndefinedProperties } from '@chainfuse/types-internal';
-import type { PrefixedUuid, UuidExport } from '@chainfuse/types-internal/d1';
+import type { UndefinedProperties } from '@chainfuse/types';
+import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
 import { v7 as uuidv7 } from 'uuid';
 
 export class BufferHelpers {
