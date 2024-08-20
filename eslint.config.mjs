@@ -22,6 +22,7 @@ export default tseslint.config({
 		},
 	},
 	rules: {
+		'no-async-promise-executor': 'off',
 		'@typescript-eslint/consistent-type-imports': 'error',
 		'@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'with-single-extends' }],
 		'@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true, ignoreVoidOperator: true }],
