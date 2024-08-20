@@ -16,4 +16,15 @@ export class CryptoHelpers {
 			})
 			.catch(() => crypto.subtle.digest(algorithm, typeof input === 'string' ? new TextEncoder().encode(input) : input).then((hashBuffer) => BufferHelpers.bufferToHex(hashBuffer)));
 	}
+
+	/**
+	 * @returns Fully formatted (double quote encapsulated) `ETag` header value
+	 * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag#etag_value
+	 */
+	public static generateETag(response: Response, algorithm: Parameters<typeof this.getHash>[0] = 'SHA-512') {
+		return response
+			.clone()
+			.arrayBuffer()
+			.then((buffer) => this.getHash(algorithm, buffer).then((hex) => `"${hex}"`));
+	}
 }
