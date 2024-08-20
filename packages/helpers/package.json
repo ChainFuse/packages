@@ -46,9 +46,11 @@
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",
-	"dependencies": {},
-	"devDependencies": {
-		"@types/node": "^22.4.1"
+	"dependencies": {
+		"uuid": "^10.0.0"
 	},
-	"optionalDependencies": {}
+	"devDependencies": {
+		"@types/node": "^22.4.1",
+		"@types/uuid": "^10.0.0"
+	}
 }
