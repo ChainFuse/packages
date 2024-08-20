@@ -1,3 +1,6 @@
+/**
+ * It is used to carry over the types when using the `Object.values()` method.
+ */
 export type ObjectValues<T> =
 	{
 		[K in keyof T]: T[K];
