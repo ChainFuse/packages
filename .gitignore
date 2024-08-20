@@ -128,3 +128,21 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Basic
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Cloudflare
+.dev.vars
+.wrangler
+
+# Custom
+packages/*/schemas/*.d.ts
+packages/*/schemas/*.json
+*.test.mjs
