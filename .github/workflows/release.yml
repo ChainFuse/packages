@@ -164,7 +164,7 @@ jobs:
           name: dist
           path: packages
       - run: npm ci --include-workspace-root
-      - name: Setup git
+      - name: Git Setup
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
