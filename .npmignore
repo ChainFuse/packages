@@ -3,9 +3,5 @@
 .vscode
 packages/*/src/**
 packages/*/test/**
-packages/*/schemas/*.ts
-!packages/*/schemas/*.d.ts
 tsconfig.json
 **/.wrangler
-wrangler.toml
-*.wrangler.toml
