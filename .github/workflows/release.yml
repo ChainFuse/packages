@@ -1,0 +1,160 @@
+name: Release
+
+on:
+  push:
+    branches-ignore:
+      - latest
+    paths:
+      - '.github/workflows/release.yml'
+      - 'packages/*/src/**'
+      - 'packages/*/__tests__/**'
+      - 'package*.json'
+      - 'packages/*/package*.json'
+      - 'tsconfig.json'
+      - 'packages/*/tsconfig.json'
+  workflow_dispatch:
+    inputs:
+      dry_tun_tests:
+        description: 'Publish even if tests fail'
+        default: false
+        type: boolean
+      semver:
+        required: true
+        default: 'prerelease'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+          - premajor
+          - preminor
+          - prepatch
+          - prerelease
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      pr: ${{ steps.check_pr.outputs.PR_NUMBER }}
+    steps:
+      - uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
+        with:
+          egress-policy: audit
+          disable-sudo: true
+      - name: Check if commit is part of a PR
+        id: check_pr
+        run: |
+          PR_NUMBER=$(gh pr list --head ${{ github.ref_name }} --json number --jq '.[0].number // empty' --repo ${{ github.repository }})
+
+          if [[ -z "$PR_NUMBER" ]]; then
+            echo "This commit is a direct push to a branch."
+            echo "PR_NUMBER=none" >> $GITHUB_OUTPUT
+          else
+            echo "This commit is part of PR #$PR_NUMBER."
+            echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
+        with:
+          egress-policy: audit
+          disable-sudo: true
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: lts/*
+          check-latest: true
+          cache: npm
+      - run: npm ci --include-workspace-root --workspaces
+      - uses: actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: |
+            packages/*/.tsbuildinfo
+            packages/*/dist
+          key: tsc-${{ hashFiles('**/*.tsbuildinfo') }}
+          restore-keys: |
+            tsc-
+          enableCrossOsArchive: true
+      - run: npm run build
+      - uses: actions/cache/save@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: |
+            packages/*/.tsbuildinfo
+            packages/*/dist
+          key: tsc-${{ hashFiles('**/*.tsbuildinfo') }}
+          enableCrossOsArchive: true
+      - uses: actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b # v4.3.4
+        with:
+          name: dist
+          path: |
+            packages/*/.tsbuildinfo
+            packages/*/dist
+          compression-level: 9
+  test:
+    needs: build
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        version: ['lts/*', latest]
+    continue-on-error: ${{ matrix.os == 'windows-latest' && matrix.version == 'latest' && fromJson('true') || fromJson(inputs.dry_tun_tests || 'false')  }}
+    steps:
+      - uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+          disable-sudo: true
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: dist
+          path: packages
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: ${{ matrix.version }}
+          check-latest: true
+          cache: npm
+      - run: npm ci --include-workspace-root
+      - run: npm test -- --since -- --test-reporter=junit --test-reporter-destination=test-output.xml
+      - uses: test-summary/action@31493c76ec9e7aa675f1585d3ed6f1da69269a86 # v2.4
+        if: always()
+        with:
+          paths: packages/*/test-output.xml
+          show: all
+  # https://github.com/azu/monorepo-github-releases
+  release:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    steps:
+      - uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde # v2.9.1
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+          disable-sudo: true
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: lts/*
+          check-latest: true
+          cache: 'npm'
+      - run: npm ci --include-workspace-root --workspaces
+      - name: Setup git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
