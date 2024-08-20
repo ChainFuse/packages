@@ -3,7 +3,7 @@ export * from './crypto.mjs';
 
 export class Helpers {
 	public static precisionFloat(input: string) {
-		if (!input.includes('.')) {
+		if (input.indexOf('.') < 0) {
 			// No decimal point means it's an integer, just return as a float
 			return parseFloat(input);
 		} else {
