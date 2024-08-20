@@ -1,6 +1,5 @@
 import type { UndefinedProperties } from '@chainfuse/types';
 import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
-import { v7 as uuidv7 } from 'uuid';
 import { CryptoHelpers } from './crypto.mjs';
 
 export class BufferHelpers {
@@ -30,16 +29,18 @@ export class BufferHelpers {
 	}
 
 	public static get generateUuid(): Promise<UuidExport> {
-		return CryptoHelpers.secretBytes(16).then((random) => {
-			const uuid = uuidv7({ random }) as UuidExport['utf8'];
-			const uuidHex = uuid.replaceAll('-', '');
+		return CryptoHelpers.secretBytes(16).then((random) =>
+			import('uuid').then(({ v7: uuidv7 }) => {
+				const uuid = uuidv7({ random }) as UuidExport['utf8'];
+				const uuidHex = uuid.replaceAll('-', '');
 
-			return this.bufferFromHex(uuidHex).then((blob) => ({
-				utf8: uuid,
-				hex: uuidHex,
-				blob,
-			}));
-		});
+				return this.bufferFromHex(uuidHex).then((blob) => ({
+					utf8: uuid,
+					hex: uuidHex,
+					blob,
+				}));
+			}),
+		);
 	}
 
 	public static uuidConvert(input: UuidExport['blob']): Promise<UuidExport>;
