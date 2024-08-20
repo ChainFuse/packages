@@ -5,7 +5,7 @@
 		"source.organizeImports": "always"
 	},
 	"typescript.tsdk": "./node_modules/typescript/lib",
-	"github-actions.workflows.pinned.workflows": [],
+	"github-actions.workflows.pinned.workflows": [".github/workflows/release.yml"],
 	"github-actions.workflows.pinned.refresh.enabled": true,
 	"yaml.schemas": {
 		"https://json.schemastore.org/dependabot-2.0.json": "${workspaceFolder}/.github/dependabot.yml"
