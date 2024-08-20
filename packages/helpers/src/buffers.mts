@@ -122,6 +122,7 @@ export class BufferHelpers {
 				}));
 			}
 		} else {
+			// eslint-disable-next-line @typescript-eslint/require-await
 			return (async () => ({
 				utf8: undefined,
 				hex: undefined,
