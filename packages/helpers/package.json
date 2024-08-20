@@ -21,6 +21,10 @@
 		"url": "git+https://github.com/ChainFuse/packages.git"
 	},
 	"scripts": {
+		"fmt": "prettier --check .",
+		"fmt:fix": "prettier --write .",
+		"lint": "eslint .",
+		"lint:fix": "npm run lint -- --fix",
 		"build": "tsc",
 		"build:clean": "npm run build -- --build --clean && npm run build",
 		"pretest": "tsc --project tsconfig.tests.json",
