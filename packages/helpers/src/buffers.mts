@@ -29,18 +29,16 @@ export class BufferHelpers {
 	}
 
 	public static get generateUuid(): Promise<UuidExport> {
-		return CryptoHelpers.secretBytes(16).then((random) =>
-			import('uuid').then(({ v7: uuidv7 }) => {
-				const uuid = uuidv7({ random }) as UuidExport['utf8'];
-				const uuidHex = uuid.replaceAll('-', '');
+		return Promise.all([CryptoHelpers.secretBytes(16), import('uuid')]).then(([random, { v7: uuidv7 }]) => {
+			const uuid = uuidv7({ random }) as UuidExport['utf8'];
+			const uuidHex = uuid.replaceAll('-', '');
 
-				return this.bufferFromHex(uuidHex).then((blob) => ({
-					utf8: uuid,
-					hex: uuidHex,
-					blob,
-				}));
-			}),
-		);
+			return this.bufferFromHex(uuidHex).then((blob) => ({
+				utf8: uuid,
+				hex: uuidHex,
+				blob,
+			}));
+		});
 	}
 
 	public static uuidConvert(input: UuidExport['blob']): Promise<UuidExport>;
