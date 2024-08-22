@@ -240,7 +240,7 @@ jobs:
             const comments = [];
 
             // Run it 1 by 1 to avoid rate limits
-            packages.array.forEach(async (p) => {
+            packages.forEach(async (p) => {
               const tag_name = `${p['name']}@${p['newVersion']}`;
               console.info(`(temp) created tag ${tag_name}`);
 
