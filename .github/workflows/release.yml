@@ -220,7 +220,7 @@ jobs:
         run: git checkout -b temp-new-branch
       - name: Surgically delete local commit
         if: always()
-        run: git rebase -p --onto ${{ steps.prCreate.outputs.commit_to_delete }}^ ${{ steps.prCreate.outputs.commit_to_delete }} ${{ github.ref_name }}
+        run: git rebase --rebase-merges --onto ${{ steps.prCreate.outputs.commit_to_delete }}^ ${{ steps.prCreate.outputs.commit_to_delete }} ${{ github.ref_name }}
       - name: Delete commit upstream
         if: always()
         run: git push origin ${{ github.ref_name }} --force
