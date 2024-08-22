@@ -209,11 +209,18 @@ jobs:
             git push --delete origin $tag_name
           done
 
+          # Create new branch temporarily
+          git checkout -b temp-new-branch
+
           # Surgically delete local commit
           git rebase -p --onto $commit_to_delete^ $commit_to_delete ${{ github.ref_name }}
 
           # Delete commit upstream
           git push origin ${{ github.ref_name }} --force
+
+          # Switch back original branch and delete new temp branch
+          git checkout ${{ github.ref_name }}
+          git branch -d temp-new-branch
         # JSON piping is funky on default `sh`, but fine on
         shell: bash
         env:
