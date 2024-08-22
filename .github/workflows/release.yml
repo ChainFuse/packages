@@ -200,7 +200,7 @@ jobs:
             echo "(temp) created tag $tag_name"
 
             # Make pr and use undocomented github endpoint fo release notes generation
-            gh pr create --reviewer ${{ github.actor }} --title "TESTING|chore(release): $tag_name" --body "$(gh api "/repos/${{ github.repository }}/releases/generate-notes" -f tag_name="$tag_name" --jq .body)"
+            gh pr create --reviewer ${{ github.actor }} --title "TESTING|chore(release): $tag_name" --body "TODO PATCH NOTES"
 
             # Delete local tag
             git tag -d $tag_name
