@@ -176,7 +176,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
       - name: Create PR branch
-        run: git checkout -b publish/${{ hashFiles('packages') }}
+        run: git checkout -b publish/${{ hashFiles('packages') }} && git push
       - name: Increment ${{ inputs.semver }} version
         run: echo "NEW_PACKAGES=$(npx lerna version ${{ inputs.semver }} | jq -c .)" >> "$GITHUB_OUTPUT"
         id: lver
