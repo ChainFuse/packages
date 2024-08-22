@@ -204,7 +204,7 @@ jobs:
               console.info(`(temp) created tag ${tag_name}`);
 
               // Save commit hash to delete after loop
-              core.setOutput('commit_to_delete', await exec.getExecOutput(`git rev-list -n 1 ${tag_name}`));
+              core.setOutput('commit_to_delete', await exec.getExecOutput(`git rev-list -n 1 ${tag_name}`).stdout.trim());
               console.info('saved commit hash for later');
 
               // Use undocomented github endpoint for release notes generation
