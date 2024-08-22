@@ -206,15 +206,15 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const packages = JSON.parse('${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}');
+            const packages = JSON.parse(process.env.NEW_PACKAGES);
 
             return await github.rest.pulls
               .create({
                 owner,
                 repo,
                 // pattern is base <-- head
-                base: '${{ github.ref_name }}',
-                head: '${{ steps.branchCreate.outputs.BRANCH }}',
+                base: process.env.BASE,
+                head: process.env.HEAD,
                 title: `TESTING|chore(release): ${JSON.stringify(packages.map((package) => `${package['name']}@${package['newVersion']}`))}`,
                 body: `This PR will update the following packages:\n---\n\`\`\`json\n${JSON.stringify(packages, null, '\t')}\n\`\`\`\n---\nA comment has been made per package which will become that package's release notes. Edit the comment(s) (anything below the horizontal rule) to change the release notes.\n\n> [!NOTE]\n> Leading and trailing whitespace will be automatically trimmed.\n\nMerge this PR to publish the new versions. Close this PR to abort.`,
               })
@@ -225,14 +225,17 @@ jobs:
               .catch((e) => console.error(e.response.data));
         env:
           GH_TOKEN: ${{ github.token }}
+          NEW_PACKAGES: ${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}
+          BASE: ${{ github.ref_name }}
+          HEAD: ${{ steps.branchCreate.outputs.BRANCH }}
       - name: PR Comments
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         id: prComment
         with:
           script: |
             const { owner, repo } = context.repo;
-            const packages = JSON.parse('${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}');
-            const { html_url, number: pr_number } = JSON.parse('${{ steps.prCreate.outputs.result }}');
+            const packages = JSON.parse(process.env.NEW_PACKAGES);
+            const { html_url, number: pr_number } = JSON.parse(process.env.PR);
 
             return Promise.all(
               packages.map(async (p) => {
@@ -267,6 +270,8 @@ jobs:
             );
         env:
           GH_TOKEN: ${{ github.token }}
+          NEW_PACKAGES: ${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}
+          PR: ${{ steps.prCreate.outputs.result }}
       - run: echo "${{ steps.prComment.outputs.result }}"
       - name: Swap back to ${{ github.ref_name }}
         run: git checkout ${{ github.ref_name }}
