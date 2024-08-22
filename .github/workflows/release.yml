@@ -208,7 +208,7 @@ jobs:
               console.info('saved commit hash for later');
 
               // Use undocomented github endpoint for release notes generation
-              const release_notes = await octokit.rest.repos.generateReleaseNotes({ owner, repo, tag_name }).then(({ data }) => data.body);
+              const release_notes = await github.rest.repos.generateReleaseNotes({ owner, repo, tag_name }).then(({ data }) => data.body);
               console.info('generated release notes', release_notes);
 
               // Create PR
