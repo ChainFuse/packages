@@ -217,7 +217,7 @@ jobs:
                 console.info('created PR', data.html_url);
                 return data;
               })
-              .catch((e) => console.error(e.response));
+              .catch((e) => console.error(e.response.data));
         env:
           GH_TOKEN: ${{ github.token }}
       - run: echo "${{ steps.prCreate.outputs.result }}"
