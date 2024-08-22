@@ -204,7 +204,7 @@ jobs:
 
             # Surgically delete local commit
             commit_to_delete=$(git rev-list -n 1 $tag_name)
-            git rebase -p --onto $commit_to_delete^ $commit_to_delete <branch_name>
+            git rebase -p --onto $commit_to_delete^ $commit_to_delete ${{ github.ref_name }}
 
             # Delete tag upstream
             git push --delete origin $tag_name
