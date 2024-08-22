@@ -180,7 +180,7 @@ jobs:
         id: branchCreate
         run: |
           BRANCH=publish/${{ hashFiles('packages') }}
-          git checkout -b BRANCH
+          git checkout -b $BRANCH
           git push
           echo "BRANCH=$BRANCH" >> "$GITHUB_OUTPUT"
       - name: Increment ${{ inputs.semver }} version
