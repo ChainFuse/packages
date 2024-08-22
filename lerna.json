@@ -3,6 +3,7 @@
 	"version": "independent",
 	"command": {
 		"version": {
+			"loglevel": "error",
 			"yes": true,
 			"push": false,
 			"json": true
