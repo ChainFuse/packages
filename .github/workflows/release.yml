@@ -176,3 +176,4 @@ jobs:
         if: ${{ !inputs.semver || startsWith(inputs.semver, 'pre') }}
         env:
           GH_TOKEN: ${{ github.token }}
+      - run: git tag
