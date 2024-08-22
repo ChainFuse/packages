@@ -216,12 +216,17 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Create new branch temporarily
+        if: always()
         run: git checkout -b temp-new-branch
       - name: Surgically delete local commit
+        if: always()
         run: git rebase -p --onto ${{ steps.prCreate.outputs.commit_to_delete }}^ ${{ steps.prCreate.outputs.commit_to_delete }} ${{ github.ref_name }}
       - name: Delete commit upstream
+        if: always()
         run: git push origin ${{ github.ref_name }} --force
       - name: Switch back original branch
+        if: always()
         run: git checkout ${{ github.ref_name }}
       - name: Create new branch temporarily
+        if: always()
         run: git branch -d temp-new-branch
