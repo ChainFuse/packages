@@ -203,7 +203,7 @@ jobs:
             echo "commit_to_delete=$(git rev-list -n 1 $tag_name)" >> "$GITHUB_OUTPUT"
 
             # Make pr and use undocomented github endpoint fo release notes generation
-            gh pr create --reviewer ${{ github.actor }} --title "TESTING|chore(release): $tag_name" --body "TODO PATCH NOTES"
+            gh pr create --reviewer ${{ github.actor }} --title "TESTING|chore(release): $tag_name" --body "$(gh api "/repos/${{ github.repository }}/releases/generate-notes" -f tag_name="$tag_name" --jq .body)"
 
             # Delete local tag
             git tag -d $tag_name
