@@ -264,8 +264,8 @@ jobs:
                       })
                       .then(({ data }) => data)
                       .catch(console.error),
-                    exec(`git tag -d ${tag_name}`),
-                    exec(`git push --delete origin ${tag_name}`),
+                    exec.exec(`git tag -d ${tag_name}`),
+                    exec.exec(`git push --delete origin ${tag_name}`),
                   ]).then(([comment]) => comments.push(comment));
                 });
             });
