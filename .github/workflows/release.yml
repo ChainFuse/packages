@@ -133,7 +133,9 @@ jobs:
           cache: npm
       - run: npm ci --include-workspace-root
       - run: npm test -- --since -- --test-reporter=junit --test-reporter-destination=test-output.xml
-      - run: find / -name test-output.xml
+      - run: ls -la packages/*/
+        if: runner.os == 'Linux'
+      - run: find ${{ github.workspace }} -name test-output.xml
         if: runner.os == 'Linux'
       - uses: test-summary/action@31493c76ec9e7aa675f1585d3ed6f1da69269a86 # v2.4
         if: always()
