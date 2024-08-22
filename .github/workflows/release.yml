@@ -192,32 +192,40 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-      - name: Create PR
+      - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         id: prCreate
-        run: |
-          # For loop to create PRs for each package
-          echo '${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}' | jq -c '.[]' | while read -r package; do
-            tag_name=$(jq -r '"\(.name)@\(.newVersion)"' <<< "$package")
-            echo "(temp) created tag $tag_name"
-            
-            # Save commit hash to delete after loop
-            echo "commit_to_delete=$(git rev-list -n 1 $tag_name)" >> "$GITHUB_OUTPUT"
-            echo "saved commit hash for later"
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const packages = JSON.parse('${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}');
 
-            # Make pr and use undocomented github endpoint fo release notes generation
-            pr_url=$(gh pr create --reviewer ${{ github.actor }} --title "TESTING|chore(release): $tag_name" --body "$(gh api "/repos/${{ github.repository }}/releases/generate-notes" -f tag_name="$tag_name" --jq .body)")
-            echo "Created $pr_url"
+            await packages.forEach(async (package) => {
+              const tag_name = `${package['name']}@${package['newVersion']}`;
+              console.info(`(temp) created tag ${tag_name}`);
 
-            # Delete local tag
-            git tag -d $tag_name
-            echo "Deleted $tag_name locally"
+              // Save commit hash to delete after loop
+              core.setOutput('commit_to_delete', await exec.getExecOutput(`git rev-list -n 1 ${tag_name}`));
+              console.info('saved commit hash for later');
 
-            # Delete tag upstream
-            git push --delete origin $tag_name
-            echo "Deleted $tag_name upstream"
-          done
-        # JSON piping is funky on default `sh`, but fine on
-        shell: bash
+              // Use undocomented github endpoint for release notes generation
+              const release_notes = await octokit.rest.repos.generateReleaseNotes({ owner, repo, tag_name }).then(({ data }) => data.body);
+              console.info('generated release notes', release_notes);
+
+              // Create PR
+              const { html_url, number } = await github.rest.pulls
+                .create({
+                  owner,
+                  repo,
+                  title: `TESTING|chore(release): ${tag_name}`,
+                  body: release_notes,
+                })
+                .then(({ data }) => data)
+                .catch(console.error);
+
+              // Delete the temp tag
+              await exec(`git tag -d ${tag_name}`);
+              await exec(`git push --delete origin ${tag_name}`);
+            });
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Create new branch temporarily
