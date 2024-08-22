@@ -189,7 +189,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
       - run: |
           echo '${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}' | jq -c '.[]' | while read -r package; do
-            echo "$(jq -r '"\(.name)@\(.newVersion)"' <<< "$obj")"
+            echo "$(jq -r '"\(.name)@\(.newVersion)"' <<< "$package")"
           done
         # JSON piping is funky on default `sh`, but fine on
         shell: bash
