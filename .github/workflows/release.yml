@@ -194,9 +194,10 @@ jobs:
       - name: Create PR
         id: prCreate
         run: |
+          # For loop to create PRs for each package
           echo '${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}' | jq -c '.[]' | while read -r package; do
             tag_name=$(jq -r '"\(.name)@\(.newVersion)"' <<< "$package")
-            echo "(temp) created $tag_name"
+            echo "(temp) created tag $tag_name"
 
             # Make pr and use undocomented github endpoint fo release notes generation
             gh pr create --reviewer ${{ github.actor }} --title "TESTING|chore(release): $tag_name" --body "$(gh api "/repos/${{ github.repository }}/releases/generate-notes" -f tag_name="$tag_name" --jq .body)"
