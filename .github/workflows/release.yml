@@ -175,11 +175,15 @@ jobs:
         if: inputs.semver && !startsWith(inputs.semver, 'pre')
         env:
           GH_TOKEN: ${{ github.token }}
-      - run: echo "NEW_PACKAGES=$(npx lerna version ${{ inputs.semver || 'prerelease' }} --since --preid=${{ github.ref_name }} | jq -c .)" >> "$GITHUB_OUTPUT"
+      # TODO: replace `beta` with ${{ github.ref_name }}
+      - run: echo "NEW_PACKAGES=$(npx lerna version ${{ inputs.semver || 'prerelease' }} --since --preid=beta | jq -c .)" >> "$GITHUB_OUTPUT"
         id: lverPre
         if: ${{ !inputs.semver || startsWith(inputs.semver, 'pre') }}
         env:
           GH_TOKEN: ${{ github.token }}
+      - run: echo '${{ steps.lver.outputs.NEW_PACKAGES }}'
+      - run: echo '${{ steps.lverPre.outputs.NEW_PACKAGES }}'
+      - run: echo '${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}'
       - run: echo '${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}' | jq -r '.[] | "\(.name)@\(.newVersion)"'
         # JSON piping is funky on default `sh`, but fine on
         shell: bash
