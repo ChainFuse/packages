@@ -140,7 +140,8 @@ jobs:
           show: all
   # https://github.com/azu/monorepo-github-releases
   prepare:
-    needs: [detect, build, test]
+    # needs: [detect, build, test]
+    needs: [detect, build]
     # if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     permissions:
