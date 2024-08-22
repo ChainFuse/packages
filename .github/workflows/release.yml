@@ -168,3 +168,11 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+      - run: npx lerna version ${{ inputs.semver }} --yes --conventional-commits --no-push --json
+        if: inputs.semver && !startsWith(inputs.semver, 'pre')
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - run: npx lerna version ${{ inputs.semver || 'prerelease' }} --yes --preid=${{ github.ref_name }} --conventional-commits --no-push --json
+        if: ${{ !inputs.semver || startsWith(inputs.semver, 'pre') }}
+        env:
+          GH_TOKEN: ${{ github.token }}
