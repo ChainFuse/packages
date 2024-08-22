@@ -5,7 +5,6 @@
 		"version": {
 			"loglevel": "error",
 			"yes": true,
-			"push": false,
 			"json": true
 		}
 	}
