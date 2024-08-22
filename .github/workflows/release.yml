@@ -141,7 +141,7 @@ jobs:
   # https://github.com/azu/monorepo-github-releases
   tagPublish:
     needs: [detect, test]
-    if: ${{ github.event_name == 'workflow_dispatch' }}
+    # if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
