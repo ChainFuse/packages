@@ -193,10 +193,24 @@ jobs:
           GH_TOKEN: ${{ github.token }}
       - run: |
           echo '${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}' | jq -c '.[]' | while read -r package; do
-            echo "(temp) created $(jq -r '"\(.name)@\(.newVersion)"' <<< "$package")"
-            gh pr create --reviewer ${{ github.actor }} --title "TESTING|chore(release): $(jq -r '"\(.name)@\(.newVersion)"' <<< "$package")" --body "$(gh api "/repos/${{ github.repository }}/releases/generate-notes" -f tag_name="$(jq -r '"\(.name)@\(.newVersion)"' <<< "$package")" --jq .body)"
-            git tag -d $(jq -r '"\(.name)@\(.newVersion)"' <<< "$package")
-            git push --delete origin $(jq -r '"\(.name)@\(.newVersion)"' <<< "$package")
+            tag_name=$(jq -r '"\(.name)@\(.newVersion)"' <<< "$package")
+            echo "(temp) created $tag_name"
+
+            # Make pr and use undocomented github endpoint fo release notes generation
+            gh pr create --reviewer ${{ github.actor }} --title "TESTING|chore(release): $tag_name" --body "$(gh api "/repos/${{ github.repository }}/releases/generate-notes" -f tag_name="$tag_name" --jq .body)"
+
+            # Delete local tag
+            git tag -d $tag_name
+
+            # Surgically delete local commit
+            commit_to_delete=$(git rev-list -n 1 $tag_name)
+            git rebase -p --onto $commit_to_delete^ $commit_to_delete <branch_name>
+
+            # Delete tag upstream
+            git push --delete origin $tag_name
+
+            # Delete commit upstream
+            git push origin ${{ github.ref_name }} --force
           done
         # JSON piping is funky on default `sh`, but fine on
         shell: bash
