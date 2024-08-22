@@ -177,7 +177,12 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config set --type=bool push.autoSetupRemote true
       - name: Create PR branch
-        run: git checkout -b publish/${{ hashFiles('packages') }} && git push
+        id: branchCreate
+        run: |
+          BRANCH=publish/${{ hashFiles('packages') }}
+          git checkout -b BRANCH
+          git push
+          echo "BRANCH=$BRANCH" >> "$GITHUB_OUTPUT"
       - name: Increment ${{ inputs.semver }} version
         run: echo "NEW_PACKAGES=$(npx lerna version ${{ inputs.semver }} | jq -c .)" >> "$GITHUB_OUTPUT"
         id: lver
@@ -209,7 +214,7 @@ jobs:
                 repo,
                 // pattern is base <-- head
                 base: '${{ github.ref_name }}',
-                head: "publish/${{ hashFiles('packages') }}",
+                head: '${{ steps.branchCreate.outputs.BRANCH }}',
                 title: `TESTING|chore(release): ${JSON.stringify(packages.map((package) => `${package['name']}@${package['newVersion']}`))}`,
                 body: `This PR will update the following packages:\n---\n\`\`\`json\n${JSON.stringify(packages, null, '\t')}\`\`\`\n---\nA comment has been made per package which will become that package's release notes. Edit the comment(s) (anything below the horizontal rule) to change the release notes.\n\n> [!NOTE]\n> Leading and trailing whitespace will be automatically trimmed.\n\nMerge this PR to publish the new versions. Close this PR to abort.`,
               })
@@ -267,6 +272,6 @@ jobs:
       - name: Swap back to ${{ github.ref_name }}
         run: git checkout ${{ github.ref_name }}
       - name: Surgically delete local commit
-        run: git rebase --rebase-merges --onto ${{ steps.prComment.outputs.commit_to_delete }}^ ${{ steps.prComment.outputs.commit_to_delete }} publish/${{ hashFiles('packages') }}
+        run: git rebase --rebase-merges --onto ${{ steps.prComment.outputs.commit_to_delete }}^ ${{ steps.prComment.outputs.commit_to_delete }} ${{ steps.branchCreate.outputs.BRANCH }}
       - name: Delete commit upstream
-        run: git push origin publish/${{ hashFiles('packages') }} --force
+        run: git push origin ${{ steps.branchCreate.outputs.BRANCH }} --force
