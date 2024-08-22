@@ -178,6 +178,6 @@ jobs:
         if: ${{ !inputs.semver || startsWith(inputs.semver, 'pre') }}
         env:
           GH_TOKEN: ${{ github.token }}
-      - run: echo '${{ steps.lver.outputs.array||steps.lver.outputs.array }}' | jq -r '[.[] | "\(.name)@\(.newVersion)"]'
+      - run: echo '${{ steps.lver.outputs.array||steps.lver.outputs.array }}' | jq -r '.[] | "\(.name)@\(.newVersion)"'
         shell: bash
       - run: git tag
