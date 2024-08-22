@@ -185,7 +185,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-      - run: echo '${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}' | jq -r 'map("\(.name)@\(.newVersion)")'
+      - run: echo '${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}' | jq -cr 'map("\(.name)@\(.newVersion)")'
         # JSON piping is funky on default `sh`, but fine on
         shell: bash
       - run: git tag
