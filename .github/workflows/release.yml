@@ -181,6 +181,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       # Need to use `toJSON()`/`fromJSON()` or else it's empty
-      - run: echo '${{ toJSON(fromJSON(steps.lver.outputs.NEW_PACKAGES || steps.lver.outputs.NEW_PACKAGES)) }}' | jq -r '.[] | "\(.name)@\(.newVersion)"'
+      - run: echo '${{ toJSON(fromJSON(steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES)) }}' | jq -r '.[] | "\(.name)@\(.newVersion)"'
         shell: bash
       - run: git tag
