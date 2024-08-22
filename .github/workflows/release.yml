@@ -216,7 +216,7 @@ jobs:
                 base: '${{ github.ref_name }}',
                 head: '${{ steps.branchCreate.outputs.BRANCH }}',
                 title: `TESTING|chore(release): ${JSON.stringify(packages.map((package) => `${package['name']}@${package['newVersion']}`))}`,
-                body: `This PR will update the following packages:\n---\n\`\`\`json\n${JSON.stringify(packages, null, '\t')}\`\`\`\n---\nA comment has been made per package which will become that package's release notes. Edit the comment(s) (anything below the horizontal rule) to change the release notes.\n\n> [!NOTE]\n> Leading and trailing whitespace will be automatically trimmed.\n\nMerge this PR to publish the new versions. Close this PR to abort.`,
+                body: `This PR will update the following packages:\n---\n\`\`\`json\n${JSON.stringify(packages, null, '\t')}\n\`\`\`\n---\nA comment has been made per package which will become that package's release notes. Edit the comment(s) (anything below the horizontal rule) to change the release notes.\n\n> [!NOTE]\n> Leading and trailing whitespace will be automatically trimmed.\n\nMerge this PR to publish the new versions. Close this PR to abort.`,
               })
               .then(({ data }) => {
                 console.info('created PR', data.html_url);
