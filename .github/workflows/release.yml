@@ -145,6 +145,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
     outputs:
       NEW_PACKAGES: ${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}
     steps:
