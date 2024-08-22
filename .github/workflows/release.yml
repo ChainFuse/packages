@@ -139,7 +139,7 @@ jobs:
           paths: packages/*/test-output.xml
           show: all
   # https://github.com/azu/monorepo-github-releases
-  tagPublish:
+  prepare:
     needs: [detect, test]
     # if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
