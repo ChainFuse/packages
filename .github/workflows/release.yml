@@ -264,11 +264,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
       - run: echo "${{ steps.prComment.outputs.result }}"
       - name: Swap back to ${{ github.ref_name }}
-        if: always()
         run: git checkout ${{ github.ref_name }}
       - name: Surgically delete local commit
-        if: always()
         run: git rebase --rebase-merges --onto ${{ steps.prComment.outputs.commit_to_delete }}^ ${{ steps.prComment.outputs.commit_to_delete }} publish/${{ hashFiles('packages') }}
       - name: Delete commit upstream
-        if: always()
         run: git push origin publish/${{ hashFiles('packages') }} --force
