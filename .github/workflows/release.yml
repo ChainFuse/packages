@@ -196,4 +196,6 @@ jobs:
           done
         # JSON piping is funky on default `sh`, but fine on
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
       - run: git tag
