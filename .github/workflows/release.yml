@@ -168,17 +168,17 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
-      - run: echo "array=$(npx lerna version ${{ inputs.semver }} --since | jq -c .)" >> "$GITHUB_OUTPUT"
+      - run: echo "NEW_PACKAGES=$(npx lerna version ${{ inputs.semver }} --since | jq -c .)" >> "$GITHUB_OUTPUT"
         id: lver
         if: inputs.semver && !startsWith(inputs.semver, 'pre')
         env:
           GH_TOKEN: ${{ github.token }}
-      - run: echo "array=$(npx lerna version ${{ inputs.semver || 'prerelease' }} --since --preid=${{ github.ref_name }} | jq -c .)" >> "$GITHUB_OUTPUT"
+      - run: echo "NEW_PACKAGES=$(npx lerna version ${{ inputs.semver || 'prerelease' }} --since --preid=${{ github.ref_name }} | jq -c .)" >> "$GITHUB_OUTPUT"
         id: lverPre
         if: ${{ !inputs.semver || startsWith(inputs.semver, 'pre') }}
         env:
           GH_TOKEN: ${{ github.token }}
       # Need to use `toJSON()`/`fromJSON()` or else it's empty
-      - run: echo '${{ toJSON(fromJSON(steps.lver.outputs.array || steps.lver.outputs.array)) }}' | jq -r '.[] | "\(.name)@\(.newVersion)"'
+      - run: echo '${{ toJSON(fromJSON(steps.lver.outputs.NEW_PACKAGES || steps.lver.outputs.NEW_PACKAGES)) }}' | jq -r '.[] | "\(.name)@\(.newVersion)"'
         shell: bash
       - run: git tag
