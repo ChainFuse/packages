@@ -237,37 +237,40 @@ jobs:
             const packages = JSON.parse(process.env.NEW_PACKAGES);
             const { html_url, number: pr_number } = JSON.parse(process.env.PR);
 
-            return Promise.all(
-              packages.map(async (p) => {
-                const tag_name = `${p['name']}@${p['newVersion']}`;
-                console.info(`(temp) created tag ${tag_name}`);
+            const comments = [];
 
-                // Save commit hash to delete after loop
-                core.setOutput('commit_to_delete', await exec.getExecOutput(`git rev-list -n 1 ${tag_name}`).then(({ stdout }) => stdout.trim()));
-                console.info('saved commit hash for later');
+            // Run it 1 by 1 to avoid rate limits
+            packages.array.forEach(async (p) => {
+              const tag_name = `${p['name']}@${p['newVersion']}`;
+              console.info(`(temp) created tag ${tag_name}`);
 
-                return github.rest.repos
-                  .generateReleaseNotes({ owner, repo, tag_name })
-                  .then(({ data }) => data.body)
-                  .then((release_notes) => {
-                    console.info('generated release notes', release_notes);
+              // Save commit hash to delete after loop
+              core.setOutput('commit_to_delete', await exec.getExecOutput(`git rev-list -n 1 ${tag_name}`).then(({ stdout }) => stdout.trim()));
+              console.info('saved commit hash for later');
 
-                    return Promise.all([
-                      github.rest.issues
-                        .createComment({
-                          owner,
-                          repo,
-                          issue_number: pr_number,
-                          body: `${tag_name}\n---\n` + release_notes,
-                        })
-                        .then(({ data }) => data)
-                        .catch(console.error),
-                      exec(`git tag -d ${tag_name}`),
-                      exec(`git push --delete origin ${tag_name}`),
-                    ]).then(([comment, localTag, remoteTag]) => comment);
-                  });
-              }),
-            );
+              await github.rest.repos
+                .generateReleaseNotes({ owner, repo, tag_name })
+                .then(({ data }) => data.body)
+                .then(async (release_notes) => {
+                  console.info('generated release notes', release_notes);
+
+                  await Promise.all([
+                    github.rest.issues
+                      .createComment({
+                        owner,
+                        repo,
+                        issue_number: pr_number,
+                        body: `${tag_name}\n---\n` + release_notes,
+                      })
+                      .then(({ data }) => data)
+                      .catch(console.error),
+                    exec(`git tag -d ${tag_name}`),
+                    exec(`git push --delete origin ${tag_name}`),
+                  ]).then(([comment]) => comments.push(comment));
+                });
+            });
+
+            return comments;
         env:
           GH_TOKEN: ${{ github.token }}
           NEW_PACKAGES: ${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}
