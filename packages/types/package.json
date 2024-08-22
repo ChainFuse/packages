@@ -65,8 +65,5 @@
 			"types": "./dist/discourse/topic/index.d.ts"
 		}
 	},
-	"prettier": "@demosjarco/prettier-config",
-	"dependencies": {},
-	"devDependencies": {},
-	"optionalDependencies": {}
+	"prettier": "@demosjarco/prettier-config"
 }
