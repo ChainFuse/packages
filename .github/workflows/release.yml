@@ -221,8 +221,7 @@ jobs:
               .then(({ data }) => {
                 console.info('created PR', data.html_url);
                 return data;
-              })
-              .catch((e) => console.error(e.response.data));
+              });
         env:
           GH_TOKEN: ${{ github.token }}
           NEW_PACKAGES: ${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}
@@ -252,7 +251,7 @@ jobs:
                 .generateReleaseNotes({ owner, repo, tag_name })
                 .then(({ data }) => data.body)
                 .then(async (release_notes) => {
-                  console.info('generated release notes', release_notes);
+                  console.info('generated release notes');
 
                   await Promise.all([
                     github.rest.issues
@@ -262,8 +261,7 @@ jobs:
                         issue_number: pr_number,
                         body: `${tag_name}\n---\n` + release_notes,
                       })
-                      .then(({ data }) => data)
-                      .catch(console.error),
+                      .then(({ data }) => data),
                     exec.exec(`git tag -d ${tag_name}`),
                     exec.exec(`git push --delete origin ${tag_name}`),
                   ]).then(([comment]) => comments.push(comment));
