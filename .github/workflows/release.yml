@@ -191,16 +191,15 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-      - run: |
+      - name: Create PR
+        id: prCreate
+        run: |
           echo '${{ steps.lver.outputs.NEW_PACKAGES || steps.lverPre.outputs.NEW_PACKAGES }}' | jq -c '.[]' | while read -r package; do
             tag_name=$(jq -r '"\(.name)@\(.newVersion)"' <<< "$package")
             echo "(temp) created $tag_name"
 
             # Make pr and use undocomented github endpoint fo release notes generation
             gh pr create --reviewer ${{ github.actor }} --title "TESTING|chore(release): $tag_name" --body "$(gh api "/repos/${{ github.repository }}/releases/generate-notes" -f tag_name="$tag_name" --jq .body)"
-
-            # Save commit hash to delete after loop
-            commit_to_delete=$(git rev-list -n 1 $tag_name)
 
             # Delete local tag
             git tag -d $tag_name
@@ -209,20 +208,19 @@ jobs:
             git push --delete origin $tag_name
           done
 
-          # Create new branch temporarily
-          git checkout -b temp-new-branch
-
-          # Surgically delete local commit
-          git rebase -p --onto $commit_to_delete^ $commit_to_delete ${{ github.ref_name }}
-
-          # Delete commit upstream
-          git push origin ${{ github.ref_name }} --force
-
-          # Switch back original branch and delete new temp branch
-          git checkout ${{ github.ref_name }}
-          git branch -d temp-new-branch
+          # Save commit hash to delete after loop
+          echo "commit_to_delete=$(git rev-list -n 1 $tag_name)" >> "$GITHUB_OUTPUT"
         # JSON piping is funky on default `sh`, but fine on
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-      - run: git tag
+      - name: Create new branch temporarily
+        run: git checkout -b temp-new-branch
+      - name: Surgically delete local commit
+        run: git rebase -p --onto ${{ steps.prCreate.outputs.commit_to_delete }}^ ${{ steps.prCreate.outputs.commit_to_delete }} ${{ github.ref_name }}
+      - name: Delete commit upstream
+        run: git push origin ${{ github.ref_name }} --force
+      - name: Switch back original branch
+        run: git checkout ${{ github.ref_name }}
+      - name: Create new branch temporarily
+        run: git branch -d temp-new-branch
