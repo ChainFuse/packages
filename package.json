@@ -32,14 +32,14 @@
 	},
 	"devDependencies": {
 		"@demosjarco/prettier-config": "^1.0.1",
-		"@eslint/js": "^9.9.0",
+		"@eslint/js": "^9.9.1",
 		"@swc/core": "^1.7.14",
 		"@types/eslint__js": "^8.42.3",
 		"@types/node": "^22.4.1",
-		"eslint": "^9.9.0",
+		"eslint": "^9.9.1",
 		"prettier": "^3.3.3",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.5.4",
-		"typescript-eslint": "^8.2.0"
+		"typescript-eslint": "^8.3.0"
 	}
 }
