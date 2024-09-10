@@ -1,17 +1,6 @@
 name: Release
 
 on:
-  push:
-    branches-ignore:
-      - latest
-    paths:
-      - '.github/workflows/release.yml'
-      - 'packages/*/src/**'
-      - 'packages/*/__tests__/**'
-      - 'package*.json'
-      - 'packages/*/package*.json'
-      - 'tsconfig.json'
-      - 'packages/*/tsconfig.json'
   workflow_dispatch:
     inputs:
       dry_tun_tests:
