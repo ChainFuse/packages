@@ -50,5 +50,7 @@ jobs:
         shell: bash
       - uses: dependabot/fetch-metadata@dbb049abf0d677abbd7f7eee0375145b417fdd34 # v2.2.0
         id: dependabot-metadata
+      - name: Dependabot metadata
+        run: echo "${{ toJson(steps.dependabot-metadata.outputs) }}"
       - run: git commit -m "Updated changeset" || echo "Changeset update not needed"
       - run: git push
