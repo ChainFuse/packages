@@ -40,7 +40,8 @@ jobs:
           check-latest: true
           cache: 'npm'
       - run: npm ci --include-workspace-root
-      - run: |
+      - name: Get packages affected
+        run: |
           npx lerna changed --json | jq -r '.[] | "\"\(.name)\": patch"' | sed '1s/^/---\n/; $s/$/\n---\n\n/' > ${{ steps.changeset-filename.outputs.FILENAME }}
         shell: bash
       - name: Git Setup
