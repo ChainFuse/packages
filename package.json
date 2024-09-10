@@ -28,6 +28,7 @@
 	],
 	"prettier": "@demosjarco/prettier-config",
 	"dependencies": {
+		"@changesets/cli": "^2.27.8",
 		"lerna": "^8.1.8"
 	},
 	"devDependencies": {
