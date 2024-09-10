@@ -48,7 +48,6 @@ jobs:
           git config user.name "dependabot[bot]"
           git config user.email "dependabot[bot]@users.noreply.github.com"
       - run: git add ${{ steps.changeset-filename.outputs.FILENAME }}
-        shell: bash
       - uses: dependabot/fetch-metadata@dbb049abf0d677abbd7f7eee0375145b417fdd34 # v2.2.0
         id: dependabot-metadata
       - name: Dependabot metadata
