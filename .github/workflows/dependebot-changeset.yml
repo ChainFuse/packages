@@ -28,17 +28,18 @@ jobs:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           ref: ${{ github.head_ref }}
+      - name: Generate changeset file name
+        run: |
+          SAFE_BRANCH_NAME=$(echo "${{ github.head_ref }}" | sed 's/\//-/g')
+          echo "FILENAME=.changeset/$SAFE_BRANCH_NAME.md" >> $GITHUB_OUTPUT
+        id: changeset-filename
+        shell: bash
       - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
         with:
           node-version: lts/*
           check-latest: true
           cache: 'npm'
       - run: npm ci --include-workspace-root
-      - run: |
-          SAFE_BRANCH_NAME=$(echo "${{ github.head_ref }}" | sed 's/\//-/g')
-          echo "FILENAME=.changeset/$SAFE_BRANCH_NAME.md" >> $GITHUB_OUTPUT
-        id: changeset-filename
-        shell: bash
       - run: |
           npx lerna changed --json | jq -r '.[] | "\"\(.name)\": patch"' | sed '1s/^/---\n/; $s/$/\n---\n\n/' > ${{ steps.changeset-filename.outputs.FILENAME }}
         shell: bash
