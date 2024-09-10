@@ -39,6 +39,7 @@ jobs:
           echo "FILENAME=.changeset/$SAFE_BRANCH_NAME.md" >> $GITHUB_OUTPUT
         id: changeset-filename
         shell: bash
+      - run: npx lerna version --json
       - run: |
           npx lerna version --json | jq -r '.[] | "\"\(.name)\": patch"' | sed '1s/^/---\n/; $s/$/\n---/' > ${{ steps.changeset-filename.outputs.FILENAME }}
         shell: bash
