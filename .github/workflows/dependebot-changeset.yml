@@ -1,0 +1,54 @@
+name: Dependabot Changeset
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  changeset:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde # v2.9.1
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+          disable-sudo: true
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: lts/*
+          check-latest: true
+          cache: 'npm'
+      - run: npm ci --include-workspace-root
+      - run: |
+          SAFE_BRANCH_NAME=$(echo "${{ github.head_ref }}" | sed 's/\//-/g')
+          echo "FILENAME=.changeset/$SAFE_BRANCH_NAME.md" >> $GITHUB_OUTPUT
+        id: changeset-filename
+        shell: bash
+      - run: |
+          npx lerna version --json | jq -r '.[] | "\"\(.name)\": patch"' | sed '1s/^/---\n/; $s/$/\n---/' > ${{ steps.changeset-filename.outputs.FILENAME }}
+        shell: bash
+      - name: Git Setup
+        run: |
+          git config user.name "dependabot[bot]"
+          git config user.email "dependabot[bot]@users.noreply.github.com"
+      - run: git add ${{ steps.changeset-filename.outputs.FILENAME }}
+        shell: bash
+      - uses: dependabot/fetch-metadata@dbb049abf0d677abbd7f7eee0375145b417fdd34 # v2.2.0
+        id: dependabot-metadata
+      - run: git commit -m "Updated changeset" || echo "Changeset update not needed"
+      - run: git push
