@@ -5,6 +5,9 @@
 		"changed": {
 			"loglevel": "error",
 			"json": true
+		},
+		"publish": {
+			"loglevel": "info"
 		}
 	}
 }
