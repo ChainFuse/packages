@@ -1,5 +1,13 @@
 # @chainfuse/helpers
 
+## 0.0.3
+
+### Patch Changes
+
+-   [#31](https://github.com/ChainFuse/packages/pull/31) [`a219287`](https://github.com/ChainFuse/packages/commit/a2192875aa5d011d2d4eeb1c099f5c5094f6d58c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+
+-   [`6e67831`](https://github.com/ChainFuse/packages/commit/6e678310274e8fcf05ca763516fcd2f509951b4e) Thanks [@demosjarco](https://github.com/demosjarco)! - Include LICENSE inside each package
+
 ## 0.0.2
 
 ### Patch Changes
