@@ -60,4 +60,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           NODE_AUTH_TOKEN: ${{ secrets.PUBLIC_DEPLOY_NPM_TOKEN }}
+      - run: git config set --type=bool push.autoSetupRemote true
       - run: git push --follow-tags
