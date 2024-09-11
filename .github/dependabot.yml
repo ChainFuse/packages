@@ -46,6 +46,10 @@ updates:
       timezone: 'America/Los_Angeles'
     versioning-strategy: increase
     open-pull-requests-limit: 999
+    ignore:
+      - dependency-name: '@types/node'
+        versions:
+          - '>=21.0.0'
     groups:
       cloudflare:
         patterns:
