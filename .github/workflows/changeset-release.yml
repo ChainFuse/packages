@@ -36,6 +36,23 @@ jobs:
           check-latest: true
           cache: 'npm'
       - run: npm ci --include-workspace-root --workspaces
+      - uses: actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: |
+            packages/*/.tsbuildinfo
+            packages/*/dist
+          key: tsc-${{ hashFiles('**/*.tsbuildinfo', '**/package-lock.json') }}
+          restore-keys: |
+            tsc-
+          enableCrossOsArchive: true
+      - run: npm run build
+      - uses: actions/cache/save@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: |
+            packages/*/.tsbuildinfo
+            packages/*/dist
+          key: tsc-${{ hashFiles('**/*.tsbuildinfo', '**/package-lock.json') }}
+          enableCrossOsArchive: true
       - uses: changesets/action@3de3850952bec538fde60aac71731376e57b9b57 # v1.4.8
         with:
           publish: npx lerna publish from-package --yes
