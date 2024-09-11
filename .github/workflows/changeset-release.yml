@@ -35,3 +35,4 @@ jobs:
           publish: npx lerna publish from-package --yes
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          NODE_AUTH_TOKEN: ${{ secrets.PUBLIC_DEPLOY_NPM_TOKEN }}
