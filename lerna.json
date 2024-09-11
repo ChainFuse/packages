@@ -5,11 +5,6 @@
 		"changed": {
 			"loglevel": "error",
 			"json": true
-		},
-		"version": {
-			"loglevel": "error",
-			"yes": true,
-			"json": true
 		}
 	}
 }
