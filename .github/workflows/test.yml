@@ -1,0 +1,105 @@
+name: Build & Test
+
+on:
+  push:
+    paths:
+      - '.github/workflows/test.yml'
+      - 'packages/*/src/**'
+      - 'packages/*/__tests__/**'
+      - 'package*.json'
+      - 'packages/*/package*.json'
+      - 'tsconfig.json'
+      - 'packages/*/tsconfig.json'
+  pull_request:
+    paths:
+      - '.github/workflows/test.yml'
+      - 'packages/*/src/**'
+      - 'packages/*/__tests__/**'
+      - 'package*.json'
+      - 'packages/*/package*.json'
+      - 'tsconfig.json'
+      - 'packages/*/tsconfig.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde # v2.9.1
+        with:
+          egress-policy: audit
+          disable-sudo: true
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: lts/*
+          check-latest: true
+          cache: npm
+      - run: npm ci --include-workspace-root --workspaces
+      - uses: actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: |
+            packages/*/.tsbuildinfo
+            packages/*/dist
+          key: tsc-${{ hashFiles('**/*.tsbuildinfo', '**/package-lock.json') }}
+          restore-keys: |
+            tsc-
+          enableCrossOsArchive: true
+      - run: npm run build
+      - uses: actions/cache/save@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: |
+            packages/*/.tsbuildinfo
+            packages/*/dist
+          key: tsc-${{ hashFiles('**/*.tsbuildinfo', '**/package-lock.json') }}
+          enableCrossOsArchive: true
+      - uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4.3.6
+        with:
+          name: dist
+          path: |
+            packages/*/.tsbuildinfo
+            packages/*/dist
+          compression-level: 9
+          # Be nice to github and don't store for long
+          retention-days: 1
+  test:
+    needs: build
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        version: ['lts/*', latest]
+    steps:
+      - uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde # v2.9.1
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+          disable-sudo: true
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: dist
+          path: packages
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: ${{ matrix.version }}
+          check-latest: true
+          cache: npm
+      - run: npm ci --include-workspace-root
+      - run: npm test -- --since -- --test-reporter=junit --test-reporter-destination=test-output.xml
+      - uses: test-summary/action@31493c76ec9e7aa675f1585d3ed6f1da69269a86 # v2.4
+        if: always()
+        with:
+          paths: packages/*/test-output.xml
+          show: all
