@@ -22,6 +22,12 @@ jobs:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-tags: true # Important to fetch all history for versioning
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: lts/*
+          check-latest: true
+          cache: 'npm'
+      - run: npm ci --include-workspace-root --workspaces
       - uses: changesets/action@3de3850952bec538fde60aac71731376e57b9b57 # v1.4.8
         env:
           GITHUB_TOKEN: ${{ github.token }}
