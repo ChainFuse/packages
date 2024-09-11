@@ -114,6 +114,7 @@ class LernaCustomCreate {
 					json.main = './dist/index.mjs';
 					delete json.module;
 					json.types = './dist/index.d.mts';
+					json.publishConfig.provenance = true;
 					json.scripts = {
 						fmt: 'prettier --check .',
 						'fmt:fix': 'prettier --write .',
