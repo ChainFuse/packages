@@ -1,5 +1,15 @@
 # @chainfuse/helpers
 
+## 0.0.4
+
+### Patch Changes
+
+-   [#29](https://github.com/ChainFuse/packages/pull/29) [`f51f1c3`](https://github.com/ChainFuse/packages/commit/f51f1c3b6a45f59237967b36c081f85a31df536b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/upload-artifact
+
+-   [#33](https://github.com/ChainFuse/packages/pull/33) [`fc006de`](https://github.com/ChainFuse/packages/commit/fc006defa81f09b5760df0fe9b05c2a2ccc96f24) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+-   [#48](https://github.com/ChainFuse/packages/pull/48) [`6c5df8a`](https://github.com/ChainFuse/packages/commit/6c5df8a5f8fc33e5a6454b301f719599beb5e2f4) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @swc/core, typescript
+
 ## 0.0.3
 
 ### Patch Changes
