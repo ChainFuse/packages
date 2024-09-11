@@ -30,6 +30,7 @@ jobs:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-tags: true # Important to fetch all history for versioning
+      - run: git config set --type=bool push.autoSetupRemote true
       - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
         with:
           node-version: lts/*
@@ -60,5 +61,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           NODE_AUTH_TOKEN: ${{ secrets.PUBLIC_DEPLOY_NPM_TOKEN }}
-      - run: git config set --type=bool push.autoSetupRemote true
       - run: git push --follow-tags
