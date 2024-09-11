@@ -72,3 +72,7 @@ updates:
           - 'eslint-plugin-*'
           - '@eslint/*'
           - 'typescript-eslint'
+      monorepo-management:
+        patterns:
+          - 'lerna'
+          - '@changesets/*'
