@@ -2,27 +2,7 @@ name: Build & Test
 
 on:
   push:
-    paths:
-      - '.github/workflows/test.yml'
-      - 'packages/*/src/**'
-      - 'packages/*/__tests__/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'packages/*/package.json'
-      - 'packages/*/package-lock.json'
-      - 'tsconfig.json'
-      - 'packages/*/tsconfig.json'
   pull_request:
-    paths:
-      - '.github/workflows/test.yml'
-      - 'packages/*/src/**'
-      - 'packages/*/__tests__/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'packages/*/package.json'
-      - 'packages/*/package-lock.json'
-      - 'tsconfig.json'
-      - 'packages/*/tsconfig.json'
 
 permissions:
   contents: read
