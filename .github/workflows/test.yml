@@ -20,7 +20,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
+      - uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
         with:
           egress-policy: audit
           disable-sudo: true
@@ -71,7 +71,7 @@ jobs:
         version: ['lts/*', latest]
     continue-on-error: ${{ matrix.os == 'windows-latest' && matrix.version == 'latest' && fromJson('true') || fromJson(inputs.dry_tun_tests || 'false')  }}
     steps:
-      - uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
+      - uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
         if: matrix.os == 'ubuntu-latest'
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
