@@ -11,6 +11,8 @@ on:
       - 'tsconfig.json'
       - 'packages/*/tsconfig.json'
   pull_request:
+    branches:
+      - 'changeset-release/*'
     paths:
       - '.github/workflows/test.yml'
       - 'packages/*/src/**'
