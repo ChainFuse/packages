@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 0.0.5
+
+### Patch Changes
+
+-   [`d147b1e`](https://github.com/ChainFuse/packages/commit/d147b1ec79cdcaae196d7f8462dded4481db8a3d) Thanks [@demosjarco](https://github.com/demosjarco)! - Don't dynamic import cloudflare lib
+
 ## 0.0.4
 
 ### Patch Changes
