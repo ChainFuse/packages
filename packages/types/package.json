@@ -45,9 +45,9 @@
 			"import": "./dist/d1/index.js",
 			"types": "./dist/d1/index.d.ts"
 		},
-		"./d1/dataspaces": {
-			"import": "./dist/d1/dataspaces/index.js",
-			"types": "./dist/d1/dataspaces/index.d.ts"
+		"./d1/tenants": {
+			"import": "./dist/d1/tenants/index.js",
+			"types": "./dist/d1/tenants/index.d.ts"
 		},
 		"./d1/users": {
 			"import": "./dist/d1/users/index.js",
