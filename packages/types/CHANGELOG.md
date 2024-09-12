@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 0.0.5
+
+### Patch Changes
+
+-   [`2264de6`](https://github.com/ChainFuse/packages/commit/2264de6976a3442d9966114a367a6104a8818036) Thanks [@demosjarco](https://github.com/demosjarco)! - Fix path of types
+
 ## 0.0.4
 
 ### Patch Changes
