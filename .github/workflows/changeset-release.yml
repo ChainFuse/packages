@@ -6,6 +6,8 @@ on:
     paths:
       - '.github/workflows/changeset-release.yml'
       - '.changeset/**'
+      - 'packages/*/CHANGELOG.md'
+      - 'packages/*/package.json'
   workflow_dispatch:
 
 permissions:
