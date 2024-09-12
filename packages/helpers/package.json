@@ -53,7 +53,7 @@
 		"uuid": "^10.0.0"
 	},
 	"devDependencies": {
-		"@chainfuse/types": "^0.0.4",
+		"@chainfuse/types": "^0.0.5",
 		"@types/node": "^20.16.5",
 		"@types/uuid": "^10.0.0"
 	}
