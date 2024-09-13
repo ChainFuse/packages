@@ -11,7 +11,7 @@ class LernaCustomCreate {
 	public async createPackage(packageNameInput = LernaCustomCreate.arguments[0]) {
 		if (packageNameInput) {
 			const { packageName, packagePath } = await this.lernaCreate(packageNameInput);
-			await Promise.all([this.copyTemplate(packagePath), this.editPackageJson(packagePath).then(() => this.syncPackageFiles(packagePath)), this.renameFiles(packageName, packagePath)]);
+			await Promise.all([this.customiseReadme(packagePath, packageNameInput), this.copyTemplate(packagePath), this.editPackageJson(packagePath).then(() => this.syncPackageFiles(packagePath)), this.renameFiles(packageName, packagePath)]);
 		} else {
 			throw new Error('No package name provided');
 		}
@@ -85,6 +85,48 @@ class LernaCustomCreate {
 
 			readStream.pipe(writeStream);
 		});
+	}
+
+	private customiseReadme(packageDir: string, packageName: string) {
+		const readmePath = join(packageDir, 'README.md');
+		const tempFilePath = join(packageDir, 'README.temp.md');
+
+		// Read the package.json file
+		const readStream = createReadStream(readmePath, { encoding: 'utf8' });
+		let fileData = '';
+
+		readStream.on('data', (chunk) => (fileData += chunk));
+
+		return new Promise<void>((resolve, reject) => {
+			readStream.on('end', () => {
+				try {
+					fileData =
+						[
+							// Security
+							['[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/ChainFuse/packages/badge)](https://securityscorecards.dev/viewer/?uri=github.com/ChainFuse/packages)', `[![Socket Badge](https://socket.dev/api/badge/npm/package/@chainfuse/${packageName})](https://socket.dev/npm/package/@chainFuse/${packageName})`].join(''),
+							// NPM
+							[`![NPM Downloads](${new URL(`https://img.shields.io/npm/dw/@chainfuse/${packageName}`).href})`, `![npm bundle size](${new URL(`https://img.shields.io/bundlephobia/min/@chainfuse/${packageName}`).href})`, `![NPM Unpacked Size](${new URL(`https://img.shields.io/npm/unpacked-size/@chainfuse/${packageName}`).href})`].join(''),
+							// CI/CD
+							['[![Build & Test](https://github.com/ChainFuse/packages/actions/workflows/test.yml/badge.svg)](https://github.com/ChainFuse/packages/actions/workflows/test.yml)', '[![Release](https://github.com/ChainFuse/packages/actions/workflows/changeset-release.yml/badge.svg)](https://github.com/ChainFuse/packages/actions/workflows/changeset-release.yml)'].join(''),
+						].join('\n\n') +
+						'\n\n' +
+						fileData;
+
+					// Write the updated JSON back to a temporary file
+					const writeStream = createWriteStream(tempFilePath, { encoding: 'utf8' });
+					writeStream.write(fileData);
+					writeStream.end();
+
+					writeStream.on('finish', () => resolve());
+				} catch (error) {
+					reject(error);
+				}
+			});
+		}).then(() =>
+			rename(tempFilePath, readmePath).catch((e) => {
+				throw e;
+			}),
+		);
 	}
 
 	private copyTemplate(packageDir: string, templateDir: string = relative(process.cwd(), 'template')) {
