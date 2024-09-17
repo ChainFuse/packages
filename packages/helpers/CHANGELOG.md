@@ -1,5 +1,13 @@
 # @chainfuse/helpers
 
+## 0.0.6
+
+### Patch Changes
+
+-   [#58](https://github.com/ChainFuse/packages/pull/58) [`344c67a`](https://github.com/ChainFuse/packages/commit/344c67a5b50173295bf5e5084e44b3f7d8e26f67) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
+-   [#57](https://github.com/ChainFuse/packages/pull/57) [`e451b95`](https://github.com/ChainFuse/packages/commit/e451b95b0f0f810f8e9700327d81291e9f0bdaaf) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
 ## 0.0.5
 
 ### Patch Changes
