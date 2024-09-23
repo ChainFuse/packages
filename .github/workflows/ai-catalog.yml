@@ -120,10 +120,7 @@ jobs:
           node-version: lts/*
           check-latest: true
           cache: 'npm'
-          registry-url: 'https://registry.npmjs.org'
       - run: npm install -D prettier @demosjarco/prettier-config
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.PRIVATE_READ_NPM_TOKEN }}
       - run: npx prettier --write .
       - name: Git Setup
         run: |
