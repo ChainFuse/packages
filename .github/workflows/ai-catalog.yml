@@ -87,7 +87,7 @@ jobs:
                         return Object.entries(lora).reduce((acc, prop) => {
                             console.log('prop', prop);
                             let value = prop[1];
-                            if (['true', 'false', '0', '1'].includes(value)) {
+                            if (['true', 'false', '0', '1', 0, 1].includes(value)) {
                                 value = Boolean(value);
                             } else if (!isNaN(value)) {
                                 value = Number(value);
