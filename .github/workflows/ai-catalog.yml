@@ -85,7 +85,7 @@ jobs:
                     [...privateLoraJson, ...publicLoraJson].forEach(lora => console.log("lora", lora));
 
                     await import('node:fs').then(({ createWriteStream }) => {
-                        const writeStream = createWriteStream('packages/types-internal/src/super-ai/workers-ai-catalog.ts', { encoding: 'utf8' });
+                        const writeStream = createWriteStream('packages/types/src/super-ai/workers-ai-catalog.ts', { encoding: 'utf8' });
                         writeStream.write(
                             `export const workersAiCatalog = ${JSON.stringify({
                                 modelGroups: grouped,
