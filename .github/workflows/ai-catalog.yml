@@ -56,6 +56,7 @@ jobs:
                     const grouped = {};
 
                     modelJson.forEach((model) => {
+                        // Pull out model group into a upper level key
                         const taskName = model.task.name;
                         if (!grouped[taskName]) {
                             grouped[taskName] = {
@@ -67,6 +68,7 @@ jobs:
 
                         const { task, ...modelWithoutTask } = model;
 
+                        // Convert stringified values to primitives, if possible
                         const properties = model.properties.reduce((acc, prop) => {
                             let value = prop.value;
                             if (value === 'true' || value === 'false') {
