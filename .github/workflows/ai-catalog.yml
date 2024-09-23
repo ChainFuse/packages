@@ -53,7 +53,7 @@ jobs:
                 })
                 .then(([{ result: modelJson }, { result: privateLoraJson }, { result: publicLoraJson }]) => {});
         env:
-          WORKERS_AI_API_KEY: 'notarealsecret'
+          WORKERS_AI_API_KEY: ${{ secrets.WORKERS_AI_API_KEY }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
       - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
         with:
