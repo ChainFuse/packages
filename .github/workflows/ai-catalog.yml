@@ -125,7 +125,6 @@ jobs:
                         writeStream.end();
                     });
                 });
-
         env:
           WORKERS_AI_API_KEY: ${{ secrets.WORKERS_AI_API_KEY }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
