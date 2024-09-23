@@ -82,17 +82,19 @@ jobs:
 
                         grouped[taskName].models.push({ ...modelWithoutTask, properties });
                     });
-                    
-                    const temp = [...privateLoraJson, ...publicLoraJson].reduce((acc, prop) => {
-                        let value = prop.value;
-                        if (value === 'true' || value === '1' || value === 'false' || value === '0') {
-                            value = Boolean(value);
-                        } else if (!isNaN(value)) {
-                            value = Number(value);
-                        }
-                        acc[prop.property_id] = value;
-                        return acc;
-                    }, {});
+
+                    const temp = [...privateLoraJson, ...publicLoraJson].map((lora) =>
+                        Object.values(lora).reduce((acc, prop) => {
+                            let value = prop.value;
+                            if (value === 'true' || value === '1' || value === 'false' || value === '0') {
+                                value = Boolean(value);
+                            } else if (!isNaN(value)) {
+                                value = Number(value);
+                            }
+                            acc[prop.property_id] = value;
+                            return acc;
+                        }, {}),
+                    );
                     console.log('temp', temp);
 
                     await import('node:fs').then(({ createWriteStream }) => {
