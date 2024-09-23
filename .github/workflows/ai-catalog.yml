@@ -81,27 +81,29 @@ jobs:
 
                         grouped[taskName].models.push({ ...modelWithoutTask, properties });
                     });
+                    
+                    [...privateLoraJson, ...publicLoraJson].forEach(lora => console.log("lora", lora));
 
                     await import('node:fs').then(({ createWriteStream }) => {
                         const writeStream = createWriteStream('packages/types-internal/src/super-ai/workers-ai-catalog.ts', { encoding: 'utf8' });
                         writeStream.write(
                             `export const workersAiCatalog = ${JSON.stringify({
                                 modelGroups: grouped,
-                                loras: [...privateLoraJson, ...publicLoraJson].map((lora) => ({
-                                    // The api endpoint doesn't provide `public` on the private endpoint
-                                    public: false,
-                                    // Convert stringified values to primitives, if possible
-                                    ...lora.reduce((acc, prop) => {
-                                        let value = prop.value;
-                                        if (value === 'true' || value === '1' || value === 'false' || value === '0') {
-                                            value = Boolean(value);
-                                        } else if (!isNaN(value)) {
-                                            value = Number(value);
-                                        }
-                                        acc[prop.property_id] = value;
-                                        return acc;
-                                    }, {}),
-                                })),
+                                // loras: [...privateLoraJson, ...publicLoraJson].map((lora) => ({
+                                // 	// The api endpoint doesn't provide `public` on the private endpoint
+                                // 	public: false,
+                                // 	// Convert stringified values to primitives, if possible
+                                // 	...lora.reduce((acc, prop) => {
+                                // 		let value = prop.value;
+                                // 		if (value === 'true' || value === '1' || value === 'false' || value === '0') {
+                                // 			value = Boolean(value);
+                                // 		} else if (!isNaN(value)) {
+                                // 			value = Number(value);
+                                // 		}
+                                // 		acc[prop.property_id] = value;
+                                // 		return acc;
+                                // 	}, {}),
+                                // })),
                             })} as const`,
                         );
                         writeStream.end();
