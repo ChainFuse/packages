@@ -52,9 +52,45 @@ jobs:
                     }
                 })
                 .then(([{ result: modelJson }, { result: privateLoraJson }, { result: publicLoraJson }]) => {
-                    console.log('modelJson', modelJson);
+                    core.startGroup('Models');
+                    const grouped = {};
+
+                    models.forEach((model) => {
+                        const taskName = model.task.name;
+                        if (!grouped[taskName]) {
+                            grouped[taskName] = {
+                                id: model.task.id,
+                                description: model.task.description,
+                                models: [],
+                            };
+                        }
+
+                        const { task, ...modelWithoutTask } = model;
+
+                        const properties = model.properties.reduce((acc, prop) => {
+                            let value = prop.value;
+                            if (value === 'true' || value === 'false') {
+                                value = value === 'true';
+                            } else if (/^\d+$/.test(value)) {
+                                value = Number(value);
+                            }
+                            acc[prop.property_id] = value;
+                            return acc;
+                        }, {});
+
+                        grouped[taskName].models.push({ ...modelWithoutTask, properties });
+                    });
+
+                    console.log('grouped', grouped);
+                    core.endGroup();
+
+                    core.startGroup('Private Loras');
                     console.log('privateLoraJson', privateLoraJson);
+                    core.endGroup();
+
+                    core.startGroup('Public Loras');
                     console.log('publicLoraJson', publicLoraJson);
+                    core.endGroup();
                 });
         env:
           WORKERS_AI_API_KEY: ${{ secrets.WORKERS_AI_API_KEY }}
