@@ -71,7 +71,7 @@ jobs:
                             let value = prop.value;
                             if (value === 'true' || value === 'false') {
                                 value = value === 'true';
-                            } else if (/^\d+$/.test(value)) {
+                            } else if (!isNaN(value)) {
                                 value = Number(value);
                             }
                             acc[prop.property_id] = value;
