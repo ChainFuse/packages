@@ -72,7 +72,7 @@ jobs:
                         const properties = model.properties.reduce((acc, prop) => {
                             let value = prop.value;
                             if (value === 'true' || value === 'false') {
-                                value = value === 'true';
+                                value = Boolean(value);
                             } else if (!isNaN(value)) {
                                 value = Number(value);
                             }
