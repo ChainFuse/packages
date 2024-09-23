@@ -66,5 +66,8 @@
 			"types": "./dist/discourse/topic/index.d.ts"
 		}
 	},
-	"prettier": "@demosjarco/prettier-config"
+	"prettier": "@demosjarco/prettier-config",
+	"devDependencies": {
+		"@types/json-schema": "^7.0.15"
+	}
 }

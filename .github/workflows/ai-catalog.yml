@@ -1,0 +1,65 @@
+name: SuperAi Catalog
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ai-catalog.yml'
+      - 'packages/types/src/super-ai/workers-ai-catalog.ts'
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        with:
+          disable-sudo: true
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            await fetch(new URL(`client/v4/accounts/${CF_ACCOUNT_ID}/ai/models/search`, 'https://api.cloudflare.com'), {
+                headers: {
+                    Authorization: `Bearer ${WORKERS_AI_API_KEY}`,
+                },
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error(response.statusText, { cause: response.status });
+                    }
+                })
+                .then(({ result }) => {
+                    console.log('result', result);
+                })
+                .catch(console.error);
+        env:
+          WORKERS_AI_API_KEY: 'notarealsecret'
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: lts/*
+          check-latest: true
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install -D prettier @demosjarco/prettier-config
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PRIVATE_READ_NPM_TOKEN }}
+      - run: npx prettier --write .
+      - name: Git Setup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - run: git add packages/types/src/super-ai/workers-ai-catalog.ts
+      - run: git commit -m "Updated model catalog" || echo "model catalog not touched"
+      - run: git push
