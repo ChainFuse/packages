@@ -70,7 +70,7 @@ jobs:
                         // Convert stringified values to primitives, if possible
                         const properties = model.properties.reduce((acc, prop) => {
                             let value = prop.value;
-                            if (value === 'true' || value === 'false') {
+                            if (['true', 'false', '0', '1', 0, 1].includes(value)) {
                                 value = Boolean(value);
                             } else if (!isNaN(value)) {
                                 value = Number(value);
