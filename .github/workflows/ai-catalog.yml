@@ -68,7 +68,6 @@ jobs:
                         const { task, ...modelWithoutTask } = model;
 
                         // Convert stringified values to primitives, if possible
-                        console.log('properties', model.properties);
                         const properties = model.properties.reduce((acc, prop) => {
                             let value = prop.value;
                             if (value === 'true' || value === 'false') {
