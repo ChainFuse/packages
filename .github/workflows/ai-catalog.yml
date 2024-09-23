@@ -82,8 +82,10 @@ jobs:
                         grouped[taskName].models.push({ ...modelWithoutTask, properties });
                     });
 
-                    const temp = [...privateLoraJson, ...publicLoraJson].map((lora) =>
-                        Object.entries(lora).reduce((acc, prop) => {
+                    const temp = [...privateLoraJson, ...publicLoraJson].map((lora) => {
+                        console.log('lora', lora);
+                        return Object.entries(lora).reduce((acc, prop) => {
+                            console.log('prop', prop);
                             let value = prop[1];
                             if (['true', 'false', '0', '1'].includes(value)) {
                                 value = Boolean(value);
@@ -92,8 +94,8 @@ jobs:
                             }
                             acc[prop[0]] = value;
                             return acc;
-                        }, {}),
-                    );
+                        }, {});
+                    });
                     console.log('temp', temp);
 
                     await import('node:fs').then(({ createWriteStream }) => {
