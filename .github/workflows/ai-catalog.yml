@@ -86,7 +86,7 @@ jobs:
                     const temp = [...privateLoraJson, ...publicLoraJson].map((lora) =>
                         Object.entries(lora).reduce((acc, prop) => {
                             let value = prop[1];
-                            if (value === 'true' || value === '1' || value === 'false' || value === '0') {
+                            if (['true', 'false', '0', '1'].includes(value)) {
                                 value = Boolean(value);
                             } else if (!isNaN(value)) {
                                 value = Number(value);
@@ -126,6 +126,7 @@ jobs:
                         writeStream.end();
                     });
                 });
+
         env:
           WORKERS_AI_API_KEY: ${{ secrets.WORKERS_AI_API_KEY }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
