@@ -51,7 +51,11 @@ jobs:
                         throw new Error(modelResponse.statusText, { cause: modelResponse.status });
                     }
                 })
-                .then(([{ result: modelJson }, { result: privateLoraJson }, { result: publicLoraJson }]) => {});
+                .then(([{ result: modelJson }, { result: privateLoraJson }, { result: publicLoraJson }]) => {
+                    console.log('modelJson', modelJson);
+                    console.log('privateLoraJson', privateLoraJson);
+                    console.log('publicLoraJson', publicLoraJson);
+                });
         env:
           WORKERS_AI_API_KEY: ${{ secrets.WORKERS_AI_API_KEY }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
