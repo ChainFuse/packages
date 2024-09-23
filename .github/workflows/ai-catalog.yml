@@ -55,7 +55,7 @@ jobs:
                     core.startGroup('Models');
                     const grouped = {};
 
-                    models.forEach((model) => {
+                    modelJson.forEach((model) => {
                         const taskName = model.task.name;
                         if (!grouped[taskName]) {
                             grouped[taskName] = {
