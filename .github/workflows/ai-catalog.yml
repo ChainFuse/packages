@@ -51,7 +51,7 @@ jobs:
                         throw new Error(modelResponse.statusText, { cause: modelResponse.status });
                     }
                 })
-                .then(([{ result: modelJson }, { result: privateLoraJson }, { result: publicLoraJson }]) => {
+                .then(async ([{ result: modelJson }, { result: privateLoraJson }, { result: publicLoraJson }]) => {
                     const grouped = {};
 
                     modelJson.forEach((model) => {
@@ -82,26 +82,31 @@ jobs:
                         grouped[taskName].models.push({ ...modelWithoutTask, properties });
                     });
 
-                    console.log('json', {
-                        modelGroups: grouped,
-                        loras: [...privateLoraJson, ...publicLoraJson].map((lora) => ({
-                            // The api endpoint doesn't provide `public` on the private endpoint
-                            public: false,
-                            // Convert stringified values to primitives, if possible
-                            ...lora.reduce((acc, prop) => {
-                                let value = prop.value;
-                                if (value === 'true' || value === '1' || value === 'false' || value === '0') {
-                                    value = Boolean(value);
-                                } else if (!isNaN(value)) {
-                                    value = Number(value);
-                                }
-                                acc[prop.property_id] = value;
-                                return acc;
-                            }, {}),
-                        })),
+                    await import('node:fs').then(({ createWriteStream }) => {
+                        const writeStream = createWriteStream('packages/types-internal/src/super-ai/workers-ai-catalog.ts', { encoding: 'utf8' });
+                        writeStream.write(
+                            `export const workersAiCatalog = ${JSON.stringify({
+                                modelGroups: grouped,
+                                loras: [...privateLoraJson, ...publicLoraJson].map((lora) => ({
+                                    // The api endpoint doesn't provide `public` on the private endpoint
+                                    public: false,
+                                    // Convert stringified values to primitives, if possible
+                                    ...lora.reduce((acc, prop) => {
+                                        let value = prop.value;
+                                        if (value === 'true' || value === '1' || value === 'false' || value === '0') {
+                                            value = Boolean(value);
+                                        } else if (!isNaN(value)) {
+                                            value = Number(value);
+                                        }
+                                        acc[prop.property_id] = value;
+                                        return acc;
+                                    }, {}),
+                                })),
+                            })} as const`,
+                        );
+                        writeStream.end();
                     });
                 });
-
         env:
           WORKERS_AI_API_KEY: ${{ secrets.WORKERS_AI_API_KEY }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
