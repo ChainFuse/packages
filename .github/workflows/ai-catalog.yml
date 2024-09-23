@@ -27,22 +27,31 @@ jobs:
       - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
-            await fetch(new URL(`client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/models/search`, 'https://api.cloudflare.com'), {
-                headers: {
-                    Authorization: `Bearer ${process.env.WORKERS_AI_API_KEY}`,
-                },
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
+            await Promise.all([
+                fetch(new URL(`client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/models/search`, 'https://api.cloudflare.com'), {
+                    headers: {
+                        Authorization: `Bearer ${process.env.WORKERS_AI_API_KEY}`,
+                    },
+                }),
+                fetch(new URL(`client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/finetunes`, 'https://api.cloudflare.com'), {
+                    headers: {
+                        Authorization: `Bearer ${process.env.WORKERS_AI_API_KEY}`,
+                    },
+                }),
+                fetch(new URL(`client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/finetunes/public`, 'https://api.cloudflare.com'), {
+                    headers: {
+                        Authorization: `Bearer ${process.env.WORKERS_AI_API_KEY}`,
+                    },
+                }),
+            ])
+                .then(([modelResponse, privateLoraResult, publicLoraResult]) => {
+                    if (modelResponse.ok && privateLoraResult.ok && publicLoraResult.ok) {
+                        return Promise.all([modelResponse.json(), privateLoraResult.json(), publicLoraResult.json()]);
                     } else {
-                        throw new Error(response.statusText, { cause: response.status });
+                        throw new Error(modelResponse.statusText, { cause: modelResponse.status });
                     }
                 })
-                .then(({ result }) => {
-                    console.log('result', result);
-                })
-                .catch(console.error);
+                .then(([{ result: modelJson }, { result: privateLoraJson }, { result: publicLoraJson }]) => {});
         env:
           WORKERS_AI_API_KEY: 'notarealsecret'
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
