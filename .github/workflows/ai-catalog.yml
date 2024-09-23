@@ -52,7 +52,6 @@ jobs:
                     }
                 })
                 .then(([{ result: modelJson }, { result: privateLoraJson }, { result: publicLoraJson }]) => {
-                    core.startGroup('Models');
                     const grouped = {};
 
                     modelJson.forEach((model) => {
@@ -83,17 +82,26 @@ jobs:
                         grouped[taskName].models.push({ ...modelWithoutTask, properties });
                     });
 
-                    console.log('grouped', grouped);
-                    core.endGroup();
-
-                    core.startGroup('Private Loras');
-                    console.log('privateLoraJson', privateLoraJson);
-                    core.endGroup();
-
-                    core.startGroup('Public Loras');
-                    console.log('publicLoraJson', publicLoraJson);
-                    core.endGroup();
+                    console.log('json', {
+                        modelGroups: grouped,
+                        loras: [...privateLoraJson, ...publicLoraJson].map((lora) => ({
+                            // The api endpoint doesn't provide `public` on the private endpoint
+                            public: false,
+                            // Convert stringified values to primitives, if possible
+                            ...lora.reduce((acc, prop) => {
+                                let value = prop.value;
+                                if (value === 'true' || value === '1' || value === 'false' || value === '0') {
+                                    value = Boolean(value);
+                                } else if (!isNaN(value)) {
+                                    value = Number(value);
+                                }
+                                acc[prop.property_id] = value;
+                                return acc;
+                            }, {}),
+                        })),
+                    });
                 });
+
         env:
           WORKERS_AI_API_KEY: ${{ secrets.WORKERS_AI_API_KEY }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
