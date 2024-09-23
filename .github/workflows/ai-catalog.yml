@@ -84,14 +84,14 @@ jobs:
                     });
 
                     const temp = [...privateLoraJson, ...publicLoraJson].map((lora) =>
-                        Object.values(lora).reduce((acc, prop) => {
-                            let value = prop.value;
+                        Object.entries(lora).reduce((acc, prop) => {
+                            let value = prop[1];
                             if (value === 'true' || value === '1' || value === 'false' || value === '0') {
                                 value = Boolean(value);
                             } else if (!isNaN(value)) {
                                 value = Number(value);
                             }
-                            acc[prop.property_id] = value;
+                            acc[prop[0]] = value;
                             return acc;
                         }, {}),
                     );
