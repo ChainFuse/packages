@@ -671,4 +671,33 @@ export const workersAiCatalog = {
 			],
 		},
 	},
+	loras: [
+		{
+			public: true,
+			id: '39fb185c-762a-4633-a2ad-7a4462940608',
+			name: 'cf-public-magicoder',
+			description: 'LoRA adapter that enables Mistral to generate code',
+			created_at: '2024-05-08 02:23:55.897',
+			modified_at: '2024-05-08 02:23:55.897',
+			model: '@cf/mistral/mistral-7b-instruct-v0.2-lora',
+		},
+		{
+			public: true,
+			id: '911a83cf-d947-4c96-b4d2-a86c2c6d2b7f',
+			name: 'cf-public-cnn-summarization',
+			description: 'LoRA adapter that enables Mistral to summarize articles. https://huggingface.co/predibase/cnn',
+			created_at: '2024-05-09 02:11:12.386',
+			modified_at: '2024-05-09 02:11:12.386',
+			model: '@cf/mistral/mistral-7b-instruct-v0.2-lora',
+		},
+		{
+			public: true,
+			id: 'c0b52d28-530b-4751-b7d9-afbdb4795990',
+			name: 'cf-public-jigsaw-classification',
+			description: 'LoRA adapter that enables Mistral to detect and classify toxic comments. https://huggingface.co/predibase/jigsaw',
+			created_at: '2024-05-09 02:19:48.750',
+			modified_at: '2024-05-09 02:19:48.750',
+			model: '@cf/mistral/mistral-7b-instruct-v0.2-lora',
+		},
+	],
 } as const;
