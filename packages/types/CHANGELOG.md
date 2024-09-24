@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 0.1.0
+
+### Minor Changes
+
+-   [`2c13095`](https://github.com/ChainFuse/packages/commit/2c13095c9870937158fc974c625be4f1e721967d) Thanks [@demosjarco](https://github.com/demosjarco)! - Bring over ai stuff
+
 ## 0.0.6
 
 ### Patch Changes
