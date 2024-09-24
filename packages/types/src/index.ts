@@ -1,5 +1,6 @@
 export * from './d1/index.js';
 export * from './discourse/index.js';
+export * from './super-ai/index.js';
 
 type MethodKeys<T> = {
 	[P in keyof T]: T[P] extends (...args: any[]) => any ? P : never;
