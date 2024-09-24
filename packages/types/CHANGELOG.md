@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 0.1.1
+
+### Patch Changes
+
+-   [`1385374`](https://github.com/ChainFuse/packages/commit/13853740989bd92f4820639c97790d9841a14743) Thanks [@demosjarco](https://github.com/demosjarco)! - export super-ai to default export
+
 ## 0.1.0
 
 ### Minor Changes
