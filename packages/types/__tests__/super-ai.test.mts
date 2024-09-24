@@ -2,7 +2,7 @@ import { SuperAi, type llmProviders } from '@chainfuse/super-ai';
 import type { ExecutionContext, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import { ok, strictEqual } from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { enabledAzureLlmProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmProviders, type aiFunctionProviders, type aiProviders } from '../dist/super-ai';
+import { enabledAzureLlmProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmProviders, type aiFunctionProviders, type aiProviders } from '../dist/super-ai/index.js';
 
 const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY, WORKERS_AI_API_KEY } = process.env;
 const { OPENAI_API_KEY, OPENAI_ORGANIZATION } = process.env;
