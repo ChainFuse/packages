@@ -28,6 +28,9 @@ on:
   schedule:
     - cron: '24 12 * * 4'
 
+permissions:
+  contents: read
+
 jobs:
   MSDO:
     runs-on: ubuntu-latest
