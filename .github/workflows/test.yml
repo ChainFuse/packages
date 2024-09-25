@@ -91,7 +91,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-15]
         version: ['lts/*', latest]
     continue-on-error: ${{ matrix.os == 'windows-latest' && matrix.version == 'latest' && fromJson('true') || fromJson(inputs.dry_tun_tests || 'false')  }}
     steps:
