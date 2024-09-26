@@ -210,8 +210,12 @@ void describe('AI Function Tests', async () => {
 					providerPreferences: [{ [llmProviderKey]: 1 }] as llmProviders<aiFunctionProviders>[],
 					messages: [
 						{
+							role: 'system',
+							content: 'You are a running in a CI/CD test. Use the available tool `get-conn-info` to get full debug statistics of the entire connection including geolocation information',
+						},
+						{
 							role: 'user',
-							content: 'Where am I running?',
+							content: 'Where (geographically) are you running? Return in the specified format',
 						},
 					],
 					settings,
