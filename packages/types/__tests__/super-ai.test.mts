@@ -92,42 +92,38 @@ void describe('AI Response Tests', () => {
 			const settings: llmRequestProperties = { stream, max_tokens: 128 };
 
 			void test(JSON.stringify({ model: llmProviderKey, ...settings }), async () => {
-				try {
-					const response = await superAi.llm({
-						providerPreferences: [{ [llmProviderKey]: 1 }] as llmProviders<aiProviders>[],
-						messages: [
-							{
-								role: 'user',
-								content: 'Tell me about black holes',
-							},
-						],
-						settings,
-						tracking: {
-							dataspaceId: 'internal',
+				const response = await superAi.llm({
+					providerPreferences: [{ [llmProviderKey]: 1 }] as llmProviders<aiProviders>[],
+					messages: [
+						{
+							role: 'user',
+							content: 'Tell me about black holes',
 						},
-					});
+					],
+					settings,
+					tracking: {
+						dataspaceId: 'internal',
+					},
+				});
 
-					response.stream?.on('data', (chunk) => {
-						// console.info(JSON.stringify(chunk, null, '\t'));
+				response.stream?.on('data', (chunk) => {
+					// console.info(JSON.stringify(chunk, null, '\t'));
 
-						strictEqual(typeof chunk.role, 'string');
-						strictEqual(typeof chunk.content, 'string');
-						ok(chunk.timestamp instanceof Date);
-					});
-					response.stream?.once('end', () => {
-						response.stream?.removeAllListeners();
-					});
+					strictEqual(typeof chunk.role, 'string');
+					strictEqual(typeof chunk.content, 'string');
+					ok(chunk.timestamp instanceof Date);
+				});
+				response.stream?.once('end', () => {
+					response.stream?.removeAllListeners();
+				});
 
-					const fullResponse = await response.message;
+				const fullResponse = await response.message;
 
-					// console.info(fullResponse);
+				// console.info(fullResponse);
 
-					strictEqual(typeof fullResponse.role, 'string');
-					strictEqual(typeof fullResponse.content, 'string');
-					ok(fullResponse.timestamp instanceof Date);
-				} catch (error) {
-					throw new Error(JSON.stringify({ model: llmProviderKey, ...settings }), { cause: error });
-				}
+				strictEqual(typeof fullResponse.role, 'string');
+				strictEqual(typeof fullResponse.content, 'string');
+				ok(fullResponse.timestamp instanceof Date);
 			});
 		}
 	}
