@@ -85,7 +85,7 @@ void describe('AI Response Tests', () => {
 		for (const llmProviderKey of allLlmProviderKeys) {
 			const settings: llmRequestProperties = { stream, max_tokens: 128, skipCache: true };
 
-			test(JSON.stringify({ model: llmProviderKey, ...settings }), { skip: !(llmProviderKey.startsWith('@cf') || llmProviderKey.startsWith('@hf')) }, () =>
+			void test(JSON.stringify({ model: llmProviderKey, ...settings }), { skip: !(llmProviderKey.startsWith('@cf') || llmProviderKey.startsWith('@hf')) }, () =>
 				superAi
 					.llm({
 						providerPreferences: [{ [llmProviderKey]: 1 }] as llmProviders<aiProviders>[],
@@ -123,7 +123,7 @@ void describe('AI Response Tests', () => {
 							.catch((error) => strictEqual(error, null, `${llmProviderKey}: ${error}`));
 					})
 					.catch((error) => strictEqual(error, null, `${llmProviderKey}: ${error}`)),
-			).catch((error) => strictEqual(error, null, `${llmProviderKey}: ${error}`));
+			);
 		}
 	}
 });
