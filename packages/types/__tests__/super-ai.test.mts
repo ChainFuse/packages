@@ -78,23 +78,22 @@ void describe('AI Response Tests', async () => {
 		for (const llmProviderKey of allLlmProviderKeys) {
 			const settings: llmRequestProperties = { stream, max_tokens: 128, skipCache: llmProviderKey.startsWith('@cf') || llmProviderKey.startsWith('@hf') };
 
-			try {
-				void it(JSON.stringify({ model: llmProviderKey, ...settings }), async () => {
-					try {
-						const response = await superAi.llm({
-							providerPreferences: [{ [llmProviderKey]: 1 }] as llmProviders<aiProviders>[],
-							messages: [
-								{
-									role: 'user',
-									content: 'Tell me about black holes',
-								},
-							],
-							settings,
-							tracking: {
-								dataspaceId: 'internal',
+			void it(JSON.stringify({ model: llmProviderKey, ...settings }), () =>
+				superAi
+					.llm({
+						providerPreferences: [{ [llmProviderKey]: 1 }] as llmProviders<aiProviders>[],
+						messages: [
+							{
+								role: 'user',
+								content: 'Tell me about black holes',
 							},
-						});
-
+						],
+						settings,
+						tracking: {
+							dataspaceId: 'internal',
+						},
+					})
+					.then(async (response) => {
 						response.stream?.on('data', (chunk) => {
 							// console.info(JSON.stringify(chunk, null, '\t'));
 
@@ -112,13 +111,9 @@ void describe('AI Response Tests', async () => {
 						strictEqual(typeof fullResponse.role, 'string');
 						strictEqual(typeof fullResponse.content, 'string');
 						ok(fullResponse.timestamp instanceof Date);
-					} catch (error) {
-						strictEqual(error, null, `${llmProviderKey}: ${error}`);
-					}
-				});
-			} catch (error) {
-				strictEqual(error, null, `${llmProviderKey}: ${error}`);
-			}
+					})
+					.catch((error) => strictEqual(error, null, `${llmProviderKey}: ${error}`)),
+			).catch((error) => strictEqual(error, null, `${llmProviderKey}: ${error}`));
 		}
 	}
 });
