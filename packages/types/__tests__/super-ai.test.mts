@@ -131,12 +131,14 @@ void describe('AI Response Tests', () => {
 
 void describe('AI Function Tests', async () => {
 	const allLlmProviderKeys = [...Object.values(enabledAzureLlmProviders), ...enabledCloudflareLlmFunctionProviders];
+	let waitUntilPromises: Promise<any>[] = [];
 
 	beforeEach(() => {
+		waitUntilPromises = [];
 		superAi = new SuperAi(
 			{
 				waitUntil(promise) {
-					promise.catch(console.error);
+					waitUntilPromises.push(promise);
 				},
 			} as ExecutionContext,
 			{
@@ -194,72 +196,69 @@ void describe('AI Function Tests', async () => {
 		);
 	});
 
+	afterEach(async () => {
+		await Promise.all(waitUntilPromises);
+	});
+
 	for (const stream of [true, false]) {
 		for (const llmProviderKey of allLlmProviderKeys) {
 			const settings: llmRequestProperties = { stream, max_tokens: 128 };
 
-			try {
-				void test(JSON.stringify({ model: llmProviderKey, ...settings }), { skip: true }, async () => {
-					try {
-						const response = await superAi.llm({
-							providerPreferences: [{ [llmProviderKey]: 1 }] as llmProviders<aiFunctionProviders>[],
-							messages: [
-								{
-									role: 'user',
-									content: 'Where am I running?',
-								},
-							],
-							settings,
-							tracking: {
-								dataspaceId: 'internal',
+			void test(JSON.stringify({ model: llmProviderKey, ...settings }), async () => {
+				const response = await superAi.llm({
+					providerPreferences: [{ [llmProviderKey]: 1 }] as llmProviders<aiFunctionProviders>[],
+					messages: [
+						{
+							role: 'user',
+							content: 'Where am I running?',
+						},
+					],
+					settings,
+					tracking: {
+						dataspaceId: 'internal',
+					},
+					tools: [
+						{
+							name: 'get-conn-info',
+							description: 'Get the current connection info including headers and geographical information',
+							// eslint-disable-next-line @typescript-eslint/require-await
+							function: async () => JSON.stringify(geoJson),
+						},
+					],
+					schema: {
+						description: 'Return the current city and state of the runner',
+						parameters: {
+							type: 'object',
+							properties: {
+								city: { type: 'string' },
+								state: { type: 'string' },
 							},
-							tools: [
-								{
-									name: 'get-conn-info',
-									description: 'Get the current connection info including headers and geographical information',
-									function: async () => JSON.stringify(geoJson),
-								},
-							],
-							schema: {
-								description: 'Return the current city and state of the runner',
-								parameters: {
-									type: 'object',
-									properties: {
-										city: { type: 'string' },
-										state: { type: 'string' },
-									},
-								},
-							},
-						});
-
-						response.stream?.on('data', (chunk) => {
-							// console.info(JSON.stringify(chunk, null, '\t'));
-
-							strictEqual(typeof chunk.role, 'string');
-							strictEqual(typeof chunk.content, 'object');
-							ok(chunk.timestamp instanceof Date);
-						});
-						response.stream?.once('end', () => {
-							response.stream?.removeAllListeners();
-						});
-
-						const fullResponse = await response.message;
-						// console.debug(fullResponse);
-
-						strictEqual(typeof fullResponse.role, 'string');
-						strictEqual(typeof fullResponse.content, 'object');
-						ok('city' in (fullResponse.content as Record<string, any>));
-						strictEqual(typeof (fullResponse.content as Record<string, any>)['city'], 'string');
-						ok('state' in (fullResponse.content as Record<string, any>));
-						strictEqual(typeof (fullResponse.content as Record<string, any>)['state'], 'string');
-						ok(fullResponse.timestamp instanceof Date);
-					} catch (error) {
-						strictEqual(error, null, `${llmProviderKey}: ${error}`);
-					}
+						},
+					},
 				});
-			} catch (error) {
-				strictEqual(error, null, `${llmProviderKey}: ${error}`);
-			}
+
+				response.stream?.on('data', (chunk) => {
+					// console.info(JSON.stringify(chunk, null, '\t'));
+
+					strictEqual(typeof chunk.role, 'string');
+					strictEqual(typeof chunk.content, 'object');
+					ok(chunk.timestamp instanceof Date);
+				});
+				response.stream?.once('end', () => {
+					response.stream?.removeAllListeners();
+				});
+
+				const fullResponse = await response.message;
+				// console.debug(fullResponse);
+
+				strictEqual(typeof fullResponse.role, 'string');
+				strictEqual(typeof fullResponse.content, 'object');
+				ok('city' in (fullResponse.content as Record<string, any>));
+				strictEqual(typeof (fullResponse.content as Record<string, any>)['city'], 'string');
+				ok('state' in (fullResponse.content as Record<string, any>));
+				strictEqual(typeof (fullResponse.content as Record<string, any>)['state'], 'string');
+				ok(fullResponse.timestamp instanceof Date);
+			});
 		}
 	}
 });
