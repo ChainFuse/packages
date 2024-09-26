@@ -1,26 +1,32 @@
 import { BufferHelpers } from './buffers.mjs';
 
 export class CryptoHelpers {
-	public static secretBytes(length: number) {
+	public static secretBytes(byteSize: number) {
 		return import('node:crypto')
-			.then(({ randomBytes }) => randomBytes(length))
+			.then(({ randomBytes }) => randomBytes(byteSize))
 			.catch(() => {
-				const randomBytes = new Uint8Array(length);
+				const randomBytes = new Uint8Array(byteSize);
 				crypto.getRandomValues(randomBytes);
 				return randomBytes;
 			});
 	}
 
-	public static base16secret(length: number) {
-		return this.secretBytes(length).then((bytes) => BufferHelpers.bufferToHex(bytes));
+	/**
+	 * @yields secret length = (`byteSize` * Math.log2(16)) / 8
+	 */
+	public static base16secret(byteSize: number) {
+		return this.secretBytes(byteSize).then((bytes) => BufferHelpers.bufferToHex(bytes));
 	}
 
-	public static base62secret(length: number) {
+	/**
+	 * @yields secret length = (`byteSize` * Math.log2(62)) / 8
+	 */
+	public static base62secret(byteSize: number) {
 		const LOWER_CHAR_SET = 'abcdefghijklmnopqrstuvwxyz';
 		const NUMBER_CHAR_SET = '0123456789';
 		const CHAR_SET = `${NUMBER_CHAR_SET}${LOWER_CHAR_SET}${LOWER_CHAR_SET.toUpperCase()}` as const;
 
-		return this.secretBytes(length).then((randomBytes) => {
+		return this.secretBytes(byteSize).then((randomBytes) => {
 			/**
 			 * @link https://jsbm.dev/x1F2ITy7RU8T2
 			 */
