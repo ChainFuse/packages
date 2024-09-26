@@ -85,9 +85,9 @@ void describe('AI Response Tests', () => {
 		for (const llmProviderKey of allLlmProviderKeys) {
 			const settings: llmRequestProperties = { stream, max_tokens: 128, skipCache: true };
 
-			void test(JSON.stringify({ model: llmProviderKey, ...settings }), { skip: !(llmProviderKey.startsWith('@cf') || llmProviderKey.startsWith('@hf')) }, () =>
-				superAi
-					.llm({
+			void test(JSON.stringify({ model: llmProviderKey, ...settings }), { skip: !(llmProviderKey.startsWith('@cf') || llmProviderKey.startsWith('@hf')) }, async () => {
+				try {
+					const response = await superAi.llm({
 						providerPreferences: [{ [llmProviderKey]: 1 }] as llmProviders<aiProviders>[],
 						messages: [
 							{
@@ -99,31 +99,30 @@ void describe('AI Response Tests', () => {
 						tracking: {
 							dataspaceId: 'internal',
 						},
-					})
-					.then(async (response) => {
-						response.stream?.on('data', (chunk) => {
-							// console.info(JSON.stringify(chunk, null, '\t'));
+					});
 
-							strictEqual(typeof chunk.role, 'string');
-							strictEqual(typeof chunk.content, 'string');
-							ok(chunk.timestamp instanceof Date);
-						});
-						response.stream?.once('end', () => {
-							response.stream?.removeAllListeners();
-						});
+					response.stream?.on('data', (chunk) => {
+						// console.info(JSON.stringify(chunk, null, '\t'));
 
-						await response.message
-							.then((fullResponse) => {
-								// console.info(fullResponse);
+						strictEqual(typeof chunk.role, 'string');
+						strictEqual(typeof chunk.content, 'string');
+						ok(chunk.timestamp instanceof Date);
+					});
+					response.stream?.once('end', () => {
+						response.stream?.removeAllListeners();
+					});
 
-								strictEqual(typeof fullResponse.role, 'string');
-								strictEqual(typeof fullResponse.content, 'string');
-								ok(fullResponse.timestamp instanceof Date);
-							})
-							.catch((error) => strictEqual(error, null, `${llmProviderKey}: ${error}`));
-					})
-					.catch((error) => strictEqual(error, null, `${llmProviderKey}: ${error}`)),
-			);
+					const fullResponse = await response.message;
+
+					// console.info(fullResponse);
+
+					strictEqual(typeof fullResponse.role, 'string');
+					strictEqual(typeof fullResponse.content, 'string');
+					ok(fullResponse.timestamp instanceof Date);
+				} catch (error) {
+					throw new Error(JSON.stringify({ model: llmProviderKey, ...settings }), { cause: error });
+				}
+			});
 		}
 	}
 });
