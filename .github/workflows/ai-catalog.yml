@@ -33,7 +33,7 @@ jobs:
             await Promise.all([
                 fetch(new URL(`client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/models/search`, 'https://api.cloudflare.com'), {
                     headers: {
-                        Authorization: `Bearer ${process.env.WORKERS_AI_API_KEY}`,
+                        Authorization: `Bearer ${process.env.CICD_CF_API_TOKEN}`,
                     },
                 }).then((modelResponse) => {
                     if (modelResponse.ok) {
@@ -44,7 +44,7 @@ jobs:
                 }),
                 fetch(new URL(`client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/finetunes`, 'https://api.cloudflare.com'), {
                     headers: {
-                        Authorization: `Bearer ${process.env.WORKERS_AI_API_KEY}`,
+                        Authorization: `Bearer ${process.env.CICD_CF_API_TOKEN}`,
                     },
                 }).then((privateLoraResult) => {
                     if (privateLoraResult.ok) {
@@ -55,7 +55,7 @@ jobs:
                 }),
                 fetch(new URL(`client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/finetunes/public`, 'https://api.cloudflare.com'), {
                     headers: {
-                        Authorization: `Bearer ${process.env.WORKERS_AI_API_KEY}`,
+                        Authorization: `Bearer ${process.env.CICD_CF_API_TOKEN}`,
                     },
                 }).then((publicLoraResult) => {
                     if (publicLoraResult.ok) {
@@ -126,7 +126,7 @@ jobs:
                 });
             });
         env:
-          WORKERS_AI_API_KEY: ${{ secrets.WORKERS_AI_API_KEY }}
+          CICD_CF_API_TOKEN: ${{ secrets.CICD_CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
       - uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
         with:

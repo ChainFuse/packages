@@ -144,7 +144,7 @@ jobs:
           AZURE_API_KEY_OPENAI_US_VIRGINIA2: ${{ secrets.AZURE_API_KEY_OPENAI_US_VIRGINIA2 }}
           AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG: ${{ secrets.AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG }}
           OPENAI_API_KEY: 'notreal'
-          WORKERS_AI_API_KEY: ${{ secrets.WORKERS_AI_API_KEY }}
+          CICD_CF_API_TOKEN: ${{ secrets.CICD_CF_API_TOKEN }}
           ANTHROPIC_API_KEY: 'notreal'
       - uses: test-summary/action@31493c76ec9e7aa675f1585d3ed6f1da69269a86 # v2.4
         if: always()
