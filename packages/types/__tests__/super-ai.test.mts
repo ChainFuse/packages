@@ -130,7 +130,8 @@ void describe('AI Response Tests', () => {
 });
 
 void describe('AI Function Tests', async () => {
-	const allLlmProviderKeys = [...Object.values(enabledAzureLlmProviders), ...enabledCloudflareLlmFunctionProviders];
+	const extraOverrideTest: aiProviders[] = [];
+	const allLlmProviderKeys = [...Object.values(enabledAzureLlmProviders), ...enabledCloudflareLlmFunctionProviders, ...extraOverrideTest];
 	let waitUntilPromises: Promise<any>[] = [];
 
 	beforeEach(() => {
