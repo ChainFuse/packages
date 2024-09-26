@@ -16,7 +16,7 @@ before(async () => {
 	geoJson = await fetch(new URL('https://workers.cloudflare.com/cf.json')).then((geoResponse) => geoResponse.json());
 });
 
-void describe('AI Response Tests', async () => {
+void describe('AI Response Tests', () => {
 	const allLlmProviderKeys = [...Object.values(enabledAzureLlmProviders), ...enabledCloudflareLlmProviders];
 
 	beforeEach(() => {
@@ -85,7 +85,7 @@ void describe('AI Response Tests', async () => {
 		for (const llmProviderKey of allLlmProviderKeys) {
 			const settings: llmRequestProperties = { stream, max_tokens: 128, skipCache: true };
 
-			await test(JSON.stringify({ model: llmProviderKey, ...settings }), { skip: !(llmProviderKey.startsWith('@cf') || llmProviderKey.startsWith('@hf')) }, () =>
+			test(JSON.stringify({ model: llmProviderKey, ...settings }), { skip: !(llmProviderKey.startsWith('@cf') || llmProviderKey.startsWith('@hf')) }, () =>
 				superAi
 					.llm({
 						providerPreferences: [{ [llmProviderKey]: 1 }] as llmProviders<aiProviders>[],
