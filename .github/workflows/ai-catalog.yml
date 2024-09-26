@@ -35,86 +35,96 @@ jobs:
                     headers: {
                         Authorization: `Bearer ${process.env.WORKERS_AI_API_KEY}`,
                     },
+                }).then((modelResponse) => {
+                    if (modelResponse.ok) {
+                        return modelResponse.json();
+                    } else {
+                        throw new Error(modelResponse.statusText, { cause: modelResponse.status });
+                    }
                 }),
                 fetch(new URL(`client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/finetunes`, 'https://api.cloudflare.com'), {
                     headers: {
                         Authorization: `Bearer ${process.env.WORKERS_AI_API_KEY}`,
                     },
+                }).then((privateLoraResult) => {
+                    if (privateLoraResult.ok) {
+                        return privateLoraResult.json();
+                    } else {
+                        throw new Error(privateLoraResult.statusText, { cause: privateLoraResult.status });
+                    }
                 }),
                 fetch(new URL(`client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/finetunes/public`, 'https://api.cloudflare.com'), {
                     headers: {
                         Authorization: `Bearer ${process.env.WORKERS_AI_API_KEY}`,
                     },
-                }),
-            ])
-                .then(([modelResponse, privateLoraResult, publicLoraResult]) => {
-                    if (modelResponse.ok && privateLoraResult.ok && publicLoraResult.ok) {
-                        return Promise.all([modelResponse.json(), privateLoraResult.json(), publicLoraResult.json()]);
+                }).then((publicLoraResult) => {
+                    if (publicLoraResult.ok) {
+                        return publicLoraResult.json();
                     } else {
-                        throw new Error(modelResponse.statusText, { cause: modelResponse.status });
+                        throw new Error(publicLoraResult.statusText, { cause: publicLoraResult.status });
                     }
-                })
-                .then(async ([{ result: modelJson }, { result: privateLoraJson }, { result: publicLoraJson }]) => {
-                    const grouped = {};
+                }),
+            ]).then(async ([{ result: modelJson }, { result: privateLoraJson }, { result: publicLoraJson }]) => {
+                const grouped = {};
 
-                    modelJson.forEach((model) => {
-                        // Pull out model group into a upper level key
-                        const taskName = model.task.name;
-                        if (!grouped[taskName]) {
-                            grouped[taskName] = {
-                                id: model.task.id,
-                                description: model.task.description,
-                                models: [],
-                            };
+                modelJson.forEach((model) => {
+                    // Pull out model group into a upper level key
+                    const taskName = model.task.name;
+                    if (!grouped[taskName]) {
+                        grouped[taskName] = {
+                            id: model.task.id,
+                            description: model.task.description,
+                            models: [],
+                        };
+                    }
+
+                    const { task, ...modelWithoutTask } = model;
+
+                    // Convert stringified values to primitives, if possible
+                    const properties = model.properties.reduce((acc, prop) => {
+                        let value = prop.value;
+                        if (['true', 'false', '0', '1', 0, 1].includes(value)) {
+                            value = Boolean(value);
+                        } else if (!isNaN(value)) {
+                            value = Number(value);
                         }
+                        acc[prop.property_id] = value;
+                        return acc;
+                    }, {});
 
-                        const { task, ...modelWithoutTask } = model;
-
-                        // Convert stringified values to primitives, if possible
-                        const properties = model.properties.reduce((acc, prop) => {
-                            let value = prop.value;
-                            if (['true', 'false', '0', '1', 0, 1].includes(value)) {
-                                value = Boolean(value);
-                            } else if (!isNaN(value)) {
-                                value = Number(value);
-                            }
-                            acc[prop.property_id] = value;
-                            return acc;
-                        }, {});
-
-                        grouped[taskName].models.push({ ...modelWithoutTask, properties });
-                    });
-
-                    await import('node:fs').then(({ createWriteStream }) => {
-                        const writeStream = createWriteStream('packages/types/src/super-ai/workers-ai-catalog.ts', { encoding: 'utf8' });
-                        writeStream.write(
-                            `export const workersAiCatalog = ${JSON.stringify(
-                                {
-                                    modelGroups: grouped,
-                                    loras: [...privateLoraJson, ...publicLoraJson].map((lora) => ({
-                                        // The api endpoint doesn't provide `public` on the private endpoint
-                                        public: false,
-                                        // Convert stringified values to primitives, if possible
-                                        ...Object.entries(lora).reduce((acc, prop) => {
-                                            console.log('prop', prop);
-                                            let value = prop[1];
-                                            if (['true', 'false', '0', '1', 0, 1].includes(value)) {
-                                                value = Boolean(value);
-                                            } else if (!isNaN(value)) {
-                                                value = Number(value);
-                                            }
-                                            acc[prop[0]] = value;
-                                            return acc;
-                                        }, {}),
-                                    })),
-                                },
-                                null,
-                                '\t',
-                            )} as const`,
-                        );
-                        writeStream.end();
-                    });
+                    grouped[taskName].models.push({ ...modelWithoutTask, properties });
                 });
+
+                await import('node:fs').then(({ createWriteStream }) => {
+                    const writeStream = createWriteStream('packages/types/src/super-ai/workers-ai-catalog.ts', { encoding: 'utf8' });
+                    writeStream.write(
+                        `export const workersAiCatalog = ${JSON.stringify(
+                            {
+                                modelGroups: grouped,
+                                loras: [...privateLoraJson, ...publicLoraJson].map((lora) => ({
+                                    // The api endpoint doesn't provide `public` on the private endpoint
+                                    public: false,
+                                    // Convert stringified values to primitives, if possible
+                                    ...Object.entries(lora).reduce((acc, prop) => {
+                                        console.log('prop', prop);
+                                        let value = prop[1];
+                                        if (['true', 'false', '0', '1', 0, 1].includes(value)) {
+                                            value = Boolean(value);
+                                        } else if (!isNaN(value)) {
+                                            value = Number(value);
+                                        }
+                                        acc[prop[0]] = value;
+                                        return acc;
+                                    }, {}),
+                                })),
+                            },
+                            null,
+                            '\t',
+                        )} as const`,
+                    );
+                    writeStream.end();
+                });
+            });
         env:
           WORKERS_AI_API_KEY: ${{ secrets.WORKERS_AI_API_KEY }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
