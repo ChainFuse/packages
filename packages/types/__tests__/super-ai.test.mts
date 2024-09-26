@@ -91,7 +91,7 @@ void describe('AI Response Tests', () => {
 		for (const llmProviderKey of allLlmProviderKeys) {
 			const settings: llmRequestProperties = { stream, max_tokens: 128 };
 
-			void test(JSON.stringify({ model: llmProviderKey, ...settings }), { skip: !(llmProviderKey.startsWith('@cf') || llmProviderKey.startsWith('@hf')) }, async () => {
+			void test(JSON.stringify({ model: llmProviderKey, ...settings }), async () => {
 				try {
 					const response = await superAi.llm({
 						providerPreferences: [{ [llmProviderKey]: 1 }] as llmProviders<aiProviders>[],
