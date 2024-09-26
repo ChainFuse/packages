@@ -228,6 +228,10 @@ void describe('AI Function Tests', async () => {
 							description: 'Get the current connection info including headers and geographical information',
 							// eslint-disable-next-line @typescript-eslint/require-await
 							function: async () => JSON.stringify(geoJson),
+							parameters: {
+								type: 'object',
+								properties: {},
+							},
 						},
 					],
 					schema: {
@@ -235,8 +239,14 @@ void describe('AI Function Tests', async () => {
 						parameters: {
 							type: 'object',
 							properties: {
-								city: { type: 'string' },
-								state: { type: 'string' },
+								city: {
+									type: 'string',
+									description: 'City of the incoming request',
+								},
+								state: {
+									type: 'string',
+									description: 'The ISO 3166-2 name for the first level region of the incoming request',
+								},
 							},
 						},
 					},
