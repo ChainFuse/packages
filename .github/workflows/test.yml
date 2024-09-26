@@ -32,6 +32,7 @@ on:
       - 'packages/*/package*.json'
       - 'tsconfig.json'
       - 'packages/*/tsconfig*.json'
+  workflow_dispatch:
 
 permissions:
   contents: read
