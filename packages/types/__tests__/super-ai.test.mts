@@ -4,7 +4,7 @@ import { ok, strictEqual } from 'node:assert/strict';
 import test, { afterEach, before, beforeEach, describe } from 'node:test';
 import { enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmProviders, type aiFunctionProviders, type aiProviders } from '../dist/super-ai/index.js';
 
-const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY, CICD_CF_API_TOKEN } = process.env;
+const { CF_ACCOUNT_ID, CICD_CF_API_TOKEN } = process.env;
 
 let geoJson: IncomingRequestCfProperties;
 let superAi: SuperAi;
@@ -35,7 +35,7 @@ void describe('AI Response Tests', () => {
 				},
 				cloudflare: {
 					accountId: CF_ACCOUNT_ID!.replaceAll(`"`, ``),
-					apiToken: AI_GATEWAY_API_KEY!.replaceAll(`"`, ``),
+					apiToken: CICD_CF_API_TOKEN!.replaceAll(`"`, ``),
 				},
 				openAi: {
 					apiToken: '' as ConstructorParameters<typeof SuperAi>[1]['openAi']['apiToken'],
@@ -122,7 +122,7 @@ void describe('AI Function Tests', async () => {
 				},
 				cloudflare: {
 					accountId: CF_ACCOUNT_ID!.replaceAll(`"`, ``),
-					apiToken: AI_GATEWAY_API_KEY!.replaceAll(`"`, ``),
+					apiToken: CICD_CF_API_TOKEN!.replaceAll(`"`, ``),
 				},
 				openAi: {
 					apiToken: '' as ConstructorParameters<typeof SuperAi>[1]['openAi']['apiToken'],
