@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 0.1.3
+
+### Patch Changes
+
+-   [#70](https://github.com/ChainFuse/packages/pull/70) [`3e0a4c1`](https://github.com/ChainFuse/packages/commit/3e0a4c1519c9fbcb9e0fc0189a75f99ec6492925) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/checkout
+
+-   [#71](https://github.com/ChainFuse/packages/pull/71) [`3582ce6`](https://github.com/ChainFuse/packages/commit/3582ce60728d789e23d17aa1494824982be9569a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 0.1.2
 
 ### Patch Changes
