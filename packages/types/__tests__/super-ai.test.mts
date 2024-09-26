@@ -1,7 +1,7 @@
 import { SuperAi, type llmProviders, type llmRequestProperties } from '@chainfuse/super-ai';
 import type { ExecutionContext, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import { ok, strictEqual } from 'node:assert/strict';
-import test, { before, beforeEach, describe } from 'node:test';
+import test, { afterEach, before, beforeEach, describe } from 'node:test';
 import { enabledAzureLlmProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmProviders, type aiFunctionProviders, type aiProviders } from '../dist/super-ai/index.js';
 
 const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY, WORKERS_AI_API_KEY } = process.env;
@@ -18,12 +18,14 @@ before(async () => {
 
 void describe('AI Response Tests', () => {
 	const allLlmProviderKeys = [...Object.values(enabledAzureLlmProviders), ...enabledCloudflareLlmProviders];
+	let waitUntilPromises: Promise<any>[] = [];
 
 	beforeEach(() => {
+		waitUntilPromises = [];
 		superAi = new SuperAi(
 			{
 				waitUntil(promise) {
-					promise.catch(console.error);
+					waitUntilPromises.push(promise);
 				},
 			} as ExecutionContext,
 			{
@@ -79,6 +81,10 @@ void describe('AI Response Tests', () => {
 				},
 			},
 		);
+	});
+
+	afterEach(async () => {
+		await Promise.all(waitUntilPromises);
 	});
 
 	for (const stream of [true, false]) {
