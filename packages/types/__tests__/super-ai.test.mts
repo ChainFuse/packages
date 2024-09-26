@@ -4,7 +4,7 @@ import { ok, strictEqual } from 'node:assert/strict';
 import test, { afterEach, before, beforeEach, describe } from 'node:test';
 import { enabledAzureLlmProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmProviders, type aiFunctionProviders, type aiProviders } from '../dist/super-ai/index.js';
 
-const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY, WORKERS_AI_API_KEY } = process.env;
+const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY, CICD_CF_API_TOKEN } = process.env;
 const { OPENAI_API_KEY, OPENAI_ORGANIZATION } = process.env;
 const { AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES, AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE, AZURE_API_KEY_OPENAI_CA_QUEBEC, AZURE_API_KEY_OPENAI_CA_TORONTO, AZURE_API_KEY_OPENAI_CH_GENEVA, AZURE_API_KEY_OPENAI_CH_ZURICH, AZURE_API_KEY_OPENAI_EU_FRANKFURT, AZURE_API_KEY_OPENAI_EU_GAVLE, AZURE_API_KEY_OPENAI_EU_MADRID, AZURE_API_KEY_OPENAI_EU_NETHERLANDS, AZURE_API_KEY_OPENAI_EU_PARIS, AZURE_API_KEY_OPENAI_EU_WARSAW, AZURE_API_KEY_OPENAI_IN_CHENNAI, AZURE_API_KEY_OPENAI_JP_TOKYO, AZURE_API_KEY_OPENAI_KR_SEOUL, AZURE_API_KEY_OPENAI_NO_OSLO, AZURE_API_KEY_OPENAI_UK_LONDON, AZURE_API_KEY_OPENAI_US_CALIFORNIA, AZURE_API_KEY_OPENAI_US_ILLINOIS, AZURE_API_KEY_OPENAI_US_PHOENIX, AZURE_API_KEY_OPENAI_US_TEXAS, AZURE_API_KEY_OPENAI_US_VIRGINIA, AZURE_API_KEY_OPENAI_US_VIRGINIA2, AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG } = process.env;
 const { ANTHROPIC_API_KEY } = process.env;
@@ -74,7 +74,7 @@ void describe('AI Response Tests', () => {
 					},
 				},
 				workersAi: {
-					apiToken: WORKERS_AI_API_KEY!.replaceAll(`"`, ``),
+					apiToken: CICD_CF_API_TOKEN!.replaceAll(`"`, ``),
 				},
 				anthropic: {
 					apiToken: ANTHROPIC_API_KEY!.replaceAll(`"`, ``) as ConstructorParameters<typeof SuperAi>[1]['anthropic']['apiToken'],
@@ -187,7 +187,7 @@ void describe('AI Function Tests', async () => {
 					},
 				},
 				workersAi: {
-					apiToken: WORKERS_AI_API_KEY!.replaceAll(`"`, ``),
+					apiToken: CICD_CF_API_TOKEN!.replaceAll(`"`, ``),
 				},
 				anthropic: {
 					apiToken: ANTHROPIC_API_KEY!.replaceAll(`"`, ``) as ConstructorParameters<typeof SuperAi>[1]['anthropic']['apiToken'],
