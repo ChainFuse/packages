@@ -115,7 +115,7 @@ void describe('AI Response Tests', async () => {
 					} catch (error) {
 						strictEqual(error, null, `${llmProviderKey}: ${error}`);
 					}
-				}).catch((e) => strictEqual(e, null, `${e}`));
+				});
 			} catch (error) {
 				strictEqual(error, null, `${llmProviderKey}: ${error}`);
 			}
@@ -188,7 +188,7 @@ void describe('AI Function Tests', async () => {
 					} catch (error) {
 						strictEqual(error, null, `${llmProviderKey}: ${error}`);
 					}
-				}).catch((e) => strictEqual(e, null, `${e}`));
+				});
 			} catch (error) {
 				strictEqual(error, null, `${llmProviderKey}: ${error}`);
 			}
