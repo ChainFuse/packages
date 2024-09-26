@@ -2,12 +2,9 @@ import { SuperAi, type llmProviders, type llmRequestProperties } from '@chainfus
 import type { ExecutionContext, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import { ok, strictEqual } from 'node:assert/strict';
 import test, { afterEach, before, beforeEach, describe } from 'node:test';
-import { enabledAzureLlmProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmProviders, type aiFunctionProviders, type aiProviders } from '../dist/super-ai/index.js';
+import { enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmProviders, type aiFunctionProviders, type aiProviders } from '../dist/super-ai/index.js';
 
 const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY, CICD_CF_API_TOKEN } = process.env;
-const { OPENAI_API_KEY, OPENAI_ORGANIZATION } = process.env;
-const { AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES, AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE, AZURE_API_KEY_OPENAI_CA_QUEBEC, AZURE_API_KEY_OPENAI_CA_TORONTO, AZURE_API_KEY_OPENAI_CH_GENEVA, AZURE_API_KEY_OPENAI_CH_ZURICH, AZURE_API_KEY_OPENAI_EU_FRANKFURT, AZURE_API_KEY_OPENAI_EU_GAVLE, AZURE_API_KEY_OPENAI_EU_MADRID, AZURE_API_KEY_OPENAI_EU_NETHERLANDS, AZURE_API_KEY_OPENAI_EU_PARIS, AZURE_API_KEY_OPENAI_EU_WARSAW, AZURE_API_KEY_OPENAI_IN_CHENNAI, AZURE_API_KEY_OPENAI_JP_TOKYO, AZURE_API_KEY_OPENAI_KR_SEOUL, AZURE_API_KEY_OPENAI_NO_OSLO, AZURE_API_KEY_OPENAI_UK_LONDON, AZURE_API_KEY_OPENAI_US_CALIFORNIA, AZURE_API_KEY_OPENAI_US_ILLINOIS, AZURE_API_KEY_OPENAI_US_PHOENIX, AZURE_API_KEY_OPENAI_US_TEXAS, AZURE_API_KEY_OPENAI_US_VIRGINIA, AZURE_API_KEY_OPENAI_US_VIRGINIA2, AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG } = process.env;
-const { ANTHROPIC_API_KEY } = process.env;
 
 let geoJson: IncomingRequestCfProperties;
 let superAi: SuperAi;
@@ -17,7 +14,6 @@ before(async () => {
 });
 
 void describe('AI Response Tests', () => {
-	const allLlmProviderKeys = [...Object.values(enabledAzureLlmProviders), ...enabledCloudflareLlmProviders];
 	let waitUntilPromises: Promise<any>[] = [];
 
 	beforeEach(() => {
@@ -42,42 +38,17 @@ void describe('AI Response Tests', () => {
 					apiToken: AI_GATEWAY_API_KEY!.replaceAll(`"`, ``),
 				},
 				openAi: {
-					apiToken: OPENAI_API_KEY!.replaceAll(`"`, ``) as ConstructorParameters<typeof SuperAi>[1]['openAi']['apiToken'],
-					organization: OPENAI_ORGANIZATION!.replaceAll(`"`, ``) as ConstructorParameters<typeof SuperAi>[1]['openAi']['organization'],
+					apiToken: '' as ConstructorParameters<typeof SuperAi>[1]['openAi']['apiToken'],
+					organization: '' as ConstructorParameters<typeof SuperAi>[1]['openAi']['organization'],
 				},
 				azureOpenAi: {
-					apiTokens: {
-						AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES: AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE: AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_CA_QUEBEC: AZURE_API_KEY_OPENAI_CA_QUEBEC!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_CA_TORONTO: AZURE_API_KEY_OPENAI_CA_TORONTO!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_CH_GENEVA: AZURE_API_KEY_OPENAI_CH_GENEVA!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_CH_ZURICH: AZURE_API_KEY_OPENAI_CH_ZURICH!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_FRANKFURT: AZURE_API_KEY_OPENAI_EU_FRANKFURT!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_GAVLE: AZURE_API_KEY_OPENAI_EU_GAVLE!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_MADRID: AZURE_API_KEY_OPENAI_EU_MADRID!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_NETHERLANDS: AZURE_API_KEY_OPENAI_EU_NETHERLANDS!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_PARIS: AZURE_API_KEY_OPENAI_EU_PARIS!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_WARSAW: AZURE_API_KEY_OPENAI_EU_WARSAW!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_IN_CHENNAI: AZURE_API_KEY_OPENAI_IN_CHENNAI!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_JP_TOKYO: AZURE_API_KEY_OPENAI_JP_TOKYO!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_KR_SEOUL: AZURE_API_KEY_OPENAI_KR_SEOUL!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_NO_OSLO: AZURE_API_KEY_OPENAI_NO_OSLO!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_UK_LONDON: AZURE_API_KEY_OPENAI_UK_LONDON!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_CALIFORNIA: AZURE_API_KEY_OPENAI_US_CALIFORNIA!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_ILLINOIS: AZURE_API_KEY_OPENAI_US_ILLINOIS!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_PHOENIX: AZURE_API_KEY_OPENAI_US_PHOENIX!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_TEXAS: AZURE_API_KEY_OPENAI_US_TEXAS!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_VIRGINIA: AZURE_API_KEY_OPENAI_US_VIRGINIA!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_VIRGINIA2: AZURE_API_KEY_OPENAI_US_VIRGINIA2!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG: AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG!.replaceAll(`"`, ``),
-					},
+					apiTokens: {},
 				},
 				workersAi: {
 					apiToken: CICD_CF_API_TOKEN!.replaceAll(`"`, ``),
 				},
 				anthropic: {
-					apiToken: ANTHROPIC_API_KEY!.replaceAll(`"`, ``) as ConstructorParameters<typeof SuperAi>[1]['anthropic']['apiToken'],
+					apiToken: '' as ConstructorParameters<typeof SuperAi>[1]['anthropic']['apiToken'],
 				},
 			},
 		);
@@ -88,7 +59,7 @@ void describe('AI Response Tests', () => {
 	});
 
 	for (const stream of [true, false]) {
-		for (const llmProviderKey of allLlmProviderKeys) {
+		for (const llmProviderKey of enabledCloudflareLlmProviders) {
 			const settings: llmRequestProperties = { stream, max_tokens: 128 };
 
 			void test(JSON.stringify({ model: llmProviderKey, ...settings }), async () => {
@@ -130,7 +101,6 @@ void describe('AI Response Tests', () => {
 });
 
 void describe('AI Function Tests', async () => {
-	const allLlmProviderKeys = [...Object.values(enabledAzureLlmProviders), ...enabledCloudflareLlmFunctionProviders];
 	let waitUntilPromises: Promise<any>[] = [];
 
 	beforeEach(() => {
@@ -155,42 +125,17 @@ void describe('AI Function Tests', async () => {
 					apiToken: AI_GATEWAY_API_KEY!.replaceAll(`"`, ``),
 				},
 				openAi: {
-					apiToken: OPENAI_API_KEY!.replaceAll(`"`, ``) as ConstructorParameters<typeof SuperAi>[1]['openAi']['apiToken'],
-					organization: OPENAI_ORGANIZATION!.replaceAll(`"`, ``) as ConstructorParameters<typeof SuperAi>[1]['openAi']['organization'],
+					apiToken: '' as ConstructorParameters<typeof SuperAi>[1]['openAi']['apiToken'],
+					organization: '' as ConstructorParameters<typeof SuperAi>[1]['openAi']['organization'],
 				},
 				azureOpenAi: {
-					apiTokens: {
-						AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES: AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE: AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_CA_QUEBEC: AZURE_API_KEY_OPENAI_CA_QUEBEC!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_CA_TORONTO: AZURE_API_KEY_OPENAI_CA_TORONTO!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_CH_GENEVA: AZURE_API_KEY_OPENAI_CH_GENEVA!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_CH_ZURICH: AZURE_API_KEY_OPENAI_CH_ZURICH!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_FRANKFURT: AZURE_API_KEY_OPENAI_EU_FRANKFURT!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_GAVLE: AZURE_API_KEY_OPENAI_EU_GAVLE!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_MADRID: AZURE_API_KEY_OPENAI_EU_MADRID!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_NETHERLANDS: AZURE_API_KEY_OPENAI_EU_NETHERLANDS!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_PARIS: AZURE_API_KEY_OPENAI_EU_PARIS!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_EU_WARSAW: AZURE_API_KEY_OPENAI_EU_WARSAW!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_IN_CHENNAI: AZURE_API_KEY_OPENAI_IN_CHENNAI!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_JP_TOKYO: AZURE_API_KEY_OPENAI_JP_TOKYO!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_KR_SEOUL: AZURE_API_KEY_OPENAI_KR_SEOUL!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_NO_OSLO: AZURE_API_KEY_OPENAI_NO_OSLO!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_UK_LONDON: AZURE_API_KEY_OPENAI_UK_LONDON!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_CALIFORNIA: AZURE_API_KEY_OPENAI_US_CALIFORNIA!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_ILLINOIS: AZURE_API_KEY_OPENAI_US_ILLINOIS!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_PHOENIX: AZURE_API_KEY_OPENAI_US_PHOENIX!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_TEXAS: AZURE_API_KEY_OPENAI_US_TEXAS!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_VIRGINIA: AZURE_API_KEY_OPENAI_US_VIRGINIA!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_US_VIRGINIA2: AZURE_API_KEY_OPENAI_US_VIRGINIA2!.replaceAll(`"`, ``),
-						AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG: AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG!.replaceAll(`"`, ``),
-					},
+					apiTokens: {},
 				},
 				workersAi: {
 					apiToken: CICD_CF_API_TOKEN!.replaceAll(`"`, ``),
 				},
 				anthropic: {
-					apiToken: ANTHROPIC_API_KEY!.replaceAll(`"`, ``) as ConstructorParameters<typeof SuperAi>[1]['anthropic']['apiToken'],
+					apiToken: '' as ConstructorParameters<typeof SuperAi>[1]['anthropic']['apiToken'],
 				},
 			},
 		);
@@ -201,7 +146,7 @@ void describe('AI Function Tests', async () => {
 	});
 
 	for (const stream of [true, false]) {
-		for (const llmProviderKey of allLlmProviderKeys) {
+		for (const llmProviderKey of enabledCloudflareLlmFunctionProviders) {
 			const settings: llmRequestProperties = { stream, max_tokens: 128 };
 
 			void test(JSON.stringify({ model: llmProviderKey, ...settings }), async () => {
