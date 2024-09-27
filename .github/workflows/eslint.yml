@@ -5,12 +5,14 @@ on:
     paths:
       - '.github/workflows/eslint.yml'
       - 'eslint.config.mjs'
+      - '**/eslint.config.mjs'
       - 'package*.json'
       - '**.*ts*'
   pull_request:
     paths:
       - '.github/workflows/eslint.yml'
       - 'eslint.config.mjs'
+      - '**/eslint.config.mjs'
       - 'package*.json'
       - '**.*ts*'
   workflow_dispatch:
