@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 0.0.9
+
+### Patch Changes
+
+-   [`af3ba01`](https://github.com/ChainFuse/packages/commit/af3ba011968fb84d96d9f8b9ffeb9e9903fb1196) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Make `init` optional (following fetch spec)
+
 ## 0.0.8
 
 ### Patch Changes
