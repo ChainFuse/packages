@@ -207,7 +207,7 @@ export class NetHelpers {
 		});
 	}
 
-	public static loggingFetch(info: Parameters<typeof fetch>[0], init: Parameters<typeof fetch>[1], body = false, logger: CustomLoging = false) {
+	public static loggingFetch(info: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1], body = false, logger: CustomLoging = false) {
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		return new Promise<Awaited<ReturnType<typeof fetch>>>((resolve, reject) =>
 			fetch(info, init)
