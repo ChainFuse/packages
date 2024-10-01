@@ -47,28 +47,21 @@ const possibilities_embeddings = [...(Object.values(enabledAzureLlmEmbeddingProv
 
 export const possibilities_mc_generic = [...possibilities_base.map((modelName) => ({ name: modelName })), ...(workersAiCatalog.modelGroups['Text Generation'].models.filter((model) => 'function_calling' in model.properties && model.properties.function_calling) as unknown as [cloudflareFilteredModelPossibilitiesRaw<'Text Generation', 'function_calling', true>])] as const;
 export type type_mc_generic = aiFunctionProviders;
-export const default_mc_generic: type_mc_generic = '@hf/nousresearch/hermes-2-pro-mistral-7b';
 
 export const possibilities_mc_summary = [...possibilities_base.map((modelName) => ({ name: modelName })), ...workersAiCatalog.modelGroups.Summarization.models] as const;
 export type type_mc_summary = aiProviders<'Summarization'>;
-export const default_mc_summary: type_mc_summary = enabledAzureLlmProviders.Azure_OpenAi_Gpt3;
 
 export const possibilities_mc_extraction = [...possibilities_base.map((modelName) => ({ name: modelName })), ...(workersAiCatalog.modelGroups['Text Generation'].models.filter((model) => 'function_calling' in model.properties && model.properties.function_calling) as unknown as [cloudflareFilteredModelPossibilitiesRaw<'Text Generation', 'function_calling', true>])] as const;
 export type type_mc_extraction = aiFunctionProviders;
-export const default_mc_extraction: type_mc_extraction = '@hf/nousresearch/hermes-2-pro-mistral-7b';
 
 export const possibilities_mc_tagging = [...possibilities_base.map((modelName) => ({ name: modelName })), ...(workersAiCatalog.modelGroups['Text Generation'].models.filter((model) => 'function_calling' in model.properties && model.properties.function_calling) as unknown as [cloudflareFilteredModelPossibilitiesRaw<'Text Generation', 'function_calling', true>])] as const;
 export type type_mc_tagging = aiFunctionProviders;
-export const default_mc_tagging: type_mc_tagging = enabledAzureLlmProviders.Azure_OpenAi_Gpt4o;
 
 export const possibilities_mc_sentiment = [...possibilities_base.map((modelName) => ({ name: modelName })), ...(workersAiCatalog.modelGroups['Text Generation'].models.filter((model) => 'function_calling' in model.properties && model.properties.function_calling) as unknown as [cloudflareFilteredModelPossibilitiesRaw<'Text Generation', 'function_calling', true>])] as const;
 export type type_mc_sentiment = aiFunctionProviders;
-export const default_mc_sentiment: type_mc_sentiment = '@hf/nousresearch/hermes-2-pro-mistral-7b';
 
 export const possibilities_mc_safety = [...possibilities_base.map((modelName) => ({ name: modelName })), ...workersAiCatalog.modelGroups['Text Generation'].models] as const;
 export type type_mc_safety = aiProviders<'Text Generation'>;
-export const default_mc_safety: type_mc_safety = '@hf/thebloke/llamaguard-7b-awq';
 
 export const possibilities_mc_embedding = [...possibilities_embeddings.map((modelName) => ({ name: modelName })), ...workersAiCatalog.modelGroups['Text Embeddings'].models] as const;
 export type type_mc_embedding = aiEmbeddingProviders;
-export const default_mc_embedding: type_mc_embedding = '@cf/baai/bge-large-en-v1.5';
