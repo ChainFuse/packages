@@ -1,5 +1,19 @@
 # @chainfuse/types
 
+## 1.0.0
+
+### Major Changes
+
+-   [#78](https://github.com/ChainFuse/packages/pull/78) [`502647f`](https://github.com/ChainFuse/packages/commit/502647fbb78b5b45b8e47f9563ece7c6214fbe2a) Thanks [@demosjarco](https://github.com/demosjarco)! - Move defaults to private
+
+### Patch Changes
+
+-   [#74](https://github.com/ChainFuse/packages/pull/74) [`34e5a73`](https://github.com/ChainFuse/packages/commit/34e5a737a68660920bf23f726809b833398d9f6c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
+-   [#76](https://github.com/ChainFuse/packages/pull/76) [`4a2368e`](https://github.com/ChainFuse/packages/commit/4a2368e7a8ec807168fcba971af7231d82ebea76) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+-   [#75](https://github.com/ChainFuse/packages/pull/75) [`a04eb9f`](https://github.com/ChainFuse/packages/commit/a04eb9f7efc66983d39761fa32ccd6e98b492c98) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+
 ## 0.1.3
 
 ### Patch Changes
