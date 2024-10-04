@@ -60,7 +60,7 @@ export class BufferHelpers {
 		);
 	}
 
-	public static bufferToBase64(buffer: UuidExport['blob'], urlSafe = true): Promise<string> {
+	public static bufferToBase64(buffer: UuidExport['blob'], urlSafe: boolean): Promise<string> {
 		return import('node:buffer')
 			.then(({ Buffer }) => Buffer.from(buffer).toString(urlSafe ? 'base64url' : 'base64'))
 			.catch(() => {
