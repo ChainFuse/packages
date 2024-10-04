@@ -35,6 +35,44 @@ export class BufferHelpers {
 		);
 	}
 
+	public static base64ToBuffer(rawBase64: string, urlSafe: boolean): Promise<UuidExport['blob']> {
+		return (
+			import('node:buffer')
+				.then(({ Buffer }) => {
+					const mainBuffer = Buffer.from(rawBase64, urlSafe ? 'base64url' : 'base64');
+					return mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength);
+				})
+				/**
+				 *
+				 */
+				.catch(() => {
+					let base64 = rawBase64;
+					if (urlSafe) {
+						base64 = rawBase64.replaceAll('-', '+').replaceAll('_', '/');
+						// Add padding back to make length a multiple of 4
+						while (base64.length % 4 !== 0) {
+							base64 += '=';
+						}
+					}
+
+					return new Uint8Array([...atob(base64)].map((char) => char.charCodeAt(0))).buffer;
+				})
+		);
+	}
+
+	public static bufferToBase64(buffer: UuidExport['blob'], urlSafe = true): Promise<string> {
+		return import('node:buffer')
+			.then(({ Buffer }) => Buffer.from(buffer).toString(urlSafe ? 'base64url' : 'base64'))
+			.catch(() => {
+				const raw = btoa(new TextDecoder().decode(buffer));
+				if (urlSafe) {
+					return raw.replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
+				} else {
+					return raw;
+				}
+			});
+	}
+
 	public static get generateUuid(): Promise<UuidExport> {
 		return Promise.all([CryptoHelpers.secretBytes(16), import('uuid')]).then(([random, { v7: uuidv7 }]) => {
 			const uuid = uuidv7({ random }) as UuidExport['utf8'];
