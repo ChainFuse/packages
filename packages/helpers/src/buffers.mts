@@ -3,7 +3,14 @@ import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
 import { CryptoHelpers } from './crypto.mjs';
 
 export class BufferHelpers {
-	public static bufferFromHex(hex: UuidExport['hex']): Promise<UuidExport['blob']> {
+	/**
+	 * @deprecated
+	 */
+	public static bufferFromHex(...args: Parameters<typeof this.hexToBuffer>): ReturnType<typeof this.hexToBuffer> {
+		return this.hexToBuffer(...args);
+	}
+
+	public static hexToBuffer(hex: UuidExport['hex']): Promise<UuidExport['blob']> {
 		return (
 			import('node:buffer')
 				.then(({ Buffer }) => {
