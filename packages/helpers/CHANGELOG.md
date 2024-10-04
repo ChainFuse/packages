@@ -1,5 +1,15 @@
 # @chainfuse/helpers
 
+## 0.1.0
+
+### Minor Changes
+
+-   [#81](https://github.com/ChainFuse/packages/pull/81) [`302dda6`](https://github.com/ChainFuse/packages/commit/302dda6cbc444deac4d170b4565b42767e6bdbd1) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add base64 to buffer helpers
+
+### Patch Changes
+
+-   [#79](https://github.com/ChainFuse/packages/pull/79) [`844a29a`](https://github.com/ChainFuse/packages/commit/844a29a40270fe0a825438e328b21cd61855e55b) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): refactor method name
+
 ## 0.0.10
 
 ### Patch Changes
