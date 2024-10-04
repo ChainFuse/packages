@@ -36,28 +36,23 @@ export class BufferHelpers {
 	}
 
 	public static base64ToBuffer(rawBase64: string, urlSafe: boolean): Promise<UuidExport['blob']> {
-		return (
-			import('node:buffer')
-				.then(({ Buffer }) => {
-					const mainBuffer = Buffer.from(rawBase64, urlSafe ? 'base64url' : 'base64');
-					return mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength);
-				})
-				/**
-				 *
-				 */
-				.catch(() => {
-					let base64 = rawBase64;
-					if (urlSafe) {
-						base64 = rawBase64.replaceAll('-', '+').replaceAll('_', '/');
-						// Add padding back to make length a multiple of 4
-						while (base64.length % 4 !== 0) {
-							base64 += '=';
-						}
+		return import('node:buffer')
+			.then(({ Buffer }) => {
+				const mainBuffer = Buffer.from(rawBase64, urlSafe ? 'base64url' : 'base64');
+				return mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength);
+			})
+			.catch(() => {
+				let base64 = rawBase64;
+				if (urlSafe) {
+					base64 = rawBase64.replaceAll('-', '+').replaceAll('_', '/');
+					// Add padding back to make length a multiple of 4
+					while (base64.length % 4 !== 0) {
+						base64 += '=';
 					}
+				}
 
-					return new Uint8Array([...atob(base64)].map((char) => char.charCodeAt(0))).buffer;
-				})
-		);
+				return new Uint8Array([...atob(base64)].map((char) => char.charCodeAt(0))).buffer;
+			});
 	}
 
 	public static bufferToBase64(buffer: UuidExport['blob'], urlSafe: boolean): Promise<string> {
