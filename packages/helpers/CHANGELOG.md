@@ -1,5 +1,27 @@
 # @chainfuse/helpers
 
+## 0.1.1
+
+### Patch Changes
+
+-   [#88](https://github.com/ChainFuse/packages/pull/88) [`42e210a`](https://github.com/ChainFuse/packages/commit/42e210a5dfa97eebf24d6ff59e407398fac21cb2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/checkout
+
+-   [#89](https://github.com/ChainFuse/packages/pull/89) [`7cfff57`](https://github.com/ChainFuse/packages/commit/7cfff576202266b79a739264c1a415ab6d5b024f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/upload-artifact
+
+-   [#86](https://github.com/ChainFuse/packages/pull/86) [`72c59b6`](https://github.com/ChainFuse/packages/commit/72c59b6f22c1f0e33f8879a813e467654eb92014) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/cache
+
+-   [#87](https://github.com/ChainFuse/packages/pull/87) [`57405fc`](https://github.com/ChainFuse/packages/commit/57405fce972a7221c9a41cd4306172d8071bef5f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
+-   [#83](https://github.com/ChainFuse/packages/pull/83) [`bc68fdb`](https://github.com/ChainFuse/packages/commit/bc68fdb28250a5d3a2eef8ff897513db17a80b3e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+-   [#84](https://github.com/ChainFuse/packages/pull/84) [`28090c1`](https://github.com/ChainFuse/packages/commit/28090c1961d366d3a1d3b50b86c6d17b79dbaabd) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
+
+-   [#90](https://github.com/ChainFuse/packages/pull/90) [`8528fd5`](https://github.com/ChainFuse/packages/commit/8528fd54cb9044f1fb5c8eed15a90ea4fed79f78) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core, typescript
+
+-   [#91](https://github.com/ChainFuse/packages/pull/91) [`5107e6b`](https://github.com/ChainFuse/packages/commit/5107e6b0cec0d983c16f4e24534715587fa76cbe) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+-   [#93](https://github.com/ChainFuse/packages/pull/93) [`222e3f4`](https://github.com/ChainFuse/packages/commit/222e3f4dc6ff6bc0413629845a8e0a4cb5f6a596) Thanks [@demosjarco](https://github.com/demosjarco)! - Use built in `TextEncoder` instead of map
+
 ## 0.1.0
 
 ### Minor Changes
