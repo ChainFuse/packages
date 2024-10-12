@@ -51,7 +51,7 @@ export class BufferHelpers {
 					}
 				}
 
-				return new Uint8Array([...atob(base64)].map((char) => char.charCodeAt(0))).buffer;
+				return new TextEncoder().encode(atob(base64)).buffer;
 			});
 	}
 
