@@ -1,5 +1,15 @@
 # @chainfuse/types
 
+## 1.0.2
+
+### Patch Changes
+
+-   [#96](https://github.com/ChainFuse/packages/pull/96) [`002a7e6`](https://github.com/ChainFuse/packages/commit/002a7e6f11e04a62b4b84fa88aab557f253c2093) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump changesets/action
+
+-   [#95](https://github.com/ChainFuse/packages/pull/95) [`69c676d`](https://github.com/ChainFuse/packages/commit/69c676d6aa63ebcf26ed101a43ba55ca1099d100) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
+-   [#94](https://github.com/ChainFuse/packages/pull/94) [`18d7136`](https://github.com/ChainFuse/packages/commit/18d7136f77e4124b1e2fe1b754cf38adfd31b121) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
 ## 1.0.1
 
 ### Patch Changes
