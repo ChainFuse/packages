@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 0.1.3
+
+### Patch Changes
+
+-   [#98](https://github.com/ChainFuse/packages/pull/98) [`2ea15f9`](https://github.com/ChainFuse/packages/commit/2ea15f9669817cbe874515abc85e382a617c7528) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
 ## 0.1.2
 
 ### Patch Changes
