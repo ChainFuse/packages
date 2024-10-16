@@ -1,3 +1,3 @@
 export default function discordjsCfCache() {
-  return 'Hello from discordjsCfCache';
+	return 'Hello from discordjsCfCache';
 }
