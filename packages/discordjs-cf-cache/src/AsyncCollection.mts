@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
+import type { CacheStorage as CfCacheStorage } from '@cloudflare/workers-types/experimental';
 import type { Comparator, Keep } from '@discordjs/collection';
 
 /**
@@ -34,6 +35,8 @@ export interface AsyncCollection<Key, Value> extends Map<Key, Value> {
  * @typeParam Value - The value type this collection holds
  */
 export class AsyncCollection<Key, Value> extends Map<Key, Value> {
+	private cache = (caches as unknown as CfCacheStorage).default;
+
 	/**
 	 * Obtains the value of the given key if it exists, otherwise sets and returns the value provided by the default value generator.
 	 *
