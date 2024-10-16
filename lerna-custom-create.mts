@@ -162,6 +162,7 @@ class LernaCustomCreate {
 						'fmt:fix': 'prettier --write .',
 						lint: 'eslint .',
 						'lint:fix': 'npm run lint -- --fix',
+						clean: 'npx -y rimraf@latest ./dist ./.tsbuildinfo',
 						build: 'tsc',
 						'build:clean': 'npm run build -- --build --clean && npm run build',
 						pretest: 'tsc --project tsconfig.tests.json',
