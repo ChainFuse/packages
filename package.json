@@ -7,6 +7,7 @@
 		"lint:fix": "npm run lint -- --fix",
 		"base": "node --disallow-code-generation-from-strings --trace-warnings --use-largepages=silent",
 		"create": "npm run base -- --loader ts-node/esm ./lerna-custom-create.mts",
+		"clean": "lerna run --stream clean",
 		"build": "lerna run --stream build",
 		"build:clean": "lerna run --stream build:clean",
 		"test": "lerna run --parallel test",
