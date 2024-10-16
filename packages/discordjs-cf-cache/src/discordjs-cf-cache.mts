@@ -1,3 +1,5 @@
-export default function discordjsCfCache() {
-	return 'Hello from discordjsCfCache';
+import { AsyncCollection } from './AsyncCollection.mjs';
+
+export function cfCache() {
+	return () => new AsyncCollection();
 }
