@@ -15,7 +15,7 @@ export interface AsyncCollectionConstructor {
 /**
  * Represents an immutable version of a collection
  */
-export type AsyncReadonlyCollection<Key, Value> = Omit<AsyncCollection<Key, Value>, 'clear' | 'delete' | 'ensure' | 'forEach' | 'get' | 'reverse' | 'set' | 'sort' | 'sweep'> & ReadonlyMap<Key, Value>;
+export type ReadonlyAsyncCollection<Key, Value> = Omit<AsyncCollection<Key, Value>, 'clear' | 'delete' | 'ensure' | 'forEach' | 'get' | 'reverse' | 'set' | 'sort' | 'sweep'> & ReadonlyMap<Key, Value>;
 
 /**
  * Separate interface for the constructor so that emitted js does not have a constructor that overwrites itself
@@ -640,7 +640,7 @@ export class AsyncCollection<Key, Value> extends Map<Key, Value> {
 	 * const newColl = someColl.concat(someOtherColl, anotherColl, ohBoyAColl);
 	 * ```
 	 */
-	public concat(...collections: AsyncReadonlyCollection<Key, Value>[]) {
+	public concat(...collections: ReadonlyAsyncCollection<Key, Value>[]) {
 		const newColl = this.clone();
 		for (const coll of collections) {
 			for (const [key, val] of coll) newColl.set(key, val);
@@ -657,7 +657,7 @@ export class AsyncCollection<Key, Value> extends Map<Key, Value> {
 	 * @param collection - Collection to compare with
 	 * @returns Whether the collections have identical contents
 	 */
-	public equals(collection: AsyncReadonlyCollection<Key, Value>) {
+	public equals(collection: ReadonlyAsyncCollection<Key, Value>) {
 		if (!collection) return false; // runtime check
 		if (this === collection) return true;
 		if (this.size !== collection.size) return false;
@@ -710,7 +710,7 @@ export class AsyncCollection<Key, Value> extends Map<Key, Value> {
 	 * // => Collection { 'a' => 1 }
 	 * ```
 	 */
-	public intersection(other: AsyncReadonlyCollection<Key, any>): AsyncCollection<Key, Value> {
+	public intersection(other: ReadonlyAsyncCollection<Key, any>): AsyncCollection<Key, Value> {
 		const coll = new this.constructor[Symbol.species]<Key, Value>();
 
 		for (const [key, value] of this) {
@@ -736,7 +736,7 @@ export class AsyncCollection<Key, Value> extends Map<Key, Value> {
 	 * // => Collection { 'a' => 1, 'b' => 2, 'c' => 3 }
 	 * ```
 	 */
-	public union<OtherValue>(other: AsyncReadonlyCollection<Key, OtherValue>): AsyncCollection<Key, OtherValue | Value> {
+	public union<OtherValue>(other: ReadonlyAsyncCollection<Key, OtherValue>): AsyncCollection<Key, OtherValue | Value> {
 		const coll = new this.constructor[Symbol.species]<Key, OtherValue | Value>(this);
 
 		for (const [key, value] of other) {
@@ -760,7 +760,7 @@ export class AsyncCollection<Key, Value> extends Map<Key, Value> {
 	 * // => Collection { 'c' => 3 }
 	 * ```
 	 */
-	public difference(other: AsyncReadonlyCollection<Key, any>): AsyncCollection<Key, Value> {
+	public difference(other: ReadonlyAsyncCollection<Key, any>): AsyncCollection<Key, Value> {
 		const coll = new this.constructor[Symbol.species]<Key, Value>();
 
 		for (const [key, value] of this) {
@@ -783,7 +783,7 @@ export class AsyncCollection<Key, Value> extends Map<Key, Value> {
 	 * // => Collection { 'b' => 2, 'c' => 3 }
 	 * ```
 	 */
-	public symmetricDifference<OtherValue>(other: AsyncReadonlyCollection<Key, OtherValue>): AsyncCollection<Key, OtherValue | Value> {
+	public symmetricDifference<OtherValue>(other: ReadonlyAsyncCollection<Key, OtherValue>): AsyncCollection<Key, OtherValue | Value> {
 		const coll = new this.constructor[Symbol.species]<Key, OtherValue | Value>();
 
 		for (const [key, value] of this) {
@@ -825,7 +825,7 @@ export class AsyncCollection<Key, Value> extends Map<Key, Value> {
 	 * );
 	 * ```
 	 */
-	public merge<OtherValue, ResultValue>(other: AsyncReadonlyCollection<Key, OtherValue>, whenInSelf: (value: Value, key: Key) => Keep<ResultValue>, whenInOther: (valueOther: OtherValue, key: Key) => Keep<ResultValue>, whenInBoth: (value: Value, valueOther: OtherValue, key: Key) => Keep<ResultValue>): AsyncCollection<Key, ResultValue> {
+	public merge<OtherValue, ResultValue>(other: ReadonlyAsyncCollection<Key, OtherValue>, whenInSelf: (value: Value, key: Key) => Keep<ResultValue>, whenInOther: (valueOther: OtherValue, key: Key) => Keep<ResultValue>, whenInBoth: (value: Value, valueOther: OtherValue, key: Key) => Keep<ResultValue>): AsyncCollection<Key, ResultValue> {
 		const coll = new this.constructor[Symbol.species]<Key, ResultValue>();
 		const keys = new Set([...this.keys(), ...other.keys()]);
 
