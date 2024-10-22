@@ -1,5 +1,23 @@
 # @chainfuse/types
 
+## 1.0.3
+
+### Patch Changes
+
+-   [#103](https://github.com/ChainFuse/packages/pull/103) [`8dfa7de`](https://github.com/ChainFuse/packages/commit/8dfa7dedd85ddfd685a3b5b07e8149ad7a0a5865) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/dependency-review-action
+
+-   [#101](https://github.com/ChainFuse/packages/pull/101) [`31ca3d6`](https://github.com/ChainFuse/packages/commit/31ca3d676e858641b01252ee1bf4c27515a74178) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/cache
+
+-   [#102](https://github.com/ChainFuse/packages/pull/102) [`cfd2c1e`](https://github.com/ChainFuse/packages/commit/cfd2c1ef18be99f0cc4e42edcec7a91a08713900) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump github/codeql-action
+
+-   [#106](https://github.com/ChainFuse/packages/pull/106) [`e8c5213`](https://github.com/ChainFuse/packages/commit/e8c52132b61e94c1a8dadfe52e05de9644c37610) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+-   [#104](https://github.com/ChainFuse/packages/pull/104) [`64268ef`](https://github.com/ChainFuse/packages/commit/64268efc485da4d673d5f0aaccab0151b13adaa1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
+-   [#98](https://github.com/ChainFuse/packages/pull/98) [`2ea15f9`](https://github.com/ChainFuse/packages/commit/2ea15f9669817cbe874515abc85e382a617c7528) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
+-   [#105](https://github.com/ChainFuse/packages/pull/105) [`5cd5b8d`](https://github.com/ChainFuse/packages/commit/5cd5b8dc94b9d80929f75db1f021086b3710c8fb) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 1.0.2
 
 ### Patch Changes
