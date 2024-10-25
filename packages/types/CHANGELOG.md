@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 1.1.0
+
+### Minor Changes
+
+-   [`f6aae66`](https://github.com/ChainFuse/packages/commit/f6aae669c22348b6d411a14a47e609b24253a9ae) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add cron type support
+
 ## 1.0.3
 
 ### Patch Changes
