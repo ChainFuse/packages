@@ -12,3 +12,9 @@ export interface UuidExport {
 }
 
 export type ISODateString = `${number}-${number}-${number}T${number}:${number}:${number}.${number}Z`;
+
+/**
+ * Represents a cron expression string (in UTC time).
+ * Supports any format supported by `cron-parser` library @link https://www.npmjs.com/package/cron-parser#supported-format
+ */
+export type CronString = `${string | number} ${string | number} ${string | number} ${string | number} ${string | number}`;
