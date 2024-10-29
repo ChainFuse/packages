@@ -1,5 +1,21 @@
 # @chainfuse/helpers
 
+## 0.1.4
+
+### Patch Changes
+
+-   [#109](https://github.com/ChainFuse/packages/pull/109) [`658e13a`](https://github.com/ChainFuse/packages/commit/658e13a6abbda5eba10aea2c1e248ae08fce9c3c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/dependency-review-action
+
+-   [#108](https://github.com/ChainFuse/packages/pull/108) [`d43e8c2`](https://github.com/ChainFuse/packages/commit/d43e8c2d20cef43ab0dc2948d9375504ecb96286) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/setup-node
+
+-   [#113](https://github.com/ChainFuse/packages/pull/113) [`d5a3a0b`](https://github.com/ChainFuse/packages/commit/d5a3a0b334d2038ff9659a2245bad668ddf7b8fc) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+-   [#111](https://github.com/ChainFuse/packages/pull/111) [`7ca400a`](https://github.com/ChainFuse/packages/commit/7ca400ab5332d4b59f6ef91d44423222f7e40c7a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
+-   [#115](https://github.com/ChainFuse/packages/pull/115) [`70b8a98`](https://github.com/ChainFuse/packages/commit/70b8a9841fbdea6de1a1e66c6363a7fdc335b2ef) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump @types/node, @cloudflare/workers-types
+
+-   [#114](https://github.com/ChainFuse/packages/pull/114) [`df512c0`](https://github.com/ChainFuse/packages/commit/df512c0b9db85c1cde5e8156cefe05944dc433d9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump uuid
+
 ## 0.1.3
 
 ### Patch Changes
