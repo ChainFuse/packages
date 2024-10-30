@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 1.1.2
+
+### Patch Changes
+
+-   [#110](https://github.com/ChainFuse/packages/pull/110) [`0502124`](https://github.com/ChainFuse/packages/commit/050212474f8694cc4b18f748352fadc214d0ca24) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/checkout
+
 ## 1.1.1
 
 ### Patch Changes
