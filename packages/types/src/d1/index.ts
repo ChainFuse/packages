@@ -17,4 +17,18 @@ export type ISODateString = `${number}-${number}-${number}T${number}:${number}:$
  * Represents a cron expression string (in UTC time).
  * Supports any format supported by `cron-parser` library @link https://www.npmjs.com/package/cron-parser#supported-format
  */
-export type CronString = `${string | number} ${string | number} ${string | number} ${string | number} ${string | number}`;
+export type CronString = `${string | number} ${string | number} ${string | number} ${string | number} ${string | number}` | `${string | number} ${string | number} ${string | number} ${string | number} ${string | number} ${string | number}`;
+export type CronArray = [string | number, string | number, string | number, string | number, string | number] | [string | number, string | number, string | number, string | number, string | number, string | number];
+export interface CronObject {
+	second?: string | number;
+	minute: string | number;
+	hour: string | number;
+	dayOfMonth: string | number;
+	month: string | number;
+	dayOfWeek: string | number;
+}
+export interface CronExport {
+	string: CronString;
+	array: CronArray;
+	object: CronObject;
+}
