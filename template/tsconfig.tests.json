@@ -3,7 +3,8 @@
 	"compilerOptions": {
 		"incremental": false,
 		"declaration": false,
-		"inlineSourceMap": true
+		"inlineSourceMap": true,
+		"removeComments": true
 	},
 	"include": ["./__tests__"]
 }
