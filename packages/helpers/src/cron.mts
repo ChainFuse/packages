@@ -20,8 +20,15 @@ export class CronHelpers {
 
 			return {
 				string: parsed.stringify(true) as CronExport['string'],
-				array: [parsed.fields.second, parsed.fields.minute, parsed.fields.hour, parsed.fields.dayOfMonth, parsed.fields.month, parsed.fields.dayOfWeek],
-				object: parsed.fields,
+				array: [parsed.fields.second.toSorted(), parsed.fields.minute.toSorted(), parsed.fields.hour.toSorted(), parsed.fields.dayOfMonth.toSorted(), parsed.fields.month.toSorted(), parsed.fields.dayOfWeek.toSorted()],
+				object: {
+					second: parsed.fields.second.toSorted(),
+					minute: parsed.fields.minute.toSorted(),
+					hour: parsed.fields.hour.toSorted(),
+					dayOfMonth: parsed.fields.dayOfMonth.toSorted(),
+					month: parsed.fields.month.toSorted(),
+					dayOfWeek: parsed.fields.dayOfWeek.toSorted(),
+				},
 			};
 		} else {
 			return {
