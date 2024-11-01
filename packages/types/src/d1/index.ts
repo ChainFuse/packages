@@ -17,4 +17,4 @@ export type ISODateString = `${number}-${number}-${number}T${number}:${number}:$
  * Represents a cron expression string (in UTC time).
  * Supports any format supported by `cron-parser` library @link https://www.npmjs.com/package/cron-parser#supported-format
  */
-export type CronString = `${number} ${number} ${number | 'l' | 'L'} ${number} ${number | `${number}l` | `${number}L`}` | `${number} ${number} ${number} ${number | 'l' | 'L'} ${number} ${number | `${number}l` | `${number}L`}`;
+export type CronString = `${string | number} ${string | number} ${string | number} ${string | number} ${string | number}` | `${string | number} ${string | number} ${string | number} ${string | number} ${string | number} ${string | number}`;
