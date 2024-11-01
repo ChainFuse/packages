@@ -3,8 +3,7 @@
 	"compilerOptions": {
 		"incremental": false,
 		"declaration": false,
-		"inlineSourceMap": true,
-		"types": ["node"]
+		"inlineSourceMap": true
 	},
 	"include": ["./__tests__"]
 }
