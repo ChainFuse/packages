@@ -1,5 +1,19 @@
 # @chainfuse/types
 
+## 1.1.3
+
+### Patch Changes
+
+-   [#122](https://github.com/ChainFuse/packages/pull/122) [`549c059`](https://github.com/ChainFuse/packages/commit/549c05928a89bd740efe253db45fa2ecaa7c7ae9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint
+
+-   [#123](https://github.com/ChainFuse/packages/pull/123) [`a16fa15`](https://github.com/ChainFuse/packages/commit/a16fa152b0da45f91848e83ccf09cd8f04f4a8f4) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump lerna
+
+-   [#120](https://github.com/ChainFuse/packages/pull/120) [`79928ba`](https://github.com/ChainFuse/packages/commit/79928ba49c2c7416146d7d959046a5f797796d8f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
+-   [#121](https://github.com/ChainFuse/packages/pull/121) [`7d683a1`](https://github.com/ChainFuse/packages/commit/7d683a1d5efb10a4670eb81f47c18f67c89ac188) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+
+-   [#118](https://github.com/ChainFuse/packages/pull/118) [`18f6c53`](https://github.com/ChainFuse/packages/commit/18f6c5329654e7bcfe97b25483a551be145540e5) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): More accurate cron type
+
 ## 1.1.2
 
 ### Patch Changes
