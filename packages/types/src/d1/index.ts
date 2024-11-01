@@ -1,4 +1,3 @@
-import type { CronFields } from 'cron-parser';
 import type { Buffer } from 'node:buffer';
 
 export * from './tenants/index.js';
@@ -19,10 +18,3 @@ export type ISODateString = `${number}-${number}-${number}T${number}:${number}:$
  * Supports any format supported by `cron-parser` library @link https://www.npmjs.com/package/cron-parser#supported-format
  */
 export type CronString = `${number} ${number} ${number | 'l' | 'L'} ${number} ${number | `${number}l` | `${number}L`}` | `${number} ${number} ${number} ${number | 'l' | 'L'} ${number} ${number | `${number}l` | `${number}L`}`;
-export type CronArray = [CronFields['minute'], CronFields['hour'], CronFields['dayOfMonth'], CronFields['month'], CronFields['dayOfWeek']] | [CronFields['second'], CronFields['minute'], CronFields['hour'], CronFields['dayOfMonth'], CronFields['month'], CronFields['dayOfWeek']];
-export type CronObject = Exclude<CronFields, 'second'> & Partial<Pick<CronFields, 'second'>>;
-export interface CronExport {
-	string: CronString;
-	array: CronArray;
-	object: CronObject;
-}

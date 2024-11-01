@@ -2,4 +2,4 @@
 '@chainfuse/types': patch
 ---
 
-types(feat): Add more variation to cron
+types(fix): More accurate cron type
