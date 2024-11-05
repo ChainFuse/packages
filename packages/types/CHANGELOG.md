@@ -1,5 +1,15 @@
 # @chainfuse/types
 
+## 1.1.4
+
+### Patch Changes
+
+-   [#126](https://github.com/ChainFuse/packages/pull/126) [`6a37aba`](https://github.com/ChainFuse/packages/commit/6a37aba09191ba30b3ad8f379347ac5265449f3b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+-   [#124](https://github.com/ChainFuse/packages/pull/124) [`32c2e77`](https://github.com/ChainFuse/packages/commit/32c2e77ef7f835064feed902c335bc3df838cd2c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @swc/core
+
+-   [#125](https://github.com/ChainFuse/packages/pull/125) [`270eabe`](https://github.com/ChainFuse/packages/commit/270eabec9fa043f440ab51a6308f316a90816dec) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node
+
 ## 1.1.3
 
 ### Patch Changes
