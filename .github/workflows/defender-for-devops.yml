@@ -45,11 +45,11 @@ jobs:
           node-version: lts/*
           check-latest: true
           cache: 'npm'
-      - uses: microsoft/security-devops-action@cc007d020261b84193ccd49fa298eb8ba2408893 # v1.11.0
+      - uses: microsoft/security-devops-action@08976cb623803b1b36d7112d4ff9f59eae704de0 # v1.12.0
         id: msdo
         env:
           GDN_RUN_AUTO: true
-      - uses: github/codeql-action/upload-sarif@662472033e021d55d94146f66f6058822b0b39fd # v3.27.0
+      - uses: github/codeql-action/upload-sarif@396bb3e45325a47dd9ef434068033c6d5bb0d11a # v3.27.3
         with:
           sarif_file: ${{ steps.msdo.outputs.sarifFile }}
           wait-for-processing: false
