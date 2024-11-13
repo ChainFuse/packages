@@ -1,5 +1,21 @@
 # @chainfuse/helpers
 
+## 0.1.8
+
+### Patch Changes
+
+-   [#134](https://github.com/ChainFuse/packages/pull/134) [`a4e0f50`](https://github.com/ChainFuse/packages/commit/a4e0f50fa8d040cce1f6ee8d24448d4c3b293e0e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump microsoft/security-devops-action, github/codeql-action
+
+-   [#130](https://github.com/ChainFuse/packages/pull/130) [`1a8e196`](https://github.com/ChainFuse/packages/commit/1a8e196512f5c1d4ce056c288af77898fc318ffd) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+-   [#128](https://github.com/ChainFuse/packages/pull/128) [`a48bd27`](https://github.com/ChainFuse/packages/commit/a48bd27fca77b2a3886be20be94fc0a245de14a9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @swc/core
+
+-   [#129](https://github.com/ChainFuse/packages/pull/129) [`a279041`](https://github.com/ChainFuse/packages/commit/a27904139a3417888a9e788f12cb01f9617d9ba6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+-   [#131](https://github.com/ChainFuse/packages/pull/131) [`3c360b1`](https://github.com/ChainFuse/packages/commit/3c360b123db14fbf1028ce878e950c1b67d33096) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump uuid
+
+-   [`6a4161d`](https://github.com/ChainFuse/packages/commit/6a4161d319895b1d7a86c298477ede8aa468c6e0) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Stop using depreciated functions in `BufferHelpers`
+
 ## 0.1.7
 
 ### Patch Changes
