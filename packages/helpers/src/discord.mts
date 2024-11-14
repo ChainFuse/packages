@@ -42,7 +42,11 @@ export class DiscordHelpers {
 					console.debug('Discord Fetch request', cacheKey.url, JSON.stringify(NetHelpers.initBodyTrimmer({ ...init, headers: Object.fromEntries(NetHelpers.stripSensitiveHeaders(new Headers(init.headers)).entries()) }), null, '\t'));
 				}
 
-				if (cacheTtl && (rawInit.method?.toLowerCase() === 'get' || forceCache)) {
+				/**
+				 * Only cache GET requests
+				 * Empty method means GET
+				 */
+				if (cacheTtl && ((rawInit.method ?? 'GET').toLowerCase() === 'get' || forceCache)) {
 					// const cfCacheRef: Promise<Cache> | undefined = caches?.open('cfApi');
 					const discordCacheRef = caches?.open(`discordApi`);
 
