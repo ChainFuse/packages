@@ -1,5 +1,15 @@
 # @chainfuse/helpers
 
+## 0.2.0
+
+### Minor Changes
+
+-   [`7fa2007`](https://github.com/ChainFuse/packages/commit/7fa20072be6070fd72ab3eb631e32f84ce28c035) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Added discord helpers
+
+### Patch Changes
+
+-   [#137](https://github.com/ChainFuse/packages/pull/137) [`9e007d0`](https://github.com/ChainFuse/packages/commit/9e007d06c132d130cc9a8939dd219fef704ade89) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
 ## 0.1.8
 
 ### Patch Changes
