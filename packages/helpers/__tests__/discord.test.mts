@@ -2,8 +2,8 @@ import { ok, strictEqual } from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { Helpers } from '../dist/index.mjs';
 
-void describe('Helper Tests', () => {
-	void describe('Discord snowflake generator', () => {
+void describe('Discord Helper Tests', () => {
+	void describe('Snowflake generator', () => {
 		const nowDate = new Date();
 
 		void it(`Now (${nowDate.toISOString()})`, () => {
