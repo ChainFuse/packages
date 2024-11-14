@@ -1,15 +1,15 @@
 import { ok, strictEqual } from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { Helpers } from '../dist/index.mjs';
+import { DiscordHelpers } from '../dist/discord.mjs';
 
 void describe('Discord Helper Tests', () => {
 	void describe('Snowflake generator', () => {
 		const nowDate = new Date();
 
 		void it(`Now (${nowDate.toISOString()})`, () => {
-			const snowflake = Helpers.dateToDiscordSnowflake(nowDate);
+			const snowflake = DiscordHelpers.dateToDiscordSnowflake(nowDate);
 			const originalDate = BigInt(nowDate.valueOf());
-			const convertedDate = (snowflake >> BigInt(22)) + Helpers.discordEpoch;
+			const convertedDate = (snowflake >> BigInt(22)) + DiscordHelpers.discordEpoch;
 
 			const snowflakeSize = snowflake.toString(2).length;
 			ok(snowflakeSize > 0 && snowflakeSize <= 64, `Expected snowflake to be 64 bits, but got ${snowflakeSize} bits`);
@@ -21,7 +21,7 @@ void describe('Discord Helper Tests', () => {
 		 * @param minDate Discord starts counting the first second of 2015
 		 * @param maxDate Discord snowflake uses 42 bits for the timestamp
 		 */
-		function generate(minDate = new Date(Number(Helpers.discordEpoch)), maxDate = new Date(2 ** 42 - 1)) {
+		function generate(minDate = new Date(Number(DiscordHelpers.discordEpoch)), maxDate = new Date(2 ** 42 - 1)) {
 			const startTimestamp = minDate.getTime();
 			const endTimestamp = maxDate.getTime();
 
@@ -35,9 +35,9 @@ void describe('Discord Helper Tests', () => {
 			const date = new Date(generate());
 
 			void it(date.toISOString(), () => {
-				const snowflake = Helpers.dateToDiscordSnowflake(date);
+				const snowflake = DiscordHelpers.dateToDiscordSnowflake(date);
 				const originalDate = BigInt(date.valueOf());
-				const convertedDate = (snowflake >> BigInt(22)) + Helpers.discordEpoch;
+				const convertedDate = (snowflake >> BigInt(22)) + DiscordHelpers.discordEpoch;
 
 				const snowflakeSize = snowflake.toString(2).length;
 				ok(snowflakeSize > 0 && snowflakeSize <= 64, `Expected snowflake to be 64 bits, but got ${snowflakeSize} bits`);
