@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 1.1.6
+
+### Patch Changes
+
+-   [#137](https://github.com/ChainFuse/packages/pull/137) [`9e007d0`](https://github.com/ChainFuse/packages/commit/9e007d06c132d130cc9a8939dd219fef704ade89) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
 ## 1.1.5
 
 ### Patch Changes
