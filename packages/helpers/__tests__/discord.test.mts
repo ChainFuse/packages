@@ -37,7 +37,7 @@ void describe('Discord Helper Tests', () => {
 			void it(date.toISOString(), () => {
 				const snowflake = DiscordHelpers.dateToDiscordSnowflake(date);
 				const originalDate = BigInt(date.valueOf());
-				const convertedDate = (snowflake >> BigInt(22)) + DiscordHelpers.discordEpoch;
+				const convertedDate = BigInt(DiscordHelpers.discordSnowflakeToDate(snowflake).valueOf());
 
 				const snowflakeSize = snowflake.toString(2).length;
 				ok(snowflakeSize > 0 && snowflakeSize <= 64, `Expected snowflake to be 64 bits, but got ${snowflakeSize} bits`);
