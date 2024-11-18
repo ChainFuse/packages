@@ -1,5 +1,15 @@
 # @chainfuse/helpers
 
+## 0.3.0
+
+### Minor Changes
+
+-   [#139](https://github.com/ChainFuse/packages/pull/139) [`5b24df5`](https://github.com/ChainFuse/packages/commit/5b24df56453695374df5a387518f1f96239c2348) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add discord snowflake to date
+
+### Patch Changes
+
+-   [#138](https://github.com/ChainFuse/packages/pull/138) [`0839dba`](https://github.com/ChainFuse/packages/commit/0839dba840eb1106785f9d79e344fd1a15c208b1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(): bump @eslint/plugin-kit
+
 ## 0.2.0
 
 ### Minor Changes

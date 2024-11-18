@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 1.1.7
+
+### Patch Changes
+
+-   [#138](https://github.com/ChainFuse/packages/pull/138) [`0839dba`](https://github.com/ChainFuse/packages/commit/0839dba840eb1106785f9d79e344fd1a15c208b1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(): bump @eslint/plugin-kit
+
 ## 1.1.6
 
 ### Patch Changes
