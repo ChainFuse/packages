@@ -27,6 +27,15 @@ export class DiscordHelpers {
 		return (BigInt(date.valueOf()) - this.discordEpoch) << BigInt(22);
 	}
 
+	/**
+	 * Generate a date from a Discord Snowflake ID.
+	 * @link https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right
+	 */
+	public static discordSnowflakeToDate(snowflakeRaw: bigint | string = this.discordEpoch) {
+		const snowflake = BigInt(snowflakeRaw);
+		return new Date(Number((snowflake >> BigInt(22)) + this.discordEpoch));
+	}
+
 	public static discordRest(apiKey: string, cacheTtl = 24 * 60 * 60, forceCache = false, executionContext?: ExecutionContext, logger: CustomLoging = false) {
 		return new REST({
 			agent: null,
