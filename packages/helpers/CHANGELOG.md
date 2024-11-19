@@ -1,5 +1,15 @@
 # @chainfuse/helpers
 
+## 0.3.1
+
+### Patch Changes
+
+-   [#143](https://github.com/ChainFuse/packages/pull/143) [`2c1a370`](https://github.com/ChainFuse/packages/commit/2c1a3705d12f08a9e76ad7e668acfdf34e35fbe8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump step-security/harden-runner
+
+-   [#142](https://github.com/ChainFuse/packages/pull/142) [`4695f56`](https://github.com/ChainFuse/packages/commit/4695f5659e7d4a374876cd7a52638e91289b480a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+-   [#141](https://github.com/ChainFuse/packages/pull/141) [`a2b1b7e`](https://github.com/ChainFuse/packages/commit/a2b1b7e2cbb6cc6ee5caf09182a6f5cd9ddd7c2a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+
 ## 0.3.0
 
 ### Minor Changes
