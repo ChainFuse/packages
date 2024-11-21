@@ -29,6 +29,11 @@ export type BlockKeys<T, K extends readonly string[]> = {
 	[P in keyof T as P extends K[number] ? never : P]: T[P];
 };
 
+/**
+ * For when you have a type to conform `URLSearchParams` to, but all values are strings (as per search params spec)
+ */
+export type InterfaceToSearchParams<T> = Record<keyof T, string>;
+
 export type PromiseFactory<T> = () => Promise<T>;
 
 export interface ExternallyResolvablePromise<T> {
