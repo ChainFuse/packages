@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 1.2.0
+
+### Minor Changes
+
+-   [`2a29125`](https://github.com/ChainFuse/packages/commit/2a29125e4748f9830ba7ddf5df0c25e68a948337) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add new helper type for converting types to search params
+
 ## 1.1.8
 
 ### Patch Changes
