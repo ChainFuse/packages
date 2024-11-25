@@ -36,8 +36,9 @@ export class DiscordHelpers {
 		return new Date(Number((snowflake >> BigInt(22)) + this.discordEpoch));
 	}
 
-	public static discordRest(apiKey: string, cacheTtl = 24 * 60 * 60, forceCache = false, executionContext?: ExecutionContext, logger: CustomLoging = false) {
+	public static discordRest(apiKey: string, cacheTtl = 24 * 60 * 60, forceCache = false, executionContext?: ExecutionContext, logger: CustomLoging = false, restOptions?: Partial<Omit<RESTOptions, 'agent' | 'authPrefix' | 'makeRequest'>>) {
 		return new REST({
+			...restOptions,
 			agent: null,
 			authPrefix: 'Bot',
 			makeRequest: (url, rawInit) => {
