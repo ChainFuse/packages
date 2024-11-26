@@ -1,5 +1,25 @@
 # @chainfuse/helpers
 
+## 0.4.0
+
+### Minor Changes
+
+- [`2d0da49`](https://github.com/ChainFuse/packages/commit/2d0da4912ff941a22c070984857d2690596b2556) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Allow passing in additional options to discord rest
+
+### Patch Changes
+
+- [#150](https://github.com/ChainFuse/packages/pull/150) [`adfff7f`](https://github.com/ChainFuse/packages/commit/adfff7ffa67770b20ca4d8147cf5074b0d09566b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump github/codeql-action, actions/dependency-review-action
+
+- [#154](https://github.com/ChainFuse/packages/pull/154) [`35f4e9b`](https://github.com/ChainFuse/packages/commit/35f4e9bb6e68f09a6fb5d105251822beb9427c36) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump prettier, typescript-eslint
+
+- [#152](https://github.com/ChainFuse/packages/pull/152) [`3fb9637`](https://github.com/ChainFuse/packages/commit/3fb96378ff378c48c96da443536f0cacfd6d3c7f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
+
+- [#148](https://github.com/ChainFuse/packages/pull/148) [`ab944a8`](https://github.com/ChainFuse/packages/commit/ab944a8a6859c0770bbf99b9ff362c92f2d16db1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @swc/core, typescript
+
+- [#153](https://github.com/ChainFuse/packages/pull/153) [`0476f5a`](https://github.com/ChainFuse/packages/commit/0476f5ac868a64e05a9e047e3cea25a12e2a1b04) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node
+
+- [`fda5ccc`](https://github.com/ChainFuse/packages/commit/fda5ccc1689d08e287135cf71981a46d1c879654) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Fix upstream buffer changes
+
 ## 0.3.1
 
 ### Patch Changes
