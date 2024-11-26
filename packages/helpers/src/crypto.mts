@@ -3,7 +3,10 @@ import { BufferHelpers } from './buffers.mjs';
 export class CryptoHelpers {
 	public static secretBytes(byteSize: number) {
 		return import('node:crypto')
-			.then(({ randomBytes }) => randomBytes(byteSize))
+			.then(({ randomBytes }) => {
+				const mainBuffer = randomBytes(byteSize);
+				return new Uint8Array(mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength));
+			})
 			.catch(() => {
 				const randomBytes = new Uint8Array(byteSize);
 				crypto.getRandomValues(randomBytes);
