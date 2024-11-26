@@ -4,236 +4,236 @@
 
 ### Patch Changes
 
--   [#143](https://github.com/ChainFuse/packages/pull/143) [`2c1a370`](https://github.com/ChainFuse/packages/commit/2c1a3705d12f08a9e76ad7e668acfdf34e35fbe8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump step-security/harden-runner
+- [#143](https://github.com/ChainFuse/packages/pull/143) [`2c1a370`](https://github.com/ChainFuse/packages/commit/2c1a3705d12f08a9e76ad7e668acfdf34e35fbe8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump step-security/harden-runner
 
--   [#142](https://github.com/ChainFuse/packages/pull/142) [`4695f56`](https://github.com/ChainFuse/packages/commit/4695f5659e7d4a374876cd7a52638e91289b480a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+- [#142](https://github.com/ChainFuse/packages/pull/142) [`4695f56`](https://github.com/ChainFuse/packages/commit/4695f5659e7d4a374876cd7a52638e91289b480a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
 
--   [#141](https://github.com/ChainFuse/packages/pull/141) [`a2b1b7e`](https://github.com/ChainFuse/packages/commit/a2b1b7e2cbb6cc6ee5caf09182a6f5cd9ddd7c2a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+- [#141](https://github.com/ChainFuse/packages/pull/141) [`a2b1b7e`](https://github.com/ChainFuse/packages/commit/a2b1b7e2cbb6cc6ee5caf09182a6f5cd9ddd7c2a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
 
 ## 0.3.0
 
 ### Minor Changes
 
--   [#139](https://github.com/ChainFuse/packages/pull/139) [`5b24df5`](https://github.com/ChainFuse/packages/commit/5b24df56453695374df5a387518f1f96239c2348) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add discord snowflake to date
+- [#139](https://github.com/ChainFuse/packages/pull/139) [`5b24df5`](https://github.com/ChainFuse/packages/commit/5b24df56453695374df5a387518f1f96239c2348) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add discord snowflake to date
 
 ### Patch Changes
 
--   [#138](https://github.com/ChainFuse/packages/pull/138) [`0839dba`](https://github.com/ChainFuse/packages/commit/0839dba840eb1106785f9d79e344fd1a15c208b1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(): bump @eslint/plugin-kit
+- [#138](https://github.com/ChainFuse/packages/pull/138) [`0839dba`](https://github.com/ChainFuse/packages/commit/0839dba840eb1106785f9d79e344fd1a15c208b1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(): bump @eslint/plugin-kit
 
 ## 0.2.0
 
 ### Minor Changes
 
--   [`7fa2007`](https://github.com/ChainFuse/packages/commit/7fa20072be6070fd72ab3eb631e32f84ce28c035) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Added discord helpers
+- [`7fa2007`](https://github.com/ChainFuse/packages/commit/7fa20072be6070fd72ab3eb631e32f84ce28c035) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Added discord helpers
 
 ### Patch Changes
 
--   [#137](https://github.com/ChainFuse/packages/pull/137) [`9e007d0`](https://github.com/ChainFuse/packages/commit/9e007d06c132d130cc9a8939dd219fef704ade89) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+- [#137](https://github.com/ChainFuse/packages/pull/137) [`9e007d0`](https://github.com/ChainFuse/packages/commit/9e007d06c132d130cc9a8939dd219fef704ade89) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
 
 ## 0.1.8
 
 ### Patch Changes
 
--   [#134](https://github.com/ChainFuse/packages/pull/134) [`a4e0f50`](https://github.com/ChainFuse/packages/commit/a4e0f50fa8d040cce1f6ee8d24448d4c3b293e0e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump microsoft/security-devops-action, github/codeql-action
+- [#134](https://github.com/ChainFuse/packages/pull/134) [`a4e0f50`](https://github.com/ChainFuse/packages/commit/a4e0f50fa8d040cce1f6ee8d24448d4c3b293e0e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump microsoft/security-devops-action, github/codeql-action
 
--   [#130](https://github.com/ChainFuse/packages/pull/130) [`1a8e196`](https://github.com/ChainFuse/packages/commit/1a8e196512f5c1d4ce056c288af77898fc318ffd) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+- [#130](https://github.com/ChainFuse/packages/pull/130) [`1a8e196`](https://github.com/ChainFuse/packages/commit/1a8e196512f5c1d4ce056c288af77898fc318ffd) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
 
--   [#128](https://github.com/ChainFuse/packages/pull/128) [`a48bd27`](https://github.com/ChainFuse/packages/commit/a48bd27fca77b2a3886be20be94fc0a245de14a9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @swc/core
+- [#128](https://github.com/ChainFuse/packages/pull/128) [`a48bd27`](https://github.com/ChainFuse/packages/commit/a48bd27fca77b2a3886be20be94fc0a245de14a9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @swc/core
 
--   [#129](https://github.com/ChainFuse/packages/pull/129) [`a279041`](https://github.com/ChainFuse/packages/commit/a27904139a3417888a9e788f12cb01f9617d9ba6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+- [#129](https://github.com/ChainFuse/packages/pull/129) [`a279041`](https://github.com/ChainFuse/packages/commit/a27904139a3417888a9e788f12cb01f9617d9ba6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
 
--   [#131](https://github.com/ChainFuse/packages/pull/131) [`3c360b1`](https://github.com/ChainFuse/packages/commit/3c360b123db14fbf1028ce878e950c1b67d33096) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump uuid
+- [#131](https://github.com/ChainFuse/packages/pull/131) [`3c360b1`](https://github.com/ChainFuse/packages/commit/3c360b123db14fbf1028ce878e950c1b67d33096) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump uuid
 
--   [`6a4161d`](https://github.com/ChainFuse/packages/commit/6a4161d319895b1d7a86c298477ede8aa468c6e0) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Stop using depreciated functions in `BufferHelpers`
+- [`6a4161d`](https://github.com/ChainFuse/packages/commit/6a4161d319895b1d7a86c298477ede8aa468c6e0) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Stop using depreciated functions in `BufferHelpers`
 
 ## 0.1.7
 
 ### Patch Changes
 
--   [#126](https://github.com/ChainFuse/packages/pull/126) [`6a37aba`](https://github.com/ChainFuse/packages/commit/6a37aba09191ba30b3ad8f379347ac5265449f3b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+- [#126](https://github.com/ChainFuse/packages/pull/126) [`6a37aba`](https://github.com/ChainFuse/packages/commit/6a37aba09191ba30b3ad8f379347ac5265449f3b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
 
--   [#124](https://github.com/ChainFuse/packages/pull/124) [`32c2e77`](https://github.com/ChainFuse/packages/commit/32c2e77ef7f835064feed902c335bc3df838cd2c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @swc/core
+- [#124](https://github.com/ChainFuse/packages/pull/124) [`32c2e77`](https://github.com/ChainFuse/packages/commit/32c2e77ef7f835064feed902c335bc3df838cd2c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @swc/core
 
--   [#125](https://github.com/ChainFuse/packages/pull/125) [`270eabe`](https://github.com/ChainFuse/packages/commit/270eabec9fa043f440ab51a6308f316a90816dec) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node
+- [#125](https://github.com/ChainFuse/packages/pull/125) [`270eabe`](https://github.com/ChainFuse/packages/commit/270eabec9fa043f440ab51a6308f316a90816dec) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node
 
 ## 0.1.6
 
 ### Patch Changes
 
--   [#122](https://github.com/ChainFuse/packages/pull/122) [`549c059`](https://github.com/ChainFuse/packages/commit/549c05928a89bd740efe253db45fa2ecaa7c7ae9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint
+- [#122](https://github.com/ChainFuse/packages/pull/122) [`549c059`](https://github.com/ChainFuse/packages/commit/549c05928a89bd740efe253db45fa2ecaa7c7ae9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint
 
--   [#123](https://github.com/ChainFuse/packages/pull/123) [`a16fa15`](https://github.com/ChainFuse/packages/commit/a16fa152b0da45f91848e83ccf09cd8f04f4a8f4) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump lerna
+- [#123](https://github.com/ChainFuse/packages/pull/123) [`a16fa15`](https://github.com/ChainFuse/packages/commit/a16fa152b0da45f91848e83ccf09cd8f04f4a8f4) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump lerna
 
--   [#120](https://github.com/ChainFuse/packages/pull/120) [`79928ba`](https://github.com/ChainFuse/packages/commit/79928ba49c2c7416146d7d959046a5f797796d8f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+- [#120](https://github.com/ChainFuse/packages/pull/120) [`79928ba`](https://github.com/ChainFuse/packages/commit/79928ba49c2c7416146d7d959046a5f797796d8f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
 
--   [#121](https://github.com/ChainFuse/packages/pull/121) [`7d683a1`](https://github.com/ChainFuse/packages/commit/7d683a1d5efb10a4670eb81f47c18f67c89ac188) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+- [#121](https://github.com/ChainFuse/packages/pull/121) [`7d683a1`](https://github.com/ChainFuse/packages/commit/7d683a1d5efb10a4670eb81f47c18f67c89ac188) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
 
 ## 0.1.5
 
 ### Patch Changes
 
--   [#110](https://github.com/ChainFuse/packages/pull/110) [`0502124`](https://github.com/ChainFuse/packages/commit/050212474f8694cc4b18f748352fadc214d0ca24) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/checkout
+- [#110](https://github.com/ChainFuse/packages/pull/110) [`0502124`](https://github.com/ChainFuse/packages/commit/050212474f8694cc4b18f748352fadc214d0ca24) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/checkout
 
 ## 0.1.4
 
 ### Patch Changes
 
--   [#109](https://github.com/ChainFuse/packages/pull/109) [`658e13a`](https://github.com/ChainFuse/packages/commit/658e13a6abbda5eba10aea2c1e248ae08fce9c3c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/dependency-review-action
+- [#109](https://github.com/ChainFuse/packages/pull/109) [`658e13a`](https://github.com/ChainFuse/packages/commit/658e13a6abbda5eba10aea2c1e248ae08fce9c3c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/dependency-review-action
 
--   [#108](https://github.com/ChainFuse/packages/pull/108) [`d43e8c2`](https://github.com/ChainFuse/packages/commit/d43e8c2d20cef43ab0dc2948d9375504ecb96286) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/setup-node
+- [#108](https://github.com/ChainFuse/packages/pull/108) [`d43e8c2`](https://github.com/ChainFuse/packages/commit/d43e8c2d20cef43ab0dc2948d9375504ecb96286) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/setup-node
 
--   [#113](https://github.com/ChainFuse/packages/pull/113) [`d5a3a0b`](https://github.com/ChainFuse/packages/commit/d5a3a0b334d2038ff9659a2245bad668ddf7b8fc) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+- [#113](https://github.com/ChainFuse/packages/pull/113) [`d5a3a0b`](https://github.com/ChainFuse/packages/commit/d5a3a0b334d2038ff9659a2245bad668ddf7b8fc) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
 
--   [#111](https://github.com/ChainFuse/packages/pull/111) [`7ca400a`](https://github.com/ChainFuse/packages/commit/7ca400ab5332d4b59f6ef91d44423222f7e40c7a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+- [#111](https://github.com/ChainFuse/packages/pull/111) [`7ca400a`](https://github.com/ChainFuse/packages/commit/7ca400ab5332d4b59f6ef91d44423222f7e40c7a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
 
--   [#115](https://github.com/ChainFuse/packages/pull/115) [`70b8a98`](https://github.com/ChainFuse/packages/commit/70b8a9841fbdea6de1a1e66c6363a7fdc335b2ef) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump @types/node, @cloudflare/workers-types
+- [#115](https://github.com/ChainFuse/packages/pull/115) [`70b8a98`](https://github.com/ChainFuse/packages/commit/70b8a9841fbdea6de1a1e66c6363a7fdc335b2ef) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump @types/node, @cloudflare/workers-types
 
--   [#114](https://github.com/ChainFuse/packages/pull/114) [`df512c0`](https://github.com/ChainFuse/packages/commit/df512c0b9db85c1cde5e8156cefe05944dc433d9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump uuid
+- [#114](https://github.com/ChainFuse/packages/pull/114) [`df512c0`](https://github.com/ChainFuse/packages/commit/df512c0b9db85c1cde5e8156cefe05944dc433d9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump uuid
 
 ## 0.1.3
 
 ### Patch Changes
 
--   [#103](https://github.com/ChainFuse/packages/pull/103) [`8dfa7de`](https://github.com/ChainFuse/packages/commit/8dfa7dedd85ddfd685a3b5b07e8149ad7a0a5865) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/dependency-review-action
+- [#103](https://github.com/ChainFuse/packages/pull/103) [`8dfa7de`](https://github.com/ChainFuse/packages/commit/8dfa7dedd85ddfd685a3b5b07e8149ad7a0a5865) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/dependency-review-action
 
--   [#101](https://github.com/ChainFuse/packages/pull/101) [`31ca3d6`](https://github.com/ChainFuse/packages/commit/31ca3d676e858641b01252ee1bf4c27515a74178) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/cache
+- [#101](https://github.com/ChainFuse/packages/pull/101) [`31ca3d6`](https://github.com/ChainFuse/packages/commit/31ca3d676e858641b01252ee1bf4c27515a74178) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/cache
 
--   [#102](https://github.com/ChainFuse/packages/pull/102) [`cfd2c1e`](https://github.com/ChainFuse/packages/commit/cfd2c1ef18be99f0cc4e42edcec7a91a08713900) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump github/codeql-action
+- [#102](https://github.com/ChainFuse/packages/pull/102) [`cfd2c1e`](https://github.com/ChainFuse/packages/commit/cfd2c1ef18be99f0cc4e42edcec7a91a08713900) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump github/codeql-action
 
--   [#106](https://github.com/ChainFuse/packages/pull/106) [`e8c5213`](https://github.com/ChainFuse/packages/commit/e8c52132b61e94c1a8dadfe52e05de9644c37610) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+- [#106](https://github.com/ChainFuse/packages/pull/106) [`e8c5213`](https://github.com/ChainFuse/packages/commit/e8c52132b61e94c1a8dadfe52e05de9644c37610) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
 
--   [#104](https://github.com/ChainFuse/packages/pull/104) [`64268ef`](https://github.com/ChainFuse/packages/commit/64268efc485da4d673d5f0aaccab0151b13adaa1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+- [#104](https://github.com/ChainFuse/packages/pull/104) [`64268ef`](https://github.com/ChainFuse/packages/commit/64268efc485da4d673d5f0aaccab0151b13adaa1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
 
--   [#98](https://github.com/ChainFuse/packages/pull/98) [`2ea15f9`](https://github.com/ChainFuse/packages/commit/2ea15f9669817cbe874515abc85e382a617c7528) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+- [#98](https://github.com/ChainFuse/packages/pull/98) [`2ea15f9`](https://github.com/ChainFuse/packages/commit/2ea15f9669817cbe874515abc85e382a617c7528) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
 
--   [#105](https://github.com/ChainFuse/packages/pull/105) [`5cd5b8d`](https://github.com/ChainFuse/packages/commit/5cd5b8dc94b9d80929f75db1f021086b3710c8fb) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+- [#105](https://github.com/ChainFuse/packages/pull/105) [`5cd5b8d`](https://github.com/ChainFuse/packages/commit/5cd5b8dc94b9d80929f75db1f021086b3710c8fb) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
 
 ## 0.1.2
 
 ### Patch Changes
 
--   [#96](https://github.com/ChainFuse/packages/pull/96) [`002a7e6`](https://github.com/ChainFuse/packages/commit/002a7e6f11e04a62b4b84fa88aab557f253c2093) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump changesets/action
+- [#96](https://github.com/ChainFuse/packages/pull/96) [`002a7e6`](https://github.com/ChainFuse/packages/commit/002a7e6f11e04a62b4b84fa88aab557f253c2093) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump changesets/action
 
--   [#95](https://github.com/ChainFuse/packages/pull/95) [`69c676d`](https://github.com/ChainFuse/packages/commit/69c676d6aa63ebcf26ed101a43ba55ca1099d100) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+- [#95](https://github.com/ChainFuse/packages/pull/95) [`69c676d`](https://github.com/ChainFuse/packages/commit/69c676d6aa63ebcf26ed101a43ba55ca1099d100) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
 
--   [#94](https://github.com/ChainFuse/packages/pull/94) [`18d7136`](https://github.com/ChainFuse/packages/commit/18d7136f77e4124b1e2fe1b754cf38adfd31b121) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+- [#94](https://github.com/ChainFuse/packages/pull/94) [`18d7136`](https://github.com/ChainFuse/packages/commit/18d7136f77e4124b1e2fe1b754cf38adfd31b121) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
 
 ## 0.1.1
 
 ### Patch Changes
 
--   [#88](https://github.com/ChainFuse/packages/pull/88) [`42e210a`](https://github.com/ChainFuse/packages/commit/42e210a5dfa97eebf24d6ff59e407398fac21cb2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/checkout
+- [#88](https://github.com/ChainFuse/packages/pull/88) [`42e210a`](https://github.com/ChainFuse/packages/commit/42e210a5dfa97eebf24d6ff59e407398fac21cb2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/checkout
 
--   [#89](https://github.com/ChainFuse/packages/pull/89) [`7cfff57`](https://github.com/ChainFuse/packages/commit/7cfff576202266b79a739264c1a415ab6d5b024f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/upload-artifact
+- [#89](https://github.com/ChainFuse/packages/pull/89) [`7cfff57`](https://github.com/ChainFuse/packages/commit/7cfff576202266b79a739264c1a415ab6d5b024f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/upload-artifact
 
--   [#86](https://github.com/ChainFuse/packages/pull/86) [`72c59b6`](https://github.com/ChainFuse/packages/commit/72c59b6f22c1f0e33f8879a813e467654eb92014) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/cache
+- [#86](https://github.com/ChainFuse/packages/pull/86) [`72c59b6`](https://github.com/ChainFuse/packages/commit/72c59b6f22c1f0e33f8879a813e467654eb92014) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/cache
 
--   [#87](https://github.com/ChainFuse/packages/pull/87) [`57405fc`](https://github.com/ChainFuse/packages/commit/57405fce972a7221c9a41cd4306172d8071bef5f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+- [#87](https://github.com/ChainFuse/packages/pull/87) [`57405fc`](https://github.com/ChainFuse/packages/commit/57405fce972a7221c9a41cd4306172d8071bef5f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
 
--   [#83](https://github.com/ChainFuse/packages/pull/83) [`bc68fdb`](https://github.com/ChainFuse/packages/commit/bc68fdb28250a5d3a2eef8ff897513db17a80b3e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+- [#83](https://github.com/ChainFuse/packages/pull/83) [`bc68fdb`](https://github.com/ChainFuse/packages/commit/bc68fdb28250a5d3a2eef8ff897513db17a80b3e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
 
--   [#84](https://github.com/ChainFuse/packages/pull/84) [`28090c1`](https://github.com/ChainFuse/packages/commit/28090c1961d366d3a1d3b50b86c6d17b79dbaabd) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
+- [#84](https://github.com/ChainFuse/packages/pull/84) [`28090c1`](https://github.com/ChainFuse/packages/commit/28090c1961d366d3a1d3b50b86c6d17b79dbaabd) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
 
--   [#90](https://github.com/ChainFuse/packages/pull/90) [`8528fd5`](https://github.com/ChainFuse/packages/commit/8528fd54cb9044f1fb5c8eed15a90ea4fed79f78) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core, typescript
+- [#90](https://github.com/ChainFuse/packages/pull/90) [`8528fd5`](https://github.com/ChainFuse/packages/commit/8528fd54cb9044f1fb5c8eed15a90ea4fed79f78) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core, typescript
 
--   [#91](https://github.com/ChainFuse/packages/pull/91) [`5107e6b`](https://github.com/ChainFuse/packages/commit/5107e6b0cec0d983c16f4e24534715587fa76cbe) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+- [#91](https://github.com/ChainFuse/packages/pull/91) [`5107e6b`](https://github.com/ChainFuse/packages/commit/5107e6b0cec0d983c16f4e24534715587fa76cbe) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
 
--   [#93](https://github.com/ChainFuse/packages/pull/93) [`222e3f4`](https://github.com/ChainFuse/packages/commit/222e3f4dc6ff6bc0413629845a8e0a4cb5f6a596) Thanks [@demosjarco](https://github.com/demosjarco)! - Use built in `TextEncoder` instead of map
+- [#93](https://github.com/ChainFuse/packages/pull/93) [`222e3f4`](https://github.com/ChainFuse/packages/commit/222e3f4dc6ff6bc0413629845a8e0a4cb5f6a596) Thanks [@demosjarco](https://github.com/demosjarco)! - Use built in `TextEncoder` instead of map
 
 ## 0.1.0
 
 ### Minor Changes
 
--   [#81](https://github.com/ChainFuse/packages/pull/81) [`302dda6`](https://github.com/ChainFuse/packages/commit/302dda6cbc444deac4d170b4565b42767e6bdbd1) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add base64 to buffer helpers
+- [#81](https://github.com/ChainFuse/packages/pull/81) [`302dda6`](https://github.com/ChainFuse/packages/commit/302dda6cbc444deac4d170b4565b42767e6bdbd1) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add base64 to buffer helpers
 
 ### Patch Changes
 
--   [#79](https://github.com/ChainFuse/packages/pull/79) [`844a29a`](https://github.com/ChainFuse/packages/commit/844a29a40270fe0a825438e328b21cd61855e55b) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): refactor method name
+- [#79](https://github.com/ChainFuse/packages/pull/79) [`844a29a`](https://github.com/ChainFuse/packages/commit/844a29a40270fe0a825438e328b21cd61855e55b) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): refactor method name
 
 ## 0.0.10
 
 ### Patch Changes
 
--   [#74](https://github.com/ChainFuse/packages/pull/74) [`34e5a73`](https://github.com/ChainFuse/packages/commit/34e5a737a68660920bf23f726809b833398d9f6c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+- [#74](https://github.com/ChainFuse/packages/pull/74) [`34e5a73`](https://github.com/ChainFuse/packages/commit/34e5a737a68660920bf23f726809b833398d9f6c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
 
--   [#76](https://github.com/ChainFuse/packages/pull/76) [`4a2368e`](https://github.com/ChainFuse/packages/commit/4a2368e7a8ec807168fcba971af7231d82ebea76) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+- [#76](https://github.com/ChainFuse/packages/pull/76) [`4a2368e`](https://github.com/ChainFuse/packages/commit/4a2368e7a8ec807168fcba971af7231d82ebea76) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
 
--   [#75](https://github.com/ChainFuse/packages/pull/75) [`a04eb9f`](https://github.com/ChainFuse/packages/commit/a04eb9f7efc66983d39761fa32ccd6e98b492c98) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+- [#75](https://github.com/ChainFuse/packages/pull/75) [`a04eb9f`](https://github.com/ChainFuse/packages/commit/a04eb9f7efc66983d39761fa32ccd6e98b492c98) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
 
 ## 0.0.9
 
 ### Patch Changes
 
--   [`af3ba01`](https://github.com/ChainFuse/packages/commit/af3ba011968fb84d96d9f8b9ffeb9e9903fb1196) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Make `init` optional (following fetch spec)
+- [`af3ba01`](https://github.com/ChainFuse/packages/commit/af3ba011968fb84d96d9f8b9ffeb9e9903fb1196) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Make `init` optional (following fetch spec)
 
 ## 0.0.8
 
 ### Patch Changes
 
--   [#70](https://github.com/ChainFuse/packages/pull/70) [`3e0a4c1`](https://github.com/ChainFuse/packages/commit/3e0a4c1519c9fbcb9e0fc0189a75f99ec6492925) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/checkout
+- [#70](https://github.com/ChainFuse/packages/pull/70) [`3e0a4c1`](https://github.com/ChainFuse/packages/commit/3e0a4c1519c9fbcb9e0fc0189a75f99ec6492925) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/checkout
 
--   [#71](https://github.com/ChainFuse/packages/pull/71) [`3582ce6`](https://github.com/ChainFuse/packages/commit/3582ce60728d789e23d17aa1494824982be9569a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+- [#71](https://github.com/ChainFuse/packages/pull/71) [`3582ce6`](https://github.com/ChainFuse/packages/commit/3582ce60728d789e23d17aa1494824982be9569a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
 
 ## 0.0.7
 
 ### Patch Changes
 
--   [#64](https://github.com/ChainFuse/packages/pull/64) [`5af1bb2`](https://github.com/ChainFuse/packages/commit/5af1bb2204d37207b9fca4a9585a32b776be06b5) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/setup-node
+- [#64](https://github.com/ChainFuse/packages/pull/64) [`5af1bb2`](https://github.com/ChainFuse/packages/commit/5af1bb2204d37207b9fca4a9585a32b776be06b5) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/setup-node
 
--   [#63](https://github.com/ChainFuse/packages/pull/63) [`db37828`](https://github.com/ChainFuse/packages/commit/db3782894d1d7a32e00b6e363a0f39a1be4f234b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+- [#63](https://github.com/ChainFuse/packages/pull/63) [`db37828`](https://github.com/ChainFuse/packages/commit/db3782894d1d7a32e00b6e363a0f39a1be4f234b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
 
--   [#67](https://github.com/ChainFuse/packages/pull/67) [`d8152f8`](https://github.com/ChainFuse/packages/commit/d8152f86fb7b7b04ee471b24fb162fe080958bb6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+- [#67](https://github.com/ChainFuse/packages/pull/67) [`d8152f8`](https://github.com/ChainFuse/packages/commit/d8152f86fb7b7b04ee471b24fb162fe080958bb6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
 
--   [#65](https://github.com/ChainFuse/packages/pull/65) [`065bf9f`](https://github.com/ChainFuse/packages/commit/065bf9fd17c5f9188ba1bd9cd9f093dad0bfff50) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+- [#65](https://github.com/ChainFuse/packages/pull/65) [`065bf9f`](https://github.com/ChainFuse/packages/commit/065bf9fd17c5f9188ba1bd9cd9f093dad0bfff50) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
 
--   [#69](https://github.com/ChainFuse/packages/pull/69) [`e7d25e6`](https://github.com/ChainFuse/packages/commit/e7d25e6f3cc356b1f159a7d6cb2830e2be5ef237) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+- [#69](https://github.com/ChainFuse/packages/pull/69) [`e7d25e6`](https://github.com/ChainFuse/packages/commit/e7d25e6f3cc356b1f159a7d6cb2830e2be5ef237) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
 
 ## 0.0.6
 
 ### Patch Changes
 
--   [#58](https://github.com/ChainFuse/packages/pull/58) [`344c67a`](https://github.com/ChainFuse/packages/commit/344c67a5b50173295bf5e5084e44b3f7d8e26f67) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+- [#58](https://github.com/ChainFuse/packages/pull/58) [`344c67a`](https://github.com/ChainFuse/packages/commit/344c67a5b50173295bf5e5084e44b3f7d8e26f67) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
 
--   [#57](https://github.com/ChainFuse/packages/pull/57) [`e451b95`](https://github.com/ChainFuse/packages/commit/e451b95b0f0f810f8e9700327d81291e9f0bdaaf) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+- [#57](https://github.com/ChainFuse/packages/pull/57) [`e451b95`](https://github.com/ChainFuse/packages/commit/e451b95b0f0f810f8e9700327d81291e9f0bdaaf) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
 
 ## 0.0.5
 
 ### Patch Changes
 
--   [`d147b1e`](https://github.com/ChainFuse/packages/commit/d147b1ec79cdcaae196d7f8462dded4481db8a3d) Thanks [@demosjarco](https://github.com/demosjarco)! - Don't dynamic import cloudflare lib
+- [`d147b1e`](https://github.com/ChainFuse/packages/commit/d147b1ec79cdcaae196d7f8462dded4481db8a3d) Thanks [@demosjarco](https://github.com/demosjarco)! - Don't dynamic import cloudflare lib
 
 ## 0.0.4
 
 ### Patch Changes
 
--   [#29](https://github.com/ChainFuse/packages/pull/29) [`f51f1c3`](https://github.com/ChainFuse/packages/commit/f51f1c3b6a45f59237967b36c081f85a31df536b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/upload-artifact
+- [#29](https://github.com/ChainFuse/packages/pull/29) [`f51f1c3`](https://github.com/ChainFuse/packages/commit/f51f1c3b6a45f59237967b36c081f85a31df536b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/upload-artifact
 
--   [#52](https://github.com/ChainFuse/packages/pull/52) [`610bd28`](https://github.com/ChainFuse/packages/commit/610bd281ca6651877c6842585f4bd6b2ca7d09d8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump step-security/harden-runner
+- [#52](https://github.com/ChainFuse/packages/pull/52) [`610bd28`](https://github.com/ChainFuse/packages/commit/610bd281ca6651877c6842585f4bd6b2ca7d09d8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump step-security/harden-runner
 
--   [#33](https://github.com/ChainFuse/packages/pull/33) [`fc006de`](https://github.com/ChainFuse/packages/commit/fc006defa81f09b5760df0fe9b05c2a2ccc96f24) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+- [#33](https://github.com/ChainFuse/packages/pull/33) [`fc006de`](https://github.com/ChainFuse/packages/commit/fc006defa81f09b5760df0fe9b05c2a2ccc96f24) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
 
--   [#48](https://github.com/ChainFuse/packages/pull/48) [`6c5df8a`](https://github.com/ChainFuse/packages/commit/6c5df8a5f8fc33e5a6454b301f719599beb5e2f4) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @swc/core, typescript
+- [#48](https://github.com/ChainFuse/packages/pull/48) [`6c5df8a`](https://github.com/ChainFuse/packages/commit/6c5df8a5f8fc33e5a6454b301f719599beb5e2f4) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @swc/core, typescript
 
--   [#51](https://github.com/ChainFuse/packages/pull/51) [`79c21d0`](https://github.com/ChainFuse/packages/commit/79c21d0de327a6adf49c6c51dac39a0bcad80f78) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+- [#51](https://github.com/ChainFuse/packages/pull/51) [`79c21d0`](https://github.com/ChainFuse/packages/commit/79c21d0de327a6adf49c6c51dac39a0bcad80f78) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
 
 ## 0.0.3
 
 ### Patch Changes
 
--   [#31](https://github.com/ChainFuse/packages/pull/31) [`a219287`](https://github.com/ChainFuse/packages/commit/a2192875aa5d011d2d4eeb1c099f5c5094f6d58c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+- [#31](https://github.com/ChainFuse/packages/pull/31) [`a219287`](https://github.com/ChainFuse/packages/commit/a2192875aa5d011d2d4eeb1c099f5c5094f6d58c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
 
--   [`6e67831`](https://github.com/ChainFuse/packages/commit/6e678310274e8fcf05ca763516fcd2f509951b4e) Thanks [@demosjarco](https://github.com/demosjarco)! - Include LICENSE inside each package
+- [`6e67831`](https://github.com/ChainFuse/packages/commit/6e678310274e8fcf05ca763516fcd2f509951b4e) Thanks [@demosjarco](https://github.com/demosjarco)! - Include LICENSE inside each package
 
 ## 0.0.2
 
 ### Patch Changes
 
--   [#30](https://github.com/ChainFuse/packages/pull/30) [`68b3ce3`](https://github.com/ChainFuse/packages/commit/68b3ce345877e3f160cf19eb313d27fe11c44c33) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+- [#30](https://github.com/ChainFuse/packages/pull/30) [`68b3ce3`](https://github.com/ChainFuse/packages/commit/68b3ce345877e3f160cf19eb313d27fe11c44c33) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
 
 ## 0.0.1
 
 ### Patch Changes
 
--   [`2530142`](https://github.com/ChainFuse/packages/commit/2530142143d4c3afd5283928d9f7dca314cba48c) Thanks [@demosjarco](https://github.com/demosjarco)! - Initial release
+- [`2530142`](https://github.com/ChainFuse/packages/commit/2530142143d4c3afd5283928d9f7dca314cba48c) Thanks [@demosjarco](https://github.com/demosjarco)! - Initial release
 
--   [#37](https://github.com/ChainFuse/packages/pull/37) [`2e95175`](https://github.com/ChainFuse/packages/commit/2e95175a28977c52b32e826f50e52506b00fbf05) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump step-security/harden-runner
+- [#37](https://github.com/ChainFuse/packages/pull/37) [`2e95175`](https://github.com/ChainFuse/packages/commit/2e95175a28977c52b32e826f50e52506b00fbf05) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump step-security/harden-runner
