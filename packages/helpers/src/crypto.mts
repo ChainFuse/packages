@@ -18,7 +18,7 @@ export class CryptoHelpers {
 	 * @yields secret length = (`byteSize` * Math.log2(16)) / 8
 	 */
 	public static base16secret(byteSize: number) {
-		return this.secretBytes(byteSize).then((bytes) => BufferHelpers.bufferToHex(bytes));
+		return this.secretBytes(byteSize).then((bytes) => BufferHelpers.bufferToHex(bytes.buffer));
 	}
 
 	/**
