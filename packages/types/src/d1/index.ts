@@ -4,6 +4,7 @@ export * from './tenants/index.js';
 export * from './users/index.js';
 
 export type PrefixedUuid = `${'t_' | 'd_' | 'u_'}${UuidExport['utf8']}${'' | '_p'}`;
+export type D1Blob = [number, ...number[]];
 export interface UuidExport {
 	utf8: ReturnType<typeof crypto.randomUUID>;
 	hex: string;
