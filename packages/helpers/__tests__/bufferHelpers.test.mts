@@ -18,7 +18,7 @@ void describe('Buffer Helper Tests', () => {
 				for (const usingType of Object.keys(uuid)) {
 					void it(`Convert from ${startingType} using ${usingType} to ${baseType}`, async () => {
 						// @ts-expect-error ts can't infer when for-looping a type
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
 						const usingValue = (await BufferHelpers.uuidConvert((await BufferHelpers.uuidConvert(startingValue))[usingType]))[baseType];
 
 						if (usingType === 'blob' || baseType === 'blob') {
@@ -26,7 +26,7 @@ void describe('Buffer Helper Tests', () => {
 							const usingBuffer = typeof usingValue === 'string' ? encoder.encode(usingValue).buffer : (usingValue as UuidExport['blob']);
 
 							strictEqual(baseBuffer.byteLength, usingBuffer.byteLength);
-							ok(timingSafeEqual(baseBuffer as Parameters<typeof timingSafeEqual>[0], usingBuffer as Parameters<typeof timingSafeEqual>[1]));
+							ok(timingSafeEqual(baseBuffer as unknown as Parameters<typeof timingSafeEqual>[0], usingBuffer as unknown as Parameters<typeof timingSafeEqual>[1]));
 						} else {
 							strictEqual(baseValue, usingValue);
 						}
