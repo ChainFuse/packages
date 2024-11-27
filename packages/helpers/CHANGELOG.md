@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 0.4.1
+
+### Patch Changes
+
+- [`8d4a4e2`](https://github.com/ChainFuse/packages/commit/8d4a4e2b34f854e965cae92a8686bd243eda01fd) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): New type to match how D1 returns blob buffers
+
 ## 0.4.0
 
 ### Minor Changes
