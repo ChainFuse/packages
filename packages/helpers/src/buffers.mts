@@ -1,4 +1,4 @@
-import type { PrefixedUuid, UndefinedProperties, UuidExport } from '@chainfuse/types';
+import type { D1Blob, PrefixedUuid, UndefinedProperties, UuidExport } from '@chainfuse/types';
 import { CryptoHelpers } from './crypto.mjs';
 
 export class BufferHelpers {
@@ -23,13 +23,15 @@ export class BufferHelpers {
 		);
 	}
 
-	public static bufferToHex(buffer: UuidExport['blob']): Promise<UuidExport['hex']> {
+	public static bufferToHex(buffer: UuidExport['blob'] | D1Blob): Promise<UuidExport['hex']> {
 		return (
 			import('node:buffer')
+				// @ts-expect-error `ArrayBufferLike` or D1Blob is actually accepted and fine
 				.then(({ Buffer }) => Buffer.from(buffer).toString('hex'))
 				/**
 				 * @link https://jsbm.dev/AoXo8dEke1GUg
 				 */
+				// @ts-expect-error `ArrayBufferLike` or D1Blob is actually accepted and fine
 				.catch(() => new Uint8Array(buffer).reduce((output, elem) => output + ('0' + elem.toString(16)).slice(-2), ''))
 		);
 	}
@@ -54,18 +56,21 @@ export class BufferHelpers {
 			});
 	}
 
-	public static bufferToBase64(buffer: UuidExport['blob'], urlSafe: boolean): Promise<string> {
-		return import('node:buffer')
-			.then(({ Buffer }) => Buffer.from(buffer).toString(urlSafe ? 'base64url' : 'base64'))
-			.catch(() => {
-				// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
-				const raw = btoa(new TextDecoder().decode(buffer));
-				if (urlSafe) {
-					return raw.replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
-				} else {
-					return raw;
-				}
-			});
+	public static bufferToBase64(buffer: UuidExport['blob'] | D1Blob, urlSafe: boolean): Promise<string> {
+		return (
+			import('node:buffer')
+				// @ts-expect-error `ArrayBufferLike` or D1Blob is actually accepted and fine
+				.then(({ Buffer }) => Buffer.from(buffer).toString(urlSafe ? 'base64url' : 'base64'))
+				.catch(() => {
+					// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
+					const raw = btoa(new TextDecoder().decode(buffer));
+					if (urlSafe) {
+						return raw.replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
+					} else {
+						return raw;
+					}
+				})
+		);
 	}
 
 	public static get generateUuid(): Promise<UuidExport> {
@@ -81,13 +86,14 @@ export class BufferHelpers {
 		});
 	}
 
-	public static uuidConvert(input: UuidExport['blob']): Promise<UuidExport>;
+	public static uuidConvert(input: undefined): Promise<UndefinedProperties<UuidExport>>;
 	public static uuidConvert(prefixedUtf: PrefixedUuid): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['utf8']): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['hex']): Promise<UuidExport>;
-	public static uuidConvert(input: undefined): Promise<UndefinedProperties<UuidExport>>;
+	public static uuidConvert(input: UuidExport['blob']): Promise<UuidExport>;
+	public static uuidConvert(input: D1Blob): Promise<UuidExport>;
 	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-	public static uuidConvert(input?: UuidExport['blob'] | PrefixedUuid | UuidExport['utf8'] | UuidExport['hex']): Promise<UuidExport | UndefinedProperties<UuidExport>> {
+	public static uuidConvert(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExport['blob'] | D1Blob): Promise<UuidExport | UndefinedProperties<UuidExport>> {
 		if (input) {
 			if (typeof input === 'string') {
 				if (input.includes('-')) {
@@ -113,12 +119,11 @@ export class BufferHelpers {
 					}));
 				}
 			} else {
-				const blob: UuidExport['blob'] = input;
-
-				return this.bufferToHex(blob).then((hex) => ({
+				return this.bufferToHex(input).then((hex) => ({
 					utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}`,
 					hex,
-					blob,
+					// @ts-expect-error `ArrayBufferLike` or D1Blob is actually accepted and fine
+					blob: new Uint8Array(input).buffer,
 				}));
 			}
 		} else {
