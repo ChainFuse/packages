@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 1.3.0
+
+### Minor Changes
+
+- [`72ef964`](https://github.com/ChainFuse/packages/commit/72ef9646a5b03a93a287a014ea44613accc0d377) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): New type to match how D1 returns blob buffers
+
 ## 1.2.1
 
 ### Patch Changes
