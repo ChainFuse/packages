@@ -1,5 +1,4 @@
-import type { UndefinedProperties } from '@chainfuse/types';
-import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
+import type { PrefixedUuid, UndefinedProperties, UuidExport } from '@chainfuse/types';
 import { CryptoHelpers } from './crypto.mjs';
 
 export class BufferHelpers {
