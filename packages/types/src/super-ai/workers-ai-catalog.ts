@@ -47,7 +47,6 @@ export const workersAiCatalog = {
 					description: 'Generation over generation, Meta Llama 3 demonstrates state-of-the-art performance on a wide range of industry benchmarks and offers new capabilities, including improved reasoning.',
 					tags: [],
 					properties: {
-						beta: true,
 						info: 'https://llama.meta.com',
 						terms: 'https://llama.meta.com/llama3/license/#',
 					},
