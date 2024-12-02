@@ -103,7 +103,7 @@ class LernaCustomCreate {
 					fileData =
 						[
 							// Security
-							['[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/ChainFuse/packages/badge)](https://securityscorecards.dev/viewer/?uri=github.com/ChainFuse/packages)', `[![Socket Badge](https://socket.dev/api/badge/npm/package/@chainfuse/${packageName})](https://socket.dev/npm/package/@chainFuse/${packageName})`].join(''),
+							['[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/ChainFuse/packages/badge)](https://securityscorecards.dev/viewer/?uri=github.com/ChainFuse/packages)', `[![Socket Badge](https://socket.dev/api/badge/npm/package/@chainfuse/${packageName})](https://socket.dev/npm/package/@chainfuse/${packageName})`].join(''),
 							// NPM
 							[`![NPM Downloads](${new URL(`https://img.shields.io/npm/dw/@chainfuse/${packageName}`).href})`, `![npm bundle size](${new URL(`https://img.shields.io/bundlephobia/min/@chainfuse/${packageName}`).href})`, `![NPM Unpacked Size](${new URL(`https://img.shields.io/npm/unpacked-size/@chainfuse/${packageName}`).href})`].join(''),
 							// CI/CD
