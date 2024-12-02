@@ -1,0 +1,54 @@
+{
+	"name": "@chainfuse/ai-tools",
+	"version": "0.0.0",
+	"description": "",
+	"author": "ChainFuse",
+	"homepage": "https://github.com/ChainFuse/packages/tree/main/packages/ai-tools#readme",
+	"license": "Apache-2.0",
+	"main": "./dist/index.mjs",
+	"directories": {
+		"lib": "dist",
+		"test": "__tests__"
+	},
+	"files": [
+		"dist"
+	],
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ChainFuse/packages.git"
+	},
+	"scripts": {
+		"fmt": "prettier --check .",
+		"fmt:fix": "prettier --write .",
+		"lint": "eslint .",
+		"lint:fix": "npm run lint -- --fix",
+		"clean": "npx -y rimraf@latest ./dist ./.tsbuildinfo",
+		"build": "tsc",
+		"build:clean": "npm run build -- --build --clean && npm run build",
+		"pretest": "tsc --project tsconfig.tests.json",
+		"test": "node --enable-source-maps --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout",
+		"test:local": "npm run test"
+	},
+	"type": "module",
+	"bugs": {
+		"url": "https://github.com/ChainFuse/packages/issues"
+	},
+	"types": "./dist/index.d.mts",
+	"engines": {
+		"node": ">=22.11.0"
+	},
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"types": "./dist/index.d.mts"
+		}
+	},
+	"prettier": "@demosjarco/prettier-config",
+	"dependencies": {},
+	"devDependencies": {},
+	"optionalDependencies": {}
+}
