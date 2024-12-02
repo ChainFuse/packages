@@ -1,2 +1,1 @@
-// export type {  } from '...';
-// export {  } from '...';
+// Nothing here, use ESM imports only
