@@ -29,7 +29,7 @@ export interface AiConfigAzOpenai {
 }
 export interface AiConfigOaiOpenai {
 	apiToken: `sk-${string}`;
-	organization?: `org-${string}`;
+	organization: `org-${string}`;
 }
 export interface AiConfigWorkersaiRest {
 	apiToken: string;
