@@ -1,4 +1,4 @@
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/ChainFuse/packages/badge)](https://securityscorecards.dev/viewer/?uri=github.com/ChainFuse/packages)[![Socket Badge](https://socket.dev/api/badge/npm/package/@chainfuse/ai-tools)](https://socket.dev/npm/package/@chainFuse/ai-tools)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/ChainFuse/packages/badge)](https://securityscorecards.dev/viewer/?uri=github.com/ChainFuse/packages)[![Socket Badge](https://socket.dev/api/badge/npm/package/@chainfuse/ai-tools)](https://socket.dev/npm/package/@chainfuse/ai-tools)
 
 ![NPM Downloads](https://img.shields.io/npm/dw/@chainfuse/ai-tools)![npm bundle size](https://img.shields.io/bundlephobia/min/@chainfuse/ai-tools)![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/@chainfuse/ai-tools)
 
