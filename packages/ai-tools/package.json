@@ -50,5 +50,8 @@
 	"prettier": "@demosjarco/prettier-config",
 	"dependencies": {
 		"@chainfuse/types": "^1.3.0"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20241127.0"
 	}
 }
