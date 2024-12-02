@@ -11,6 +11,7 @@ export interface AiConfig {
 		country?: IncomingRequestCfProperties['country'];
 		continent?: IncomingRequestCfProperties['continent'];
 	};
+	environment: 'production' | 'preview';
 	providers: AiConfigProviders;
 }
 
