@@ -1,1 +1,1 @@
-// Nothing here, use ESM imports only
+export type * from './types.mjs';
