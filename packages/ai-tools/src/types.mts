@@ -1,7 +1,7 @@
 import type { Coordinate } from '@chainfuse/types';
 import type { Ai, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 
-export interface AiConfigBase {
+export interface AiConfig {
 	gateway: {
 		accountId: string;
 		apiToken: string;
@@ -11,14 +11,15 @@ export interface AiConfigBase {
 		country?: IncomingRequestCfProperties['country'];
 		continent?: IncomingRequestCfProperties['continent'];
 	};
+	providers: AiConfigProviders;
 }
-export interface AiConfig extends AiConfigBase {
+
+export interface AiConfigProviders {
 	anthropic: AiConfigAnthropic;
 	azureOpenAi: AiConfigAzOpenai;
 	openAi: AiConfigOaiOpenai;
 	workersAi: AiConfigWorkersai;
 }
-
 export interface AiConfigAnthropic {
 	apiToken: `sk-ant-${string}`;
 }
