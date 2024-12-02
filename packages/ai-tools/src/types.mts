@@ -1,4 +1,4 @@
-import type { Coordinate } from '@chainfuse/types';
+import type { Coordinate, UuidExport } from '@chainfuse/types';
 import type { Ai, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 
 export interface AiConfig {
@@ -36,3 +36,37 @@ export interface AiConfigWorkersaiRest {
 }
 export type AiConfigWorkersaiBinding = Ai;
 export type AiConfigWorkersai = AiConfigWorkersaiRest | AiConfigWorkersaiBinding;
+
+export type AiRequestIdempotencyId = `${UuidExport['utf8']}.${string}`;
+export interface AiRequestExecutor {
+	type: 'worker' | 'queue' | 'workflow';
+	id: string;
+}
+
+export interface AiRequestConfig {
+	/**
+	 * Sets if a response should be cached (1 month) or for any custom duration
+	 * @default true
+	 */
+	cache?: boolean | number;
+	dataspaceId: UuidExport['utf8'];
+	/**
+	 * Service identification of caller
+	 */
+	executor: AiRequestExecutor;
+	/**
+	 * Identify the same request across multiple calls. If not provided, a new id will be generated
+	 * Structure: <UUIDv7>.<last 8 of SHA256 of body>
+	 */
+	idempotencyId?: AiRequestIdempotencyId;
+	/**
+	 * Logging includes anything up to the ai call. For ai call info, see ai gateway
+	 * @default false (on production environment), true (on preview environment)
+	 */
+	logging?: boolean;
+	/**
+	 * Force a response to be generated even if a matching request is already cached (without changing cache setting)
+	 * @default false
+	 */
+	skipCache?: boolean;
+}
