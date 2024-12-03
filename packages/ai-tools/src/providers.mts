@@ -59,7 +59,7 @@ export class AiProviders {
 						} else {
 							const [body1, body2] = response.body!.tee();
 
-							console.error('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.bold.red(response.status), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
+							console.error('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.red(response.status), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
 
 							return new Response(body2, response);
 						}
