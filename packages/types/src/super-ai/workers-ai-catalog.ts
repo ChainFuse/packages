@@ -58,7 +58,6 @@ export const workersAiCatalog = {
 					description: 'The Llama 3.2 instruction-tuned text only models are optimized for multilingual dialogue use cases, including agentic retrieval and summarization tasks.',
 					tags: [],
 					properties: {
-						beta: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
@@ -179,7 +178,6 @@ export const workersAiCatalog = {
 					description: 'Llama 3.1 8B quantized to FP8 precision',
 					tags: [],
 					properties: {
-						beta: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
 					},
 				},
@@ -212,7 +210,6 @@ export const workersAiCatalog = {
 					description: 'The Llama 3.2 instruction-tuned text only models are optimized for multilingual dialogue use cases, including agentic retrieval and summarization tasks.',
 					tags: [],
 					properties: {
-						beta: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
@@ -312,7 +309,6 @@ export const workersAiCatalog = {
 					description: 'The Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models. The Llama 3.1 instruction tuned text only models are optimized for multilingual dialogue use cases and outperform many of the available open source and closed chat models on common industry benchmarks.',
 					tags: [],
 					properties: {
-						beta: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
 					},
 				},
@@ -323,7 +319,6 @@ export const workersAiCatalog = {
 					description: 'Quantized (int4) generative text model with 8 billion parameters from Meta.\n',
 					tags: [],
 					properties: {
-						beta: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
 					},
 				},
@@ -367,7 +362,6 @@ export const workersAiCatalog = {
 					description: 'Quantized (int4) generative text model with 8 billion parameters from Meta.',
 					tags: [],
 					properties: {
-						beta: true,
 						info: 'https://llama.meta.com',
 						terms: 'https://llama.meta.com/llama3/license/#',
 					},
@@ -379,7 +373,6 @@ export const workersAiCatalog = {
 					description: ' The Llama 3.2-Vision instruction-tuned models are optimized for visual recognition, image reasoning, captioning, and answering general questions about an image.',
 					tags: [],
 					properties: {
-						beta: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
