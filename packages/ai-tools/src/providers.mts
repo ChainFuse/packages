@@ -51,7 +51,7 @@ export class AiProviders {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? this._config.environment !== 'production') console.debug('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? this._config.environment !== 'production') console.info('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
 						if (response.ok) {
