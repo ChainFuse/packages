@@ -1,21 +1,11 @@
 import type { OpenAIProvider } from '@ai-sdk/openai';
 import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
-import { Chalk } from 'chalk';
-import type { AiConfig, AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata } from './types.mjs';
+import { AiBase } from './base.mjs';
+import type { AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata } from './types.mjs';
 
-export class AiProviders {
-	protected readonly chalk = new Chalk({ level: 3 });
-	protected _config: AiConfig;
+export class AiProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
-	protected readonly cacheTtl = 2628288;
-
-	constructor(config: AiConfig) {
-		this._config = config;
-	}
-
-	public get config(): Readonly<AiConfig> {
-		return this._config;
-	}
+	private readonly cacheTtl = 2628288;
 
 	public oaiOpenai(args: AiRequestConfig): Promise<OpenAIProvider> {
 		return import('@ai-sdk/openai').then(async ({ createOpenAI }) => {
