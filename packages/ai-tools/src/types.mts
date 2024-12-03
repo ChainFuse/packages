@@ -1,5 +1,6 @@
 import type { Coordinate, UuidExport } from '@chainfuse/types';
 import type { Ai, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
+import type haversine from 'haversine-distance';
 
 export interface AiConfig {
 	gateway: {
@@ -69,4 +70,30 @@ export interface AiRequestConfig {
 	 * @default false
 	 */
 	skipCache?: boolean;
+}
+
+export interface AiRequestMetadataServerInfo {
+	name: 'anthropic' | 'cloudflare' | 'openai';
+}
+export interface AiRequestMetadataServerInfoWithLocation {
+	name: `${'azure' | 'google'}-${string}`;
+	/**
+	 * @returns distance in meters
+	 */
+	distance: ReturnType<typeof haversine>;
+}
+export interface AiRequestMetadataTiming {
+	modelTime?: number;
+	fromCache: boolean;
+	totalRoundtripTime: number;
+	/**
+	 * @todo @demosjarco add more timing info
+	 */
+}
+export interface AiRequestMetadata {
+	dataspaceId: AiRequestConfig['dataspaceId'];
+	serverInfo: AiRequestMetadataServerInfo | AiRequestMetadataServerInfoWithLocation | string;
+	idempotencyId: AiRequestIdempotencyId;
+	executor: AiRequestExecutor | string;
+	timing: AiRequestMetadataTiming | string;
 }
