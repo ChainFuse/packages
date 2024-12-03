@@ -1,5 +1,5 @@
 import type { OpenAIProvider } from '@ai-sdk/openai';
-import { BufferHelpers, CryptoHelpers } from '@chainfuse/helpers';
+import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
 import { Chalk } from 'chalk';
 import type { AiConfig, AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata } from './types.mjs';
 
@@ -15,29 +15,6 @@ export class AiProviders {
 
 	public get config(): Readonly<AiConfig> {
 		return this._config;
-	}
-
-	private static uniqueRequestColor(id: AiRequestIdempotencyId): Parameters<InstanceType<typeof Chalk>['rgb']> {
-		// Hash the string to a numeric value
-		let hash = 0;
-		for (let i = 0; i < id.length; i++) {
-			const char = id.charCodeAt(i);
-			hash = (hash << 5) - hash + char;
-			hash |= 0; // Convert to 32-bit integer
-		}
-
-		// Convert the hash to RGB components
-		let r = (hash & 0xff0000) >> 16; // Extract red
-		let g = (hash & 0x00ff00) >> 8; // Extract green
-		let b = hash & 0x0000ff; // Extract blue
-
-		// Clamp RGB values to a more legible range (e.g., 64-200)
-		const clamp = (value: number) => Math.max(100, Math.min(222, value));
-		r = clamp(r);
-		g = clamp(g);
-		b = clamp(b);
-
-		return [r, g, b];
 	}
 
 	public oaiOpenai(args: AiRequestConfig): Promise<OpenAIProvider> {
@@ -74,7 +51,7 @@ export class AiProviders {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? this._config.environment !== 'production') console.debug('ai', this.chalk.rgb(...AiProviders.uniqueRequestColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? this._config.environment !== 'production') console.debug('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
 						if (response.ok) {
@@ -82,7 +59,7 @@ export class AiProviders {
 						} else {
 							const [body1, body2] = response.body!.tee();
 
-							console.error('ai', this.chalk.rgb(...AiProviders.uniqueRequestColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.bold.red(response.status), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
+							console.error('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.bold.red(response.status), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
 
 							return new Response(body2, response);
 						}
