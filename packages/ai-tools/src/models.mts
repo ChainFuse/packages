@@ -2,6 +2,9 @@ import type { Experimental_LanguageModelV1Middleware as LanguageModelV1Middlewar
 import { experimental_wrapLanguageModel as wrapLanguageModel } from 'ai';
 import { AiBase } from './base.mjs';
 
+/**
+ * @todo @demosjarco migrate to provider registry
+ */
 export class AiProviders extends AiBase {
 	/**
 	 * @todo @demosjarco Take model enum instead and pick the right one from the providers. Also take args in here and keep for logging in middleware.
