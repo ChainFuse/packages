@@ -14,11 +14,11 @@ export class AiModels extends AiBase {
 	/**
 	 * @todo @demosjarco Take model enum instead of string.
 	 */
-	public async wrappedLanguageModel<P extends ValidProviders>(config: AiRequestConfig, provider: P, model: ProviderModels[P]): Promise<ReturnType<typeof wrapLanguageModel>>;
-	public async wrappedLanguageModel(config: AiRequestConfig, model: ''): Promise<ReturnType<typeof wrapLanguageModel>>;
-	public async wrappedLanguageModel<P extends ValidProviders>(config: AiRequestConfig, modelOrProvider: string | P, model?: ProviderModels[P]) {
+	public async wrappedLanguageModel<P extends ValidProviders>(args: AiRequestConfig, provider: P, model: ProviderModels[P]): Promise<ReturnType<typeof wrapLanguageModel>>;
+	public async wrappedLanguageModel(args: AiRequestConfig, model: ''): Promise<ReturnType<typeof wrapLanguageModel>>;
+	public async wrappedLanguageModel<P extends ValidProviders>(args: AiRequestConfig, modelOrProvider: string | P, model?: ProviderModels[P]) {
 		return wrapLanguageModel({
-			model: (await new AiRegistry(this.config).registry(config)).languageModel(model ? `${modelOrProvider}:${model}` : modelOrProvider),
+			model: (await new AiRegistry(this.config).registry(args)).languageModel(model ? `${modelOrProvider}:${model}` : modelOrProvider),
 			middleware: this.middleware,
 		});
 	}
