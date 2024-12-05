@@ -68,6 +68,13 @@ export type type_mc_embedding = aiEmbeddingProviders;
 
 // New AI
 
+export type CloudflareModelsEnum<M extends cloudflareModelTypes = cloudflareModelTypes> = {
+	[K in cloudflareModelPossibilities<M>]: `workersai:${K}`;
+};
+export type CloudflareFunctionModelsEnum = {
+	[K in cloudflareFilteredModelPossibilities<'Text Generation', 'function_calling', true>]: `workersai:${K}`;
+};
+
 export namespace AiModels {
 	export namespace LanguageModels {
 		export enum OpenAi {
@@ -78,6 +85,18 @@ export namespace AiModels {
 			gpt4o = 'openai:gpt-4o',
 			o1 = 'openai:o1-preview',
 		}
+
+		export enum Azure {
+			gpt3 = 'azure:gpt-3.5-turbo',
+			gpt4o_mini = 'azure:gpt-4o-mini',
+			gpt4 = 'azure:gpt-4-turbo',
+			gpt4o = 'azure:gpt-4o',
+		}
+
+		export const CloudflareSummary = Object.freeze(Object.fromEntries(enabledCloudflareLlmSummaryProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Summarization'>);
+		export const CloudflareClassification = Object.freeze(Object.fromEntries(enabledCloudflareLlmClassificationProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text Classification'>);
+		export const Cloudflare = Object.freeze(Object.fromEntries(enabledCloudflareLlmProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text Generation'>);
+		export const CloudflareFunctions = Object.freeze(Object.fromEntries(enabledCloudflareLlmFunctionProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareFunctionModelsEnum);
 	}
 
 	export namespace TextEmbeddingModels {
@@ -85,5 +104,12 @@ export namespace AiModels {
 			te3_large = 'openai:text-embedding-3-large',
 			te3_small = 'openai:text-embedding-3-small',
 		}
+
+		export enum Azure {
+			te3_large = 'azure:text-embedding-3-large',
+			te3_small = 'azure:text-embedding-3-small',
+		}
+
+		export const Cloudflare = Object.freeze(Object.fromEntries(enabledCloudflareLlmEmbeddingProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text Embeddings'>);
 	}
 }
