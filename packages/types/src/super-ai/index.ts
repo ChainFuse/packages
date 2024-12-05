@@ -65,3 +65,25 @@ export type type_mc_safety = aiProviders<'Text Generation'>;
 
 export const possibilities_mc_embedding = [...possibilities_embeddings.map((modelName) => ({ name: modelName })), ...workersAiCatalog.modelGroups['Text Embeddings'].models] as const;
 export type type_mc_embedding = aiEmbeddingProviders;
+
+// New AI
+
+export namespace AiModels {
+	export namespace LanguageModels {
+		export enum OpenAi {
+			gpt3 = 'openai:gpt-3.5-turbo',
+			gpt4o_mini = 'openai:gpt-4o-mini',
+			o1_mini = 'openai:o1-mini',
+			gpt4 = 'openai:gpt-4-turbo',
+			gpt4o = 'openai:gpt-4o',
+			o1 = 'openai:o1-preview',
+		}
+	}
+
+	export namespace TextEmbeddingModels {
+		export enum OpenAi {
+			te3_large = 'openai:text-embedding-3-large',
+			te3_small = 'openai:text-embedding-3-small',
+		}
+	}
+}

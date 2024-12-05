@@ -1,3 +1,4 @@
+import type { AiModels } from '@chainfuse/types';
 import { experimental_wrapLanguageModel as wrapLanguageModel, type embed, type embedMany } from 'ai';
 import { AiBase } from './base.mjs';
 import { AiRegistry } from './registry.mjs';
@@ -11,14 +12,13 @@ type ProviderLanguageModels = {
 type ProvidersTextEmbeddingModels = {
 	[P in ValidProviders]: Parameters<ProvidersReturnType[P]['textEmbeddingModel']>[0];
 };
+type LanguageModelValues = (typeof AiModels.LanguageModels)[keyof typeof AiModels.LanguageModels][keyof (typeof AiModels.LanguageModels)[keyof typeof AiModels.LanguageModels]];
+type TextEmbeddingModelValues = (typeof AiModels.TextEmbeddingModels)[keyof typeof AiModels.TextEmbeddingModels][keyof (typeof AiModels.TextEmbeddingModels)[keyof typeof AiModels.TextEmbeddingModels]];
 
 export class AiModel extends AiBase {
-	/**
-	 * @todo @demosjarco Take model enum instead of string.
-	 */
 	public wrappedLanguageModel<P extends ValidProviders>(args: AiRequestConfig, provider: P, model: ProviderLanguageModels[P]): Promise<ReturnType<typeof wrapLanguageModel>>;
-	public wrappedLanguageModel(args: AiRequestConfig, model: ''): Promise<ReturnType<typeof wrapLanguageModel>>;
-	public wrappedLanguageModel<P extends ValidProviders>(args: AiRequestConfig, modelOrProvider: string | P, model?: ProviderLanguageModels[P]) {
+	public wrappedLanguageModel(args: AiRequestConfig, model: LanguageModelValues): Promise<ReturnType<typeof wrapLanguageModel>>;
+	public wrappedLanguageModel<P extends ValidProviders>(args: AiRequestConfig, modelOrProvider: LanguageModelValues | P, model?: ProviderLanguageModels[P]) {
 		return new AiRegistry(this.config).registry(args).then((registry) =>
 			wrapLanguageModel({
 				model: registry.languageModel(model ? `${modelOrProvider}:${model}` : modelOrProvider),
@@ -28,8 +28,8 @@ export class AiModel extends AiBase {
 	}
 
 	public wrappedTextEmbeddingModel<P extends ValidProviders>(args: AiRequestConfig, provider: P, model: ProvidersTextEmbeddingModels[P]): Promise<Parameters<typeof embed | typeof embedMany>[0]['model']>;
-	public wrappedTextEmbeddingModel(args: AiRequestConfig, model: ''): Promise<Parameters<typeof embed | typeof embedMany>[0]['model']>;
-	public wrappedTextEmbeddingModel<P extends ValidProviders>(args: AiRequestConfig, modelOrProvider: string | P, model?: ProvidersTextEmbeddingModels[P]): Promise<Parameters<typeof embed | typeof embedMany>[0]['model']> {
+	public wrappedTextEmbeddingModel(args: AiRequestConfig, model: TextEmbeddingModelValues): Promise<Parameters<typeof embed | typeof embedMany>[0]['model']>;
+	public wrappedTextEmbeddingModel<P extends ValidProviders>(args: AiRequestConfig, modelOrProvider: TextEmbeddingModelValues | P, model?: ProvidersTextEmbeddingModels[P]): Promise<Parameters<typeof embed | typeof embedMany>[0]['model']> {
 		return new AiRegistry(this.config).registry(args).then((registry) => registry.textEmbeddingModel(model ? `${modelOrProvider}:${model}` : modelOrProvider));
 	}
 
