@@ -16,10 +16,12 @@ export class AiModels extends AiBase {
 	public async wrappedLanguageModel<P extends ValidProviders>(args: AiRequestConfig, provider: P, model: ProviderModels[P]): Promise<ReturnType<typeof wrapLanguageModel>>;
 	public async wrappedLanguageModel(args: AiRequestConfig, model: ''): Promise<ReturnType<typeof wrapLanguageModel>>;
 	public async wrappedLanguageModel<P extends ValidProviders>(args: AiRequestConfig, modelOrProvider: string | P, model?: ProviderModels[P]) {
-		return wrapLanguageModel({
-			model: (await new AiRegistry(this.config).registry(args)).languageModel(model ? `${modelOrProvider}:${model}` : modelOrProvider),
-			middleware: this.middleware,
-		});
+		return new AiRegistry(this.config).registry(args).then((registry) =>
+			wrapLanguageModel({
+				model: registry.languageModel(model ? `${modelOrProvider}:${model}` : modelOrProvider),
+				middleware: this.middleware,
+			}),
+		);
 	}
 
 	private get middleware(): Parameters<typeof wrapLanguageModel>[0]['middleware'] {
