@@ -12,7 +12,7 @@ type ProvidersTextEmbeddingModels = {
 	[P in ValidProviders]: Parameters<ProvidersReturnType[P]['textEmbeddingModel']>[0];
 };
 
-export class AiModels extends AiBase {
+export class AiModel extends AiBase {
 	/**
 	 * @todo @demosjarco Take model enum instead of string.
 	 */
