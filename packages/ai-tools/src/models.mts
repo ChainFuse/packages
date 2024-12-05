@@ -1,4 +1,3 @@
-import type { Experimental_LanguageModelV1Middleware as LanguageModelV1Middleware } from 'ai';
 import { experimental_wrapLanguageModel as wrapLanguageModel } from 'ai';
 import { AiBase } from './base.mjs';
 import { AiRegistry } from './registry.mjs';
@@ -23,7 +22,7 @@ export class AiModels extends AiBase {
 		});
 	}
 
-	private get middleware(): LanguageModelV1Middleware {
+	private get middleware(): Parameters<typeof wrapLanguageModel>[0]['middleware'] {
 		return {};
 	}
 }
