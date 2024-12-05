@@ -29,6 +29,6 @@ export default tseslint.config({
 		'@typescript-eslint/no-explicit-any': ['warn', { ignoreRestArgs: true }],
 		'@typescript-eslint/restrict-plus-operands': 'warn',
 		'@typescript-eslint/no-floating-promises': ['error', { checkThenables: true, ignoreIIFE: true }],
-		"@typescript-eslint/no-namespace": "off"
+		'@typescript-eslint/no-namespace': 'off',
 	},
 });
