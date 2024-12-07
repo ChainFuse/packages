@@ -77,7 +77,7 @@ export class AiCustomProviders extends AiBase {
 				async (accPromise, model) => {
 					const acc = await accPromise;
 					// @ts-expect-error override for types
-					acc[model as AzureEmbeddingModels] = (await raw.azOpenai(args, server!.id))(model);
+					acc[model as AzureEmbeddingModels] = (await raw.azOpenai(args, server!.id)).textEmbeddingModel(model);
 					return acc;
 				},
 				Promise.resolve({} as Record<AzureEmbeddingModels, Awaited<ReturnType<AiRawProviders['azOpenai']>>>),
