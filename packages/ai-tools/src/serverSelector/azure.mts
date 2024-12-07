@@ -11,7 +11,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 151.2094,
 			},
 			region: PrivacyRegion.Australian_Privacy_Principles,
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-BR-SaoPauloState',
@@ -20,7 +21,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -46.633,
 			},
 			region: PrivacyRegion.Brazil_General_Data_protection_Law,
-			availability: ['gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAI-CA-Toronto',
@@ -29,7 +31,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -79.383,
 			},
 			region: PrivacyRegion.Canada_Personal_Information_Protection_and_Electronic_Documents_Act,
-			availability: [],
+			languageModelAvailability: [],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAI-CA-Quebec',
@@ -38,7 +41,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -71.217,
 			},
 			region: PrivacyRegion.Canada_Personal_Information_Protection_and_Electronic_Documents_Act,
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'text-embedding-3-small', 'text-embedding-3-large'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: ['text-embedding-3-small', 'text-embedding-3-large'],
 		},
 		{
 			id: 'OpenAi-US-Virginia',
@@ -46,7 +50,8 @@ export class AzureServerSelector extends ServerSelector {
 				lat: 37.3719,
 				lon: -79.8164,
 			},
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o-mini', 'gpt-4o', 'text-embedding-3-small', 'text-embedding-3-large'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o-mini', 'gpt-4o'],
+			textEmbeddingModelAvailability: ['text-embedding-3-small', 'text-embedding-3-large'],
 		},
 		{
 			id: 'OpenAi-US-Virginia2',
@@ -54,7 +59,8 @@ export class AzureServerSelector extends ServerSelector {
 				lat: 36.6681,
 				lon: -78.3889,
 			},
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'text-embedding-3-small', 'text-embedding-3-large'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: ['text-embedding-3-small', 'text-embedding-3-large'],
 		},
 		{
 			id: 'OpenAi-EU-Paris',
@@ -63,7 +69,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 2.373,
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'text-embedding-3-large'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
 			id: 'OpenAi-EU-Frankfurt',
@@ -72,7 +79,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 8.682127,
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
-			availability: ['gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-JP-Tokyo',
@@ -81,7 +89,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 139.77,
 			},
 			region: PrivacyRegion.Japan_Act_on_the_Protection_of_Personal_Information,
-			availability: ['gpt-4-turbo', 'gpt-4o', 'text-embedding-3-large'],
+			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
 			id: 'OpenAi-KR-Seoul',
@@ -90,7 +99,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 126.978,
 			},
 			region: PrivacyRegion.Korean_Personal_Information_Protection_Act,
-			availability: ['gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-US-Illinois',
@@ -98,7 +108,8 @@ export class AzureServerSelector extends ServerSelector {
 				lat: 41.8819,
 				lon: -87.6278,
 			},
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-NO-Oslo',
@@ -107,7 +118,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 10.752245,
 			},
 			region: PrivacyRegion.Norwegian_Personal_Data_Act,
-			availability: ['gpt-4-turbo', 'gpt-4o', 'text-embedding-3-large'],
+			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
 			id: 'OpenAi-EU-Warsaw',
@@ -116,7 +128,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 21.01666,
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
-			availability: ['gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-ZA-Johannesburg',
@@ -125,7 +138,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -25.73134,
 			},
 			region: PrivacyRegion.SouthAfrica_Protection_Personal_Information_Act,
-			availability: ['gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-US-Texas',
@@ -133,7 +147,8 @@ export class AzureServerSelector extends ServerSelector {
 				lat: 29.4167,
 				lon: -98.5,
 			},
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-IN-Chennai',
@@ -142,7 +157,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 80.1636,
 			},
 			region: PrivacyRegion.Indian_Personal_Protection,
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'text-embedding-3-large'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
 			id: 'OpenAi-EU-Gavle',
@@ -151,7 +167,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 17.14127,
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o-mini', 'gpt-4o', 'text-embedding-3-large'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o-mini', 'gpt-4o'],
+			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
 			id: 'OpenAi-EU-Madrid',
@@ -160,7 +177,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 40.4259,
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
-			availability: ['gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-CH-Geneva',
@@ -169,7 +187,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 6.143158,
 			},
 			region: PrivacyRegion.Swiss_Federal_Act_on_Data_Protection,
-			availability: [],
+			languageModelAvailability: [],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-CH-Zurich',
@@ -178,7 +197,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 8.564572,
 			},
 			region: PrivacyRegion.Swiss_Federal_Act_on_Data_Protection,
-			availability: ['gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-UK-London',
@@ -187,7 +207,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -0.799,
 			},
 			region: PrivacyRegion.UK_General_Data_Protection_Regulation,
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'text-embedding-3-large'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
 			id: 'OpenAi-EU-Netherlands',
@@ -196,7 +217,8 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 4.9,
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
-			availability: ['gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-US-California',
@@ -204,7 +226,8 @@ export class AzureServerSelector extends ServerSelector {
 				lat: 37.783,
 				lon: -122.417,
 			},
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: [],
 		},
 		{
 			id: 'OpenAi-US-Phoenix',
@@ -212,7 +235,8 @@ export class AzureServerSelector extends ServerSelector {
 				lat: 33.448376,
 				lon: -112.074036,
 			},
-			availability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'text-embedding-3-large'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o'],
+			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 	]);
 }
