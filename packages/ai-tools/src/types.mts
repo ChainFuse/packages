@@ -1,4 +1,4 @@
-import type { Coordinate, UuidExport } from '@chainfuse/types';
+import type { RawCoordinate, UuidExport } from '@chainfuse/types';
 import type { Ai, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import type haversine from 'haversine-distance';
 
@@ -8,7 +8,7 @@ export interface AiConfig {
 		apiToken: string;
 	};
 	geoRouting?: {
-		userCoordinate?: Coordinate;
+		userCoordinate?: RawCoordinate;
 		country?: IncomingRequestCfProperties['country'];
 		continent?: IncomingRequestCfProperties['continent'];
 	};
