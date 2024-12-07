@@ -247,6 +247,16 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '7a143886-c9bb-4a1c-be95-377b1973bc3b',
+					source: 1,
+					name: '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+					description: 'Llama 3.3 70B quantized to fp8 precision, optimized to be faster.',
+					tags: [],
+					properties: {
+						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE',
+					},
+				},
+				{
 					id: '673c56cc-8553-49a1-b179-dd549ec9209a',
 					source: 2,
 					name: '@hf/thebloke/openhermes-2.5-mistral-7b-awq',
