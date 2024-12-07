@@ -1,4 +1,3 @@
-import type { OpenAIProvider } from '@ai-sdk/openai';
 import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
 import { AiBase } from './base.mjs';
 import type { AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata } from './types.mjs';
@@ -7,7 +6,7 @@ export class AiRawProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
 	private readonly cacheTtl = 2628288;
 
-	public oaiOpenai(args: AiRequestConfig): Promise<OpenAIProvider> {
+	public oaiOpenai(args: AiRequestConfig) {
 		return import('@ai-sdk/openai').then(async ({ createOpenAI }) =>
 			createOpenAI({
 				baseURL: new URL(['v1', this._config.gateway.accountId, this._config.environment, 'openai'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
