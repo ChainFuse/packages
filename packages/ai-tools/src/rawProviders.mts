@@ -8,8 +8,8 @@ export class AiRawProviders extends AiBase {
 	private readonly cacheTtl = 2628288;
 
 	public oaiOpenai(args: AiRequestConfig): Promise<OpenAIProvider> {
-		return import('@ai-sdk/openai').then(async ({ createOpenAI }) => {
-			return createOpenAI({
+		return import('@ai-sdk/openai').then(async ({ createOpenAI }) =>
+			createOpenAI({
 				baseURL: new URL(['v1', this._config.gateway.accountId, this._config.environment, 'openai'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: this._config.providers.openAi.apiToken,
 				organization: this._config.providers.openAi.organization,
@@ -57,7 +57,7 @@ export class AiRawProviders extends AiBase {
 						}
 					});
 				},
-			});
-		});
+			}),
+		);
 	}
 }
