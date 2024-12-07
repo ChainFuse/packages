@@ -1,8 +1,9 @@
+import { Helpers } from '@chainfuse/helpers';
 import type { AzureChatModels, AzureEmbeddingModels } from '@chainfuse/types';
 import { APICallError, experimental_customProvider as customProvider, experimental_wrapLanguageModel as wrapLanguageModel } from 'ai';
 import { AiBase } from '../base.mjs';
 import { AzureServerSelector } from '../serverSelector/azure.mjs';
-import type { AiRequestConfig } from '../types.mjs';
+import type { AiRequestConfig, AiRequestIdempotencyId } from '../types.mjs';
 import { AiRawProviders } from './rawProviders.mjs';
 import type { AzureOpenAIProvider } from './types.mjs';
 
@@ -23,28 +24,43 @@ export class AiCustomProviders extends AiBase {
 					acc[model as AzureChatModels] = wrapLanguageModel({
 						model: (await raw.azOpenai(args, server!.id))(model),
 						middleware: {
-							wrapGenerate: async ({ doGenerate, params }) => {
+							wrapGenerate: async ({ doGenerate, model, params }) => {
 								try {
-									const result = await doGenerate();
-
-									return result;
+									// Must be double awaited to prevent a promise from being returned
+									return await doGenerate();
 								} catch (error) {
 									if (APICallError.isInstance(error)) {
-										const urlFragments = new URL(error.url).pathname.split('/');
-										const lastServer = urlFragments[5]!;
-										const modelName = urlFragments[6]!;
-										const compatibleServers = new AzureServerSelector(this.config).closestServers(modelName);
+										const idempotencyId = new Headers(error.responseHeaders).get('X-Idempotency-Id') as AiRequestIdempotencyId;
+										const lastServer = new URL(error.url).pathname.split('/')[5]!;
+										const compatibleServers = new AzureServerSelector(this.config).closestServers(model.modelId);
 										const lastServerIndex = compatibleServers.findIndex((s) => s.id.toLowerCase() === lastServer.toLowerCase());
 
-										// Safety check if next servers exist
-										if (lastServerIndex < compatibleServers.length - 1) {
-											console.error(lastServer, compatibleServers.slice(lastServerIndex + 1));
-											// Should retry with the next server
-										} else {
-											throw error;
+										if (args.logging ?? this._config.environment !== 'production') console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.red('FAIL'), compatibleServers[lastServerIndex]!.id, 'REMAINING', JSON.stringify(compatibleServers.slice(lastServerIndex + 1).map((s) => s.id)));
+
+										// Should retry with the next server
+										const leftOverServers = compatibleServers.slice(lastServerIndex + 1);
+										const errors: unknown[] = [error];
+
+										for (const nextServer of leftOverServers) {
+											try {
+												if (args.logging ?? this._config.environment !== 'production') console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.blue('FALLBACK'), nextServer.id, 'REMAINING', JSON.stringify(leftOverServers.slice(leftOverServers.indexOf(nextServer) + 1).map((s) => s.id)));
+
+												// Must be double awaited to prevent a promise from being returned
+												return await (await raw.azOpenai({ ...args, idempotencyId }, nextServer.id))(model.modelId).doGenerate(params);
+											} catch (nextServerError) {
+												if (APICallError.isInstance(nextServerError)) {
+													if (args.logging ?? this._config.environment !== 'production') console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.red('FAIL'), nextServer.id, 'REMAINING', JSON.stringify(leftOverServers.slice(leftOverServers.indexOf(nextServer) + 1).map((s) => s.id)));
+
+													errors.push(nextServerError);
+												} else {
+													errors.push(nextServerError);
+													throw nextServerError;
+												}
+											}
 										}
 
-										throw error;
+										// eslint-disable-next-line @typescript-eslint/only-throw-error
+										throw errors;
 									} else {
 										throw error;
 									}
