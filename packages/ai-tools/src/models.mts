@@ -12,8 +12,10 @@ type ProviderLanguageModels = {
 type ProvidersTextEmbeddingModels = {
 	[P in ValidProviders]: Parameters<ProvidersReturnType[P]['textEmbeddingModel']>[0];
 };
-type LanguageModelValues = (typeof AiModels.LanguageModels)[keyof typeof AiModels.LanguageModels][keyof (typeof AiModels.LanguageModels)[keyof typeof AiModels.LanguageModels]];
-type TextEmbeddingModelValues = (typeof AiModels.TextEmbeddingModels)[keyof typeof AiModels.TextEmbeddingModels][keyof (typeof AiModels.TextEmbeddingModels)[keyof typeof AiModels.TextEmbeddingModels]];
+type EnumOrEnumLike<T> = T extends Record<string, infer V> ? V : T extends Readonly<Record<string, infer V>> ? V : never;
+type LanguageModelValues = EnumOrEnumLike<(typeof AiModels.LanguageModels)[keyof typeof AiModels.LanguageModels]>;
+
+type TextEmbeddingModelValues = EnumOrEnumLike<(typeof AiModels.TextEmbeddingModels)[keyof typeof AiModels.TextEmbeddingModels]>;
 
 export class AiModel extends AiBase {
 	public wrappedLanguageModel<P extends ValidProviders>(args: AiRequestConfig, provider: P, model: ProviderLanguageModels[P]): Promise<ReturnType<typeof wrapLanguageModel>>;
