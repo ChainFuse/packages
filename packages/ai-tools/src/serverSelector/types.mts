@@ -5,5 +5,6 @@ export interface Server {
 	id: string;
 	coordinate: Coordinate;
 	region?: PrivacyRegion;
-	availability: (AzureChatModels | AzureEmbeddingModels)[] | string[];
+	languageModelAvailability: AzureChatModels[] | string[];
+	textEmbeddingModelAvailability: AzureEmbeddingModels[] | string[];
 }
