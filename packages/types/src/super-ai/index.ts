@@ -1,6 +1,10 @@
 import type { JSONSchema7 } from 'json-schema';
 import { workersAiCatalog } from './workers-ai-catalog.js';
 
+export interface RawCoordinate {
+	lat: string;
+	lon: string;
+}
 export interface Coordinate {
 	lat: number;
 	lon: number;
