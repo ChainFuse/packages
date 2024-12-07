@@ -94,7 +94,7 @@ export namespace AiModels {
 		}
 
 		export enum Azure {
-			gpt3 = 'azure:gpt-3.5-turbo',
+			gpt3 = 'azure:gpt-35-turbo',
 			gpt4o_mini = 'azure:gpt-4o-mini',
 			gpt4 = 'azure:gpt-4-turbo',
 			gpt4o = 'azure:gpt-4o',
