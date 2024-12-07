@@ -40,19 +40,23 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? this._config.environment !== 'production') console.info('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? this._config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? this._config.environment !== 'production') console.info('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? this._config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+
+						// Inject it to have it available for retries
+						const mutableHeaders = new Headers(response.headers);
+						mutableHeaders.set('X-Idempotency-Id', metadataHeader.idempotencyId);
 
 						if (response.ok) {
-							return response;
+							return new Response(response.body, { ...response, headers: mutableHeaders });
 						} else {
 							const [body1, body2] = response.body!.tee();
 
-							console.error('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
+							console.error('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
 
-							return new Response(body2, response);
+							return new Response(body2, { ...response, headers: mutableHeaders });
 						}
 					});
 				},
@@ -97,19 +101,23 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? this._config.environment !== 'production') console.info('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? this._config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? this._config.environment !== 'production') console.info('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? this._config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+
+						// Inject it to have it available for retries
+						const mutableHeaders = new Headers(response.headers);
+						mutableHeaders.set('X-Idempotency-Id', metadataHeader.idempotencyId);
 
 						if (response.ok) {
-							return response;
+							return new Response(response.body, { ...response, headers: mutableHeaders });
 						} else {
 							const [body1, body2] = response.body!.tee();
 
-							console.error('ai', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
+							console.error('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
 
-							return new Response(body2, response);
+							return new Response(body2, { ...response, headers: mutableHeaders });
 						}
 					});
 				},
