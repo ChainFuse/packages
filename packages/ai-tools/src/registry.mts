@@ -1,6 +1,6 @@
 import { experimental_createProviderRegistry as createProviderRegistry } from 'ai';
 import { AiBase } from './base.mjs';
-import { AiCustomProviders } from './customProviders.mjs';
+import { AiCustomProviders } from './providers/customProviders.mjs';
 import type { AiRequestConfig } from './types.mjs';
 
 export class AiRegistry extends AiBase {

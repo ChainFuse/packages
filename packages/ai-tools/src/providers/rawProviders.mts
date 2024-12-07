@@ -1,6 +1,6 @@
 import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
-import { AiBase } from './base.mjs';
-import type { AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata } from './types.mjs';
+import { AiBase } from '../base.mjs';
+import type { AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata } from '../types.mjs';
 
 export class AiRawProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
