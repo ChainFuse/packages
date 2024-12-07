@@ -7,6 +7,7 @@ export class AiRegistry extends AiBase {
 	public async providers(args: AiRequestConfig) {
 		return Object.freeze({
 			openai: await new AiCustomProviders(this.config).oaiOpenai(args),
+			azure: await new AiCustomProviders(this.config).azOpenai(args),
 		});
 	}
 
