@@ -132,16 +132,6 @@ export class AiCustomProviders extends AiBase {
 					},
 					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['bindingWorkersAi']>>>),
 				),
-				// @ts-expect-error override for types
-				textEmbeddingModels: await enabledCloudflareLlmEmbeddingProviders.reduce(
-					async (accPromise, model) => {
-						const acc = await accPromise;
-						// @ts-expect-error override for types
-						acc[model] = (await raw.bindingWorkersAi(args)).textEmbeddingModel(model);
-						return acc;
-					},
-					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Embeddings'>, Awaited<ReturnType<AiRawProviders['bindingWorkersAi']>>>),
-				),
 			}) as CloudflareOpenAIProvider;
 		}
 	}
