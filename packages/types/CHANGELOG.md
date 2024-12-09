@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 1.3.1
+
+### Patch Changes
+
+- [#157](https://github.com/ChainFuse/packages/pull/157) [`4b49965`](https://github.com/ChainFuse/packages/commit/4b49965c93a65539b5cd134d5c48b42ae0d8e999) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+- [#156](https://github.com/ChainFuse/packages/pull/156) [`0bf95a3`](https://github.com/ChainFuse/packages/commit/0bf95a3deafef3eed5bb1d1aa3644701bf5e0224) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 1.3.0
 
 ### Minor Changes
