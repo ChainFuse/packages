@@ -206,6 +206,7 @@ export class AiRawProviders extends AiBase {
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 				},
 				compatibility: 'compatible',
+				name: 'workersai',
 				fetch: async (input, rawInit) => {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
