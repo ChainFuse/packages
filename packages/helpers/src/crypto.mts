@@ -14,22 +14,16 @@ export class CryptoHelpers {
 			});
 	}
 
-	/**
-	 * @yields secret length = (`byteSize` * Math.log2(16)) / 8
-	 */
-	public static base16secret(byteSize: number) {
-		return this.secretBytes(byteSize).then((bytes) => BufferHelpers.bufferToHex(bytes.buffer));
+	public static base16secret(secretLength: number) {
+		return this.secretBytes(secretLength / 2).then((bytes) => BufferHelpers.bufferToHex(bytes.buffer));
 	}
 
-	/**
-	 * @yields secret length = (`byteSize` * Math.log2(62)) / 8
-	 */
-	public static base62secret(byteSize: number) {
+	public static base62secret(secretLength: number) {
 		const LOWER_CHAR_SET = 'abcdefghijklmnopqrstuvwxyz';
 		const NUMBER_CHAR_SET = '0123456789';
 		const CHAR_SET = `${NUMBER_CHAR_SET}${LOWER_CHAR_SET}${LOWER_CHAR_SET.toUpperCase()}` as const;
 
-		return this.secretBytes(byteSize).then((randomBytes) => {
+		return this.secretBytes(secretLength).then((randomBytes) => {
 			/**
 			 * @link https://jsbm.dev/x1F2ITy7RU8T2
 			 */
