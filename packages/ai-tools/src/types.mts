@@ -38,7 +38,10 @@ export interface AiConfigWorkersaiRest {
 export type AiConfigWorkersaiBinding = Ai;
 export type AiConfigWorkersai = AiConfigWorkersaiRest | AiConfigWorkersaiBinding;
 
-export type AiRequestIdempotencyId = `${UuidExport['utf8']}.${string}`;
+/**
+ * It's a UUID, but the last block is SHA256 of the request body
+ */
+export type AiRequestIdempotencyId = UuidExport['utf8'];
 export interface AiRequestExecutor {
 	type: 'worker' | 'queue' | 'workflow';
 	id: string;
