@@ -8,6 +8,7 @@ export class AiRegistry extends AiBase {
 		return Object.freeze({
 			openai: await new AiCustomProviders(this.config).oaiOpenai(args),
 			azure: await new AiCustomProviders(this.config).azOpenai(args),
+			anthropic: await new AiCustomProviders(this.config).anthropic(args),
 		});
 	}
 

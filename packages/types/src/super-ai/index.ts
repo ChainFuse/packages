@@ -100,6 +100,11 @@ export namespace AiModels {
 			gpt4o = 'azure:gpt-4o',
 		}
 
+		export enum Anthropic {
+			haiku = 'anthropic:claude-3-5-haiku-latest',
+			sonnet = 'anthropic:claude-3-5-sonnet-latest',
+		}
+
 		export const CloudflareSummary = Object.freeze(Object.fromEntries(enabledCloudflareLlmSummaryProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Summarization'>);
 		export const CloudflareClassification = Object.freeze(Object.fromEntries(enabledCloudflareLlmClassificationProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text Classification'>);
 		export const Cloudflare = Object.freeze(Object.fromEntries(enabledCloudflareLlmProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text Generation'>);

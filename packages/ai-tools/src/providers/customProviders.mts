@@ -86,4 +86,8 @@ export class AiCustomProviders extends AiBase {
 			...(servers.length > 0 && { fallbackProvider: await this.azOpenai(args, servers) }),
 		}) as AzureOpenAIProvider; // Override type so autocomplete works
 	}
+
+	public anthropic(args: AiRequestConfig) {
+		return new AiRawProviders(this.config).anthropic(args);
+	}
 }
