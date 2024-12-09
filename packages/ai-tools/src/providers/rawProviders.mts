@@ -18,7 +18,7 @@ export class AiRawProviders extends AiBase {
 						dataspaceId: args.dataspaceId,
 						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8 as AiRequestIdempotencyId),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
 						serverInfo: JSON.stringify({
 							name: 'openai',
 						} satisfies Exclude<AiRequestMetadata['serverInfo'], string>),
@@ -35,8 +35,8 @@ export class AiRawProviders extends AiBase {
 				fetch: async (input, rawInit) => {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
-					if (!metadataHeader.idempotencyId.includes('.')) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}.${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(-8)}`;
+					if (metadataHeader.idempotencyId.split('-').length === 4) {
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestIdempotencyId;
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
@@ -80,7 +80,7 @@ export class AiRawProviders extends AiBase {
 						dataspaceId: args.dataspaceId,
 						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8 as AiRequestIdempotencyId),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
 						serverInfo: JSON.stringify({
 							name: 'openai',
 						} satisfies Exclude<AiRequestMetadata['serverInfo'], string>),
@@ -96,8 +96,8 @@ export class AiRawProviders extends AiBase {
 				fetch: async (input, rawInit) => {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
-					if (!metadataHeader.idempotencyId.includes('.')) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}.${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(-8)}`;
+					if (metadataHeader.idempotencyId.split('-').length === 4) {
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestIdempotencyId;
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
@@ -136,7 +136,7 @@ export class AiRawProviders extends AiBase {
 						dataspaceId: args.dataspaceId,
 						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8 as AiRequestIdempotencyId),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
 						serverInfo: JSON.stringify({
 							name: 'openai',
 						} satisfies Exclude<AiRequestMetadata['serverInfo'], string>),
@@ -152,8 +152,8 @@ export class AiRawProviders extends AiBase {
 				fetch: async (input, rawInit) => {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
-					if (!metadataHeader.idempotencyId.includes('.')) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}.${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(-8)}`;
+					if (metadataHeader.idempotencyId.split('-').length === 4) {
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestIdempotencyId;
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
