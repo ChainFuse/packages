@@ -57,12 +57,18 @@ updates:
         versions:
           - '>=23.0.0'
     groups:
+      ai:
+        patterns:
+          - 'ai'
+          - '@ai-sdk/*'
+          - '@cloudflare/ai*'
       cloudflare:
         patterns:
           - 'cloudflare'
           - '@cloudflare/*'
           - 'wrangler'
         exclude-patterns:
+          - '@cloudflare/ai*'
           - '@cloudflare/workers-types'
       typescript-core:
         patterns:
