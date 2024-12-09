@@ -1,11 +1,11 @@
 import { Helpers } from '@chainfuse/helpers';
-import type { AzureChatModels, AzureEmbeddingModels } from '@chainfuse/types';
+import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
 import { APICallError, experimental_customProvider as customProvider, experimental_wrapLanguageModel as wrapLanguageModel } from 'ai';
 import { AiBase } from '../base.mjs';
 import { AzureServerSelector } from '../serverSelector/azure.mjs';
-import type { AiRequestConfig, AiRequestIdempotencyId } from '../types.mjs';
+import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId } from '../types.mjs';
 import { AiRawProviders } from './rawProviders.mjs';
-import type { AzureOpenAIProvider } from './types.mjs';
+import type { AzureOpenAIProvider, CloudflareOpenAIProvider } from './types.mjs';
 
 export class AiCustomProviders extends AiBase {
 	public oaiOpenai(args: AiRequestConfig) {
@@ -89,5 +89,60 @@ export class AiCustomProviders extends AiBase {
 
 	public anthropic(args: AiRequestConfig) {
 		return new AiRawProviders(this.config).anthropic(args);
+	}
+
+	private static workersAiIsRest(arg: any): arg is AiConfigWorkersaiRest {
+		return typeof arg === 'object' && 'apiToken' in arg;
+	}
+	public async cfWorkersAi(args: AiRequestConfig) {
+		const raw = new AiRawProviders(this.config);
+
+		if (AiCustomProviders.workersAiIsRest(this.config.providers.workersAi)) {
+			return customProvider({
+				// @ts-expect-error override for types
+				languageModels: await enabledCloudflareLlmProviders.reduce(
+					async (accPromise, model) => {
+						const acc = await accPromise;
+						// @ts-expect-error override for types
+						acc[model] = (await raw.restWorkersAi(args))(model);
+						return acc;
+					},
+					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['restWorkersAi']>>>),
+				),
+				// @ts-expect-error override for types
+				textEmbeddingModels: await enabledCloudflareLlmEmbeddingProviders.reduce(
+					async (accPromise, model) => {
+						const acc = await accPromise;
+						// @ts-expect-error override for types
+						acc[model] = (await raw.restWorkersAi(args)).textEmbeddingModel(model);
+						return acc;
+					},
+					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Embeddings'>, Awaited<ReturnType<AiRawProviders['restWorkersAi']>>>),
+				),
+			}) as CloudflareOpenAIProvider;
+		} else {
+			return customProvider({
+				// @ts-expect-error override for types
+				languageModels: await enabledCloudflareLlmProviders.reduce(
+					async (accPromise, model) => {
+						const acc = await accPromise;
+						// @ts-expect-error override for types
+						acc[model] = (await raw.bindingWorkersAi(args))(model);
+						return acc;
+					},
+					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['bindingWorkersAi']>>>),
+				),
+				// @ts-expect-error override for types
+				textEmbeddingModels: await enabledCloudflareLlmEmbeddingProviders.reduce(
+					async (accPromise, model) => {
+						const acc = await accPromise;
+						// @ts-expect-error override for types
+						acc[model] = (await raw.bindingWorkersAi(args)).textEmbeddingModel(model);
+						return acc;
+					},
+					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Embeddings'>, Awaited<ReturnType<AiRawProviders['bindingWorkersAi']>>>),
+				),
+			}) as CloudflareOpenAIProvider;
+		}
 	}
 }
