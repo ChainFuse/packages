@@ -9,6 +9,7 @@ export class AiRegistry extends AiBase {
 			openai: await new AiCustomProviders(this.config).oaiOpenai(args),
 			azure: await new AiCustomProviders(this.config).azOpenai(args),
 			anthropic: await new AiCustomProviders(this.config).anthropic(args),
+			workersai: await new AiCustomProviders(this.config).cfWorkersAi(args),
 		});
 	}
 
