@@ -1,5 +1,6 @@
-import type { LanguageModelV1, LanguageModelV1CallOptions, LanguageModelV1CallWarning, LanguageModelV1FinishReason, LanguageModelV1FunctionToolCall, LanguageModelV1LogProbs, LanguageModelV1ProviderMetadata, LanguageModelV1StreamPart } from '@ai-sdk/provider';
+import type { LanguageModelV1, LanguageModelV1CallWarning } from '@ai-sdk/provider';
 import type { cloudflareModelPossibilities } from '@chainfuse/types';
+import type { BaseAiTextGenerationModels } from '@cloudflare/workers-types/experimental';
 import { z } from 'zod';
 import { convertToWorkersAiChatMessages } from './convert-to-workersai-chat-messages.mjs';
 import type { WorkersAiSettings } from './index.mjs';
@@ -90,6 +91,56 @@ export class WorkersAiChatLanguageModel implements LanguageModelV1 {
 				const _exhaustiveCheck: never = type;
 				throw new Error(`Unsupported type: ${_exhaustiveCheck}`);
 		}
+	}
+
+	async doGenerate(options: Parameters<LanguageModelV1['doGenerate']>[0]): Promise<Awaited<ReturnType<LanguageModelV1['doGenerate']>>> {
+		const { args, warnings } = this.getArgs(options);
+
+		// Bypass types because model list will always be more updated
+		const response = await this.config.binding.run(
+			args.model as BaseAiTextGenerationModels,
+			{
+				stream: false,
+				max_tokens: args.max_tokens,
+				temperature: args.temperature,
+				top_p: args.top_p,
+				top_k: args.top_p,
+				seed: args.seed,
+				frequency_penalty: args.frequency_penalty,
+				presence_penalty: args.presence_penalty,
+				messages: args.messages,
+			},
+			{
+				gateway: this.config.gateway,
+				prefix: this.config.prefix,
+				extraHeaders: this.config.extraHeaders,
+			},
+		);
+
+		if (response instanceof ReadableStream) {
+			throw new Error("This shouldn't happen");
+		}
+
+		temp;
+
+		return {
+			text: response.response,
+			// TODO: tool calls
+			toolCalls: response.tool_calls?.map((toolCall) => ({
+				toolCallType: 'function',
+				toolCallId: toolCall.name, // TODO: what can the id be?
+				toolName: toolCall.name,
+				args: JSON.stringify(toolCall.arguments || {}),
+			})),
+			finishReason: 'stop', // TODO: mapWorkersAIFinishReason(response.finish_reason),
+			rawCall: { rawPrompt: args.messages, rawSettings: args },
+			usage: {
+				// TODO: mapWorkersAIUsage(response.usage),
+				promptTokens: 0,
+				completionTokens: 0,
+			},
+			warnings,
+		};
 	}
 }
 
