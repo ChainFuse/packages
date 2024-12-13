@@ -662,7 +662,7 @@ export const workersAiCatalog = {
 					id: '57fbd08a-a4c4-411c-910d-b9459ff36c20',
 					source: 1,
 					name: '@cf/baai/bge-small-en-v1.5',
-					description: 'BAAI general embedding (bge) models transform any given text into a compact vector',
+					description: 'BAAI general embedding (Small) model that transforms any given text into a 384-dimensional vector',
 					tags: [],
 					properties: {
 						beta: true,
@@ -675,7 +675,7 @@ export const workersAiCatalog = {
 					id: '429b9e8b-d99e-44de-91ad-706cf8183658',
 					source: 1,
 					name: '@cf/baai/bge-base-en-v1.5',
-					description: 'BAAI general embedding (bge) models transform any given text into a compact vector',
+					description: 'BAAI general embedding (Base) model that transforms any given text into a 768-dimensional vector',
 					tags: [],
 					properties: {
 						beta: true,
@@ -688,7 +688,7 @@ export const workersAiCatalog = {
 					id: '01bc2fb0-4bca-4598-b985-d2584a3f46c0',
 					source: 1,
 					name: '@cf/baai/bge-large-en-v1.5',
-					description: 'BAAI general embedding (bge) models transform any given text into a compact vector',
+					description: 'BAAI general embedding (Large) model that transforms any given text into a 1024-dimensional vector',
 					tags: [],
 					properties: {
 						beta: true,
