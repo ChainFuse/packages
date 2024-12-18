@@ -515,6 +515,16 @@ export const workersAiCatalog = {
 						beta: true,
 					},
 				},
+				{
+					id: '200f0812-148c-48c1-915d-fb3277a94a08',
+					source: 1,
+					name: '@cf/openai/whisper-large-v3-turbo',
+					description: 'Whisper is a pre-trained model for automatic speech recognition (ASR) and speech translation. ',
+					tags: [],
+					properties: {
+						beta: true,
+					},
+				},
 			],
 		},
 		'Image-to-Text': {
