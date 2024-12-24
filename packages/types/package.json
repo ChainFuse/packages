@@ -81,7 +81,7 @@
 	},
 	"prettier": "@demosjarco/prettier-config",
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20241216.0",
+		"@cloudflare/workers-types": "^4.20241224.0",
 		"@types/json-schema": "^7.0.15"
 	}
 }
