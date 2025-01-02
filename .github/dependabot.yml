@@ -61,6 +61,7 @@ updates:
         patterns:
           - 'ai'
           - '@ai-sdk/*'
+          - 'workers-ai-provider'
           - '@cloudflare/ai*'
       cloudflare:
         patterns:
