@@ -10,8 +10,7 @@
 		"clean": "lerna run --stream clean",
 		"build": "lerna run --stream build",
 		"build:clean": "lerna run --stream build:clean",
-		"test": "lerna run --parallel test",
-		"test:local": "lerna run --parallel test:local"
+		"test": "lerna run --parallel test"
 	},
 	"repository": {
 		"type": "git",
