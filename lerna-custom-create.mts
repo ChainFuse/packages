@@ -167,7 +167,6 @@ class LernaCustomCreate {
 						'build:clean': 'npm run build -- --build --clean && npm run build',
 						pretest: 'tsc --project tsconfig.tests.json',
 						test: 'node --enable-source-maps --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout',
-						'test:local': 'npm run test',
 					};
 					json.author = 'ChainFuse';
 					json.engines = {

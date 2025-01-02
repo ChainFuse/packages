@@ -24,7 +24,7 @@
 		{
 			"label": "sample",
 			"type": "npm",
-			"script": "test:local",
+			"script": "test",
 			"isBackground": true,
 			"group": {
 				"kind": "test"
