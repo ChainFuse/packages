@@ -121,7 +121,9 @@ export class AiCustomProviders extends AiBase {
 				),
 			}) as CloudflareOpenAIProvider;
 		} else {
-			return customProvider({
+			throw new Error('Binding workers AI is not supported');
+
+			/*return customProvider({
 				// @ts-expect-error override for types
 				languageModels: await enabledCloudflareLlmProviders.reduce(
 					async (accPromise, model) => {
@@ -132,7 +134,7 @@ export class AiCustomProviders extends AiBase {
 					},
 					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['bindingWorkersAi']>>>),
 				),
-			}) as CloudflareOpenAIProvider;
+			}) as CloudflareOpenAIProvider;*/
 		}
 	}
 }
