@@ -238,7 +238,7 @@ export class AiRawProviders extends AiBase {
 			}),
 		);
 	}
-	public async bindingWorkersAi(args: AiRequestConfig) {
+	/*public async bindingWorkersAi(args: AiRequestConfig) {
 		return import('workers-ai-provider').then(({ createWorkersAI }) => createWorkersAI({ binding: this.config.providers.workersAi }));
-	}
+	}*/
 }
