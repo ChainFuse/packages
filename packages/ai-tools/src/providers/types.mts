@@ -1,4 +1,4 @@
-import type { OpenAIChatSettings, OpenAIEmbeddingSettings } from '@ai-sdk/openai';
+import type { OpenAIChatSettings, OpenAIEmbeddingSettings } from '@ai-sdk/openai/internal';
 import type { EmbeddingModelV1, LanguageModelV1 } from '@ai-sdk/provider';
 import type { AzureChatModels, AzureEmbeddingModels, cloudflareModelPossibilities } from '@chainfuse/types';
 import type { Provider } from 'ai';
