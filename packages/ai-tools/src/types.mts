@@ -35,6 +35,10 @@ export interface AiConfigOaiOpenai {
 export interface AiConfigWorkersaiRest {
 	apiToken: string;
 }
+
+/**
+ * @deprecated Not functional. Use REST instead
+ */
 export type AiConfigWorkersaiBinding = Ai;
 export type AiConfigWorkersai = AiConfigWorkersaiRest | AiConfigWorkersaiBinding;
 
