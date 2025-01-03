@@ -184,8 +184,8 @@ await describe('AI Tests', () => {
 								],
 								maxTokens: 128,
 								schema: z.object({
-									city: z.string().describe('City of the incoming request'),
-									state: z.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+									city: z.string().trim().describe('City of the incoming request'),
+									state: z.string().trim().describe('The ISO 3166-2 name for the first level region of the incoming request'),
 								}),
 								schemaDescription: 'Return the current city and state of the runner',
 							});
