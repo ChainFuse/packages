@@ -1,9 +1,10 @@
 import { AiModels } from '@chainfuse/types';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
-import { generateText, streamText } from 'ai';
-import { doesNotReject, strictEqual } from 'node:assert/strict';
+import { generateObject, generateText, streamObject, streamText } from 'ai';
+import { doesNotReject, ok, strictEqual } from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import test, { before, beforeEach, describe, it } from 'node:test';
+import { z } from 'zod';
 import { AiModel, type LanguageModelValues } from '../dist/models.mjs';
 import type { AiConfig, AiConfigOaiOpenai, AiRequestConfig } from '../dist/types.mjs';
 
@@ -143,6 +144,98 @@ await describe('AI Tests', () => {
 						strictEqual(typeof (await responsePromise).text, 'string');
 
 						// console.debug('fullResponse', (await responsePromise).text);
+					});
+				}
+			}
+		});
+	});
+
+	void describe('Structured', () => {
+		const chosenModels = Object.entries(AiModels.LanguageModels)
+			.filter(([provider]) => (['Azure', 'CloudflareFunctions'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
+			.map(([, models]) => models);
+
+		beforeEach(() => {
+			// Simulate new instances each time
+			args.executor.id = randomUUID();
+		});
+
+		void it('Streaming', async () => {
+			for (const models of chosenModels) {
+				for (const model of Object.values(models)) {
+					await test(`${model}`, async () => {
+						const { partialObjectStream, object } = streamObject({
+							model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
+							messages: [
+								{
+									role: 'system',
+									content: `You are a running in a CI/CD test. Full debug statistics of the entire connection is:\n\`\`\`${JSON.stringify(geoJson)}\`\`\``,
+								},
+								{
+									role: 'user',
+									content: 'Where (geographically) are you running? Return in the specified format',
+								},
+							],
+							maxTokens: 128,
+							schema: z.object({
+								city: z.string().describe('City of the incoming request'),
+								state: z.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+							}),
+							schemaDescription: 'Return the current city and state of the runner',
+						});
+
+						for await (const chunk of partialObjectStream) {
+							// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+							ok(chunk.city || chunk.state);
+
+							if (chunk.city) strictEqual(typeof (await object).city, 'string');
+							if (chunk.state) strictEqual(typeof (await object).state, 'string');
+
+							// console.debug('objectPart', chunk);
+						}
+
+						await doesNotReject(object);
+
+						strictEqual(typeof (await object).city, 'string');
+						strictEqual(typeof (await object).state, 'string');
+
+						// console.debug('fullObject', await object);
+					});
+				}
+			}
+		});
+
+		void it('Buffered', async () => {
+			for (const models of chosenModels) {
+				for (const model of Object.values(models)) {
+					await test(`${model}`, async () => {
+						const responsePromise = generateObject({
+							model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
+							messages: [
+								{
+									role: 'system',
+									content: `You are a running in a CI/CD test. Full debug statistics of the entire connection is:\n\`\`\`${JSON.stringify(geoJson)}\`\`\``,
+								},
+								{
+									role: 'user',
+									content: 'Where (geographically) are you running? Return in the specified format',
+								},
+							],
+							maxTokens: 128,
+							schema: z.object({
+								city: z.string().describe('City of the incoming request'),
+								state: z.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+							}),
+							schemaDescription: 'Return the current city and state of the runner',
+						});
+
+						await doesNotReject(responsePromise);
+
+						const { object } = await responsePromise;
+						strictEqual(typeof object.city, 'string');
+						strictEqual(typeof object.state, 'string');
+
+						// console.debug('fullObject', object);
 					});
 				}
 			}
