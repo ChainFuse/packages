@@ -184,7 +184,8 @@ export class AiRawProviders extends AiBase {
 	public restWorkersAi(args: AiRequestConfig) {
 		return import('@ai-sdk/openai').then(async ({ createOpenAI }) =>
 			createOpenAI({
-				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'workers-ai', 'v1'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
+				// baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'workers-ai', 'v1'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
+				baseURL: new URL(['client', 'v4', 'accounts', this.config.gateway.accountId, 'ai', 'v1'].join('/'), 'https://api.cloudflare.com').toString(),
 				apiKey: (this.config.providers.workersAi as AiConfigWorkersaiRest).apiToken,
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
