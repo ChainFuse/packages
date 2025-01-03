@@ -1,6 +1,6 @@
 import { AiModels } from '@chainfuse/types';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
-import { generateObject, generateText, streamObject, streamText } from 'ai';
+import { generateObject, generateText, Output, streamObject, streamText, tool } from 'ai';
 import { doesNotReject, strictEqual } from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import test, { before, beforeEach, describe, it } from 'node:test';
@@ -248,6 +248,133 @@ await describe('AI Tests', () => {
 							strictEqual(typeof object.state, 'string');
 
 							// console.debug('fullObject', object);
+						},
+					);
+				}
+			}
+		});
+	});
+
+	void describe('Structured with tools', () => {
+		const chosenModels = Object.entries(AiModels.LanguageModels)
+			.filter(([provider]) => (['Azure'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
+			.map(([, models]) => models);
+
+		beforeEach(() => {
+			// Simulate new instances each time
+			args.executor.id = randomUUID();
+		});
+
+		/**
+		 * Listed in documentation but missing from code
+		 * @link https://sdk.vercel.ai/docs/ai-sdk-core/generating-structured-data#streamtext
+		 */
+		void it(['Structured with tools', 'Streaming'].join(' '), async () => {
+			for (const models of chosenModels) {
+				for (const model of Object.values(models)) {
+					await test(
+						['Structured with tools', 'Streaming', model].join(' '),
+						{
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model) || Object.values(AiModels.LanguageModels.CloudflareFunctions).includes(model),
+						},
+						async () => {
+							const { experimental_partialOutputStream } = streamText({
+								model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
+								messages: [
+									{
+										role: 'system',
+										content: 'You are a running in a CI/CD test. Use the available tool `get-conn-info` to get full debug statistics of the entire connection including geolocation information',
+									},
+									{
+										role: 'user',
+										content: 'Where (geographically) are you running? Return in the specified format',
+									},
+								],
+								maxTokens: 128,
+								tools: {
+									'get-conn-info': tool({
+										description: 'Get the current connection info including headers and geographical information',
+										parameters: z.any(),
+										// eslint-disable-next-line @typescript-eslint/require-await
+										execute: async () => geoJson,
+									}),
+								},
+								experimental_output: Output.object({
+									schema: z.object({
+										city: z.string().describe('City of the incoming request'),
+										state: z.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+									}),
+								}),
+							});
+
+							for await (const chunk of experimental_partialOutputStream) {
+								strictEqual(typeof chunk, 'object');
+
+								if (chunk.city) strictEqual(typeof chunk.city, 'string');
+								if (chunk.state) strictEqual(typeof chunk.state, 'string');
+
+								// console.debug('objectPart', chunk);
+							}
+
+							/**
+							 * Doesn't support accumulated output
+							 * @link https://sdk.vercel.ai/docs/ai-sdk-core/generating-structured-data#streamtext
+							 */
+							/*await doesNotReject(experimental_output);
+
+						strictEqual(typeof (await experimental_output).city, 'string');
+						strictEqual(typeof (await experimental_output).state, 'string');
+
+						// console.debug('fullObject', await experimental_output);*/
+						},
+					);
+				}
+			}
+		});
+
+		void it(['Structured with tools', 'Buffered'].join(' '), async () => {
+			for (const models of chosenModels) {
+				for (const model of Object.values(models)) {
+					await test(
+						['Structured with tools', 'Buffered', model].join(' '),
+						{
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model) || Object.values(AiModels.LanguageModels.CloudflareFunctions).includes(model),
+						},
+						async () => {
+							const responsePromise = generateText({
+								model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
+								messages: [
+									{
+										role: 'user',
+										content: 'Tell me about black holes',
+									},
+								],
+								maxTokens: 128,
+								tools: {
+									'get-conn-info': tool({
+										description: 'Get the current connection info including headers and geographical information',
+										parameters: z.any(),
+										// eslint-disable-next-line @typescript-eslint/require-await
+										execute: async () => geoJson,
+									}),
+								},
+								experimental_output: Output.object({
+									schema: z.object({
+										city: z.string().describe('City of the incoming request'),
+										state: z.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+									}),
+								}),
+							});
+
+							await doesNotReject(responsePromise);
+
+							const { experimental_output } = await responsePromise;
+							strictEqual(typeof experimental_output.city, 'string');
+							strictEqual(typeof experimental_output.state, 'string');
+
+							// console.debug('fullObject', experimental_output);
 						},
 					);
 				}
