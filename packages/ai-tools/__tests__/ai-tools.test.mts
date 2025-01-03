@@ -257,7 +257,7 @@ await describe('AI Tests', () => {
 
 	void describe('Structured with tools', () => {
 		const chosenModels = Object.entries(AiModels.LanguageModels)
-			.filter(([provider]) => (['Azure'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
+			.filter(([provider]) => (['Azure', 'Cloudflare', 'CloudflareFunctions'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
 			.map(([, models]) => models);
 
 		beforeEach(() => {
