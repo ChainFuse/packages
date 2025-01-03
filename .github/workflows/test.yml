@@ -94,7 +94,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest, macos-15]
         version: ['lts/*', latest]
-    continue-on-error: ${{ matrix.os == 'windows-latest' && matrix.version == 'latest' && fromJson('true') || fromJson(inputs.dry_tun_tests || 'false')  }}
+    continue-on-error: ${{ matrix.os == 'windows-latest' && fromJson('true') || fromJson(inputs.dry_tun_tests || 'false')  }}
     steps:
       - uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         if: matrix.os == 'ubuntu-latest'
