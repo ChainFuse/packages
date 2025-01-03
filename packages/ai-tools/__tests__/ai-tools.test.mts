@@ -1,8 +1,7 @@
 import { AiModels } from '@chainfuse/types';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import { generateText, streamText } from 'ai';
-import { doesNotReject } from 'node:assert';
-import { strictEqual } from 'node:assert/strict';
+import { doesNotReject, strictEqual } from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import test, { before, beforeEach, describe, it } from 'node:test';
 import { AiModel, type LanguageModelValues } from '../dist/models.mjs';
@@ -129,7 +128,7 @@ await describe('AI Tests', () => {
 			for (const models of chosenModels) {
 				for (const model of Object.values(models)) {
 					await test(`${model}`, async () => {
-						const { text } = await generateText({
+						const responsePromise = generateText({
 							model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
 							messages: [
 								{
@@ -140,9 +139,10 @@ await describe('AI Tests', () => {
 							maxTokens: 128,
 						});
 
-						strictEqual(typeof text, 'string');
+						await doesNotReject(responsePromise);
+						strictEqual(typeof (await responsePromise).text, 'string');
 
-						// console.debug('fullResponse', text);
+						// console.debug('fullResponse', (await responsePromise).text);
 					});
 				}
 			}
