@@ -28,9 +28,7 @@
 		"lint:fix": "npm run lint -- --fix",
 		"clean": "npx -y rimraf@latest ./dist ./.tsbuildinfo",
 		"build": "tsc",
-		"build:clean": "npm run build -- --build --clean && npm run build",
-		"pretest": "npm -w @chainfuse/types i -D @chainfuse/super-ai @chainfuse/types-internal && tsc --project tsconfig.tests.json",
-		"test": "node --env-file-if-exists=.dev.vars --enable-source-maps --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout"
+		"build:clean": "npm run build -- --build --clean && npm run build"
 	},
 	"type": "module",
 	"bugs": {
