@@ -1,83 +1,148 @@
-import { BufferHelpers } from '@chainfuse/helpers';
+import { AiModels } from '@chainfuse/types';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
-import { generateText } from 'ai';
-import { describe } from 'node:test';
-import { AiModel } from '../dist/models.mjs';
-import type { AiConfig } from '../dist/types.mjs';
+import { generateText, streamText } from 'ai';
+import { doesNotReject } from 'node:assert';
+import { strictEqual } from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
+import test, { before, beforeEach, describe, it } from 'node:test';
+import { AiModel, type LanguageModelValues } from '../dist/models.mjs';
+import type { AiConfig, AiRequestConfig } from '../dist/types.mjs';
 
 const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY } = process.env;
+const { AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES, AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE, AZURE_API_KEY_OPENAI_CA_QUEBEC, AZURE_API_KEY_OPENAI_CA_TORONTO, AZURE_API_KEY_OPENAI_CH_GENEVA, AZURE_API_KEY_OPENAI_CH_ZURICH, AZURE_API_KEY_OPENAI_EU_FRANKFURT, AZURE_API_KEY_OPENAI_EU_GAVLE, AZURE_API_KEY_OPENAI_EU_MADRID, AZURE_API_KEY_OPENAI_EU_NETHERLANDS, AZURE_API_KEY_OPENAI_EU_PARIS, AZURE_API_KEY_OPENAI_EU_WARSAW, AZURE_API_KEY_OPENAI_IN_CHENNAI, AZURE_API_KEY_OPENAI_JP_TOKYO, AZURE_API_KEY_OPENAI_KR_SEOUL, AZURE_API_KEY_OPENAI_NO_OSLO, AZURE_API_KEY_OPENAI_UK_LONDON, AZURE_API_KEY_OPENAI_US_CALIFORNIA, AZURE_API_KEY_OPENAI_US_ILLINOIS, AZURE_API_KEY_OPENAI_US_PHOENIX, AZURE_API_KEY_OPENAI_US_TEXAS, AZURE_API_KEY_OPENAI_US_VIRGINIA, AZURE_API_KEY_OPENAI_US_VIRGINIA2, AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG } = process.env;
+const { WORKERS_AI_API_KEY } = process.env;
 
-const geoJson = await fetch(new URL('https://workers.cloudflare.com/cf.json')).then((geoResponse) => geoResponse.json().then((json) => json as IncomingRequestCfProperties));
+await describe('AI Tests', () => {
+	let config: AiConfig;
+	let geoJson: IncomingRequestCfProperties;
 
-await describe('AI Response Tests', async () => {
-	const config: AiConfig = {
-		gateway: {
-			accountId: CF_ACCOUNT_ID!,
-			apiToken: AI_GATEWAY_API_KEY!,
-		},
-		geoRouting: {
-			userCoordinate: {
-				lat: geoJson.latitude!,
-				lon: geoJson.longitude!,
+	before(async () => {
+		geoJson = await fetch(new URL('https://workers.cloudflare.com/cf.json')).then((geoResponse) => geoResponse.json().then((json) => json as IncomingRequestCfProperties));
+		config = {
+			gateway: {
+				accountId: CF_ACCOUNT_ID!,
+				apiToken: AI_GATEWAY_API_KEY!,
 			},
-			country: geoJson.country,
-			continent: geoJson.continent,
-		},
-		environment: 'preview',
-		providers: {
-			anthropic: {
-				apiToken: 'sk-ant-*',
+			geoRouting: {
+				userCoordinate: {
+					lat: geoJson.latitude!,
+					lon: geoJson.longitude!,
+				},
+				country: geoJson.country,
+				continent: geoJson.continent,
 			},
-			azureOpenAi: {
-				apiTokens: {
-					AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES: '',
-					AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE: '',
-					AZURE_API_KEY_OPENAI_CA_QUEBEC: '',
-					AZURE_API_KEY_OPENAI_CA_TORONTO: '',
-					AZURE_API_KEY_OPENAI_CH_GENEVA: '',
-					AZURE_API_KEY_OPENAI_CH_ZURICH: '',
-					AZURE_API_KEY_OPENAI_EU_FRANKFURT: '',
-					AZURE_API_KEY_OPENAI_EU_GAVLE: '',
-					AZURE_API_KEY_OPENAI_EU_MADRID: '',
-					AZURE_API_KEY_OPENAI_EU_NETHERLANDS: '',
-					AZURE_API_KEY_OPENAI_EU_PARIS: '',
-					AZURE_API_KEY_OPENAI_EU_WARSAW: '',
-					AZURE_API_KEY_OPENAI_IN_CHENNAI: '',
-					AZURE_API_KEY_OPENAI_JP_TOKYO: '',
-					AZURE_API_KEY_OPENAI_KR_SEOUL: '',
-					AZURE_API_KEY_OPENAI_NO_OSLO: '',
-					AZURE_API_KEY_OPENAI_UK_LONDON: '',
-					AZURE_API_KEY_OPENAI_US_CALIFORNIA: '',
-					AZURE_API_KEY_OPENAI_US_ILLINOIS: '',
-					AZURE_API_KEY_OPENAI_US_PHOENIX: '',
-					AZURE_API_KEY_OPENAI_US_TEXAS: '',
-					AZURE_API_KEY_OPENAI_US_VIRGINIA: '',
-					AZURE_API_KEY_OPENAI_US_VIRGINIA2: '',
-					AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG: '',
+			environment: 'preview',
+			providers: {
+				anthropic: {
+					apiToken: 'sk-ant-*',
+				},
+				azureOpenAi: {
+					apiTokens: {
+						AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES: AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE: AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_CA_QUEBEC: AZURE_API_KEY_OPENAI_CA_QUEBEC!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_CA_TORONTO: AZURE_API_KEY_OPENAI_CA_TORONTO!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_CH_GENEVA: AZURE_API_KEY_OPENAI_CH_GENEVA!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_CH_ZURICH: AZURE_API_KEY_OPENAI_CH_ZURICH!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_EU_FRANKFURT: AZURE_API_KEY_OPENAI_EU_FRANKFURT!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_EU_GAVLE: AZURE_API_KEY_OPENAI_EU_GAVLE!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_EU_MADRID: AZURE_API_KEY_OPENAI_EU_MADRID!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_EU_NETHERLANDS: AZURE_API_KEY_OPENAI_EU_NETHERLANDS!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_EU_PARIS: AZURE_API_KEY_OPENAI_EU_PARIS!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_EU_WARSAW: AZURE_API_KEY_OPENAI_EU_WARSAW!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_IN_CHENNAI: AZURE_API_KEY_OPENAI_IN_CHENNAI!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_JP_TOKYO: AZURE_API_KEY_OPENAI_JP_TOKYO!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_KR_SEOUL: AZURE_API_KEY_OPENAI_KR_SEOUL!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_NO_OSLO: AZURE_API_KEY_OPENAI_NO_OSLO!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_UK_LONDON: AZURE_API_KEY_OPENAI_UK_LONDON!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_US_CALIFORNIA: AZURE_API_KEY_OPENAI_US_CALIFORNIA!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_US_ILLINOIS: AZURE_API_KEY_OPENAI_US_ILLINOIS!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_US_PHOENIX: AZURE_API_KEY_OPENAI_US_PHOENIX!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_US_TEXAS: AZURE_API_KEY_OPENAI_US_TEXAS!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_US_VIRGINIA: AZURE_API_KEY_OPENAI_US_VIRGINIA!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_US_VIRGINIA2: AZURE_API_KEY_OPENAI_US_VIRGINIA2!.replaceAll(`"`, ``),
+						AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG: AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG!.replaceAll(`"`, ``),
+					},
+				},
+				openAi: {
+					apiToken: 'sk-*',
+					organization: 'org-*',
+				},
+				workersAi: {
+					apiToken: WORKERS_AI_API_KEY!,
 				},
 			},
-			openAi: {
-				apiToken: 'sk-*',
-				organization: 'org-*',
-			},
-			workersAi: {
-				apiToken: '',
-			},
-		},
-	};
+		};
+	});
 
-	await generateText({
-		model: await new AiModel(config).wrappedLanguageModel(
-			{
-				dataspaceId: (await BufferHelpers.generateUuid).utf8,
+	void describe('Response', () => {
+		let args: AiRequestConfig;
+
+		before(() => {
+			args = {
+				dataspaceId: 'd_00000000-0000-0000-0000-000000000002_p',
 				executor: {
 					type: 'workflow',
-					id: '',
+					// CF Workflows have a uuidv4 instance id
+					id: randomUUID(),
 				},
-			},
-			'workersai',
-			'@cf/meta/llama-3.2-11b-vision-instruct',
-		),
-		prompt: 'Ooga booga',
+			};
+		});
+
+		beforeEach(() => {
+			// Simulate new instances each time
+			args.executor.id = randomUUID();
+		});
+
+		void it('Tests', async () => {
+			for (const stream of [true, false]) {
+				for (const models of Object.entries(AiModels.LanguageModels)
+					.filter(([provider]) => (['Azure', 'Cloudflare', 'CloudflareFunctions'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
+					.map(([, models]) => models)) {
+					for (const model of Object.values(models)) {
+						await test([JSON.stringify({ stream }), model].join(' '), async () => {
+							if (stream) {
+								const { textStream, text } = streamText({
+									model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
+									messages: [
+										{
+											role: 'user',
+											content: 'Tell me about black holes',
+										},
+									],
+									maxTokens: 128,
+								});
+
+								for await (const chunk of textStream) {
+									strictEqual(typeof chunk, 'string');
+
+									// console.debug('textPart', chunk);
+								}
+
+								await doesNotReject(text);
+								strictEqual(typeof (await text), 'string');
+
+								// console.debug('fullResponse', await text);
+							} else {
+								const { text } = await generateText({
+									model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
+									messages: [
+										{
+											role: 'user',
+											content: 'Tell me about black holes',
+										},
+									],
+									maxTokens: 128,
+								});
+
+								strictEqual(typeof text, 'string');
+
+								// console.debug('fullResponse', text);
+							}
+						});
+					}
+				}
+			}
+		});
 	});
 });
