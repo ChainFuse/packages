@@ -194,8 +194,8 @@ await describe('AI Tests', () => {
 								// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 								ok(chunk.city || chunk.state);
 
-								if (chunk.city) strictEqual(typeof (await object).city, 'string');
-								if (chunk.state) strictEqual(typeof (await object).state, 'string');
+								if (chunk.city) strictEqual(typeof chunk.city, 'string');
+								if (chunk.state) strictEqual(typeof chunk.state, 'string');
 
 								// console.debug('objectPart', chunk);
 							}
