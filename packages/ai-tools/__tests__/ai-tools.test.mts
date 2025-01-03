@@ -323,10 +323,10 @@ await describe('AI Tests', () => {
 							 */
 							/*await doesNotReject(experimental_output);
 
-						strictEqual(typeof (await experimental_output).city, 'string');
-						strictEqual(typeof (await experimental_output).state, 'string');
+							strictEqual(typeof (await experimental_output).city, 'string');
+							strictEqual(typeof (await experimental_output).state, 'string');
 
-						// console.debug('fullObject', await experimental_output);*/
+							// console.debug('fullObject', await experimental_output);*/
 						},
 					);
 				}
