@@ -13,7 +13,7 @@ export class AiRawProviders extends AiBase {
 				apiKey: this.config.providers.openAi.apiToken,
 				organization: this.config.providers.openAi.organization,
 				headers: {
-					'cf-aig-token': `Bearer ${this.config.gateway.apiToken}`,
+					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
@@ -75,7 +75,7 @@ export class AiRawProviders extends AiBase {
 				apiVersion: '2024-10-21',
 				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'azure-openai', server.toLowerCase()].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				headers: {
-					'cf-aig-token': `Bearer ${this.config.gateway.apiToken}`,
+					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
@@ -131,7 +131,7 @@ export class AiRawProviders extends AiBase {
 				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'anthropic'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: this.config.providers.anthropic.apiToken,
 				headers: {
-					'cf-aig-token': `Bearer ${this.config.gateway.apiToken}`,
+					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
@@ -187,7 +187,7 @@ export class AiRawProviders extends AiBase {
 				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'workers-ai', 'v1'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: (this.config.providers.workersAi as AiConfigWorkersaiRest).apiToken,
 				headers: {
-					'cf-aig-token': `Bearer ${this.config.gateway.apiToken}`,
+					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
