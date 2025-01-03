@@ -17,6 +17,14 @@ const { WORKERS_AI_API_KEY } = process.env;
 await describe('AI Tests', () => {
 	let config: AiConfig;
 	let geoJson: IncomingRequestCfProperties;
+	const args: AiRequestConfig = {
+		dataspaceId: 'd_00000000-0000-0000-0000-000000000002_p',
+		executor: {
+			type: GH_RUNNER_ID ? 'githubCicd' : 'workflow',
+			// CF Workflows have a uuidv4 instance id
+			id: GH_RUNNER_ID ?? randomUUID(),
+		},
+	};
 
 	before(async () => {
 		geoJson = await fetch(new URL('https://workers.cloudflare.com/cf.json')).then((geoResponse) => geoResponse.json().then((json) => json as IncomingRequestCfProperties));
@@ -78,15 +86,6 @@ await describe('AI Tests', () => {
 	});
 
 	void describe('Response', () => {
-		const args: AiRequestConfig = {
-			dataspaceId: 'd_00000000-0000-0000-0000-000000000002_p',
-			executor: {
-				type: GH_RUNNER_ID ? 'githubCicd' : 'workflow',
-				// CF Workflows have a uuidv4 instance id
-				id: GH_RUNNER_ID ?? randomUUID(),
-			},
-		};
-
 		beforeEach(() => {
 			// Simulate new instances each time
 			args.executor.id = randomUUID();
