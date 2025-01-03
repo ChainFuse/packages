@@ -167,7 +167,7 @@ await describe('AI Tests', () => {
 						`${model}`,
 						{
 							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model),
+							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model) || Object.values(AiModels.LanguageModels.CloudflareFunctions).includes(model),
 						},
 						async () => {
 							const { partialObjectStream, object } = streamObject({
@@ -218,7 +218,7 @@ await describe('AI Tests', () => {
 						`${model}`,
 						{
 							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model),
+							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model) || Object.values(AiModels.LanguageModels.CloudflareFunctions).includes(model),
 						},
 						async () => {
 							const responsePromise = generateObject({
