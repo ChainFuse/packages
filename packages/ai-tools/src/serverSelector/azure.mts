@@ -89,7 +89,7 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 139.77,
 			},
 			region: PrivacyRegion.Japan_Act_on_the_Protection_of_Personal_Information,
-			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
 			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
@@ -197,7 +197,7 @@ export class AzureServerSelector extends ServerSelector {
 				lon: 8.564572,
 			},
 			region: PrivacyRegion.Swiss_Federal_Act_on_Data_Protection,
-			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
 			textEmbeddingModelAvailability: [],
 		},
 		{
