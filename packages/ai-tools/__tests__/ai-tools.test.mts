@@ -95,10 +95,10 @@ await describe('AI Tests', () => {
 			args.executor.id = randomUUID();
 		});
 
-		void it('Streaming', async () => {
+		void it(['Response', 'Streaming'].join(' '), async () => {
 			for (const models of chosenModels) {
 				for (const model of Object.values(models)) {
-					await test(`${model}`, async () => {
+					await test(['Response', 'Streaming', model].join(' '), async () => {
 						const { textStream, text } = streamText({
 							model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
 							messages: [
@@ -125,10 +125,10 @@ await describe('AI Tests', () => {
 			}
 		});
 
-		void it('Buffered', async () => {
+		void it(['Response', 'Buffered'].join(' '), async () => {
 			for (const models of chosenModels) {
 				for (const model of Object.values(models)) {
-					await test(`${model}`, async () => {
+					await test(['Response', 'Buffered', model].join(' '), async () => {
 						const responsePromise = generateText({
 							model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
 							messages: [
@@ -160,11 +160,11 @@ await describe('AI Tests', () => {
 			args.executor.id = randomUUID();
 		});
 
-		void it('Streaming', async () => {
+		void it(['Structured', 'Streaming'].join(' '), async () => {
 			for (const models of chosenModels) {
 				for (const model of Object.values(models)) {
 					await test(
-						`${model}`,
+						['Structured', 'Streaming', model].join(' '),
 						{
 							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model) || Object.values(AiModels.LanguageModels.CloudflareFunctions).includes(model),
@@ -211,11 +211,11 @@ await describe('AI Tests', () => {
 			}
 		});
 
-		void it('Buffered', async () => {
+		void it(['Structured', 'Buffered'].join(' '), async () => {
 			for (const models of chosenModels) {
 				for (const model of Object.values(models)) {
 					await test(
-						`${model}`,
+						['Structured', 'Buffered', model].join(' '),
 						{
 							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model) || Object.values(AiModels.LanguageModels.CloudflareFunctions).includes(model),
