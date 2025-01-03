@@ -8,6 +8,7 @@ import test, { before, beforeEach, describe, it } from 'node:test';
 import { AiModel, type LanguageModelValues } from '../dist/models.mjs';
 import type { AiConfig, AiRequestConfig } from '../dist/types.mjs';
 
+const { RUNNER_ID } = process.env;
 const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY } = process.env;
 const { AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES, AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE, AZURE_API_KEY_OPENAI_CA_QUEBEC, AZURE_API_KEY_OPENAI_CA_TORONTO, AZURE_API_KEY_OPENAI_CH_GENEVA, AZURE_API_KEY_OPENAI_CH_ZURICH, AZURE_API_KEY_OPENAI_EU_FRANKFURT, AZURE_API_KEY_OPENAI_EU_GAVLE, AZURE_API_KEY_OPENAI_EU_MADRID, AZURE_API_KEY_OPENAI_EU_NETHERLANDS, AZURE_API_KEY_OPENAI_EU_PARIS, AZURE_API_KEY_OPENAI_EU_WARSAW, AZURE_API_KEY_OPENAI_IN_CHENNAI, AZURE_API_KEY_OPENAI_JP_TOKYO, AZURE_API_KEY_OPENAI_KR_SEOUL, AZURE_API_KEY_OPENAI_NO_OSLO, AZURE_API_KEY_OPENAI_UK_LONDON, AZURE_API_KEY_OPENAI_US_CALIFORNIA, AZURE_API_KEY_OPENAI_US_ILLINOIS, AZURE_API_KEY_OPENAI_US_PHOENIX, AZURE_API_KEY_OPENAI_US_TEXAS, AZURE_API_KEY_OPENAI_US_VIRGINIA, AZURE_API_KEY_OPENAI_US_VIRGINIA2, AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG } = process.env;
 const { WORKERS_AI_API_KEY } = process.env;
@@ -82,9 +83,9 @@ await describe('AI Tests', () => {
 			args = {
 				dataspaceId: 'd_00000000-0000-0000-0000-000000000002_p',
 				executor: {
-					type: 'workflow',
+					type: RUNNER_ID ? 'githubCicd' : 'workflow',
 					// CF Workflows have a uuidv4 instance id
-					id: randomUUID(),
+					id: RUNNER_ID ? RUNNER_ID : randomUUID(),
 				},
 			};
 		});
