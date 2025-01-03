@@ -347,8 +347,12 @@ await describe('AI Tests', () => {
 								model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
 								messages: [
 									{
+										role: 'system',
+										content: 'You are a running in a CI/CD test. Use the available tool `get-conn-info` to get full debug statistics of the entire connection including geolocation information',
+									},
+									{
 										role: 'user',
-										content: 'Tell me about black holes',
+										content: 'Where (geographically) are you running? Return in the specified format',
 									},
 								],
 								maxTokens: 128,
