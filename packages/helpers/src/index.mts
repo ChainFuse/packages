@@ -60,4 +60,27 @@ export class Helpers {
 	public static getFulfilledResults<T extends unknown>(promises: PromiseLike<T>[]) {
 		return Promise.allSettled(promises).then((results) => results.filter((result): result is PromiseFulfilledResult<Awaited<T>> => result.status === 'fulfilled').map((result) => result.value));
 	}
+
+	public static areArraysEqual<T>(array1: T[], array2: T[]) {
+		// Quick length check for early exit
+		if (array1.length !== array2.length) {
+			return false;
+		}
+
+		// Use Set for efficient comparison if arrays are of primitive types
+		const set1 = new Set(array1);
+		const set2 = new Set(array2);
+
+		if (set1.size !== set2.size) {
+			return false;
+		}
+
+		for (const item of set1) {
+			if (!set2.has(item)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
