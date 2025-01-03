@@ -1,7 +1,7 @@
 import { AiModels } from '@chainfuse/types';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import { generateObject, generateText, streamObject, streamText } from 'ai';
-import { doesNotReject, ok, strictEqual } from 'node:assert/strict';
+import { doesNotReject, strictEqual } from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import test, { before, beforeEach, describe, it } from 'node:test';
 import { z } from 'zod';
