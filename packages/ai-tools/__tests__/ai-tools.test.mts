@@ -8,6 +8,8 @@ import { z } from 'zod';
 import { AiModel, type LanguageModelValues } from '../dist/models.mjs';
 import type { AiConfig, AiConfigOaiOpenai, AiRequestConfig } from '../dist/types.mjs';
 
+type ChunkType<T> = T extends AsyncIterable<infer U> ? Awaited<U> : never;
+
 const { GH_RUNNER_ID } = process.env;
 const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY } = process.env;
 const { AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES, AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE, AZURE_API_KEY_OPENAI_CA_QUEBEC, AZURE_API_KEY_OPENAI_CA_TORONTO, AZURE_API_KEY_OPENAI_CH_GENEVA, AZURE_API_KEY_OPENAI_CH_ZURICH, AZURE_API_KEY_OPENAI_EU_FRANKFURT, AZURE_API_KEY_OPENAI_EU_GAVLE, AZURE_API_KEY_OPENAI_EU_MADRID, AZURE_API_KEY_OPENAI_EU_NETHERLANDS, AZURE_API_KEY_OPENAI_EU_PARIS, AZURE_API_KEY_OPENAI_EU_WARSAW, AZURE_API_KEY_OPENAI_IN_CHENNAI, AZURE_API_KEY_OPENAI_JP_TOKYO, AZURE_API_KEY_OPENAI_KR_SEOUL, AZURE_API_KEY_OPENAI_NO_OSLO, AZURE_API_KEY_OPENAI_UK_LONDON, AZURE_API_KEY_OPENAI_US_CALIFORNIA, AZURE_API_KEY_OPENAI_US_ILLINOIS, AZURE_API_KEY_OPENAI_US_PHOENIX, AZURE_API_KEY_OPENAI_US_TEXAS, AZURE_API_KEY_OPENAI_US_VIRGINIA, AZURE_API_KEY_OPENAI_US_VIRGINIA2, AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG } = process.env;
@@ -308,6 +310,8 @@ await describe('AI Tests', () => {
 								}),
 							});
 
+							let experimental_output: ChunkType<typeof experimental_partialOutputStream> = {};
+
 							for await (const chunk of experimental_partialOutputStream) {
 								strictEqual(typeof chunk, 'object');
 
@@ -315,18 +319,20 @@ await describe('AI Tests', () => {
 								if (chunk.state) strictEqual(typeof chunk.state, 'string');
 
 								// console.debug('objectPart', chunk);
+
+								experimental_output = { ...experimental_output, ...chunk };
 							}
 
 							/**
 							 * Doesn't support accumulated output
 							 * @link https://sdk.vercel.ai/docs/ai-sdk-core/generating-structured-data#streamtext
 							 */
-							/*await doesNotReject(experimental_output);
+							// await doesNotReject(experimental_output);
 
-							strictEqual(typeof (await experimental_output).city, 'string');
-							strictEqual(typeof (await experimental_output).state, 'string');
+							strictEqual(typeof experimental_output.city, 'string');
+							strictEqual(typeof experimental_output.state, 'string');
 
-							// console.debug('fullObject', await experimental_output);*/
+							// console.debug('fullObject', 'Structured with tools', 'Streaming', experimental_output);
 						},
 					);
 				}
