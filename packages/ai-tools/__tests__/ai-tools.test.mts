@@ -295,7 +295,7 @@ await describe('AI Tests', () => {
 								tools: {
 									'get-conn-info': tool({
 										description: 'Get the current connection info including headers and geographical information',
-										parameters: z.any(),
+										parameters: z.object({}),
 										// eslint-disable-next-line @typescript-eslint/require-await
 										execute: async () => geoJson,
 									}),
@@ -355,7 +355,7 @@ await describe('AI Tests', () => {
 								tools: {
 									'get-conn-info': tool({
 										description: 'Get the current connection info including headers and geographical information',
-										parameters: z.any(),
+										parameters: z.object({}),
 										// eslint-disable-next-line @typescript-eslint/require-await
 										execute: async () => geoJson,
 									}),
