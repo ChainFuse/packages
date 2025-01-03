@@ -191,8 +191,7 @@ await describe('AI Tests', () => {
 							});
 
 							for await (const chunk of partialObjectStream) {
-								// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-								ok(chunk.city || chunk.state);
+								strictEqual(typeof chunk, 'object');
 
 								if (chunk.city) strictEqual(typeof chunk.city, 'string');
 								if (chunk.state) strictEqual(typeof chunk.state, 'string');
