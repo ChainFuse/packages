@@ -86,58 +86,64 @@ await describe('AI Tests', () => {
 	});
 
 	void describe('Response', () => {
+		const chosenModels = Object.entries(AiModels.LanguageModels)
+			.filter(([provider]) => (['Azure', 'Cloudflare', 'CloudflareFunctions'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
+			.map(([, models]) => models);
+
 		beforeEach(() => {
 			// Simulate new instances each time
 			args.executor.id = randomUUID();
 		});
 
-		void it('Tests', async () => {
-			for (const stream of [true, false]) {
-				for (const models of Object.entries(AiModels.LanguageModels)
-					.filter(([provider]) => (['Azure', 'Cloudflare', 'CloudflareFunctions'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
-					.map(([, models]) => models)) {
-					for (const model of Object.values(models)) {
-						await test([JSON.stringify({ stream }), model].join(' '), async () => {
-							if (stream) {
-								const { textStream, text } = streamText({
-									model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
-									messages: [
-										{
-											role: 'user',
-											content: 'Tell me about black holes',
-										},
-									],
-									maxTokens: 128,
-								});
-
-								for await (const chunk of textStream) {
-									strictEqual(typeof chunk, 'string');
-
-									// console.debug('textPart', chunk);
-								}
-
-								await doesNotReject(text);
-								strictEqual(typeof (await text), 'string');
-
-								// console.debug('fullResponse', await text);
-							} else {
-								const { text } = await generateText({
-									model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
-									messages: [
-										{
-											role: 'user',
-											content: 'Tell me about black holes',
-										},
-									],
-									maxTokens: 128,
-								});
-
-								strictEqual(typeof text, 'string');
-
-								// console.debug('fullResponse', text);
-							}
+		void it('Streaming', async () => {
+			for (const models of chosenModels) {
+				for (const model of Object.values(models)) {
+					await test(`${model}`, async () => {
+						const { textStream, text } = streamText({
+							model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
+							messages: [
+								{
+									role: 'user',
+									content: 'Tell me about black holes',
+								},
+							],
+							maxTokens: 128,
 						});
-					}
+
+						for await (const chunk of textStream) {
+							strictEqual(typeof chunk, 'string');
+
+							// console.debug('textPart', chunk);
+						}
+
+						await doesNotReject(text);
+						strictEqual(typeof (await text), 'string');
+
+						// console.debug('fullResponse', await text);
+					});
+				}
+			}
+		});
+
+		void it('Buffered', async () => {
+			for (const models of chosenModels) {
+				for (const model of Object.values(models)) {
+					await test(`${model}`, async () => {
+						const { text } = await generateText({
+							model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
+							messages: [
+								{
+									role: 'user',
+									content: 'Tell me about black holes',
+								},
+							],
+							maxTokens: 128,
+						});
+
+						strictEqual(typeof text, 'string');
+
+						// console.debug('fullResponse', text);
+					});
 				}
 			}
 		});
