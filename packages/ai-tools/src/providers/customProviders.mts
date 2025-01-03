@@ -1,6 +1,8 @@
 import { Helpers } from '@chainfuse/helpers';
 import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
-import { APICallError, experimental_customProvider as customProvider, experimental_wrapLanguageModel as wrapLanguageModel } from 'ai';
+import { APICallError, experimental_customProvider as customProvider, TypeValidationError, experimental_wrapLanguageModel as wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
+import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
+import { ZodError } from 'zod';
 import { AiBase } from '../base.mjs';
 import { AzureServerSelector } from '../serverSelector/azure.mjs';
 import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId } from '../types.mjs';
@@ -103,8 +105,56 @@ export class AiCustomProviders extends AiBase {
 				languageModels: await enabledCloudflareLlmProviders.reduce(
 					async (accPromise, model) => {
 						const acc = await accPromise;
+						/**
+						 * Intercept and add in missing index property to be OpenAI compatible
+						 */
 						// @ts-expect-error override for types
-						acc[model] = (await raw.restWorkersAi(args))(model);
+						acc[model] = wrapLanguageModel({
+							model: (await raw.restWorkersAi(args))(model),
+							middleware: {
+								wrapStream: async ({ doStream }) => {
+									const { stream, ...rest } = await doStream();
+
+									const transformStream = new TransformStream<LanguageModelV1StreamPart, LanguageModelV1StreamPart>({
+										transform(chunk, controller) {
+											if (chunk.type === 'error') {
+												if (TypeValidationError.isInstance(chunk.error) && chunk.error.cause instanceof ZodError) {
+													if (chunk.error.cause.issues.filter((issues) => issues.code === 'invalid_union')) {
+														// Verify the specific error instead of assuming all errors
+														const missingIndexPropertyError = chunk.error.cause.issues
+															.filter((issues) => issues.code === 'invalid_union')
+															.flatMap((issue) => issue.unionErrors)
+															.flatMap((issue) => issue.issues)
+															.filter((issue) => issue.code === 'invalid_type' && Helpers.areArraysEqual(issue.path, ['choices', 0, 'index']));
+
+														if (missingIndexPropertyError.length > 0) {
+															const newChunk = chunk.error.value as ChatCompletionChunk;
+
+															newChunk.choices
+																.filter((choice) => choice.delta.content)
+																.forEach((choice) => {
+																	controller.enqueue({
+																		type: 'text-delta',
+																		textDelta: choice.delta.content!,
+																	});
+																});
+														}
+													}
+												}
+											} else {
+												// Passthrough untouched
+												controller.enqueue(chunk);
+											}
+										},
+									});
+
+									return {
+										stream: stream.pipeThrough(transformStream),
+										...rest,
+									};
+								},
+							},
+						});
 						return acc;
 					},
 					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['restWorkersAi']>>>),
