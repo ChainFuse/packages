@@ -175,11 +175,11 @@ await describe('AI Tests', () => {
 								messages: [
 									{
 										role: 'system',
-										content: `You are a running in a CI/CD test. Full debug statistics of the entire connection is:\n\`\`\`${JSON.stringify(geoJson)}\`\`\``,
+										content: `You are an assistant running in a CI/CD test container running in a singular location for unit testing. External statistics of the container:\`${JSON.stringify(geoJson)}\``,
 									},
 									{
 										role: 'user',
-										content: 'Where (geographically) are you running? Return in the specified format',
+										content: 'Where (geographically) are you running?',
 									},
 								],
 								maxTokens: 128,
@@ -226,11 +226,11 @@ await describe('AI Tests', () => {
 								messages: [
 									{
 										role: 'system',
-										content: `You are a running in a CI/CD test. Full debug statistics of the entire connection is:\n\`\`\`${JSON.stringify(geoJson)}\`\`\``,
+										content: `You are an assistant running in a CI/CD test container running in a singular location for unit testing. External statistics of the container:\`${JSON.stringify(geoJson)}\``,
 									},
 									{
 										role: 'user',
-										content: 'Where (geographically) are you running? Return in the specified format',
+										content: 'Where (geographically) are you running?',
 									},
 								],
 								maxTokens: 128,
@@ -284,17 +284,17 @@ await describe('AI Tests', () => {
 								messages: [
 									{
 										role: 'system',
-										content: 'You are a running in a CI/CD test. Use the available tool `get-conn-info` to get full debug statistics of the entire connection including geolocation information',
+										content: 'You are an assistant running in a CI/CD test container running in a singular location for unit testing. Use the tool `get-container-info` to get external statistics of the container including geolocation information. Respond in json.',
 									},
 									{
 										role: 'user',
-										content: 'Where (geographically) are you running? Return in the specified format',
+										content: 'Where (geographically) are you running?',
 									},
 								],
 								maxTokens: 128,
 								tools: {
-									'get-conn-info': tool({
-										description: 'Get the current connection info including headers and geographical information',
+									'get-container-info': tool({
+										description: 'Get external statistics of the current container including geographical information',
 										parameters: z.object({}),
 										// eslint-disable-next-line @typescript-eslint/require-await
 										execute: async () => geoJson,
@@ -348,17 +348,17 @@ await describe('AI Tests', () => {
 								messages: [
 									{
 										role: 'system',
-										content: 'You are a running in a CI/CD test. Use the available tool `get-conn-info` to get full debug statistics of the entire connection including geolocation information',
+										content: 'You are an assistant running in a CI/CD test container running in a singular location for unit testing. Use the tool `get-container-info` to get external statistics of the container including geolocation information. Respond in json.',
 									},
 									{
 										role: 'user',
-										content: 'Where (geographically) are you running? Return in the specified format',
+										content: 'Where (geographically) are you running?',
 									},
 								],
 								maxTokens: 128,
 								tools: {
-									'get-conn-info': tool({
-										description: 'Get the current connection info including headers and geographical information',
+									'get-container-info': tool({
+										description: 'Get external statistics of the current container including geographical information',
 										parameters: z.object({}),
 										// eslint-disable-next-line @typescript-eslint/require-await
 										execute: async () => geoJson,
