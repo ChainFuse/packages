@@ -7,9 +7,9 @@ import type { AiConfig } from '../dist/types.mjs';
 
 const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY } = process.env;
 
-void describe('AI Tests', async () => {
 const geoJson = await fetch(new URL('https://workers.cloudflare.com/cf.json')).then((geoResponse) => geoResponse.json().then((json) => json as IncomingRequestCfProperties));
 
+await describe('AI Response Tests', async () => {
 	const config: AiConfig = {
 		gateway: {
 			accountId: CF_ACCOUNT_ID!,
