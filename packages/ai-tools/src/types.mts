@@ -47,7 +47,7 @@ export type AiConfigWorkersai = AiConfigWorkersaiRest | AiConfigWorkersaiBinding
  */
 export type AiRequestIdempotencyId = UuidExport['utf8'];
 export interface AiRequestExecutor {
-	type: 'worker' | 'queue' | 'workflow';
+	type: 'worker' | 'queue' | 'workflow' | 'githubCicd';
 	id: string;
 }
 
