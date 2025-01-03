@@ -198,7 +198,7 @@ await describe('AI Tests', () => {
 								if (chunk.city) strictEqual(typeof chunk.city, 'string');
 								if (chunk.state) strictEqual(typeof chunk.state, 'string');
 
-								// console.debug('objectPart', chunk);
+								// console.debug('objectPart', 'Structured', 'Buffered', model, chunk);
 							}
 
 							await doesNotReject(object);
@@ -206,7 +206,7 @@ await describe('AI Tests', () => {
 							strictEqual(typeof (await object).city, 'string');
 							strictEqual(typeof (await object).state, 'string');
 
-							// console.debug('fullObject', await object);
+							// console.debug('fullObject', 'Structured', 'Streaming', model, await object);
 						},
 					);
 				}
@@ -249,7 +249,7 @@ await describe('AI Tests', () => {
 							strictEqual(typeof object.city, 'string');
 							strictEqual(typeof object.state, 'string');
 
-							// console.debug('fullObject', object);
+							// console.debug('fullObject', 'Structured', 'Buffered', model, object);
 						},
 					);
 				}
@@ -318,7 +318,7 @@ await describe('AI Tests', () => {
 								if (chunk.city) strictEqual(typeof chunk.city, 'string');
 								if (chunk.state) strictEqual(typeof chunk.state, 'string');
 
-								// console.debug('objectPart', chunk);
+								// console.debug('objectPart', 'Structured with tools', 'Streaming', chunk);
 
 								experimental_output = { ...experimental_output, ...chunk };
 							}
@@ -384,7 +384,7 @@ await describe('AI Tests', () => {
 							strictEqual(typeof experimental_output.city, 'string');
 							strictEqual(typeof experimental_output.state, 'string');
 
-							// console.debug('fullObject', experimental_output);
+							// console.debug('fullObject', 'Structured with tools', 'Buffered', model, experimental_output);
 						},
 					);
 				}
