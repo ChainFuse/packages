@@ -15,7 +15,7 @@ export class AiRawProviders extends AiBase {
 				headers: {
 					'cf-aig-token': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
-						dataspaceId: args.dataspaceId,
+						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
 						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
@@ -77,7 +77,7 @@ export class AiRawProviders extends AiBase {
 				headers: {
 					'cf-aig-token': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
-						dataspaceId: args.dataspaceId,
+						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
 						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
@@ -133,7 +133,7 @@ export class AiRawProviders extends AiBase {
 				headers: {
 					'cf-aig-token': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
-						dataspaceId: args.dataspaceId,
+						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
 						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
@@ -189,7 +189,7 @@ export class AiRawProviders extends AiBase {
 				headers: {
 					'cf-aig-token': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
-						dataspaceId: args.dataspaceId,
+						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
 						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),

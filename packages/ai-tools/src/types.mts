@@ -1,4 +1,4 @@
-import type { RawCoordinate, UuidExport } from '@chainfuse/types';
+import type { PrefixedUuid, RawCoordinate, UuidExport } from '@chainfuse/types';
 import type { Ai, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import type haversine from 'haversine-distance';
 
@@ -57,7 +57,8 @@ export interface AiRequestConfig {
 	 * @default true
 	 */
 	cache?: boolean | number;
-	dataspaceId: UuidExport['utf8'];
+	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+	dataspaceId: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'];
 	/**
 	 * Service identification of caller
 	 */
