@@ -6,7 +6,16 @@
 
 # `@chainfuse/ai-tools`
 
-> TODO: description
+Vercel AI SDK plugin for multi-model and provider selection built for edge runtimes. Just replace `model` property and continue using vercel ai sdk as normal.
+
+## Compatability
+
+- [x] `generateText()`
+- [x] `streamText()`
+- [x] `generateObject()`
+- [x] `streamObject()`
+- [x] `embed()`
+- [ ] `generateImage()`
 
 ## Usage
 
