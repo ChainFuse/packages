@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/ai-catalog.yml'
-      - 'packages/types/src/super-ai/workers-ai-catalog.ts'
+      - 'packages/types/src/ai-tools/workers-ai-catalog.ts'
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
@@ -96,7 +96,7 @@ jobs:
                 });
 
                 await import('node:fs').then(({ createWriteStream }) => {
-                    const writeStream = createWriteStream('packages/types/src/super-ai/workers-ai-catalog.ts', { encoding: 'utf8' });
+                    const writeStream = createWriteStream('packages/types/src/ai-tools/workers-ai-catalog.ts', { encoding: 'utf8' });
                     writeStream.write(
                         `export const workersAiCatalog = ${JSON.stringify(
                             {
@@ -139,6 +139,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-      - run: git add packages/types/src/super-ai/workers-ai-catalog.ts
+      - run: git add packages/types/src/ai-tools/workers-ai-catalog.ts
       - run: git commit -m "Updated model catalog" || echo "model catalog not touched"
       - run: git push
