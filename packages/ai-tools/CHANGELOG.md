@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.1.1
+
+### Patch Changes
+
+- [`af2fdc2`](https://github.com/ChainFuse/packages/commit/af2fdc2aa8b45f8bad3a2f2839ae4f005614773d) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Add readme
+
 ## 0.1.0
 
 ### Minor Changes
