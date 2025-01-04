@@ -38,10 +38,10 @@ generateText({
 				},
 				country: 'ISO 3166-1 Alpha 2 country code',
 				continent: 'two-letter code of continent',
-				environment: 'the gateway to use',
-				providers: {
-					// api keys and any additional info needed for each service
-				},
+			},
+			environment: 'the gateway to use',
+			providers: {
+				// api keys and any additional info needed for each service
 			},
 		},
 		// ...
