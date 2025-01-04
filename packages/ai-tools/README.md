@@ -48,5 +48,5 @@ generateText({
 	// ... (anything else vercel)
 });
 
-// Continue using vercel ai as normal
+// Continue using vercel ai sdk as normal
 ```
