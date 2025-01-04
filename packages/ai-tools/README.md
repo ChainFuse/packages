@@ -19,8 +19,34 @@ Vercel AI SDK plugin for multi-model and provider selection built for edge runti
 
 ## Usage
 
-```
-import aiTools from '@chainfuse/ai-tools';
+```ts
+import { AiModels } from '@chainfuse/types';
+import { AiModel } from '@chainfuse/ai-tools';
 
-// TODO: DEMONSTRATE API
+generateText({
+	model: await new AiModel(
+		{
+			gateway: {
+				accountId: 'cf account id',
+				apiToken: 'cf ai gateway token with run permission',
+			},
+			geoRouting: {
+				userCoordinate: {
+					lat: 'latitude as a string to preserve 0 placement',
+					lon: 'longitude as a string to preserve 0 placement',
+				},
+				country: 'ISO 3166-1 Alpha 2 country code',
+				continent: 'two-letter code of continent',
+				environment: 'the gateway to use',
+				providers: {
+					// api keys and any additional info needed for each service
+				},
+			},
+		},
+		// ...
+	).wrappedLanguageModel(args, 'AiModels.LanguageModels enum or service name', 'if no enum, then model name (includes autofill typescript types based on service name)'),
+	// ... (anything else vercel)
+});
+
+// Continue using vercel ai as normal
 ```
