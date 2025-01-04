@@ -105,3 +105,8 @@ export interface AiRequestMetadata {
 	executor: AiRequestExecutor | string;
 	timing: AiRequestMetadataTiming | string;
 }
+
+/**
+ * Extracts the chunk type from an asynchronous iterable.
+ */
+export type AiStreamChunkType<T> = T extends AsyncIterable<infer U> ? Awaited<U> : never;
