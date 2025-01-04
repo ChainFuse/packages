@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.1.2
+
+### Patch Changes
+
+- [`979e1a1`](https://github.com/ChainFuse/packages/commit/979e1a1bca475e646b963d5873e4b2e28a199514) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix readme typo
+
 ## 0.1.1
 
 ### Patch Changes
