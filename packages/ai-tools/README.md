@@ -21,6 +21,7 @@ Vercel AI SDK plugin for multi-model and provider selection built for edge runti
 
 ```ts
 import { AiModels } from '@chainfuse/types';
+import { generateText } from 'ai';
 import { AiModel } from '@chainfuse/ai-tools';
 
 generateText({
