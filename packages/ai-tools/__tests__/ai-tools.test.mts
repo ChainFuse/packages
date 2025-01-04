@@ -5,8 +5,7 @@ import { doesNotReject, strictEqual } from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import test, { before, beforeEach, describe, it } from 'node:test';
 import { z } from 'zod';
-import { AiModel, type LanguageModelValues } from '../dist/models.mjs';
-import type { AiConfig, AiConfigOaiOpenai, AiRequestConfig } from '../dist/types.mjs';
+import { AiModel, type AiConfig, type AiConfigOaiOpenai, type AiRequestConfig, type LanguageModelValues } from '../dist/index.mjs';
 
 type ChunkType<T> = T extends AsyncIterable<infer U> ? Awaited<U> : never;
 
