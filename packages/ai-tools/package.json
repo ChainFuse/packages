@@ -60,6 +60,6 @@
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20241230.0",
-		"openai": "^4.77.0"
+		"openai": "^4.77.3"
 	}
 }
