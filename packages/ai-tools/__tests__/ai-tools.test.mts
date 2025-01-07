@@ -299,6 +299,7 @@ await describe('AI Tests', () => {
 										execute: async () => geoJson,
 									}),
 								},
+								toolChoice: 'required',
 								experimental_output: Output.object({
 									schema: z.object({
 										city: z.string().describe('City of the incoming request'),
@@ -367,6 +368,7 @@ await describe('AI Tests', () => {
 										execute: async () => geoJson,
 									}),
 								},
+								toolChoice: 'required',
 								experimental_output: Output.object({
 									schema: z.object({
 										city: z.string().describe('City of the incoming request'),
