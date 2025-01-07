@@ -5,7 +5,7 @@ import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
 import { ZodError } from 'zod';
 import { AiBase } from '../base.mjs';
 import { AzureServerSelector } from '../serverSelector/azure.mjs';
-import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId } from '../types.mjs';
+import type { AiConfigWorkersai, AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId } from '../types.mjs';
 import { AiRawProviders } from './rawProviders.mjs';
 import type { AzureOpenAIProvider, CloudflareOpenAIProvider } from './types.mjs';
 
@@ -93,7 +93,7 @@ export class AiCustomProviders extends AiBase {
 		return new AiRawProviders(this.config).anthropic(args);
 	}
 
-	private static workersAiIsRest(arg: any): arg is AiConfigWorkersaiRest {
+	private static workersAiIsRest(arg: AiConfigWorkersai): arg is AiConfigWorkersaiRest {
 		return typeof arg === 'object' && 'apiToken' in arg;
 	}
 	public async cfWorkersAi(args: AiRequestConfig) {
