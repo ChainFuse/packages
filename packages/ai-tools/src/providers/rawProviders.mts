@@ -1,7 +1,7 @@
 import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
 import { AiBase } from '../base.mjs';
-import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata } from '../types.mjs';
 import type { Server } from '../serverSelector/types.mjs';
+import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata } from '../types.mjs';
 
 export class AiRawProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
@@ -65,16 +65,16 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public azOpenai(args: AiRequestConfig, server: Server['id']) {
+	public azOpenai(args: AiRequestConfig, server: Server) {
 		return import('@ai-sdk/azure').then(async ({ createAzure }) =>
 			createAzure({
-				apiKey: this.config.providers.azureOpenAi.apiTokens[`AZURE_API_KEY_${server.toUpperCase().replaceAll('-', '_')}`]!,
+				apiKey: this.config.providers.azureOpenAi.apiTokens[`AZURE_API_KEY_${server.id.toUpperCase().replaceAll('-', '_')}`]!,
 				/**
 				 * @link https://learn.microsoft.com/en-us/azure/ai-services/openai/reference#api-specs
 				 * From the table, pick the `Latest GA release` for `Data plane - inference`
 				 */
 				apiVersion: '2024-10-21',
-				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'azure-openai', server.toLowerCase()].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
+				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'azure-openai', server.id.toLowerCase()].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
