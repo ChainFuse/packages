@@ -1,6 +1,7 @@
 import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
 import { AiBase } from '../base.mjs';
 import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata } from '../types.mjs';
+import type { Server } from '../serverSelector/types.mjs';
 
 export class AiRawProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
@@ -64,7 +65,7 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public azOpenai(args: AiRequestConfig, server: string) {
+	public azOpenai(args: AiRequestConfig, server: Server["id"]) {
 		return import('@ai-sdk/azure').then(async ({ createAzure }) =>
 			createAzure({
 				apiKey: this.config.providers.azureOpenAi.apiTokens[`AZURE_API_KEY_${server.toUpperCase().replaceAll('-', '_')}`]!,
