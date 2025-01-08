@@ -1,4 +1,5 @@
 import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
+import haversine from 'haversine-distance';
 import { AiBase } from '../base.mjs';
 import type { Server } from '../serverSelector/types.mjs';
 import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata } from '../types.mjs';
@@ -83,7 +84,14 @@ export class AiRawProviders extends AiBase {
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
 						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
 						serverInfo: JSON.stringify({
-							name: 'openai',
+							name: `azure-${server.id}`,
+							distance: haversine(
+								{
+									lat: Helpers.precisionFloat(this.config.geoRouting?.userCoordinate?.lat ?? '0'),
+									lon: Helpers.precisionFloat(this.config.geoRouting?.userCoordinate?.lon ?? '0'),
+								},
+								server.coordinate,
+							),
 						} satisfies Exclude<AiRequestMetadata['serverInfo'], string>),
 						/**
 						 * Blank at first, add after request finishes
