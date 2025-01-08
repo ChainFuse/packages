@@ -65,7 +65,7 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public azOpenai(args: AiRequestConfig, server: Server["id"]) {
+	public azOpenai(args: AiRequestConfig, server: Server['id']) {
 		return import('@ai-sdk/azure').then(async ({ createAzure }) =>
 			createAzure({
 				apiKey: this.config.providers.azureOpenAi.apiTokens[`AZURE_API_KEY_${server.toUpperCase().replaceAll('-', '_')}`]!,
