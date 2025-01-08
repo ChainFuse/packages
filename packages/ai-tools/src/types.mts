@@ -19,6 +19,7 @@ export interface AiConfig {
 export interface AiConfigProviders {
 	anthropic: AiConfigAnthropic;
 	azureOpenAi: AiConfigAzOpenai;
+	googleAi: AiConfigGoogleAi;
 	openAi: AiConfigOaiOpenai;
 	workersAi: AiConfigWorkersai;
 }
@@ -33,6 +34,9 @@ export interface AiConfigOaiOpenai {
 	organization: `org-${string}`;
 }
 export interface AiConfigWorkersaiRest {
+	apiToken: string;
+}
+export interface AiConfigGoogleAi {
 	apiToken: string;
 }
 
@@ -81,7 +85,7 @@ export interface AiRequestConfig {
 }
 
 export interface AiRequestMetadataServerInfo {
-	name: 'anthropic' | 'cloudflare' | 'openai';
+	name: 'anthropic' | 'cloudflare' | 'googleai' | 'openai';
 }
 export interface AiRequestMetadataServerInfoWithLocation {
 	name: `${'azure' | 'google'}-${string}`;
