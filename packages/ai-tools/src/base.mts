@@ -9,7 +9,7 @@ export class AiBase {
 		this._config = config;
 	}
 
-	public get config(): Readonly<AiConfig> {
-		return this._config;
+	public get config() {
+		return Object.freeze(this._config);
 	}
 }
