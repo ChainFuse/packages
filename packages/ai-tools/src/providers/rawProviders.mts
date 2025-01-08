@@ -191,8 +191,8 @@ export class AiRawProviders extends AiBase {
 	}
 
 	public restWorkersAi(args: AiRequestConfig) {
-		return import('@ai-sdk/openai').then(async ({ createOpenAI }) =>
-			createOpenAI({
+		return import('@ai-sdk/openai-compatible').then(async ({ createOpenAICompatible }) =>
+			createOpenAICompatible({
 				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'workers-ai', 'v1'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: (this.config.providers.workersAi as AiConfigWorkersaiRest).apiToken,
 				headers: {
@@ -214,7 +214,6 @@ export class AiRawProviders extends AiBase {
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 				},
-				compatibility: 'compatible',
 				name: 'workersai',
 				fetch: async (input, rawInit) => {
 					const headers = new Headers(rawInit?.headers);
