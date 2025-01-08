@@ -42,6 +42,15 @@ export namespace AiModels {
 		// export const CloudflareClassification = Object.freeze(Object.fromEntries(enabledCloudflareLlmClassificationProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text Classification'>);
 		export const Cloudflare = Object.freeze(Object.fromEntries(enabledCloudflareLlmProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text Generation'>);
 		export const CloudflareFunctions = Object.freeze(Object.fromEntries(enabledCloudflareLlmFunctionProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareFunctionModelsEnum);
+
+		export enum GoogleGenerativeAi {
+			gemini_flash_beta = 'google.generative-ai:gemini-2.0-flash-exp',
+			gemini_flash_beta_search = 'google.generative-ai:gemini-2.0-flash-exp:search',
+			gemini_flash = 'google.generative-ai:gemini-1.5-flash',
+			gemini_flash_search = 'google.generative-ai:gemini-1.5-flash:search',
+			gemini_pro = 'google.generative-ai:gemini-1.5-pro',
+			gemini_pro_search = 'google.generative-ai:gemini-1.5-pro:search',
+		}
 	}
 
 	export namespace TextEmbeddingModels {
@@ -56,5 +65,9 @@ export namespace AiModels {
 		}
 
 		export const Cloudflare = Object.freeze(Object.fromEntries(enabledCloudflareLlmEmbeddingProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text Embeddings'>);
+
+		export enum GoogleGenerativeAi {
+			te4 = 'google.generative-ai:text-embedding-004',
+		}
 	}
 }

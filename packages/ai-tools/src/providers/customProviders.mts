@@ -1,5 +1,6 @@
+import type { GoogleGenerativeAIProvider } from '@ai-sdk/google';
 import { Helpers } from '@chainfuse/helpers';
-import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
+import { AiModels, enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
 import { APICallError, experimental_customProvider as customProvider, TypeValidationError, experimental_wrapLanguageModel as wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
 import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
 import { ZodError } from 'zod';
@@ -186,5 +187,20 @@ export class AiCustomProviders extends AiBase {
 				),
 			}) as CloudflareOpenAIProvider;*/
 		}
+	}
+
+	public async googleAi(args: AiRequestConfig): Promise<GoogleGenerativeAIProvider> {
+		const fallbackProvider = await new AiRawProviders(this.config).googleAi(args);
+
+		return customProvider({
+			languageModels: {
+				// provider:actual model name:extra
+				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_beta_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_beta_search.split(':')[1]!, { useSearchGrounding: true }),
+				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_search.split(':')[1]!, { useSearchGrounding: true }),
+				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_pro_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_pro_search.split(':')[1]!, { useSearchGrounding: true }),
+			},
+			fallbackProvider,
+			// GoogleGenerativeAi
+		}) as GoogleGenerativeAIProvider;
 	}
 }

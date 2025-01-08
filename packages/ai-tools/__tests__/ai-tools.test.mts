@@ -10,6 +10,7 @@ import { AiModel, type AiConfig, type AiConfigOaiOpenai, type AiRequestConfig, t
 const { GH_RUNNER_ID } = process.env;
 const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY } = process.env;
 const { AZURE_API_KEY_OPENAI_AU_NEWSOUTHWALES, AZURE_API_KEY_OPENAI_BR_SAOPAULOSTATE, AZURE_API_KEY_OPENAI_CA_QUEBEC, AZURE_API_KEY_OPENAI_CA_TORONTO, AZURE_API_KEY_OPENAI_CH_GENEVA, AZURE_API_KEY_OPENAI_CH_ZURICH, AZURE_API_KEY_OPENAI_EU_FRANKFURT, AZURE_API_KEY_OPENAI_EU_GAVLE, AZURE_API_KEY_OPENAI_EU_MADRID, AZURE_API_KEY_OPENAI_EU_NETHERLANDS, AZURE_API_KEY_OPENAI_EU_PARIS, AZURE_API_KEY_OPENAI_EU_WARSAW, AZURE_API_KEY_OPENAI_IN_CHENNAI, AZURE_API_KEY_OPENAI_JP_TOKYO, AZURE_API_KEY_OPENAI_KR_SEOUL, AZURE_API_KEY_OPENAI_NO_OSLO, AZURE_API_KEY_OPENAI_UK_LONDON, AZURE_API_KEY_OPENAI_US_CALIFORNIA, AZURE_API_KEY_OPENAI_US_ILLINOIS, AZURE_API_KEY_OPENAI_US_PHOENIX, AZURE_API_KEY_OPENAI_US_TEXAS, AZURE_API_KEY_OPENAI_US_VIRGINIA, AZURE_API_KEY_OPENAI_US_VIRGINIA2, AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG } = process.env;
+const { GOOGLE_AI_API_KEY } = process.env;
 const { OPENAI_ORGANIZATION } = process.env;
 const { WORKERS_AI_API_KEY } = process.env;
 
@@ -73,6 +74,9 @@ await describe('AI Tests', () => {
 						AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG: AZURE_API_KEY_OPENAI_ZA_JOHANNESBURG!.replaceAll(`"`, ``),
 					},
 				},
+				googleAi: {
+					apiToken: GOOGLE_AI_API_KEY!,
+				},
 				openAi: {
 					apiToken: 'sk-*',
 					organization: OPENAI_ORGANIZATION as AiConfigOaiOpenai['organization'],
@@ -86,7 +90,7 @@ await describe('AI Tests', () => {
 
 	void describe('Response', () => {
 		const chosenModels = Object.entries(AiModels.LanguageModels)
-			.filter(([provider]) => (['Azure', 'Cloudflare', 'CloudflareFunctions'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
+			.filter(([provider]) => (['Azure', 'Cloudflare', 'CloudflareFunctions', 'GoogleGenerativeAi'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
 			.map(([, models]) => models);
 
 		beforeEach(() => {
@@ -151,7 +155,7 @@ await describe('AI Tests', () => {
 
 	void describe('Structured', () => {
 		const chosenModels = Object.entries(AiModels.LanguageModels)
-			.filter(([provider]) => (['Azure', 'Cloudflare', 'CloudflareFunctions'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
+			.filter(([provider]) => (['Azure', 'Cloudflare', 'CloudflareFunctions', 'GoogleGenerativeAi'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
 			.map(([, models]) => models);
 
 		beforeEach(() => {
@@ -256,7 +260,7 @@ await describe('AI Tests', () => {
 
 	void describe('Structured with tools', () => {
 		const chosenModels = Object.entries(AiModels.LanguageModels)
-			.filter(([provider]) => (['Azure', 'Cloudflare', 'CloudflareFunctions'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
+			.filter(([provider]) => (['Azure', 'Cloudflare', 'CloudflareFunctions', 'GoogleGenerativeAi'] as (keyof typeof AiModels.LanguageModels)[]).includes(provider as keyof typeof AiModels.LanguageModels))
 			.map(([, models]) => models);
 
 		beforeEach(() => {
