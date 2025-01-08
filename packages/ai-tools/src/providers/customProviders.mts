@@ -195,9 +195,9 @@ export class AiCustomProviders extends AiBase {
 		return customProvider({
 			languageModels: {
 				// provider:actual model name:extra
-				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_beta_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_beta_search.split(':')[1]!, { useSearchGrounding: true }),
-				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_search.split(':')[1]!, { useSearchGrounding: true }),
-				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_pro_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_pro_search.split(':')[1]!, { useSearchGrounding: true }),
+				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_beta_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_beta_search.split(':')[1], { useSearchGrounding: true }),
+				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_search.split(':')[1], { useSearchGrounding: true }),
+				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_pro_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_pro_search.split(':')[1], { useSearchGrounding: true }),
 			},
 			fallbackProvider,
 			// GoogleGenerativeAi
