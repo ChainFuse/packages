@@ -1,5 +1,27 @@
 # @chainfuse/types
 
+## 1.4.1
+
+### Patch Changes
+
+- [#197](https://github.com/ChainFuse/packages/pull/197) [`35bfbf2`](https://github.com/ChainFuse/packages/commit/35bfbf22a328ea1bb2914ca2d741b84927c46f61) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/upload-artifact
+
+- [#198](https://github.com/ChainFuse/packages/pull/198) [`c4506bc`](https://github.com/ChainFuse/packages/commit/c4506bc7297e78a069b8710faaadc30337f58763) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#195](https://github.com/ChainFuse/packages/pull/195) [`d0a5ebd`](https://github.com/ChainFuse/packages/commit/d0a5ebdb862f34cdb3413ab2ca2cce93ff89249c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/openai, ai
+
+- [#191](https://github.com/ChainFuse/packages/pull/191) [`0900004`](https://github.com/ChainFuse/packages/commit/0900004c70502780a1627e45f9b275eba0093930) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump ai
+
+- [#192](https://github.com/ChainFuse/packages/pull/192) [`e183a4d`](https://github.com/ChainFuse/packages/commit/e183a4df62c19ea318ac5c4b746353f54003733e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump typescript-eslint
+
+- [#199](https://github.com/ChainFuse/packages/pull/199) [`b856d7e`](https://github.com/ChainFuse/packages/commit/b856d7ef26c707ecee6713548f097dd3334d0a19) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump typescript
+
+- [#196](https://github.com/ChainFuse/packages/pull/196) [`e9b7508`](https://github.com/ChainFuse/packages/commit/e9b7508714817b1ef4fa579c009626a555a424c2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
+- [#200](https://github.com/ChainFuse/packages/pull/200) [`dbb0d04`](https://github.com/ChainFuse/packages/commit/dbb0d048103ece11ca5cc4c5899f11834be956ec) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#193](https://github.com/ChainFuse/packages/pull/193) [`c98d0da`](https://github.com/ChainFuse/packages/commit/c98d0da8a5908ad671b576f72481ba2a4ae05b71) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump uuid
+
 ## 1.4.0
 
 ### Minor Changes
