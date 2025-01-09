@@ -29,12 +29,12 @@ export interface AiConfigAnthropic {
 export interface AiConfigAzOpenai {
 	apiTokens: Record<`AZURE_API_KEY_${string}`, string>;
 }
+export interface AiConfigGoogleAi {
+	apiToken: string;
+}
 export interface AiConfigOaiOpenai {
 	apiToken: `sk-${string}`;
 	organization: `org-${string}`;
-}
-export interface AiConfigGoogleAi {
-	apiToken: string;
 }
 export type AiConfigWorkersai = AiConfigWorkersaiRest | AiConfigWorkersaiBinding;
 export interface AiConfigWorkersaiRest {
