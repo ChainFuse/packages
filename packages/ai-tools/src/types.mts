@@ -33,18 +33,17 @@ export interface AiConfigOaiOpenai {
 	apiToken: `sk-${string}`;
 	organization: `org-${string}`;
 }
-export interface AiConfigWorkersaiRest {
-	apiToken: string;
-}
 export interface AiConfigGoogleAi {
 	apiToken: string;
 }
-
+export type AiConfigWorkersai = AiConfigWorkersaiRest | AiConfigWorkersaiBinding;
+export interface AiConfigWorkersaiRest {
+	apiToken: string;
+}
 /**
  * @deprecated Not functional. Use REST instead
  */
 export type AiConfigWorkersaiBinding = Ai;
-export type AiConfigWorkersai = AiConfigWorkersaiRest | AiConfigWorkersaiBinding;
 
 /**
  * It's a UUID, but the last block is SHA256 of the request body
