@@ -1,4 +1,6 @@
 import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
+import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
+import type { cloudflareModelPossibilities } from '@chainfuse/types';
 import haversine from 'haversine-distance';
 import { AiBase } from '../base.mjs';
 import type { Server } from '../serverSelector/types.mjs';
@@ -295,7 +297,7 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public restWorkersAi(args: AiRequestConfig) {
+	public restWorkersAi(args: AiRequestConfig): Promise<OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Embeddings'>>> {
 		return import('@ai-sdk/openai-compatible').then(async ({ createOpenAICompatible }) =>
 			createOpenAICompatible({
 				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'workers-ai', 'v1'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
