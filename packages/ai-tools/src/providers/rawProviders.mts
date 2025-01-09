@@ -1,7 +1,8 @@
-import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
+import { BufferHelpers, CryptoHelpers, DnsHelpers, Helpers } from '@chainfuse/helpers';
 import type { cloudflareModelPossibilities } from '@chainfuse/types';
 import haversine from 'haversine-distance';
+import { z } from 'zod';
 import { AiBase } from '../base.mjs';
 import type { Server } from '../serverSelector/types.mjs';
 import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata, AiRequestMetadataTiming } from '../types.mjs';
@@ -231,6 +232,101 @@ export class AiRawProviders extends AiBase {
 				},
 			}),
 		);
+	}
+
+	public custom(args: AiRequestConfig) {
+		// Verify that the custom provider url is a valid URL
+		return z
+			.string()
+			.trim()
+			.url()
+			.transform((url) => new URL(url))
+			.parseAsync(this.config.providers.custom?.url)
+			.then((customProviderUrl) =>
+				// Verify that the custom provider url is not an IP address
+				z
+					.string()
+					.trim()
+					.ip()
+					.safeParseAsync(customProviderUrl.hostname)
+					.then(async ({ success }) => {
+						if (success) {
+							throw new Error('IP custom providers not allowed');
+						} else {
+							// Run domain through ZT policies
+							const doh = new DnsHelpers(new URL('dns-query', `https://${this.config.providers.custom?.dohId}.cloudflare-gateway.com`));
+
+							const aCheck = doh.query(customProviderUrl.hostname, 'A', undefined, undefined, 2 * 1000);
+							const aaaaCheck = doh.query(customProviderUrl.hostname, 'AAAA', undefined, undefined, 2 * 1000);
+
+							return Promise.allSettled([aCheck, aaaaCheck]).then((checks) => {
+								const fulfulledChecks = checks.filter((check) => check.status === 'fulfilled');
+								/**
+								 * Blocked domains return 0.0.0.0 or :: as the answer
+								 * @link https://developers.cloudflare.com/cloudflare-one/policies/gateway/block-page/
+								 */
+								if (fulfulledChecks.length > 0 && fulfulledChecks.some((obj) => 'Answer' in obj.value && Array.isArray(obj.value.Answer) && obj.value.Answer.some((answer) => answer.data !== '0.0.0.0' && answer.data !== '::'))) {
+									// ZT Pass, perform the calls
+									return import('@ai-sdk/openai-compatible').then(async ({ createOpenAICompatible }) =>
+										createOpenAICompatible({
+											baseURL: customProviderUrl.toString(),
+											...(this.config.providers.custom?.apiToken && { apiKey: this.config.providers.custom.apiToken }),
+											headers: {
+												// ZT Auth if present
+												...(this.config.providers.custom?.clientId &&
+													this.config.providers.custom?.clientSecret && {
+														'CF-Access-Client-Id': this.config.providers.custom?.clientId,
+														'CF-Access-Client-Secret': this.config.providers.custom?.clientSecret,
+													}),
+												'X-Dataspace-Id': (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+												'X-Executor': JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
+												// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+												'X-Idempotency-Id': args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
+												// Request to skip or custom cache duration (no guarantee that upstream server will respect it)
+												// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+												...((args.skipCache || args.cache) && { 'Cache-Control': [args.skipCache && 'no-cache', args.cache && `max-age=${typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache}`].join(', ') }),
+											},
+											name: 'custom',
+											fetch: async (input, rawInit) => {
+												const headers = new Headers(rawInit?.headers);
+												let idempotencyId = headers.get('X-Idempotency-Id')! as AiRequestMetadata['idempotencyId'];
+												if (idempotencyId.split('-').length === 4) {
+													idempotencyId = `${idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestIdempotencyId;
+													headers.set('X-Idempotency-Id', idempotencyId);
+												}
+
+												if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+
+												return fetch(input, { ...rawInit, headers }).then(async (response) => {
+													if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+
+													// Inject it to have it available for retries
+													const mutableHeaders = new Headers(response.headers);
+													mutableHeaders.set('X-Idempotency-Id', idempotencyId);
+
+													if (response.ok) {
+														return new Response(response.body, { ...response, headers: mutableHeaders });
+													} else {
+														const [body1, body2] = response.body!.tee();
+
+														console.error('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
+
+														return new Response(body2, { ...response, headers: mutableHeaders });
+													}
+												});
+											},
+										}),
+									);
+								} else {
+									throw new Error('Failed ZT check on custom provider url');
+								}
+							});
+						}
+					}),
+			)
+			.catch(() => {
+				throw new Error('Invalid custom provider url');
+			});
 	}
 
 	public googleAi(args: AiRequestConfig) {

@@ -181,6 +181,10 @@ export class AiCustomProviders extends AiBase {
 		}
 	}
 
+	public custom(args: AiRequestConfig) {
+		return new AiRawProviders(this.config).custom(args);
+	}
+
 	public async googleAi(args: AiRequestConfig): Promise<GoogleGenerativeAIProvider> {
 		const fallbackProvider = await new AiRawProviders(this.config).googleAi(args);
 

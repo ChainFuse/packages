@@ -20,6 +20,7 @@ export interface AiConfig {
 export interface AiConfigProviders {
 	anthropic: AiConfigAnthropic;
 	azureOpenAi: AiConfigAzOpenai;
+	custom?: AiConfigCustom;
 	googleAi: AiConfigGoogleAi;
 	openAi: AiConfigOaiOpenai;
 	workersAi: AiConfigWorkersai;
@@ -29,6 +30,18 @@ export interface AiConfigAnthropic {
 }
 export interface AiConfigAzOpenai {
 	apiTokens: Record<`AZURE_API_KEY_${string}`, string>;
+}
+export interface AiConfigCustom extends AiConfigCustomZT {
+	/**
+	 * For safety resons, no direct IPs allowed.
+	 */
+	url: string;
+	dohId: string;
+	apiToken?: string;
+}
+export interface AiConfigCustomZT {
+	clientId: string;
+	clientSecret: string;
 }
 export interface AiConfigGoogleAi {
 	apiToken: string;
