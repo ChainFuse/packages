@@ -1,5 +1,5 @@
 import type { PrefixedUuid, RawCoordinate, UuidExport } from '@chainfuse/types';
-import type { Ai, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
+import type { Ai, ExecutionContext, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import type haversine from 'haversine-distance';
 
 export interface AiConfig {
@@ -14,6 +14,7 @@ export interface AiConfig {
 	};
 	environment: 'production' | 'preview';
 	providers: AiConfigProviders;
+	backgroundContext?: ExecutionContext;
 }
 
 export interface AiConfigProviders {
