@@ -31,7 +31,7 @@ export interface AiConfigAnthropic {
 export interface AiConfigAzOpenai {
 	apiTokens: Record<`AZURE_API_KEY_${string}`, string>;
 }
-export interface AiConfigCustom extends AiConfigCustomZT {
+export interface AiConfigCustomBase {
 	/**
 	 * For safety resons, no direct IPs allowed.
 	 */
@@ -39,6 +39,7 @@ export interface AiConfigCustom extends AiConfigCustomZT {
 	dohId: string;
 	apiToken?: string;
 }
+export type AiConfigCustom = AiConfigCustomBase | (AiConfigCustomBase & AiConfigCustomZT);
 export interface AiConfigCustomZT {
 	clientId: string;
 	clientSecret: string;
