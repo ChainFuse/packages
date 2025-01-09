@@ -273,7 +273,10 @@ export class AiRawProviders extends AiBase {
 											...(this.config.providers.custom?.apiToken && { apiKey: this.config.providers.custom.apiToken }),
 											headers: {
 												// ZT Auth if present
-												...(this.config.providers.custom?.clientId &&
+												...(this.config.providers.custom &&
+													'clientId' in this.config.providers.custom &&
+													this.config.providers.custom?.clientId &&
+													'clientSecret' in this.config.providers.custom &&
 													this.config.providers.custom?.clientSecret && {
 														'CF-Access-Client-Id': this.config.providers.custom?.clientId,
 														'CF-Access-Client-Secret': this.config.providers.custom?.clientSecret,
