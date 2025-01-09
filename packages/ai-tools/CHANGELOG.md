@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.2.1
+
+### Patch Changes
+
+- [`97f0813`](https://github.com/ChainFuse/packages/commit/97f0813789697112dd604e6670233951a268b7b1) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix breaking all providers when `custom` isn't defined
+
 ## 0.2.0
 
 ### Minor Changes
