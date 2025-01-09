@@ -235,7 +235,7 @@ export class AiRawProviders extends AiBase {
 	}
 
 	public custom(args: AiRequestConfig) {
-		if (this.config.providers.custom) {
+		if (this.config.providers.custom?.url) {
 			// Verify that the custom provider url is a valid URL
 			return z
 				.string()
