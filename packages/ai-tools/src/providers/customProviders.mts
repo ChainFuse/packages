@@ -1,4 +1,5 @@
 import type { GoogleGenerativeAIProvider } from '@ai-sdk/google';
+import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { Helpers } from '@chainfuse/helpers';
 import { AiModels, enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
 import { APICallError, experimental_customProvider as customProvider, TypeValidationError, experimental_wrapLanguageModel as wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
@@ -8,7 +9,7 @@ import { AiBase } from '../base.mjs';
 import { AzureServerSelector } from '../serverSelector/azure.mjs';
 import type { AiConfigWorkersai, AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId } from '../types.mjs';
 import { AiRawProviders } from './rawProviders.mjs';
-import type { AzureOpenAIProvider, CloudflareOpenAIProvider } from './types.mjs';
+import type { AzureOpenAIProvider } from './types.mjs';
 
 export class AiCustomProviders extends AiBase {
 	public oaiOpenai(args: AiRequestConfig) {
@@ -170,7 +171,7 @@ export class AiCustomProviders extends AiBase {
 					},
 					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Embeddings'>, Awaited<ReturnType<AiRawProviders['restWorkersAi']>>>),
 				),
-			}) as CloudflareOpenAIProvider;
+			}) as OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Embeddings'>>;
 		} else {
 			throw new Error('Binding workers AI is not supported');
 
