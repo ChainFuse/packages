@@ -324,6 +324,8 @@ export class AiRawProviders extends AiBase {
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 				},
 				fetch: async (input, rawInit) => {
+					const startRoundTrip = performance.now();
+
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
@@ -335,6 +337,8 @@ export class AiRawProviders extends AiBase {
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
 						if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+
+						await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
 
 						// Inject it to have it available for retries
 						const mutableHeaders = new Headers(response.headers);
