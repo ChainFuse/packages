@@ -1,7 +1,7 @@
 import type { GoogleGenerativeAIProvider } from '@ai-sdk/google';
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { Helpers } from '@chainfuse/helpers';
-import { AiModels, enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
+import { AiModels, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
 import { APICallError, experimental_customProvider as customProvider, TypeValidationError, experimental_wrapLanguageModel as wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
 import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
 import { ZodError } from 'zod';
@@ -161,16 +161,7 @@ export class AiCustomProviders extends AiBase {
 					},
 					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['restWorkersAi']>>>),
 				),
-				// @ts-expect-error override for types
-				textEmbeddingModels: await enabledCloudflareLlmEmbeddingProviders.reduce(
-					async (accPromise, model) => {
-						const acc = await accPromise;
-						// @ts-expect-error override for types
-						acc[model] = (await raw.restWorkersAi(args)).textEmbeddingModel(model);
-						return acc;
-					},
-					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Embeddings'>, Awaited<ReturnType<AiRawProviders['restWorkersAi']>>>),
-				),
+				fallbackProvider: await raw.restWorkersAi(args),
 			}) as OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Embeddings'>>;
 		} else {
 			throw new Error('Binding workers AI is not supported');
