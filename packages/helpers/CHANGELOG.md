@@ -1,5 +1,23 @@
 # @chainfuse/helpers
 
+## 0.7.0
+
+### Minor Changes
+
+- [`d713f15`](https://github.com/ChainFuse/packages/commit/d713f153884cb167b1a5148866530180a38eaeeb) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add icon cdn support to `DiscordHelpers`
+
+### Patch Changes
+
+- [#203](https://github.com/ChainFuse/packages/pull/203) [`669b7e1`](https://github.com/ChainFuse/packages/commit/669b7e1d72624d0a85233178411b1b2f25522ae6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump step-security/harden-runner, github/codeql-action
+
+- [#204](https://github.com/ChainFuse/packages/pull/204) [`8361911`](https://github.com/ChainFuse/packages/commit/8361911d62bcf739d1541d2af5686610929e112d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#206](https://github.com/ChainFuse/packages/pull/206) [`09747e1`](https://github.com/ChainFuse/packages/commit/09747e110a1ee1e44f2fbedc280d705a2b450c5e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint
+
+- [#205](https://github.com/ChainFuse/packages/pull/205) [`85ca8cf`](https://github.com/ChainFuse/packages/commit/85ca8cf4e9508a71e920cd89df122c2f37b3f7d0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
+- [#207](https://github.com/ChainFuse/packages/pull/207) [`02fbeb3`](https://github.com/ChainFuse/packages/commit/02fbeb352e92e0ea2e701f22c7509e032a128724) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump uuid
+
 ## 0.6.0
 
 ### Minor Changes
