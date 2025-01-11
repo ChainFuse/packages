@@ -1,6 +1,6 @@
 import type { CustomLoging } from '@chainfuse/types';
 import type { ExecutionContext } from '@cloudflare/workers-types/experimental';
-import { REST, type RESTOptions } from '@discordjs/rest';
+import { CDN, REST, type RESTOptions } from '@discordjs/rest';
 import { CryptoHelpers } from './crypto.mjs';
 import { NetHelpers } from './net.mjs';
 
@@ -202,5 +202,29 @@ export class DiscordHelpers {
 				}
 			},
 		}).setToken(apiKey);
+	}
+
+	public static userIcon(userId: bigint | string, userIconHash?: Parameters<CDN['avatar']>[1] | null, guildId?: bigint | string, memberIconHash?: Parameters<CDN['avatar']>[1] | null, options?: Parameters<CDN['avatar']>[2]) {
+		options = {
+			extension: (memberIconHash ?? userIconHash)?.startsWith('a_') ? 'gif' : 'png',
+			...options,
+		};
+
+		if (userIconHash) {
+			if (guildId && memberIconHash) {
+				return new CDN().guildMemberAvatar(BigInt(guildId).toString(), BigInt(userId).toString(), memberIconHash, options);
+			} else {
+				return new CDN().avatar(BigInt(userId).toString(), userIconHash, options);
+			}
+		} else {
+			return new CDN().defaultAvatar(Number((BigInt(userId) >> BigInt(22)) % BigInt(6)));
+		}
+	}
+
+	public static guildIcon(guildId: bigint | string, iconHash: Parameters<CDN['icon']>[1], options?: Parameters<CDN['icon']>[2]) {
+		return new CDN().icon(BigInt(guildId).toString(), iconHash, {
+			extension: iconHash.startsWith('a_') ? 'gif' : 'png',
+			...options,
+		});
 	}
 }
