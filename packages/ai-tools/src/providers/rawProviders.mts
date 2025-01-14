@@ -1,5 +1,5 @@
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
-import { BufferHelpers, CryptoHelpers, DnsHelpers, Helpers } from '@chainfuse/helpers';
+import { BufferHelpers, CryptoHelpers, DnsHelpers, Helpers, NetHelpers } from '@chainfuse/helpers';
 import type { cloudflareModelPossibilities } from '@chainfuse/types';
 import haversine from 'haversine-distance';
 import { z } from 'zod';
@@ -12,25 +12,17 @@ export class AiRawProviders extends AiBase {
 	private readonly cacheTtl = 2628288;
 
 	private async updateGatewayLog(response: Response, metadataHeader: AiRequestMetadata, startRoundTrip: ReturnType<typeof performance.now>, modelTime?: number) {
-		/**
-		 * @todo `cloudflare` rest package not updated to this endpoint yet
-		 */
-		const updateMetadata = fetch(new URL(['client', 'v4', 'accounts', this.config.gateway.accountId, 'ai-gateway', 'gateways', this.config.environment, 'logs', response.headers.get('cf-aig-log-id')].join('/'), 'https://api.cloudflare.com'), {
-			method: 'PATCH',
-			headers: {
-				Authorization: `Bearer ${this.config.gateway.apiToken}`,
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				metadata: {
-					...metadataHeader,
-					timing: JSON.stringify({
-						fromCache: response.headers.get('cf-aig-cache-status')?.toLowerCase() === 'hit',
-						totalRoundtripTime: performance.now() - startRoundTrip,
-						modelTime,
-					} satisfies AiRequestMetadataTiming),
-				} satisfies AiRequestMetadata,
-			}),
+		const updateMetadata = NetHelpers.cfApi(this.config.gateway.apiToken).aiGateway.logs.edit(this.config.environment, response.headers.get('cf-aig-log-id')!, {
+			account_id: this.config.gateway.accountId,
+			// @ts-expect-error property values are stringified already
+			metadata: {
+				...metadataHeader,
+				timing: JSON.stringify({
+					fromCache: response.headers.get('cf-aig-cache-status')?.toLowerCase() === 'hit',
+					totalRoundtripTime: performance.now() - startRoundTrip,
+					modelTime,
+				} satisfies AiRequestMetadataTiming),
+			} satisfies AiRequestMetadata,
 		});
 
 		if (this.config.backgroundContext) {
