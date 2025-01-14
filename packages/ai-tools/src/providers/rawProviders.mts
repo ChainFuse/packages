@@ -5,7 +5,7 @@ import haversine from 'haversine-distance';
 import { z } from 'zod';
 import { AiBase } from '../base.mjs';
 import type { Server } from '../serverSelector/types.mjs';
-import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata, AiRequestMetadataTiming } from '../types.mjs';
+import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata, AiRequestMetadataStringified, AiRequestMetadataTiming } from '../types.mjs';
 
 export class AiRawProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
@@ -14,15 +14,17 @@ export class AiRawProviders extends AiBase {
 	private async updateGatewayLog(response: Response, metadataHeader: AiRequestMetadata, startRoundTrip: ReturnType<typeof performance.now>, modelTime?: number) {
 		const updateMetadata = NetHelpers.cfApi(this.config.gateway.apiToken).aiGateway.logs.edit(this.config.environment, response.headers.get('cf-aig-log-id')!, {
 			account_id: this.config.gateway.accountId,
-			// @ts-expect-error property values are stringified already
 			metadata: {
-				...metadataHeader,
+				...Object.entries(metadataHeader).reduce((acc, [key, value]) => {
+					acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
+					return acc;
+				}, {} as AiRequestMetadataStringified),
 				timing: JSON.stringify({
 					fromCache: response.headers.get('cf-aig-cache-status')?.toLowerCase() === 'hit',
 					totalRoundtripTime: performance.now() - startRoundTrip,
 					modelTime,
 				} satisfies AiRequestMetadataTiming),
-			} satisfies AiRequestMetadata,
+			} satisfies AiRequestMetadataStringified,
 		});
 
 		if (this.config.backgroundContext) {
@@ -53,7 +55,7 @@ export class AiRawProviders extends AiBase {
 						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
 						 */
 						timing: JSON.stringify({}),
-					} satisfies AiRequestMetadata),
+					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 				},
@@ -126,7 +128,7 @@ export class AiRawProviders extends AiBase {
 						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
 						 */
 						timing: JSON.stringify({}),
-					} satisfies AiRequestMetadata),
+					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 				},
@@ -186,7 +188,7 @@ export class AiRawProviders extends AiBase {
 						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
 						 */
 						timing: JSON.stringify({}),
-					} satisfies AiRequestMetadata),
+					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 				},
@@ -363,7 +365,7 @@ export class AiRawProviders extends AiBase {
 						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
 						 */
 						timing: JSON.stringify({}),
-					} satisfies AiRequestMetadata),
+					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 				},
@@ -423,7 +425,7 @@ export class AiRawProviders extends AiBase {
 						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
 						 */
 						timing: JSON.stringify({}),
-					} satisfies AiRequestMetadata),
+					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 				},
