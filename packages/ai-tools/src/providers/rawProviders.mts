@@ -325,7 +325,7 @@ export class AiRawProviders extends AiBase {
 				});
 		} else {
 			// This always gets called, only throw error if actually being used
-			return import('@ai-sdk/openai-compatible').then(async ({ createOpenAICompatible }) =>
+			return import('@ai-sdk/openai-compatible').then(({ createOpenAICompatible }) =>
 				createOpenAICompatible({
 					// Dummy url that'll never be hit
 					baseURL: 'https://sushidata.com',
