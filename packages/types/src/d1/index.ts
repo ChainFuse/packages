@@ -1,5 +1,5 @@
 import type { Buffer } from 'node:buffer';
-import isHexadecimal from 'validator/es/lib/isHexadecimal';
+import isHexadecimal from 'validator/es/lib/isHexadecimal.js';
 import { z } from 'zod';
 
 export * from './tenants/index.js';
