@@ -576,9 +576,7 @@ export const workersAiCatalog = {
 					name: '@cf/black-forest-labs/flux-1-schnell',
 					description: 'FLUX.1 [schnell] is a 12 billion parameter rectified flow transformer capable of generating images from text descriptions. ',
 					tags: [],
-					properties: {
-						beta: true,
-					},
+					properties: {},
 				},
 				{
 					id: '7f797b20-3eb0-44fd-b571-6cbbaa3c423b',
