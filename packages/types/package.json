@@ -85,6 +85,9 @@
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",
+	"dependencies": {
+		"zod": "^3.24.1"
+	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20250109.0",
 		"@types/json-schema": "^7.0.15"
