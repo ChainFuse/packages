@@ -2,13 +2,6 @@ import type { D1Blob, PrefixedUuid, UndefinedProperties, UuidExport } from '@cha
 import { CryptoHelpers } from './crypto.mjs';
 
 export class BufferHelpers {
-	/**
-	 * @deprecated
-	 */
-	public static bufferFromHex(...args: Parameters<typeof this.hexToBuffer>): ReturnType<typeof this.hexToBuffer> {
-		return this.hexToBuffer(...args);
-	}
-
 	public static hexToBuffer(hex: UuidExport['hex']): Promise<UuidExport['blob']> {
 		return (
 			import('node:buffer')
