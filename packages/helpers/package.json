@@ -50,7 +50,7 @@
 	"dependencies": {
 		"@discordjs/rest": "^2.4.2",
 		"chalk": "^5.4.1",
-		"cloudflare": "^3.5.0",
+		"cloudflare": "^4.0.0",
 		"uuid": "^11.0.5"
 	},
 	"devDependencies": {
