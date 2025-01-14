@@ -133,6 +133,18 @@ export class BufferHelpers {
 							base64url,
 						})),
 					);
+				} else if (this.hexRegex.test(input)) {
+					const hex: UuidExport['hex'] = input;
+
+					return this.hexToBuffer(hex).then((blob) =>
+						Promise.all([this.bufferToBase64(blob, false), this.bufferToBase64(blob, true)]).then(([base64, base64url]) => ({
+							utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}`,
+							hex,
+							blob,
+							base64,
+							base64url,
+						})),
+					);
 				} else if (this.base64Regex.test(input) && input.length % 4 === 0) {
 					const base64: UuidExport['base64'] = input;
 
@@ -150,18 +162,6 @@ export class BufferHelpers {
 
 					return this.base64ToBuffer(base64url).then((blob) =>
 						Promise.all([this.bufferToHex(blob), this.bufferToBase64(blob, false)]).then(([hex, base64]) => ({
-							utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}`,
-							hex,
-							blob,
-							base64,
-							base64url,
-						})),
-					);
-				} else if (this.hexRegex.test(input)) {
-					const hex: UuidExport['hex'] = input;
-
-					return this.hexToBuffer(hex).then((blob) =>
-						Promise.all([this.bufferToBase64(blob, false), this.bufferToBase64(blob, true)]).then(([base64, base64url]) => ({
 							utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}`,
 							hex,
 							blob,
