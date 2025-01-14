@@ -2,4 +2,4 @@
 '@chainfuse/helpers': major
 ---
 
-helpers(drop): Depreciate `bufferFromHex()` for `hexToBuffer()`
+helpers(drop): Drop `bufferFromHex()` for `hexToBuffer()`
