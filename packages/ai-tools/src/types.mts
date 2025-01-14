@@ -118,11 +118,12 @@ export interface AiRequestMetadataTiming {
 }
 export interface AiRequestMetadata {
 	dataspaceId: AiRequestConfig['dataspaceId'];
-	serverInfo: AiRequestMetadataServerInfo | AiRequestMetadataServerInfoWithLocation | string;
+	serverInfo: AiRequestMetadataServerInfo | AiRequestMetadataServerInfoWithLocation;
 	idempotencyId: AiRequestIdempotencyId;
-	executor: AiRequestExecutor | string;
-	timing: AiRequestMetadataTiming | string;
+	executor: AiRequestExecutor;
+	timing: AiRequestMetadataTiming;
 }
+export type AiRequestMetadataStringified = Record<keyof AiRequestMetadata, string>;
 
 /**
  * Extracts the chunk type from an asynchronous iterable.
