@@ -21,13 +21,13 @@ void describe('Buffer Helper Tests', () => {
 						// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
 						const usingValue = (await BufferHelpers.uuidConvert((await BufferHelpers.uuidConvert(startingValue))[usingType]))[baseType];
 
-						if (usingType === 'blob' || baseType === 'blob') {
-							const baseBuffer = typeof baseValue === 'string' ? encoder.encode(baseValue).buffer : (baseValue as UuidExport['blob']);
-							const usingBuffer = typeof usingValue === 'string' ? encoder.encode(usingValue).buffer : (usingValue as UuidExport['blob']);
+						const baseBuffer = typeof baseValue === 'string' ? encoder.encode(baseValue).buffer : (baseValue as UuidExport['blob']);
+						const usingBuffer = typeof usingValue === 'string' ? encoder.encode(usingValue).buffer : (usingValue as UuidExport['blob']);
 
-							strictEqual(baseBuffer.byteLength, usingBuffer.byteLength);
-							ok(timingSafeEqual(baseBuffer as unknown as Parameters<typeof timingSafeEqual>[0], usingBuffer as unknown as Parameters<typeof timingSafeEqual>[1]));
-						} else {
+						strictEqual(baseBuffer.byteLength, usingBuffer.byteLength);
+						ok(timingSafeEqual(baseBuffer as unknown as Parameters<typeof timingSafeEqual>[0], usingBuffer as unknown as Parameters<typeof timingSafeEqual>[1]));
+
+						if (usingType !== 'blob' && baseType !== 'blob') {
 							strictEqual(baseValue, usingValue);
 						}
 					});
