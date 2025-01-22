@@ -1,5 +1,19 @@
 # @chainfuse/types
 
+## 1.5.1
+
+### Patch Changes
+
+- [#214](https://github.com/ChainFuse/packages/pull/214) [`db06cc7`](https://github.com/ChainFuse/packages/commit/db06cc7a13c7164e178c887684d7426581bc5e4b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump step-security/harden-runner, github/codeql-action
+
+- [#220](https://github.com/ChainFuse/packages/pull/220) [`97a13ad`](https://github.com/ChainFuse/packages/commit/97a13addde86c29e29b6c0a9ad6b0f212a09a512) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#218](https://github.com/ChainFuse/packages/pull/218) [`50be46f`](https://github.com/ChainFuse/packages/commit/50be46f2c30ca78bf243da7f29956a434580bfa8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#216](https://github.com/ChainFuse/packages/pull/216) [`a90b4ac`](https://github.com/ChainFuse/packages/commit/a90b4ac5f7a85cad85266ffd57bf1017a14d10af) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
+- [#217](https://github.com/ChainFuse/packages/pull/217) [`eb70182`](https://github.com/ChainFuse/packages/commit/eb70182cb4103acd6241a87591bfa7010c415d17) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 1.5.0
 
 ### Minor Changes
