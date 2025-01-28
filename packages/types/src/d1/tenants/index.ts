@@ -1,13 +1,3 @@
-/**
- * It is used to carry over the types when using the `Object.values()` method.
- */
-export type ObjectValues<T> =
-	{
-		[K in keyof T]: T[K];
-	} extends Record<string, infer U>
-		? U[]
-		: never;
-
 export type ExtractKeysWithPrefix<T, Prefix extends string> = {
 	[K in keyof T]: K extends `${Prefix}${string}` ? K : never;
 }[keyof T];
