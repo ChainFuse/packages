@@ -1,5 +1,23 @@
 # @chainfuse/helpers
 
+## 1.1.0
+
+### Minor Changes
+
+- [`cc0bce2`](https://github.com/ChainFuse/packages/commit/cc0bce2a9654fdb0e3d142c7adb9fd52594b9ac1) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add local checking through metadata
+
+### Patch Changes
+
+- [#230](https://github.com/ChainFuse/packages/pull/230) [`96951ed`](https://github.com/ChainFuse/packages/commit/96951ed6500340c85d9015d33a17c0a084f359bd) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/setup-node
+
+- [#229](https://github.com/ChainFuse/packages/pull/229) [`3f7543f`](https://github.com/ChainFuse/packages/commit/3f7543f93a65074eb0078d8b667c63f033527a8f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
+- [#231](https://github.com/ChainFuse/packages/pull/231) [`1dd4a98`](https://github.com/ChainFuse/packages/commit/1dd4a988d3aa161da5ced30ac2bc58805c47a58d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai
+
+- [#234](https://github.com/ChainFuse/packages/pull/234) [`fa58bc1`](https://github.com/ChainFuse/packages/commit/fa58bc129ee1099923c0c2df0cdeb7d19b6eab33) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#232](https://github.com/ChainFuse/packages/pull/232) [`a1e0887`](https://github.com/ChainFuse/packages/commit/a1e0887735888ab19d4e673d0f5eea1271efc13f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
 ## 1.0.2
 
 ### Patch Changes
