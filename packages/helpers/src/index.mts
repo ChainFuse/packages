@@ -1,3 +1,4 @@
+import type { WorkerVersionMetadata } from '@cloudflare/workers-types/experimental';
 import type { Chalk } from 'chalk';
 
 export * from './buffers.mjs';
@@ -83,5 +84,9 @@ export class Helpers {
 		}
 
 		return true;
+	}
+
+	public static isLocal(metadata: WorkerVersionMetadata) {
+		return !('timestamp' in metadata);
 	}
 }
