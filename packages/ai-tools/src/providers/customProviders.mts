@@ -2,7 +2,7 @@ import type { GoogleGenerativeAIProvider } from '@ai-sdk/google';
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { Helpers } from '@chainfuse/helpers';
 import { AiModels, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
-import { APICallError, experimental_customProvider as customProvider, TypeValidationError, experimental_wrapLanguageModel as wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
+import { APICallError, experimental_customProvider as customProvider, TypeValidationError, wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
 import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
 import { ZodError } from 'zod';
 import { AiBase } from '../base.mjs';

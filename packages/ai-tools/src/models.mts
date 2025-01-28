@@ -1,5 +1,5 @@
 import type { AiModels } from '@chainfuse/types';
-import { experimental_wrapLanguageModel as wrapLanguageModel, type embed, type embedMany } from 'ai';
+import { wrapLanguageModel, type embed, type embedMany } from 'ai';
 import { AiBase } from './base.mjs';
 import { AiRegistry } from './registry.mjs';
 import type { AiRequestConfig } from './types.mjs';
