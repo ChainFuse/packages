@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 1.1.1
+
+### Patch Changes
+
+- [#235](https://github.com/ChainFuse/packages/pull/235) [`a9c7c82`](https://github.com/ChainFuse/packages/commit/a9c7c824230e20c7e6c1ea33d8042ced4fe7b277) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/google, ai
+
 ## 1.1.0
 
 ### Minor Changes

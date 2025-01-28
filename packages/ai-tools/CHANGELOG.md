@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 0.2.7
+
+### Patch Changes
+
+- [#235](https://github.com/ChainFuse/packages/pull/235) [`a9c7c82`](https://github.com/ChainFuse/packages/commit/a9c7c824230e20c7e6c1ea33d8042ced4fe7b277) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/google, ai
+
+- Updated dependencies [[`a9c7c82`](https://github.com/ChainFuse/packages/commit/a9c7c824230e20c7e6c1ea33d8042ced4fe7b277), [`fe89f15`](https://github.com/ChainFuse/packages/commit/fe89f15c90b475fa25eae9fddda1b15f15da1a2e), [`14199df`](https://github.com/ChainFuse/packages/commit/14199df733680a6d473c1172abd174decfa4875f), [`0c47722`](https://github.com/ChainFuse/packages/commit/0c477226872dffced05298206345e2f9c5e6e214)]:
+    - @chainfuse/helpers@1.1.1
+    - @chainfuse/types@1.6.0
+
 ## 0.2.6
 
 ### Patch Changes
