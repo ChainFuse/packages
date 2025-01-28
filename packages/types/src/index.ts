@@ -10,6 +10,16 @@ type MethodKeys<T> = {
 export type JsonParsed<T> = Omit<T, MethodKeys<T>>;
 
 /**
+ * It is used to carry over the types when using the `Object.values()` method.
+ */
+export type ObjectValues<T> =
+	{
+		[K in keyof T]: T[K];
+	} extends Record<string, infer U>
+		? U[]
+		: never;
+
+/**
  * This type is similar to the built-in `Partial<>` type, but it applies recursively to nested objects and arrays.
  * If a property is an array, the elements of the array will also be recursively made optional.
  * If a property is an object, the properties of the object will also be recursively made optional.
