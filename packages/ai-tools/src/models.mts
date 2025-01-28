@@ -1,4 +1,4 @@
-import type { AiModels } from '@chainfuse/types';
+import type { LanguageModelValues, TextEmbeddingModelValues } from '@chainfuse/types';
 import { wrapLanguageModel, type embed, type embedMany } from 'ai';
 import { AiBase } from './base.mjs';
 import { AiRegistry } from './registry.mjs';
@@ -12,10 +12,6 @@ type ProviderLanguageModels = {
 type ProvidersTextEmbeddingModels = {
 	[P in ValidProviders]: Parameters<ProvidersReturnType[P]['textEmbeddingModel']>[0];
 };
-type EnumOrEnumLike<T> = T extends Record<string, infer V> ? V : T extends Readonly<Record<string, infer V>> ? V : never;
-export type LanguageModelValues = EnumOrEnumLike<(typeof AiModels.LanguageModels)[keyof typeof AiModels.LanguageModels]>;
-
-type TextEmbeddingModelValues = EnumOrEnumLike<(typeof AiModels.TextEmbeddingModels)[keyof typeof AiModels.TextEmbeddingModels]>;
 
 export class AiModel extends AiBase {
 	public wrappedLanguageModel<P extends ValidProviders>(args: AiRequestConfig, provider: P, model: ProviderLanguageModels[P]): Promise<ReturnType<typeof wrapLanguageModel>>;
