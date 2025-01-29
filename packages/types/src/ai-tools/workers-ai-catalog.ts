@@ -153,6 +153,16 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: 'ad01ab83-baf8-4e7b-8fed-a0a219d4eb45',
+					source: 1,
+					name: '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b',
+					description: 'DeepSeek-R1-Distill-Qwen-32B is a model distilled from DeepSeek-R1 based on Qwen2.5. It outperforms OpenAI-o1-mini across various benchmarks, achieving new state-of-the-art results for dense models.',
+					tags: [],
+					properties: {
+						terms: 'https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE',
+					},
+				},
+				{
 					id: '9d2ab560-065e-4d0d-a789-d4bc7468d33e',
 					source: 1,
 					name: '@cf/thebloke/discolm-german-7b-v1-awq',
