@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.2.8
+
+### Patch Changes
+
+- [`91ab029`](https://github.com/ChainFuse/packages/commit/91ab029523ff7c5de797dd5657c820f88717414b) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Updated model catalog
+
 ## 0.2.7
 
 ### Patch Changes
