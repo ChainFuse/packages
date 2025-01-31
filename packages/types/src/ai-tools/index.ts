@@ -63,8 +63,6 @@ export namespace AiModels {
 			dalle2 = 'azure:dall-e-2',
 		}
 
-		export enum Anthropic {}
-
 		export const Cloudflare = Object.freeze(Object.fromEntries(enabledCloudflareLlmImageProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text-to-Image'>);
 
 		export enum GoogleGenerativeAi {
