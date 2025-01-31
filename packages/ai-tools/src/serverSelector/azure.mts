@@ -177,6 +177,16 @@ export class AzureServerSelector extends ServerSelector {
 			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
+			id: 'OpenAi-SG-Singapore',
+			coordinate: {
+				lat: 1.283,
+				lon: 103.833,
+			},
+			languageModelAvailability: [],
+			imageModelAvailability: [],
+			textEmbeddingModelAvailability: [],
+		},
+		{
 			id: 'OpenAi-EU-Gavle',
 			coordinate: {
 				lat: 60.67488,
@@ -206,6 +216,16 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Swiss_Federal_Act_on_Data_Protection,
 			languageModelAvailability: [],
+			imageModelAvailability: [],
+			textEmbeddingModelAvailability: [],
+		},
+		{
+			id: 'OpenAi-AE-Dubai',
+			coordinate: {
+				lat: 25.266666,
+				lon: 55.316666,
+			},
+			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o-mini'],
 			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
