@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 1.6.1
+
+### Patch Changes
+
+- [`fd64379`](https://github.com/ChainFuse/packages/commit/fd6437927f65853396a32539cb343e278f954ce2) Thanks [@demosjarco](https://github.com/demosjarco)! - new ai models
+
 ## 1.6.0
 
 ### Minor Changes
