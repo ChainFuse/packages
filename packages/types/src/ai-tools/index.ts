@@ -17,15 +17,6 @@ export type AzureEmbeddingModels = 'text-embedding-3-small' | 'text-embedding-3-
 
 export namespace AiModels {
 	export namespace LanguageModels {
-		export enum OpenAi {
-			gpt3 = 'openai:gpt-3.5-turbo',
-			gpt4o_mini = 'openai:gpt-4o-mini',
-			o1_mini = 'openai:o1-mini',
-			gpt4 = 'openai:gpt-4-turbo',
-			gpt4o = 'openai:gpt-4o',
-			o1 = 'openai:o1-preview',
-		}
-
 		export enum Azure {
 			gpt3 = 'azure:gpt-35-turbo',
 			gpt4o_mini = 'azure:gpt-4o-mini',
@@ -51,14 +42,18 @@ export namespace AiModels {
 			gemini_pro = 'google.generative-ai:gemini-1.5-pro',
 			gemini_pro_search = 'google.generative-ai:gemini-1.5-pro:search',
 		}
+
+		export enum OpenAi {
+			gpt3 = 'openai:gpt-3.5-turbo',
+			gpt4o_mini = 'openai:gpt-4o-mini',
+			o1_mini = 'openai:o1-mini',
+			gpt4 = 'openai:gpt-4-turbo',
+			gpt4o = 'openai:gpt-4o',
+			o1 = 'openai:o1-preview',
+		}
 	}
 
 	export namespace TextEmbeddingModels {
-		export enum OpenAi {
-			te3_large = 'openai:text-embedding-3-large',
-			te3_small = 'openai:text-embedding-3-small',
-		}
-
 		export enum Azure {
 			te3_large = 'azure:text-embedding-3-large',
 			te3_small = 'azure:text-embedding-3-small',
@@ -68,6 +63,11 @@ export namespace AiModels {
 
 		export enum GoogleGenerativeAi {
 			te4 = 'google.generative-ai:text-embedding-004',
+		}
+
+		export enum OpenAi {
+			te3_large = 'openai:text-embedding-3-large',
+			te3_small = 'openai:text-embedding-3-small',
 		}
 	}
 }
