@@ -10,7 +10,7 @@ type ProviderLanguageModels = {
 	[P in ValidProviders]: Parameters<ProvidersReturnType[P]['languageModel']>[0];
 };
 type ValidImageProviders = {
-	[P in ValidProviders]: ProvidersReturnType[P]['imageModel'] extends (...args: unknown[]) => unknown ? P : never;
+	[P in ValidProviders]: ProvidersReturnType[P] extends { imageModel: (...args: any[]) => any } ? P : never;
 }[ValidProviders];
 type ProviderImageModels = {
 	[P in Extract<ValidImageProviders, ValidProviders>]: Parameters<ProvidersReturnType[P]['imageModel']>[0];
