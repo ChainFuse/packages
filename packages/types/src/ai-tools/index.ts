@@ -1,9 +1,12 @@
 import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmProviders, type cloudflareFilteredModelPossibilities, type cloudflareModelPossibilities, type cloudflareModelTypes } from '../super-ai/index.js';
+import { workersAiCatalog } from './workers-ai-catalog.js';
 
 export interface RawCoordinate {
 	lat: string;
 	lon: string;
 }
+
+export const enabledCloudflareLlmImageProviders: cloudflareModelPossibilities<'Text-to-Image'>[] = workersAiCatalog.modelGroups['Text-to-Image'].models.map((model) => model.name);
 
 export type CloudflareModelsEnum<M extends cloudflareModelTypes = cloudflareModelTypes> = {
 	[K in cloudflareModelPossibilities<M>]: `workersai:${K}`;
@@ -13,6 +16,7 @@ export type CloudflareFunctionModelsEnum = {
 };
 
 export type AzureChatModels = 'gpt-35-turbo' | 'gpt-4-turbo' | 'gpt-4o-mini' | 'gpt-4o';
+export type AzureImageModels = 'dall-e-3' | 'dall-e-2';
 export type AzureEmbeddingModels = 'text-embedding-3-small' | 'text-embedding-3-large';
 
 export namespace AiModels {
@@ -53,6 +57,27 @@ export namespace AiModels {
 		}
 	}
 
+	export namespace ImageModels {
+		export enum Azure {
+			dalle3 = 'azure:dall-e-3',
+			dalle2 = 'azure:dall-e-2',
+		}
+
+		export enum Anthropic {}
+
+		export const Cloudflare = Object.freeze(Object.fromEntries(enabledCloudflareLlmImageProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text-to-Image'>);
+
+		export enum GoogleGenerativeAi {
+			imagen = 'google.generative-ai:imagen-3.0-generate-002',
+			imagen_fast = 'google.generative-ai:imagen-3.0-fast-generate-001',
+		}
+
+		export enum OpenAi {
+			dalle3 = 'openai:dall-e-3',
+			dalle2 = 'openai:dall-e-2',
+		}
+	}
+
 	export namespace TextEmbeddingModels {
 		export enum Azure {
 			te3_large = 'azure:text-embedding-3-large',
@@ -74,13 +99,14 @@ export namespace AiModels {
 
 export type EnumOrEnumLike<T> = T extends Record<string, infer V> ? V : T extends Readonly<Record<string, infer V>> ? V : never;
 export type LanguageModelValues = EnumOrEnumLike<(typeof AiModels.LanguageModels)[keyof typeof AiModels.LanguageModels]>;
-
+export type ImageModelValues = EnumOrEnumLike<(typeof AiModels.ImageModels)[keyof typeof AiModels.ImageModels]>;
 export type TextEmbeddingModelValues = EnumOrEnumLike<(typeof AiModels.TextEmbeddingModels)[keyof typeof AiModels.TextEmbeddingModels]>;
 
 export const default_mc_generic: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
-export const default_mc_summary: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
+export const default_mc_summary: LanguageModelValues = AiModels.LanguageModels.Cloudflare['@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
 export const default_mc_extraction: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
 export const default_mc_tagging: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
 export const default_mc_sentiment: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
 export const default_mc_safety: LanguageModelValues = AiModels.LanguageModels.Cloudflare['@hf/thebloke/llamaguard-7b-awq'];
+export const default_mc_image: ImageModelValues = AiModels.ImageModels.Cloudflare['@cf/stabilityai/stable-diffusion-xl-base-1.0'];
 export const default_mc_embedding: TextEmbeddingModelValues = AiModels.TextEmbeddingModels.Cloudflare['@cf/baai/bge-large-en-v1.5'];
