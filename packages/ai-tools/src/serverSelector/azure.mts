@@ -12,6 +12,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Australian_Privacy_Principles,
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -22,6 +23,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Brazil_General_Data_protection_Law,
 			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -32,6 +34,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Canada_Personal_Information_Protection_and_Electronic_Documents_Act,
 			languageModelAvailability: [],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -42,6 +45,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Canada_Personal_Information_Protection_and_Electronic_Documents_Act,
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: ['text-embedding-3-small', 'text-embedding-3-large'],
 		},
 		{
@@ -51,6 +55,7 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -79.8164,
 			},
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: ['text-embedding-3-small', 'text-embedding-3-large'],
 		},
 		{
@@ -60,6 +65,7 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -78.3889,
 			},
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: ['text-embedding-3-small', 'text-embedding-3-large'],
 		},
 		{
@@ -70,6 +76,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
@@ -80,6 +87,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
 			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -90,6 +98,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Japan_Act_on_the_Protection_of_Personal_Information,
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
@@ -100,6 +109,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Korean_Personal_Information_Protection_Act,
 			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -109,6 +119,7 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -87.6278,
 			},
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -119,6 +130,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Norwegian_Personal_Data_Act,
 			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
@@ -129,6 +141,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
 			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -139,6 +152,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.SouthAfrica_Protection_Personal_Information_Act,
 			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -148,6 +162,7 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -98.5,
 			},
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -158,6 +173,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Indian_Personal_Protection,
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
@@ -168,6 +184,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o-mini', 'gpt-4o'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
@@ -178,6 +195,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
 			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -188,6 +206,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Swiss_Federal_Act_on_Data_Protection,
 			languageModelAvailability: [],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -198,6 +217,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Swiss_Federal_Act_on_Data_Protection,
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -208,6 +228,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.UK_General_Data_Protection_Regulation,
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
@@ -218,6 +239,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
 			languageModelAvailability: ['gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -227,6 +249,7 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -122.417,
 			},
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -236,6 +259,7 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -112.074036,
 			},
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
+			imageModelAvailability: [],
 			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 	]);

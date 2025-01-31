@@ -1,4 +1,4 @@
-import type { AzureChatModels, AzureEmbeddingModels, Coordinate } from '@chainfuse/types';
+import type { AzureChatModels, AzureEmbeddingModels, AzureImageModels, Coordinate } from '@chainfuse/types';
 import type { PrivacyRegion } from './base.mjs';
 
 export interface Server {
@@ -6,5 +6,6 @@ export interface Server {
 	coordinate: Coordinate;
 	region?: PrivacyRegion;
 	languageModelAvailability: AzureChatModels[] | string[];
+	imageModelAvailability: AzureImageModels[] | string[];
 	textEmbeddingModelAvailability: AzureEmbeddingModels[] | string[];
 }
