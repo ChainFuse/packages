@@ -6,11 +6,11 @@ import type { Provider } from 'ai';
 export interface AzureOpenAIProvider extends Provider {
 	(deploymentId: AzureChatModels, settings?: OpenAIChatSettings): LanguageModelV1;
 	/**
-  Creates an Azure OpenAI chat model for text generation.
-     */
+	 * Creates an Azure OpenAI chat model for text generation.
+	 */
 	languageModel(deploymentId: AzureChatModels, settings?: OpenAIChatSettings): LanguageModelV1;
 	/**
-  Creates an Azure OpenAI model for text embeddings.
-     */
+	 * Creates an Azure OpenAI model for text embeddings.
+	 */
 	textEmbeddingModel(deploymentId: AzureEmbeddingModels, settings?: OpenAIEmbeddingSettings): EmbeddingModelV1<string>;
 }
