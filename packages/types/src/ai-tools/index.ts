@@ -16,7 +16,7 @@ export type CloudflareFunctionModelsEnum = {
 };
 
 export type AzureChatModels = 'gpt-35-turbo' | 'gpt-4-turbo' | 'gpt-4o-mini' | 'gpt-4o' | 'o1' | 'o3-mini';
-export type AzureImageModels = 'dall-e-3' | 'dall-e-2';
+export type AzureImageModels = 'dall-e-3';
 export type AzureEmbeddingModels = 'text-embedding-3-small' | 'text-embedding-3-large';
 
 export namespace AiModels {
