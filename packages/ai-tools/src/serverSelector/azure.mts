@@ -12,7 +12,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.Australian_Privacy_Principles,
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
-			imageModelAvailability: [],
+			imageModelAvailability: ['dall-e-3'],
 			textEmbeddingModelAvailability: [],
 		},
 		{
@@ -55,7 +55,7 @@ export class AzureServerSelector extends ServerSelector {
 				lon: -79.8164,
 			},
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini'],
-			imageModelAvailability: [],
+			imageModelAvailability: ['dall-e-3'],
 			textEmbeddingModelAvailability: ['text-embedding-3-small', 'text-embedding-3-large'],
 		},
 		{
@@ -184,7 +184,7 @@ export class AzureServerSelector extends ServerSelector {
 			},
 			region: PrivacyRegion.General_Data_Protection_Regulation,
 			languageModelAvailability: ['gpt-35-turbo', 'gpt-4-turbo', 'gpt-4o-mini', 'gpt-4o', 'o1', 'o3-mini'],
-			imageModelAvailability: [],
+			imageModelAvailability: ['dall-e-3'],
 			textEmbeddingModelAvailability: ['text-embedding-3-large'],
 		},
 		{
