@@ -1,5 +1,27 @@
 # @chainfuse/ai-tools
 
+## 0.3.0
+
+### Minor Changes
+
+- [`daf3f33`](https://github.com/ChainFuse/packages/commit/daf3f3349ebfadd935931607f9d57cef845d222f) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Add image gen support
+
+### Patch Changes
+
+- [#239](https://github.com/ChainFuse/packages/pull/239) [`64f3ca8`](https://github.com/ChainFuse/packages/commit/64f3ca88764b0a7d94f8617ba3d86f470624ea6c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#240](https://github.com/ChainFuse/packages/pull/240) [`d7e4196`](https://github.com/ChainFuse/packages/commit/d7e419619bc020f1ec72c03cc166dc606b790b11) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
+- [#241](https://github.com/ChainFuse/packages/pull/241) [`382ee7b`](https://github.com/ChainFuse/packages/commit/382ee7be06b8bbf9231e95b65e90ad7dc5a26f22) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [`4914cdb`](https://github.com/ChainFuse/packages/commit/4914cdb3ae1e34dc1e43ee48330f393d97559d27) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Remove depreciated
+
+- [`2648df9`](https://github.com/ChainFuse/packages/commit/2648df9ec26192d38bce14ae47194b0fff1b4439) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Update azure server inventory
+
+- Updated dependencies [[`64f3ca8`](https://github.com/ChainFuse/packages/commit/64f3ca88764b0a7d94f8617ba3d86f470624ea6c), [`d7e4196`](https://github.com/ChainFuse/packages/commit/d7e419619bc020f1ec72c03cc166dc606b790b11), [`382ee7b`](https://github.com/ChainFuse/packages/commit/382ee7be06b8bbf9231e95b65e90ad7dc5a26f22)]:
+    - @chainfuse/helpers@1.1.2
+    - @chainfuse/types@1.6.2
+
 ## 0.2.8
 
 ### Patch Changes
