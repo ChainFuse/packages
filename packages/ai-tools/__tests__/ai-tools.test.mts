@@ -1,11 +1,11 @@
-import { AiModels } from '@chainfuse/types';
+import { AiModels, type LanguageModelValues } from '@chainfuse/types';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import { generateObject, generateText, Output, streamObject, streamText, tool } from 'ai';
 import { doesNotReject, strictEqual } from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import test, { before, beforeEach, describe, it } from 'node:test';
 import { z } from 'zod';
-import { AiModel, type AiConfig, type AiConfigOaiOpenai, type AiRequestConfig, type AiStreamChunkType, type LanguageModelValues } from '../dist/index.mjs';
+import { AiModel, type AiConfig, type AiConfigOaiOpenai, type AiRequestConfig, type AiStreamChunkType } from '../dist/index.mjs';
 
 const { GH_RUNNER_ID } = process.env;
 const { CF_ACCOUNT_ID, AI_GATEWAY_API_KEY } = process.env;
