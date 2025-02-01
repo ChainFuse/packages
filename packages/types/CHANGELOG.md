@@ -1,5 +1,15 @@
 # @chainfuse/types
 
+## 1.6.2
+
+### Patch Changes
+
+- [#239](https://github.com/ChainFuse/packages/pull/239) [`64f3ca8`](https://github.com/ChainFuse/packages/commit/64f3ca88764b0a7d94f8617ba3d86f470624ea6c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#240](https://github.com/ChainFuse/packages/pull/240) [`d7e4196`](https://github.com/ChainFuse/packages/commit/d7e419619bc020f1ec72c03cc166dc606b790b11) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
+- [#241](https://github.com/ChainFuse/packages/pull/241) [`382ee7b`](https://github.com/ChainFuse/packages/commit/382ee7be06b8bbf9231e95b65e90ad7dc5a26f22) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 1.6.1
 
 ### Patch Changes
