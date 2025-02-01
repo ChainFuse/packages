@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.3.1
+
+### Patch Changes
+
+- [`512b95f`](https://github.com/ChainFuse/packages/commit/512b95f2952ed1f71d1c0ce06c3b1f6895b5ecd7) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Disable imagegen for now
+
 ## 0.3.0
 
 ### Minor Changes
