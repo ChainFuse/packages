@@ -16,9 +16,6 @@ export class AiRegistry extends AiBase {
 	}
 
 	public async registry(args: AiRequestConfig) {
-		return createProviderRegistry(
-			// @ts-expect-error override for types
-			await this.providers(args),
-		);
+		return createProviderRegistry(await this.providers(args));
 	}
 }

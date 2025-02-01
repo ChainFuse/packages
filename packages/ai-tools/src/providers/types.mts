@@ -1,7 +1,6 @@
-import type { OpenAIProvider } from '@ai-sdk/openai';
 import type { OpenAIChatSettings, OpenAIEmbeddingSettings } from '@ai-sdk/openai/internal';
-import type { EmbeddingModelV1, ImageModelV1, LanguageModelV1 } from '@ai-sdk/provider';
-import type { AzureChatModels, AzureEmbeddingModels, AzureImageModels } from '@chainfuse/types';
+import type { EmbeddingModelV1, LanguageModelV1 } from '@ai-sdk/provider';
+import type { AzureChatModels, AzureEmbeddingModels } from '@chainfuse/types';
 import type { Provider } from 'ai';
 
 export interface AzureOpenAIProvider extends Provider {
@@ -17,5 +16,5 @@ export interface AzureOpenAIProvider extends Provider {
 	/**
 	 * Creates a model for image generation.
 	 */
-	imageModel(modelId: AzureImageModels, settings?: Parameters<OpenAIProvider['imageModel']>[1]): ImageModelV1;
+	// imageModel(modelId: AzureImageModels, settings?: Parameters<OpenAIProvider['imageModel']>[1]): ImageModelV1;
 }
