@@ -1,7 +1,7 @@
 import type { GoogleGenerativeAIProvider } from '@ai-sdk/google';
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { Helpers } from '@chainfuse/helpers';
-import { AiModels, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type AzureImageModels, type cloudflareModelPossibilities } from '@chainfuse/types';
+import { AiModels, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
 import { APICallError, customProvider, TypeValidationError, wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
 import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
 import { ZodError } from 'zod';
@@ -76,16 +76,15 @@ export class AiCustomProviders extends AiBase {
 				},
 				Promise.resolve({} as Record<AzureChatModels, Awaited<ReturnType<AiRawProviders['azOpenai']>>>),
 			),
-			// @ts-expect-error override for types
-			imageModels: await server!.imageModelAvailability.reduce(
-				async (accPromise, model) => {
-					const acc = await accPromise;
-					// @ts-expect-error override for types
-					acc[model as AzureImageModels] = (await raw.azOpenai(args, server!)).imageModel(model);
-					return acc;
-				},
-				Promise.resolve({} as Record<AzureImageModels, Awaited<ReturnType<AiRawProviders['azOpenai']>>>),
-			),
+			// imageModels: await server!.imageModelAvailability.reduce(
+			// 	async (accPromise, model) => {
+			// 		const acc = await accPromise;
+			// 		// @ts-expect-error override for types
+			// 		acc[model as AzureImageModels] = (await raw.azOpenai(args, server!)).imageModel(model);
+			// 		return acc;
+			// 	},
+			// 	Promise.resolve({} as Record<AzureImageModels, Awaited<ReturnType<AiRawProviders['azOpenai']>>>),
+			// ),
 			// @ts-expect-error override for types
 			textEmbeddingModels: await server!.textEmbeddingModelAvailability.reduce(
 				async (accPromise, model) => {
