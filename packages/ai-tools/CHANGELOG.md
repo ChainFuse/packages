@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.3.2
+
+### Patch Changes
+
+- [`d54edf6`](https://github.com/ChainFuse/packages/commit/d54edf629f458de3f9a4fb0ea13f46eae5d3e8d1) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix output generation where it's correct, but encapsulated in a code fence
+
 ## 0.3.1
 
 ### Patch Changes
