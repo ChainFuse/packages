@@ -122,49 +122,78 @@ export class AiCustomProviders extends AiBase {
 						// @ts-expect-error override for types
 						acc[model] = wrapLanguageModel({
 							model: (await raw.restWorkersAi(args))(model),
-							middleware: {
-								wrapStream: async ({ doStream }) => {
-									const { stream, ...rest } = await doStream();
+							middleware: [
+								{
+									wrapStream: async ({ doStream }) => {
+										const { stream, ...rest } = await doStream();
 
-									const transformStream = new TransformStream<LanguageModelV1StreamPart, LanguageModelV1StreamPart>({
-										transform(chunk, controller) {
-											if (chunk.type === 'error') {
-												if (TypeValidationError.isInstance(chunk.error) && chunk.error.cause instanceof ZodError) {
-													if (chunk.error.cause.issues.filter((issues) => issues.code === 'invalid_union')) {
-														// Verify the specific error instead of assuming all errors
-														const missingIndexPropertyError = chunk.error.cause.issues
-															.filter((issues) => issues.code === 'invalid_union')
-															.flatMap((issue) => issue.unionErrors)
-															.flatMap((issue) => issue.issues)
-															.filter((issue) => issue.code === 'invalid_type' && Helpers.areArraysEqual(issue.path, ['choices', 0, 'index']));
+										const transformStream = new TransformStream<LanguageModelV1StreamPart, LanguageModelV1StreamPart>({
+											transform(chunk, controller) {
+												if (chunk.type === 'error') {
+													if (TypeValidationError.isInstance(chunk.error) && chunk.error.cause instanceof ZodError) {
+														if (chunk.error.cause.issues.filter((issues) => issues.code === 'invalid_union')) {
+															// Verify the specific error instead of assuming all errors
+															const missingIndexPropertyError = chunk.error.cause.issues
+																.filter((issues) => issues.code === 'invalid_union')
+																.flatMap((issue) => issue.unionErrors)
+																.flatMap((issue) => issue.issues)
+																.filter((issue) => issue.code === 'invalid_type' && Helpers.areArraysEqual(issue.path, ['choices', 0, 'index']));
 
-														if (missingIndexPropertyError.length > 0) {
-															const newChunk = chunk.error.value as ChatCompletionChunk;
+															if (missingIndexPropertyError.length > 0) {
+																const newChunk = chunk.error.value as ChatCompletionChunk;
 
-															newChunk.choices
-																.filter((choice) => choice.delta.content)
-																.forEach((choice) => {
-																	controller.enqueue({
-																		type: 'text-delta',
-																		textDelta: choice.delta.content!,
+																newChunk.choices
+																	.filter((choice) => choice.delta.content)
+																	.forEach((choice) => {
+																		controller.enqueue({
+																			type: 'text-delta',
+																			textDelta: choice.delta.content!,
+																		});
 																	});
-																});
+															}
 														}
 													}
+												} else {
+													// Passthrough untouched
+													controller.enqueue(chunk);
 												}
-											} else {
-												// Passthrough untouched
-												controller.enqueue(chunk);
-											}
-										},
-									});
+											},
+										});
 
-									return {
-										stream: stream.pipeThrough(transformStream),
-										...rest,
-									};
+										return {
+											stream: stream.pipeThrough(transformStream),
+											...rest,
+										};
+									},
 								},
-							},
+								// Fix output generation where it's correct, but encapsulated in a code fence
+								{
+									wrapGenerate: async ({ doGenerate, model }) => {
+										const result = await doGenerate();
+
+										/**
+										 * `chunkSchema` is undocumented but always present in `model` regardless of model
+										 * Can't use `responseFormat` (in `params`) because it isn't always present because some models don't support that part of openai api spec.
+										 */
+										if ('chunkSchema' in model) {
+											const codeFenceStart = new RegExp(/^`{1,3}\w*\s*(?=[\[{])/i);
+											const codefenceEnd = new RegExp(/(?![\]}])\s*`{1,3}$/i);
+
+											return {
+												...result,
+												/**
+												 * 1. trim initially to remove any leading/trailing whitespace
+												 * 2. Remove start and end
+												 * 3. Trim again to remove any leading/trailing whitespace
+												 */
+												text: result.text?.trim().replace(codeFenceStart, '').replace(codefenceEnd, '').trim(),
+											};
+										}
+
+										return result;
+									},
+								},
+							],
 						});
 						return acc;
 					},
