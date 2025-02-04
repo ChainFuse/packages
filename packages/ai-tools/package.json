@@ -50,12 +50,12 @@
 	"dependencies": {
 		"@ai-sdk/anthropic": "^1.1.6",
 		"@ai-sdk/azure": "^1.1.9",
-		"@ai-sdk/google": "^1.1.8",
+		"@ai-sdk/google": "^1.1.9",
 		"@ai-sdk/openai": "^1.0.5",
 		"@ai-sdk/openai-compatible": "^0.1.8",
 		"@chainfuse/helpers": "^1.1.2",
 		"@chainfuse/types": "^1.6.2",
-		"ai": "^4.1.16",
+		"ai": "^4.1.18",
 		"chalk": "^5.4.1",
 		"haversine-distance": "^1.2.3",
 		"workers-ai-provider": "^0.0.10"
