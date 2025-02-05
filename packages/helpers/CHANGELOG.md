@@ -1,5 +1,17 @@
 # @chainfuse/helpers
 
+## 1.1.3
+
+### Patch Changes
+
+- [#253](https://github.com/ChainFuse/packages/pull/253) [`36c549c`](https://github.com/ChainFuse/packages/commit/36c549ca8e63097f00a4c3c9be523cc0968f6966) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/google, ai, openai
+
+- [#252](https://github.com/ChainFuse/packages/pull/252) [`359aebe`](https://github.com/ChainFuse/packages/commit/359aebeeaff8b9d1e9848dfc4f8d499c6d9a2a85) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#250](https://github.com/ChainFuse/packages/pull/250) [`56eb304`](https://github.com/ChainFuse/packages/commit/56eb304b311fb87a83a25bc56291aa27fcfb9d65) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
+- [#251](https://github.com/ChainFuse/packages/pull/251) [`6151b55`](https://github.com/ChainFuse/packages/commit/6151b553963087f36244468f30559efd19cb6355) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 1.1.2
 
 ### Patch Changes
