@@ -1,5 +1,19 @@
 # @chainfuse/types
 
+## 1.6.4
+
+### Patch Changes
+
+- [#255](https://github.com/ChainFuse/packages/pull/255) [`6530ed5`](https://github.com/ChainFuse/packages/commit/6530ed5c6c7232599165f37c9f7eb35573ee77de) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/google, ai, workers-ai-provider
+
+- [#256](https://github.com/ChainFuse/packages/pull/256) [`75ac277`](https://github.com/ChainFuse/packages/commit/75ac277d4f1eab22599365d32e79938d57bbbeca) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump cloudflare
+
+- [#258](https://github.com/ChainFuse/packages/pull/258) [`a472081`](https://github.com/ChainFuse/packages/commit/a472081c8f7f6125abea4d3b1154240a84d48f9d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, prettier, typescript-eslint
+
+- [#259](https://github.com/ChainFuse/packages/pull/259) [`959a948`](https://github.com/ChainFuse/packages/commit/959a948bb255ff4576c3a2b6ae2bc864c04765f1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @discordjs/rest
+
+- [#257](https://github.com/ChainFuse/packages/pull/257) [`519f6eb`](https://github.com/ChainFuse/packages/commit/519f6eb84f3ecb8543d7e9bc5d6f6870cd237690) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
 ## 1.6.3
 
 ### Patch Changes
