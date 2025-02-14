@@ -1,5 +1,19 @@
 # @chainfuse/ai-tools
 
+## 0.4.0
+
+### Minor Changes
+
+- [`a1f9415`](https://github.com/ChainFuse/packages/commit/a1f9415c64e6315026326f0946dd0c8fcb6435d6) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Add middleware to remove thinking from text
+
+### Patch Changes
+
+- [#264](https://github.com/ChainFuse/packages/pull/264) [`83e8efd`](https://github.com/ChainFuse/packages/commit/83e8efd629d2aa735f62d7768312ace920e7ebd1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+
+- Updated dependencies [[`83e8efd`](https://github.com/ChainFuse/packages/commit/83e8efd629d2aa735f62d7768312ace920e7ebd1)]:
+    - @chainfuse/helpers@1.1.5
+    - @chainfuse/types@1.6.5
+
 ## 0.3.4
 
 ### Patch Changes

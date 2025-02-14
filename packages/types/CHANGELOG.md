@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 1.6.5
+
+### Patch Changes
+
+- [#264](https://github.com/ChainFuse/packages/pull/264) [`83e8efd`](https://github.com/ChainFuse/packages/commit/83e8efd629d2aa735f62d7768312ace920e7ebd1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+
 ## 1.6.4
 
 ### Patch Changes
