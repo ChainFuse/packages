@@ -1,5 +1,5 @@
 import type { LanguageModelValues, TextEmbeddingModelValues } from '@chainfuse/types';
-import { wrapLanguageModel, type embed, type embedMany } from 'ai';
+import { extractReasoningMiddleware, wrapLanguageModel, type embed, type embedMany, type LanguageModelV1Middleware } from 'ai';
 import { AiBase } from './base.mjs';
 import { AiRegistry } from './registry.mjs';
 import type { AiRequestConfig } from './types.mjs';
@@ -26,7 +26,7 @@ export class AiModel extends AiBase {
 		return new AiRegistry(this.config).registry(args).then((registry) =>
 			wrapLanguageModel({
 				model: registry.languageModel(model ? `${modelOrProvider}:${model}` : modelOrProvider),
-				middleware: this.middleware,
+				middleware: [extractReasoningMiddleware({ tagName: 'think' }), this.middleware],
 			}),
 		);
 	}
@@ -43,7 +43,7 @@ export class AiModel extends AiBase {
 		return new AiRegistry(this.config).registry(args).then((registry) => registry.textEmbeddingModel(model ? `${modelOrProvider}:${model}` : modelOrProvider));
 	}
 
-	private get middleware(): Parameters<typeof wrapLanguageModel>[0]['middleware'] {
+	private get middleware(): LanguageModelV1Middleware {
 		return {};
 	}
 }
