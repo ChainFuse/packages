@@ -76,6 +76,8 @@ export interface AiRequestConfig {
 	 */
 	cache?: boolean | number;
 	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+	messageId: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'];
+	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 	dataspaceId: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'];
 	/**
 	 * Service identification of caller
@@ -98,6 +100,10 @@ export interface AiRequestConfig {
 	skipCache?: boolean;
 }
 
+export interface AiRequestMetadataDbInfo {
+	dataspaceId: AiRequestConfig['dataspaceId'];
+	messageId: AiRequestConfig['dataspaceId'];
+}
 export interface AiRequestMetadataServerInfo {
 	name: 'anthropic' | 'cloudflare' | 'googleai' | 'openai';
 }
@@ -117,7 +123,7 @@ export interface AiRequestMetadataTiming {
 	 */
 }
 export interface AiRequestMetadata {
-	dataspaceId: AiRequestConfig['dataspaceId'];
+	dbInfo: AiRequestMetadataDbInfo;
 	serverInfo: AiRequestMetadataServerInfo | AiRequestMetadataServerInfoWithLocation;
 	idempotencyId: AiRequestIdempotencyId;
 	executor: AiRequestExecutor;
