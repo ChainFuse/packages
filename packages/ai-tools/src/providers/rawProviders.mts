@@ -47,7 +47,7 @@ export class AiRawProviders extends AiBase {
 							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						} satisfies AiRequestMetadataDbInfo),
-						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
+						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
 						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
 						serverInfo: JSON.stringify({
@@ -116,7 +116,7 @@ export class AiRawProviders extends AiBase {
 							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						} satisfies AiRequestMetadataDbInfo),
-						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
+						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
 						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
 						serverInfo: JSON.stringify({
@@ -186,7 +186,7 @@ export class AiRawProviders extends AiBase {
 							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						} satisfies AiRequestMetadataDbInfo),
-						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
+						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
 						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
 						serverInfo: JSON.stringify({
@@ -286,7 +286,7 @@ export class AiRawProviders extends AiBase {
 															'CF-Access-Client-Secret': this.config.providers.custom.clientSecret,
 														}),
 													'X-Dataspace-Id': (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-													'X-Executor': JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
+													'X-Executor': JSON.stringify(args.executor),
 													// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
 													'X-Idempotency-Id': args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
 													// Request to skip or custom cache duration (no guarantee that upstream server will respect it)
@@ -366,7 +366,7 @@ export class AiRawProviders extends AiBase {
 							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						} satisfies AiRequestMetadataDbInfo),
-						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
+						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
 						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
 						serverInfo: JSON.stringify({
@@ -429,7 +429,7 @@ export class AiRawProviders extends AiBase {
 							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						} satisfies AiRequestMetadataDbInfo),
-						executor: JSON.stringify(args.executor satisfies Exclude<AiRequestMetadata['executor'], string>),
+						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
 						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
 						serverInfo: JSON.stringify({
