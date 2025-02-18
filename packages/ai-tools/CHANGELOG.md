@@ -1,5 +1,23 @@
 # @chainfuse/ai-tools
 
+## 0.5.0
+
+### Minor Changes
+
+- [`9f41969`](https://github.com/ChainFuse/packages/commit/9f41969eae6b720d9ebaa6add671e1ac3e677230) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Add in message id to metadata
+
+### Patch Changes
+
+- [#275](https://github.com/ChainFuse/packages/pull/275) [`3da0559`](https://github.com/ChainFuse/packages/commit/3da0559a767e6ec43252201721cea781dcbbe46d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/cache
+
+- [#273](https://github.com/ChainFuse/packages/pull/273) [`3ab78b4`](https://github.com/ChainFuse/packages/commit/3ab78b4e93a23a4d7c5648d52f0b01b74f1329b5) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump openai
+
+- [`2117271`](https://github.com/ChainFuse/packages/commit/2117271ac65928ee49ea6b44e49af15ba55c278c) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix metadata types
+
+- Updated dependencies [[`3da0559`](https://github.com/ChainFuse/packages/commit/3da0559a767e6ec43252201721cea781dcbbe46d), [`3ab78b4`](https://github.com/ChainFuse/packages/commit/3ab78b4e93a23a4d7c5648d52f0b01b74f1329b5)]:
+    - @chainfuse/helpers@1.1.6
+    - @chainfuse/types@1.6.6
+
 ## 0.4.0
 
 ### Minor Changes
