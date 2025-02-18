@@ -1,5 +1,13 @@
 # @chainfuse/helpers
 
+## 1.1.6
+
+### Patch Changes
+
+- [#275](https://github.com/ChainFuse/packages/pull/275) [`3da0559`](https://github.com/ChainFuse/packages/commit/3da0559a767e6ec43252201721cea781dcbbe46d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/cache
+
+- [#273](https://github.com/ChainFuse/packages/pull/273) [`3ab78b4`](https://github.com/ChainFuse/packages/commit/3ab78b4e93a23a4d7c5648d52f0b01b74f1329b5) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump openai
+
 ## 1.1.5
 
 ### Patch Changes
