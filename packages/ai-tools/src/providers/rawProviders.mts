@@ -5,7 +5,7 @@ import haversine from 'haversine-distance';
 import { z } from 'zod';
 import { AiBase } from '../base.mjs';
 import type { Server } from '../serverSelector/types.mjs';
-import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId, AiRequestMetadata, AiRequestMetadataDbInfo, AiRequestMetadataStringified, AiRequestMetadataTiming } from '../types.mjs';
+import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified, AiRequestMetadataTiming } from '../types.mjs';
 
 export class AiRawProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
@@ -46,13 +46,13 @@ export class AiRawProviders extends AiBase {
 						dbInfo: JSON.stringify({
 							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						} satisfies AiRequestMetadataDbInfo),
+						} satisfies AiRequestMetadata['dbInfo']),
 						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 						serverInfo: JSON.stringify({
 							name: 'openai',
-						} satisfies Exclude<AiRequestMetadata['serverInfo'], string>),
+						} satisfies AiRequestMetadata['serverInfo']),
 						/**
 						 * Blank at first, add after request finishes
 						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
@@ -69,7 +69,7 @@ export class AiRawProviders extends AiBase {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestIdempotencyId;
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
@@ -115,10 +115,10 @@ export class AiRawProviders extends AiBase {
 						dbInfo: JSON.stringify({
 							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						} satisfies AiRequestMetadataDbInfo),
+						} satisfies AiRequestMetadata['dbInfo']),
 						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 						serverInfo: JSON.stringify({
 							name: `azure-${server.id}`,
 							distance: haversine(
@@ -128,7 +128,7 @@ export class AiRawProviders extends AiBase {
 								},
 								server.coordinate,
 							),
-						} satisfies Exclude<AiRequestMetadata['serverInfo'], string>),
+						} satisfies AiRequestMetadata['serverInfo']),
 						/**
 						 * Blank at first, add after request finishes
 						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
@@ -144,7 +144,7 @@ export class AiRawProviders extends AiBase {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestIdempotencyId;
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
@@ -185,13 +185,13 @@ export class AiRawProviders extends AiBase {
 						dbInfo: JSON.stringify({
 							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						} satisfies AiRequestMetadataDbInfo),
+						} satisfies AiRequestMetadata['dbInfo']),
 						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 						serverInfo: JSON.stringify({
 							name: 'anthropic',
-						} satisfies Exclude<AiRequestMetadata['serverInfo'], string>),
+						} satisfies AiRequestMetadata['serverInfo']),
 						/**
 						 * Blank at first, add after request finishes
 						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
@@ -207,7 +207,7 @@ export class AiRawProviders extends AiBase {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestIdempotencyId;
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
@@ -288,7 +288,7 @@ export class AiRawProviders extends AiBase {
 													'X-Dataspace-Id': (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 													'X-Executor': JSON.stringify(args.executor),
 													// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-													'X-Idempotency-Id': args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
+													'X-Idempotency-Id': args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 													// Request to skip or custom cache duration (no guarantee that upstream server will respect it)
 													// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 													...((args.skipCache || args.cache) && { 'Cache-Control': [args.skipCache && 'no-cache', args.cache && `max-age=${typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache}`].join(', ') }),
@@ -298,7 +298,7 @@ export class AiRawProviders extends AiBase {
 													const headers = new Headers(rawInit?.headers);
 													let idempotencyId = headers.get('X-Idempotency-Id')! as AiRequestMetadata['idempotencyId'];
 													if (idempotencyId.split('-').length === 4) {
-														idempotencyId = `${idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestIdempotencyId;
+														idempotencyId = `${idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
 														headers.set('X-Idempotency-Id', idempotencyId);
 													}
 
@@ -365,13 +365,13 @@ export class AiRawProviders extends AiBase {
 						dbInfo: JSON.stringify({
 							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						} satisfies AiRequestMetadataDbInfo),
+						} satisfies AiRequestMetadata['dbInfo']),
 						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 						serverInfo: JSON.stringify({
 							name: 'googleai',
-						} satisfies Exclude<AiRequestMetadata['serverInfo'], string>),
+						} satisfies AiRequestMetadata['serverInfo']),
 						/**
 						 * Blank at first, add after request finishes
 						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
@@ -387,7 +387,7 @@ export class AiRawProviders extends AiBase {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestIdempotencyId;
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
@@ -428,13 +428,13 @@ export class AiRawProviders extends AiBase {
 						dbInfo: JSON.stringify({
 							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						} satisfies AiRequestMetadataDbInfo),
+						} satisfies AiRequestMetadata['dbInfo']),
 						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestIdempotencyId),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 						serverInfo: JSON.stringify({
 							name: 'cloudflare',
-						} satisfies Exclude<AiRequestMetadata['serverInfo'], string>),
+						} satisfies AiRequestMetadata['serverInfo']),
 						/**
 						 * Blank at first, add after request finishes
 						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
@@ -451,7 +451,7 @@ export class AiRawProviders extends AiBase {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestIdempotencyId;
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
