@@ -1,5 +1,31 @@
 # @chainfuse/ai-tools
 
+## 0.4.0
+
+### Minor Changes
+
+- [`a1f9415`](https://github.com/ChainFuse/packages/commit/a1f9415c64e6315026326f0946dd0c8fcb6435d6) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Add middleware to remove thinking from text
+
+### Patch Changes
+
+- [#269](https://github.com/ChainFuse/packages/pull/269) [`61475d0`](https://github.com/ChainFuse/packages/commit/61475d0efe01435f4379a4ddbbb3b7259a4da455) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump step-security/harden-runner
+
+- [#271](https://github.com/ChainFuse/packages/pull/271) [`bd32360`](https://github.com/ChainFuse/packages/commit/bd3236056defa74f4b2ba08ee306efe6a573f281) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#267](https://github.com/ChainFuse/packages/pull/267) [`0b95dc0`](https://github.com/ChainFuse/packages/commit/0b95dc0b16574cb20d10ea3f097b7a60ae74fba8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump prettier, typescript-eslint
+
+- [#270](https://github.com/ChainFuse/packages/pull/270) [`31cfe0a`](https://github.com/ChainFuse/packages/commit/31cfe0a96e358a86d423ec7d6b775cc041685818) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @changesets/changelog-github, @changesets/cli
+
+- [#263](https://github.com/ChainFuse/packages/pull/263) [`182b427`](https://github.com/ChainFuse/packages/commit/182b427889cf177e2e5656cd4cbda868d11bfaff) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @swc/core
+
+- [#268](https://github.com/ChainFuse/packages/pull/268) [`1ce3757`](https://github.com/ChainFuse/packages/commit/1ce3757d74dea55f76bd75224514faeffc778b4e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#264](https://github.com/ChainFuse/packages/pull/264) [`83e8efd`](https://github.com/ChainFuse/packages/commit/83e8efd629d2aa735f62d7768312ace920e7ebd1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+
+- Updated dependencies [[`61475d0`](https://github.com/ChainFuse/packages/commit/61475d0efe01435f4379a4ddbbb3b7259a4da455), [`bd32360`](https://github.com/ChainFuse/packages/commit/bd3236056defa74f4b2ba08ee306efe6a573f281), [`0b95dc0`](https://github.com/ChainFuse/packages/commit/0b95dc0b16574cb20d10ea3f097b7a60ae74fba8), [`31cfe0a`](https://github.com/ChainFuse/packages/commit/31cfe0a96e358a86d423ec7d6b775cc041685818), [`182b427`](https://github.com/ChainFuse/packages/commit/182b427889cf177e2e5656cd4cbda868d11bfaff), [`1ce3757`](https://github.com/ChainFuse/packages/commit/1ce3757d74dea55f76bd75224514faeffc778b4e), [`83e8efd`](https://github.com/ChainFuse/packages/commit/83e8efd629d2aa735f62d7768312ace920e7ebd1)]:
+    - @chainfuse/helpers@1.1.5
+    - @chainfuse/types@1.6.5
+
 ## 0.3.4
 
 ### Patch Changes
