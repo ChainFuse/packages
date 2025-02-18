@@ -75,9 +75,8 @@ updates:
           - '@cloudflare/workers-types'
       typescript-core:
         patterns:
-          - 'ts-node'
           - 'typescript'
-          - '@swc/*'
+          - 'tsx'
       typescript-types:
         patterns:
           - '@types/*'
