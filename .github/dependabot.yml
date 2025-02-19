@@ -9,25 +9,16 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
-      day: 'tuesday'
-      time: '12:00'
-      timezone: 'America/Los_Angeles'
     open-pull-requests-limit: 999
   - package-ecosystem: 'docker'
     directory: '/'
     schedule:
       interval: 'weekly'
-      day: 'tuesday'
-      time: '12:00'
-      timezone: 'America/Los_Angeles'
     open-pull-requests-limit: 999
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
-      day: 'tuesday'
-      time: '12:00'
-      timezone: 'America/Los_Angeles'
     open-pull-requests-limit: 999
     groups:
       artifacts:
@@ -48,9 +39,6 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
-      day: 'tuesday'
-      time: '12:00'
-      timezone: 'America/Los_Angeles'
     versioning-strategy: increase
     open-pull-requests-limit: 999
     ignore:
