@@ -1,5 +1,15 @@
 # @chainfuse/helpers
 
+## 1.1.7
+
+### Patch Changes
+
+- [#276](https://github.com/ChainFuse/packages/pull/276) [`fc32524`](https://github.com/ChainFuse/packages/commit/fc32524bc99fedd95a8298429637d72112423a19) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai
+
+- [#278](https://github.com/ChainFuse/packages/pull/278) [`80d6a4f`](https://github.com/ChainFuse/packages/commit/80d6a4f80fa2637695f46bf10971703fad849d25) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump lerna
+
+- [#277](https://github.com/ChainFuse/packages/pull/277) [`c2fffd1`](https://github.com/ChainFuse/packages/commit/c2fffd17845b03de99892367f43b7631dadd280e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump tsx
+
 ## 1.1.6
 
 ### Patch Changes
