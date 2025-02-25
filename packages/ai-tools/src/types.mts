@@ -55,10 +55,8 @@ export type AiConfigWorkersai = AiConfigWorkersaiRest | AiConfigWorkersaiBinding
 export interface AiConfigWorkersaiRest {
 	apiToken: string;
 }
-/**
- * @deprecated Not functional. Use REST instead
- */
-export type AiConfigWorkersaiBinding = Ai;
+// Use `extends` to avoid type errors when just a model list has been updated - only if structural changes have been made
+export type AiConfigWorkersaiBinding<T extends Ai = Ai> = T;
 
 /**
  * It's a UUID, but the last block is SHA256 of the request body

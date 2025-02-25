@@ -4,6 +4,7 @@ import { Helpers } from '@chainfuse/helpers';
 import { AiModels, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
 import { APICallError, customProvider, TypeValidationError, wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
 import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
+import type { WorkersAI } from 'workers-ai-provider';
 import { ZodError } from 'zod';
 import { AiBase } from '../base.mjs';
 import { AzureServerSelector } from '../serverSelector/azure.mjs';
@@ -202,20 +203,53 @@ export class AiCustomProviders extends AiBase {
 				fallbackProvider: await raw.restWorkersAi(args),
 			}) as OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Embeddings'>>;
 		} else {
-			throw new Error('Binding workers AI is not supported');
-
-			/*return customProvider({
+			return customProvider({
 				// @ts-expect-error override for types
 				languageModels: await enabledCloudflareLlmProviders.reduce(
 					async (accPromise, model) => {
 						const acc = await accPromise;
+						/**
+						 * Intercept and add in missing index property to be OpenAI compatible
+						 */
 						// @ts-expect-error override for types
-						acc[model] = (await raw.bindingWorkersAi(args))(model);
+						acc[model] = wrapLanguageModel({
+							model: (await raw.restWorkersAi(args))(model),
+							middleware: [
+								// Fix output generation where it's correct, but encapsulated in a code fence
+								{
+									wrapGenerate: async ({ doGenerate, model }) => {
+										const result = await doGenerate();
+
+										/**
+										 * `chunkSchema` is undocumented but always present in `model` regardless of model
+										 * Can't use `responseFormat` (in `params`) because it isn't always present because some models don't support that part of openai api spec.
+										 */
+										if ('chunkSchema' in model) {
+											const codeFenceStart = new RegExp(/^`{1,3}\w*\s*(?=[\[{])/i);
+											const codefenceEnd = new RegExp(/(?![\]}])\s*`{1,3}$/i);
+
+											return {
+												...result,
+												/**
+												 * 1. trim initially to remove any leading/trailing whitespace
+												 * 2. Remove start and end
+												 * 3. Trim again to remove any leading/trailing whitespace
+												 */
+												text: result.text?.trim().replace(codeFenceStart, '').replace(codefenceEnd, '').trim(),
+											};
+										}
+
+										return result;
+									},
+								},
+							],
+						});
 						return acc;
 					},
-					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['bindingWorkersAi']>>>),
+					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['restWorkersAi']>>>),
 				),
-			}) as CloudflareOpenAIProvider;*/
+				fallbackProvider: await new AiRawProviders(this.config).bindingWorkersAi(args),
+			}) as unknown as WorkersAI;
 		}
 	}
 
