@@ -4,13 +4,12 @@ import { Helpers } from '@chainfuse/helpers';
 import { AiModels, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
 import { APICallError, customProvider, TypeValidationError, wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
 import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
-import type { WorkersAI } from 'workers-ai-provider';
 import { ZodError } from 'zod';
 import { AiBase } from '../base.mjs';
 import { AzureServerSelector } from '../serverSelector/azure.mjs';
 import type { AiConfigWorkersai, AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId } from '../types.mjs';
 import { AiRawProviders } from './rawProviders.mjs';
-import type { AzureOpenAIProvider } from './types.mjs';
+import type { AzureOpenAIProvider, WorkersAIProvider } from './types.mjs';
 
 export class AiCustomProviders extends AiBase {
 	public oaiOpenai(args: AiRequestConfig) {
@@ -249,7 +248,7 @@ export class AiCustomProviders extends AiBase {
 					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['bindingWorkersAi']>>>),
 				),
 				fallbackProvider: await new AiRawProviders(this.config).bindingWorkersAi(args),
-			}) as unknown as WorkersAI;
+			}) as unknown as WorkersAIProvider;
 		}
 	}
 
