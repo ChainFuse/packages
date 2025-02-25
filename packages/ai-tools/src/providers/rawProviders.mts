@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { AiBase } from '../base.mjs';
 import type { Server } from '../serverSelector/types.mjs';
 import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified, AiRequestMetadataTiming } from '../types.mjs';
+import type { WorkersAIProvider } from './types.mts';
 
 export class AiRawProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
@@ -483,32 +484,33 @@ export class AiRawProviders extends AiBase {
 	}
 
 	public async bindingWorkersAi(args: AiRequestConfig) {
-		return import('workers-ai-provider').then(async ({ createWorkersAI }) =>
-			createWorkersAI({
-				binding: this.config.providers.workersAi,
-				gateway: {
-					id: this.config.environment,
-					...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
-					...(args.skipCache && { skipCache: true }),
-					metadata: {
-						dbInfo: JSON.stringify({
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
-							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						} satisfies AiRequestMetadata['dbInfo']),
-						executor: JSON.stringify(args.executor),
-						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
-						serverInfo: JSON.stringify({
-							name: 'cloudflare',
-						} satisfies AiRequestMetadata['serverInfo']),
-						/**
-						 * Blank at first, add after request finishes
-						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
-						 */
-						timing: JSON.stringify({}),
-					} satisfies AiRequestMetadataStringified,
-				} satisfies GatewayOptions,
-			}),
+		return import('workers-ai-provider').then(
+			async ({ createWorkersAI }) =>
+				createWorkersAI({
+					binding: this.config.providers.workersAi,
+					gateway: {
+						id: this.config.environment,
+						...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
+						...(args.skipCache && { skipCache: true }),
+						metadata: {
+							dbInfo: JSON.stringify({
+								messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
+								dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+							} satisfies AiRequestMetadata['dbInfo']),
+							executor: JSON.stringify(args.executor),
+							// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+							idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+							serverInfo: JSON.stringify({
+								name: 'cloudflare',
+							} satisfies AiRequestMetadata['serverInfo']),
+							/**
+							 * Blank at first, add after request finishes
+							 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
+							 */
+							timing: JSON.stringify({}),
+						} satisfies AiRequestMetadataStringified,
+					} satisfies GatewayOptions,
+				}) as WorkersAIProvider,
 		);
 	}
 }
