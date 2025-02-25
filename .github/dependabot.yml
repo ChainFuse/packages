@@ -38,6 +38,7 @@ updates:
           - 'step-security/*'
           - 'microsoft/security-devops-action'
           - 'microsoft/DevSkim-Action'
+          - 'ossf/*'
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
