@@ -1,6 +1,7 @@
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { BufferHelpers, CryptoHelpers, DnsHelpers, Helpers, NetHelpers } from '@chainfuse/helpers';
 import type { cloudflareModelPossibilities } from '@chainfuse/types';
+import type { GatewayOptions } from '@cloudflare/workers-types/experimental';
 import haversine from 'haversine-distance';
 import { z } from 'zod';
 import { AiBase } from '../base.mjs';
@@ -480,7 +481,34 @@ export class AiRawProviders extends AiBase {
 			}),
 		);
 	}
-	/*public async bindingWorkersAi(args: AiRequestConfig) {
-		return import('workers-ai-provider').then(({ createWorkersAI }) => createWorkersAI({ binding: this.config.providers.workersAi }));
-	}*/
+
+	public async bindingWorkersAi(args: AiRequestConfig) {
+		return import('workers-ai-provider').then(async ({ createWorkersAI }) =>
+			createWorkersAI({
+				binding: this.config.providers.workersAi,
+				gateway: {
+					id: this.config.environment,
+					...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
+					...(args.skipCache && { skipCache: true }),
+					metadata: {
+						dbInfo: JSON.stringify({
+							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
+							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+						} satisfies AiRequestMetadata['dbInfo']),
+						executor: JSON.stringify(args.executor),
+						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						serverInfo: JSON.stringify({
+							name: 'cloudflare',
+						} satisfies AiRequestMetadata['serverInfo']),
+						/**
+						 * Blank at first, add after request finishes
+						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
+						 */
+						timing: JSON.stringify({}),
+					} satisfies AiRequestMetadataStringified,
+				} satisfies GatewayOptions,
+			}),
+		);
+	}
 }
