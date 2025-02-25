@@ -213,7 +213,7 @@ export class AiCustomProviders extends AiBase {
 						 */
 						// @ts-expect-error override for types
 						acc[model] = wrapLanguageModel({
-							model: (await raw.restWorkersAi(args))(model),
+							model: (await raw.bindingWorkersAi(args))(model),
 							middleware: [
 								// Fix output generation where it's correct, but encapsulated in a code fence
 								{
@@ -246,7 +246,7 @@ export class AiCustomProviders extends AiBase {
 						});
 						return acc;
 					},
-					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['restWorkersAi']>>>),
+					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['bindingWorkersAi']>>>),
 				),
 				fallbackProvider: await new AiRawProviders(this.config).bindingWorkersAi(args),
 			}) as unknown as WorkersAI;
