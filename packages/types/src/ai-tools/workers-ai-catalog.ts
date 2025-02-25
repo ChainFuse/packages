@@ -12,6 +12,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 32000,
 						info: 'https://huggingface.co/qwen/qwen1.5-0.5b-chat',
 					},
 				},
@@ -23,6 +24,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 8192,
 						lora: true,
 					},
 				},
@@ -34,6 +36,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 						info: 'https://huggingface.co/Nexusflow/Starling-LM-7B-beta',
 						max_batch_prefill_tokens: 8192,
 						max_input_length: 3072,
@@ -47,6 +50,7 @@ export const workersAiCatalog = {
 					description: 'Generation over generation, Meta Llama 3 demonstrates state-of-the-art performance on a wide range of industry benchmarks and offers new capabilities, including improved reasoning.',
 					tags: [],
 					properties: {
+						context_window: 7968,
 						info: 'https://llama.meta.com',
 						terms: 'https://llama.meta.com/llama3/license/#',
 					},
@@ -58,6 +62,7 @@ export const workersAiCatalog = {
 					description: 'The Llama 3.2 instruction-tuned text only models are optimized for multilingual dialogue use cases, including agentic retrieval and summarization tasks.',
 					tags: [],
 					properties: {
+						context_window: 128000,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
@@ -69,6 +74,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 					},
 				},
 				{
@@ -79,6 +85,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 					},
 				},
 				{
@@ -89,6 +96,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 						info: 'https://ai.meta.com/llama/',
 						terms: 'https://ai.meta.com/resources/models-and-libraries/llama-downloads/',
 					},
@@ -101,6 +109,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 2824,
 						info: 'https://mistral.ai/news/announcing-mistral-7b/',
 						lora: true,
 					},
@@ -113,6 +122,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 15000,
 						lora: true,
 					},
 				},
@@ -124,6 +134,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 2048,
 						info: 'https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0',
 					},
 				},
@@ -135,6 +146,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 3072,
 						info: 'https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2',
 						lora: true,
 						max_batch_prefill_tokens: 8192,
@@ -150,6 +162,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 15000,
 					},
 				},
 				{
@@ -159,6 +172,7 @@ export const workersAiCatalog = {
 					description: 'DeepSeek-R1-Distill-Qwen-32B is a model distilled from DeepSeek-R1 based on Qwen2.5. It outperforms OpenAI-o1-mini across various benchmarks, achieving new state-of-the-art results for dense models.',
 					tags: [],
 					properties: {
+						context_window: 80000,
 						terms: 'https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE',
 					},
 				},
@@ -170,6 +184,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 						info: 'https://huggingface.co/TheBloke/DiscoLM_German_7b_v1-AWQ',
 					},
 				},
@@ -179,7 +194,9 @@ export const workersAiCatalog = {
 					name: '@cf/meta/llama-2-7b-chat-int8',
 					description: 'Quantized (int8) generative text model with 7 billion parameters from Meta',
 					tags: [],
-					properties: {},
+					properties: {
+						context_window: 8192,
+					},
 				},
 				{
 					id: '9b9c87c6-d4b7-494c-b177-87feab5904db',
@@ -188,6 +205,7 @@ export const workersAiCatalog = {
 					description: 'Llama 3.1 8B quantized to FP8 precision',
 					tags: [],
 					properties: {
+						context_window: 32000,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
 					},
 				},
@@ -199,6 +217,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 						info: 'https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-AWQ',
 					},
 				},
@@ -210,6 +229,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 20000,
 						info: 'https://huggingface.co/qwen/qwen1.5-7b-chat-awq',
 					},
 				},
@@ -220,6 +240,7 @@ export const workersAiCatalog = {
 					description: 'The Llama 3.2 instruction-tuned text only models are optimized for multilingual dialogue use cases, including agentic retrieval and summarization tasks.',
 					tags: [],
 					properties: {
+						context_window: 128000,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
@@ -231,6 +252,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 						info: 'https://huggingface.co/TheBloke/Llama-2-13B-chat-AWQ',
 					},
 				},
@@ -242,6 +264,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 						terms: 'https://huggingface.co/TheBloke/deepseek-coder-6.7B-base-AWQ',
 					},
 				},
@@ -253,6 +276,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 8192,
 						lora: true,
 					},
 				},
@@ -263,6 +287,7 @@ export const workersAiCatalog = {
 					description: 'Llama 3.3 70B quantized to fp8 precision, optimized to be faster.',
 					tags: [],
 					properties: {
+						context_window: 24000,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE',
 					},
 				},
@@ -274,6 +299,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 					},
 				},
 				{
@@ -284,6 +310,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 						terms: 'https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-AWQ',
 					},
 				},
@@ -295,6 +322,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 						info: 'https://huggingface.co/deepseek-ai/deepseek-math-7b-instruct',
 						terms: 'https://github.com/deepseek-ai/DeepSeek-Math/blob/main/LICENSE-MODEL',
 					},
@@ -307,6 +335,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 						info: 'https://huggingface.co/tiiuae/falcon-7b-instruct',
 					},
 				},
@@ -318,6 +347,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 24000,
 						function_calling: true,
 						info: 'https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B',
 					},
@@ -329,6 +359,7 @@ export const workersAiCatalog = {
 					description: 'The Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models. The Llama 3.1 instruction tuned text only models are optimized for multilingual dialogue use cases and outperform many of the available open source and closed chat models on common industry benchmarks.',
 					tags: [],
 					properties: {
+						context_window: 7968,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
 					},
 				},
@@ -339,6 +370,7 @@ export const workersAiCatalog = {
 					description: 'Quantized (int4) generative text model with 8 billion parameters from Meta.\n',
 					tags: [],
 					properties: {
+						context_window: 8192,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
 					},
 				},
@@ -350,6 +382,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 4096,
 						info: 'https://huggingface.co/TheBloke/zephyr-7B-beta-AWQ',
 					},
 				},
@@ -361,6 +394,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 3500,
 						lora: true,
 					},
 				},
@@ -372,6 +406,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 32000,
 						info: 'https://huggingface.co/qwen/qwen1.5-1.8b-chat',
 					},
 				},
@@ -382,6 +417,7 @@ export const workersAiCatalog = {
 					description: 'Quantized (int4) generative text model with 8 billion parameters from Meta.',
 					tags: [],
 					properties: {
+						context_window: 8192,
 						info: 'https://llama.meta.com',
 						terms: 'https://llama.meta.com/llama3/license/#',
 					},
@@ -404,6 +440,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 10000,
 						info: 'https://huggingface.co/defog/sqlcoder-7b-2',
 						terms: 'https://creativecommons.org/licenses/by-sa/4.0/deed.en',
 					},
@@ -416,6 +453,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 2048,
 						info: 'https://huggingface.co/microsoft/phi-2',
 					},
 				},
@@ -425,7 +463,9 @@ export const workersAiCatalog = {
 					name: '@hf/meta-llama/meta-llama-3-8b-instruct',
 					description: 'Generation over generation, Meta Llama 3 demonstrates state-of-the-art performance on a wide range of industry benchmarks and offers new capabilities, including improved reasoning.\t',
 					tags: [],
-					properties: {},
+					properties: {
+						context_window: 8192,
+					},
 				},
 				{
 					id: '0f002249-7d86-4698-aabf-8529ed86cefb',
@@ -435,6 +475,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 8192,
 						info: 'https://ai.google.dev/gemma/docs',
 						lora: true,
 						terms: 'https://ai.google.dev/gemma/terms',
@@ -448,6 +489,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 7500,
 						info: 'https://huggingface.co/qwen/qwen1.5-14b-chat-awq',
 					},
 				},
@@ -459,6 +501,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						context_window: 8192,
 						info: 'https://huggingface.co/openchat/openchat-3.5-0106',
 					},
 				},
