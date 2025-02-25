@@ -1,5 +1,31 @@
 # @chainfuse/ai-tools
 
+## 0.6.0
+
+### Minor Changes
+
+- [`72c576d`](https://github.com/ChainFuse/packages/commit/72c576d07834febc9e728a950c3a8ae252640a85) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Re-enable cloudflare ai through bindings
+
+### Patch Changes
+
+- [#280](https://github.com/ChainFuse/packages/pull/280) [`b3e3585`](https://github.com/ChainFuse/packages/commit/b3e358516299e4b38b84f82a5005a686b177cf31) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/upload-artifact
+
+- [#290](https://github.com/ChainFuse/packages/pull/290) [`6d86bac`](https://github.com/ChainFuse/packages/commit/6d86bacaabed28d0f34c376d9c14eae2579c9c28) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action, ossf/scorecard-action
+
+- [#288](https://github.com/ChainFuse/packages/pull/288) [`3a07bd9`](https://github.com/ChainFuse/packages/commit/3a07bd9bc7544c0e5be075b3b26d25cdfce8f5ed) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, workers-ai-provider, openai
+
+- [#285](https://github.com/ChainFuse/packages/pull/285) [`d70f505`](https://github.com/ChainFuse/packages/commit/d70f50554b631f248d73fffd7bdb73caeae1233d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump @demosjarco/prettier-config, @eslint/js, @types/eslint\_\_js, eslint, prettier, typescript-eslint
+
+- [#286](https://github.com/ChainFuse/packages/pull/286) [`565ef61`](https://github.com/ChainFuse/packages/commit/565ef612279714f95e1d1567c0998a4eb8ec57e6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
+
+- [#284](https://github.com/ChainFuse/packages/pull/284) [`3b77cce`](https://github.com/ChainFuse/packages/commit/3b77cce195dcbc3635d155eb2ce93a5839b257f0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#287](https://github.com/ChainFuse/packages/pull/287) [`7cfef20`](https://github.com/ChainFuse/packages/commit/7cfef20a84359fde920208d4a22e389304f2d9ca) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump uuid
+
+- Updated dependencies [[`b3e3585`](https://github.com/ChainFuse/packages/commit/b3e358516299e4b38b84f82a5005a686b177cf31), [`6d86bac`](https://github.com/ChainFuse/packages/commit/6d86bacaabed28d0f34c376d9c14eae2579c9c28), [`3a07bd9`](https://github.com/ChainFuse/packages/commit/3a07bd9bc7544c0e5be075b3b26d25cdfce8f5ed), [`d70f505`](https://github.com/ChainFuse/packages/commit/d70f50554b631f248d73fffd7bdb73caeae1233d), [`565ef61`](https://github.com/ChainFuse/packages/commit/565ef612279714f95e1d1567c0998a4eb8ec57e6), [`3b77cce`](https://github.com/ChainFuse/packages/commit/3b77cce195dcbc3635d155eb2ce93a5839b257f0), [`7cfef20`](https://github.com/ChainFuse/packages/commit/7cfef20a84359fde920208d4a22e389304f2d9ca)]:
+    - @chainfuse/helpers@1.1.8
+    - @chainfuse/types@1.6.8
+
 ## 0.5.1
 
 ### Patch Changes
