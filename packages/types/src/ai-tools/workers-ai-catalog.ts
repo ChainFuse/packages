@@ -89,6 +89,14 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: 'cc80437b-9a8d-4f1a-9c77-9aaf0d226922',
+					source: 1,
+					name: '@cf/meta/llama-guard-3-8b',
+					description: 'Llama Guard 3 is a Llama-3.1-8B pretrained model, fine-tuned for content safety classification. Similar to previous versions, it can be used to classify content in both LLM inputs (prompt classification) and in LLM responses (response classification). It acts as an LLM – it generates text in its output that indicates whether a given prompt or response is safe or unsafe, and if unsafe, it also lists the content categories violated.',
+					tags: [],
+					properties: {},
+				},
+				{
 					id: 'ca54bcd6-0d98-4739-9b3b-5c8b4402193d',
 					source: 1,
 					name: '@cf/meta/llama-2-7b-chat-fp16',
