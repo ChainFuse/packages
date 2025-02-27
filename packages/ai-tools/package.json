@@ -48,7 +48,7 @@
 	},
 	"prettier": "@demosjarco/prettier-config",
 	"dependencies": {
-		"@ai-sdk/anthropic": "^1.1.10",
+		"@ai-sdk/anthropic": "^1.1.11",
 		"@ai-sdk/azure": "^1.1.14",
 		"@ai-sdk/google": "^1.1.17",
 		"@ai-sdk/openai": "^1.0.5",
