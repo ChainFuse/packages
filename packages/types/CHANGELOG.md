@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 1.6.9
+
+### Patch Changes
+
+- [#292](https://github.com/ChainFuse/packages/pull/292) [`8e00e50`](https://github.com/ChainFuse/packages/commit/8e00e504333a0c6d8dd52f2e56de80a8fe402b37) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/download-artifact
+
+- [#291](https://github.com/ChainFuse/packages/pull/291) [`46ea371`](https://github.com/ChainFuse/packages/commit/46ea3717b58be79fe519fe89140ec9371936249f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic
+
 ## 1.6.8
 
 ### Patch Changes
