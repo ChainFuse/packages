@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 0.6.2
+
+### Patch Changes
+
+- [#295](https://github.com/ChainFuse/packages/pull/295) [`4a536ee`](https://github.com/ChainFuse/packages/commit/4a536ee767a4e3eec9324ce65d36c22612e5198c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/cache
+
+- Updated dependencies [[`4a536ee`](https://github.com/ChainFuse/packages/commit/4a536ee767a4e3eec9324ce65d36c22612e5198c), [`f4ed8d9`](https://github.com/ChainFuse/packages/commit/f4ed8d97c0d64badee5b00b85917fb964664da36)]:
+    - @chainfuse/helpers@1.1.10
+    - @chainfuse/types@1.7.0
+
 ## 0.6.1
 
 ### Patch Changes
