@@ -248,7 +248,7 @@ export const workersAiCatalog = {
 					description: 'The Llama 3.2 instruction-tuned text only models are optimized for multilingual dialogue use cases, including agentic retrieval and summarization tasks.',
 					tags: [],
 					properties: {
-						context_window: 128000,
+						context_window: 60000,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
