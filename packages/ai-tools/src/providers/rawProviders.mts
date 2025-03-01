@@ -14,20 +14,22 @@ export class AiRawProviders extends AiBase {
 	private readonly cacheTtl = 2628288;
 
 	private async updateGatewayLog(response: Response, metadataHeader: AiRequestMetadata, startRoundTrip: ReturnType<typeof performance.now>, modelTime?: number) {
-		const updateMetadata = NetHelpers.cfApi(this.config.gateway.apiToken).aiGateway.logs.edit(this.config.environment, response.headers.get('cf-aig-log-id')!, {
-			account_id: this.config.gateway.accountId,
-			metadata: {
-				...Object.entries(metadataHeader).reduce((acc, [key, value]) => {
-					acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
-					return acc;
-				}, {} as AiRequestMetadataStringified),
-				timing: JSON.stringify({
-					fromCache: response.headers.get('cf-aig-cache-status')?.toLowerCase() === 'hit',
-					totalRoundtripTime: performance.now() - startRoundTrip,
-					modelTime,
-				} satisfies AiRequestMetadataTiming),
-			} satisfies AiRequestMetadataStringified,
-		});
+		const updateMetadata = NetHelpers.cfApi(this.config.gateway.apiToken).then((cf) =>
+			cf.aiGateway.logs.edit(this.config.environment, response.headers.get('cf-aig-log-id')!, {
+				account_id: this.config.gateway.accountId,
+				metadata: {
+					...Object.entries(metadataHeader).reduce((acc, [key, value]) => {
+						acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
+						return acc;
+					}, {} as AiRequestMetadataStringified),
+					timing: JSON.stringify({
+						fromCache: response.headers.get('cf-aig-cache-status')?.toLowerCase() === 'hit',
+						totalRoundtripTime: performance.now() - startRoundTrip,
+						modelTime,
+					} satisfies AiRequestMetadataTiming),
+				} satisfies AiRequestMetadataStringified,
+			}),
+		);
 
 		if (this.config.backgroundContext) {
 			this.config.backgroundContext.waitUntil(updateMetadata);
