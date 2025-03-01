@@ -1,5 +1,14 @@
 # @chainfuse/ai-tools
 
+## 0.6.3
+
+### Patch Changes
+
+- [`898253a`](https://github.com/ChainFuse/packages/commit/898253a2e0669daf046fa6ccd504b07f931d69ed) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Adjust to Dynamic import of `cloudflare`
+
+- Updated dependencies [[`09bc9ed`](https://github.com/ChainFuse/packages/commit/09bc9edb022b02a8c978f13a9351bdcc5c9c60d0)]:
+    - @chainfuse/helpers@2.0.0
+
 ## 0.6.2
 
 ### Patch Changes

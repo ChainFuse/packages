@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 2.0.0
+
+### Major Changes
+
+- [`09bc9ed`](https://github.com/ChainFuse/packages/commit/09bc9edb022b02a8c978f13a9351bdcc5c9c60d0) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Dynamic import `cloudflare` typescript to reduce size
+
 ## 1.1.10
 
 ### Patch Changes
