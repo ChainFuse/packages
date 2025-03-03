@@ -22,7 +22,7 @@ export class NetHelpers {
 		return originalHeaders;
 	}
 
-	public static cfApi(apiKey: string, cacheTtl?: number, logger: CustomLoging = false) {
+	public static cfApi(apiKey: string, cacheStorageRef = caches, cacheTtl?: number, logger: CustomLoging = false) {
 		return import('cloudflare').then(
 			({ Cloudflare }) =>
 				new Cloudflare({
@@ -44,9 +44,9 @@ export class NetHelpers {
 								logger(`CF Fetch request ${cacheKey.url} ${JSON.stringify(this.initBodyTrimmer({ ...init, headers: Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) }), null, '\t')}`);
 							}
 
-							if (cacheTtl) {
-								const cfCacheRef: Promise<Cache> | undefined = caches?.open('cfApi');
-								// eslint-disable-next-line @typescript-eslint/no-misused-promises
+							if (cacheStorageRef && cacheTtl) {
+								const cfCacheRef = cacheStorageRef?.open('cfApi') as Promise<Cache> | undefined;
+
 								if (cfCacheRef) {
 									await cfCacheRef
 										.then((cfCache) =>
