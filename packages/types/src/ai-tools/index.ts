@@ -105,6 +105,6 @@ export const default_mc_summary: LanguageModelValues = AiModels.LanguageModels.C
 export const default_mc_extraction: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
 export const default_mc_tagging: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
 export const default_mc_sentiment: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
-export const default_mc_safety: LanguageModelValues = AiModels.LanguageModels.Cloudflare['@cf/meta/llama-guard-3-8b'];
+export const default_mc_safety: LanguageModelValues = AiModels.LanguageModels.Cloudflare['@hf/thebloke/llamaguard-7b-awq'];
 export const default_mc_image: ImageModelValues = AiModels.ImageModels.Cloudflare['@cf/stabilityai/stable-diffusion-xl-base-1.0'];
 export const default_mc_embedding: TextEmbeddingModelValues = AiModels.TextEmbeddingModels.Cloudflare['@cf/baai/bge-large-en-v1.5'];
