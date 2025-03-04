@@ -1,5 +1,23 @@
 # @chainfuse/helpers
 
+## 2.0.0
+
+### Major Changes
+
+- [`09bc9ed`](https://github.com/ChainFuse/packages/commit/09bc9edb022b02a8c978f13a9351bdcc5c9c60d0) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Dynamic import `cloudflare` typescript to reduce size
+
+### Minor Changes
+
+- [`2079019`](https://github.com/ChainFuse/packages/commit/2079019c765cea300190f4132ac271d600460dde) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): In `NetHelpers` `cfApi`, Allow passing in cache storage ref
+
+### Patch Changes
+
+- [#300](https://github.com/ChainFuse/packages/pull/300) [`9a3d769`](https://github.com/ChainFuse/packages/commit/9a3d7693aec9c25bcab51e1c4d39a239db71ea86) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump prettier, typescript-eslint
+
+- [#301](https://github.com/ChainFuse/packages/pull/301) [`46a7ffa`](https://github.com/ChainFuse/packages/commit/46a7ffacce077e06b72de94657dc059ec8242fd8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump lerna
+
+- [#302](https://github.com/ChainFuse/packages/pull/302) [`5278600`](https://github.com/ChainFuse/packages/commit/527860064ec47c01008841a08c4f8f5c2c491bc9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 1.1.10
 
 ### Patch Changes

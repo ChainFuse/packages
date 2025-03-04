@@ -1,5 +1,17 @@
 # @chainfuse/types
 
+## 1.7.1
+
+### Patch Changes
+
+- [`85bd698`](https://github.com/ChainFuse/packages/commit/85bd6985dff9bc29e87bc32183c68ab27ef1ee83) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Revert safety default to llama guard 1
+
+- [#300](https://github.com/ChainFuse/packages/pull/300) [`9a3d769`](https://github.com/ChainFuse/packages/commit/9a3d7693aec9c25bcab51e1c4d39a239db71ea86) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump prettier, typescript-eslint
+
+- [#301](https://github.com/ChainFuse/packages/pull/301) [`46a7ffa`](https://github.com/ChainFuse/packages/commit/46a7ffacce077e06b72de94657dc059ec8242fd8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump lerna
+
+- [#302](https://github.com/ChainFuse/packages/pull/302) [`5278600`](https://github.com/ChainFuse/packages/commit/527860064ec47c01008841a08c4f8f5c2c491bc9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 1.7.0
 
 ### Minor Changes
