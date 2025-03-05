@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 2.0.1
+
+### Patch Changes
+
+- [`6018a65`](https://github.com/ChainFuse/packages/commit/6018a65edc5d6000051461a64c14592508388e3d) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Fix `caches` in NetHelpers
+
 ## 2.0.0
 
 ### Major Changes
