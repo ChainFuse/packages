@@ -22,7 +22,7 @@ export class NetHelpers {
 		return originalHeaders;
 	}
 
-	public static cfApi(apiKey: string, cacheStorageRef = caches, cacheTtl?: number, logger: CustomLoging = false) {
+	public static cfApi<C extends CacheStorage>(apiKey: string, cacheStorageRef?: C, cacheTtl?: number, logger: CustomLoging = false) {
 		return import('cloudflare').then(
 			({ Cloudflare }) =>
 				new Cloudflare({
@@ -44,8 +44,8 @@ export class NetHelpers {
 								logger(`CF Fetch request ${cacheKey.url} ${JSON.stringify(this.initBodyTrimmer({ ...init, headers: Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) }), null, '\t')}`);
 							}
 
-							if (cacheStorageRef && cacheTtl) {
-								const cfCacheRef = cacheStorageRef?.open('cfApi') as Promise<Cache> | undefined;
+							if (cacheStorageRef || cacheTtl) {
+								const cfCacheRef = (cacheStorageRef ?? caches)?.open('cfApi') as Promise<Cache> | undefined;
 
 								if (cfCacheRef) {
 									await cfCacheRef
