@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 2.0.2
+
+### Patch Changes
+
+- [`af722b0`](https://github.com/ChainFuse/packages/commit/af722b0eaa76df772c87df65c4647101740c5c46) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Fix `isLocal` return type
+
 ## 2.0.1
 
 ### Patch Changes
