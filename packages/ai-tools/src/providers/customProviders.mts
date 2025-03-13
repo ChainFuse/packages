@@ -261,9 +261,10 @@ export class AiCustomProviders extends AiBase {
 
 		return customProvider({
 			languageModels: {
-				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_beta_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_beta_search.split(':')[1] as Parameters<typeof fallbackProvider>[0], { useSearchGrounding: true }),
+				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_lite_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_lite_search.split(':')[1] as Parameters<typeof fallbackProvider>[0], { useSearchGrounding: true }),
 				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_search.split(':')[1] as Parameters<typeof fallbackProvider>[0], { useSearchGrounding: true }),
 				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_pro_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_pro_search.split(':')[1] as Parameters<typeof fallbackProvider>[0], { useSearchGrounding: true }),
+				[AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_think_search.split(':').slice(1).join(':')]: fallbackProvider(AiModels.LanguageModels.GoogleGenerativeAi.gemini_flash_think_search.split(':')[1] as Parameters<typeof fallbackProvider>[0], { useSearchGrounding: true }),
 			},
 			fallbackProvider,
 		}) as GoogleGenerativeAIProvider;

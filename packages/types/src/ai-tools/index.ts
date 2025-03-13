@@ -39,12 +39,14 @@ export namespace AiModels {
 		export const CloudflareFunctions = Object.freeze(Object.fromEntries(enabledCloudflareLlmFunctionProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareFunctionModelsEnum);
 
 		export enum GoogleGenerativeAi {
-			gemini_flash_beta = 'google.generative-ai:gemini-2.0-flash-exp',
-			gemini_flash_beta_search = 'google.generative-ai:gemini-2.0-flash-exp:search',
-			gemini_flash = 'google.generative-ai:gemini-1.5-flash',
-			gemini_flash_search = 'google.generative-ai:gemini-1.5-flash:search',
-			gemini_pro = 'google.generative-ai:gemini-1.5-pro',
-			gemini_pro_search = 'google.generative-ai:gemini-1.5-pro:search',
+			gemini_flash_lite = 'google.generative-ai:gemini-2.0-flash-lite',
+			gemini_flash_lite_search = 'google.generative-ai:gemini-2.0-flash-lite:search',
+			gemini_flash = 'google.generative-ai:gemini-2.0-flash',
+			gemini_flash_search = 'google.generative-ai:gemini-2.0-flash:search',
+			gemini_pro = 'google.generative-ai:gemini-2.0-pro-exp',
+			gemini_pro_search = 'google.generative-ai:gemini-2.0-pro-exp:search',
+			gemini_flash_think = 'google.generative-ai:gemini-2.0-flash-thinking-exp',
+			gemini_flash_think_search = 'google.generative-ai:gemini-2.0-flash-thinking-exp:search',
 		}
 
 		export enum OpenAi {
