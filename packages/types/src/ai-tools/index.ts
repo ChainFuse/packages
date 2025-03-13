@@ -101,9 +101,9 @@ export type ImageModelValues = EnumOrEnumLike<(typeof AiModels.ImageModels)[keyo
 export type TextEmbeddingModelValues = EnumOrEnumLike<(typeof AiModels.TextEmbeddingModels)[keyof typeof AiModels.TextEmbeddingModels]>;
 
 export const default_mc_generic: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
-export const default_mc_summary: LanguageModelValues = AiModels.LanguageModels.Cloudflare['@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
+export const default_mc_summary: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o;
 export const default_mc_extraction: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
-export const default_mc_tagging: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
+export const default_mc_tagging: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o;
 export const default_mc_sentiment: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
 export const default_mc_safety: LanguageModelValues = AiModels.LanguageModels.Cloudflare['@hf/thebloke/llamaguard-7b-awq'];
 export const default_mc_image: ImageModelValues = AiModels.ImageModels.Cloudflare['@cf/stabilityai/stable-diffusion-xl-base-1.0'];
