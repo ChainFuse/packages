@@ -1,5 +1,23 @@
 # @chainfuse/helpers
 
+## 2.0.2
+
+### Patch Changes
+
+- [#307](https://github.com/ChainFuse/packages/pull/307) [`21b08ee`](https://github.com/ChainFuse/packages/commit/21b08ee34f24475cceb2d620d33360d2257db42e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump changesets/action
+
+- [#306](https://github.com/ChainFuse/packages/pull/306) [`4016ed0`](https://github.com/ChainFuse/packages/commit/4016ed034e8ea5ff6fe6cb0cd3dfa5a49835d6db) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
+- [#308](https://github.com/ChainFuse/packages/pull/308) [`cfdf0c2`](https://github.com/ChainFuse/packages/commit/cfdf0c245439acb9cf443f8ce0af5ca767253765) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, workers-ai-provider, openai
+
+- [#310](https://github.com/ChainFuse/packages/pull/310) [`c9de763`](https://github.com/ChainFuse/packages/commit/c9de7633604320c1df62a70344b97004802e75e9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+- [#311](https://github.com/ChainFuse/packages/pull/311) [`e683d2f`](https://github.com/ChainFuse/packages/commit/e683d2f4d6434f07f5386cf820975ed5fb92fd5d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(): bump @babel/runtime, axios
+
+- [#309](https://github.com/ChainFuse/packages/pull/309) [`4283e0c`](https://github.com/ChainFuse/packages/commit/4283e0c73f6ccab90dada493a13eaa4a94a2be96) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [`af722b0`](https://github.com/ChainFuse/packages/commit/af722b0eaa76df772c87df65c4647101740c5c46) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Fix `isLocal` return type
+
 ## 2.0.1
 
 ### Patch Changes
