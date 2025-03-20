@@ -75,10 +75,10 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						await this.updateGatewayLog(response, metadataHeader, startRoundTrip, response.headers.has('openai-processing-ms') ? parseInt(response.headers.get('openai-processing-ms')!) : undefined);
 
@@ -143,10 +143,10 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						await this.updateGatewayLog(response, metadataHeader, startRoundTrip, response.headers.has('x-envoy-upstream-service-time') ? parseInt(response.headers.get('x-envoy-upstream-service-time')!) : undefined);
 
@@ -199,10 +199,10 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
 
@@ -290,10 +290,10 @@ export class AiRawProviders extends AiBase {
 														headers.set('X-Idempotency-Id', idempotencyId);
 													}
 
-													if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+													if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 													return fetch(input, { ...rawInit, headers }).then(async (response) => {
-														if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+														if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 														// Inject it to have it available for retries
 														const mutableHeaders = new Headers(response.headers);
@@ -372,10 +372,10 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
 
@@ -429,10 +429,10 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? this.config.environment !== 'production') console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
 
