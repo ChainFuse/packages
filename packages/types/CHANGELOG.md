@@ -1,5 +1,31 @@
 # @chainfuse/types
 
+## 1.7.3
+
+### Patch Changes
+
+- [#314](https://github.com/ChainFuse/packages/pull/314) [`9e661a0`](https://github.com/ChainFuse/packages/commit/9e661a09be688afd61d35242c440f9e9f272628a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/setup-node
+
+- [#320](https://github.com/ChainFuse/packages/pull/320) [`fc4d74b`](https://github.com/ChainFuse/packages/commit/fc4d74b878a77f7918cff7c48af12b5af4bc52d8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/upload-artifact
+
+- [#312](https://github.com/ChainFuse/packages/pull/312) [`c490815`](https://github.com/ChainFuse/packages/commit/c49081531cae4ce6ff05209337bcb24f93497153) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/download-artifact
+
+- [#321](https://github.com/ChainFuse/packages/pull/321) [`9d4c1c9`](https://github.com/ChainFuse/packages/commit/9d4c1c9cadea1304f9378afb580af2548445e26e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/cache
+
+- [#313](https://github.com/ChainFuse/packages/pull/313) [`7ace41a`](https://github.com/ChainFuse/packages/commit/7ace41ab87fa63087fcf27990ce47c6e07db917b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
+- [#322](https://github.com/ChainFuse/packages/pull/322) [`4a32430`](https://github.com/ChainFuse/packages/commit/4a32430e4911568bbb2f8e3a01b9a527dfe31e80) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#315](https://github.com/ChainFuse/packages/pull/315) [`7086c46`](https://github.com/ChainFuse/packages/commit/7086c465208e23c9ebbea9c2d39357a267aa7ce3) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, workers-ai-provider, openai
+
+- [#316](https://github.com/ChainFuse/packages/pull/316) [`be620a6`](https://github.com/ChainFuse/packages/commit/be620a6c4894537462a1445962597c1feb12e2db) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump cloudflare
+
+- [#323](https://github.com/ChainFuse/packages/pull/323) [`7a6acf8`](https://github.com/ChainFuse/packages/commit/7a6acf8c2d715250bb93a5d0c1ca8e4a4a939f85) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#317](https://github.com/ChainFuse/packages/pull/317) [`ca7ff7a`](https://github.com/ChainFuse/packages/commit/ca7ff7afb496935838bbf6fef97561fbe52da80b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#319](https://github.com/ChainFuse/packages/pull/319) [`a989318`](https://github.com/ChainFuse/packages/commit/a989318307a29cf36114aad7fecd7db18e36c4c7) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
 ## 1.7.2
 
 ### Patch Changes
