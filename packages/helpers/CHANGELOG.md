@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 2.1.0
+
+### Minor Changes
+
+- [`e352c57`](https://github.com/ChainFuse/packages/commit/e352c579680d2a8d5fc8e33d0d51d3df0f65b4ae) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add `bigint` conversions
+
 ## 2.0.3
 
 ### Patch Changes
