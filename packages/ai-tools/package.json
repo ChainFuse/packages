@@ -24,7 +24,7 @@
 	"scripts": {
 		"fmt": "prettier --check .",
 		"fmt:fix": "prettier --write .",
-		"lint": "eslint .",
+		"lint": "eslint src",
 		"lint:fix": "npm run lint -- --fix",
 		"clean": "npx -y rimraf@latest ./dist ./.tsbuildinfo",
 		"build": "tsc",
