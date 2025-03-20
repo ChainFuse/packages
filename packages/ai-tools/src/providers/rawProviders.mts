@@ -19,7 +19,7 @@ export class AiRawProviders extends AiBase {
 				account_id: this.config.gateway.accountId,
 				metadata: {
 					...Object.entries({
-						...metadataHeader,
+						...(metadataHeader as unknown as AiRequestMetadata),
 						serverInfo: {
 							...(JSON.parse(metadataHeader.serverInfo) as AiRequestMetadata['serverInfo']),
 							timing: {
