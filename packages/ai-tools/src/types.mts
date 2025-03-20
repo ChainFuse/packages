@@ -12,7 +12,7 @@ export interface AiConfig {
 		country?: IncomingRequestCfProperties['country'];
 		continent?: IncomingRequestCfProperties['continent'];
 	};
-	environment: 'production' | 'preview';
+	environment: 'internal' | 'production-passive' | 'preview-passive' | 'production-active' | 'preview-active';
 	providers: AiConfigProviders;
 	backgroundContext?: ExecutionContext;
 }
