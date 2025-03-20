@@ -4,7 +4,7 @@ import type { PrivacyRegion } from './base.mjs';
 export interface Server {
 	id: string;
 	coordinate: Coordinate;
-	region?: PrivacyRegion;
+	privacyRegion?: PrivacyRegion;
 	languageModelAvailability: AzureChatModels[] | string[];
 	imageModelAvailability: AzureImageModels[] | string[];
 	textEmbeddingModelAvailability: AzureEmbeddingModels[] | string[];

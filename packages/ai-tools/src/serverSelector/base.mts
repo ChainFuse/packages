@@ -118,7 +118,7 @@ export abstract class ServerSelector extends AiBase {
 
 		if (featureFilteredServers.length > 0) {
 			// Skip over servers not in the save privacy region except if undefined, then you can use any
-			const privacyRegionFilteredServers = featureFilteredServers.filter((server) => privacyRegion.length === 0 || (server.region && privacyRegion.includes(server.region)));
+			const privacyRegionFilteredServers = featureFilteredServers.filter((server) => privacyRegion.length === 0 || (server.privacyRegion && privacyRegion.includes(server.privacyRegion)));
 
 			if (privacyRegionFilteredServers.length > 0) {
 				// Calculate distance for each server and store it as a tuple [Server, distance]
