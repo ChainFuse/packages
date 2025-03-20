@@ -98,10 +98,15 @@ export interface AiRequestConfig {
 	skipCache?: boolean;
 }
 
-export interface AiRequestMetadataDbInfo {
-	dataspaceId: AiRequestConfig['dataspaceId'];
-	messageId: AiRequestConfig['messageId'];
+export interface AiRequestMetadataTiming {
+	modelTime?: number;
+	fromCache: boolean;
+	totalRoundtripTime: number;
+	/**
+	 * @todo @demosjarco add more timing info
+	 */
 }
+
 export interface AiRequestMetadataServerInfo {
 	name: 'anthropic' | 'cloudflare' | 'googleai' | 'openai';
 }
@@ -112,20 +117,13 @@ export interface AiRequestMetadataServerInfoWithLocation {
 	 */
 	distance: ReturnType<typeof haversine>;
 }
-export interface AiRequestMetadataTiming {
-	modelTime?: number;
-	fromCache: boolean;
-	totalRoundtripTime: number;
-	/**
-	 * @todo @demosjarco add more timing info
-	 */
-}
+
 export interface AiRequestMetadata {
-	dbInfo: AiRequestMetadataDbInfo;
-	serverInfo: AiRequestMetadataServerInfo | AiRequestMetadataServerInfoWithLocation;
+	dataspaceId: AiRequestConfig['dataspaceId'];
+	messageId: AiRequestConfig['messageId'];
+	serverInfo: (AiRequestMetadataServerInfo | AiRequestMetadataServerInfoWithLocation) & { timing?: AiRequestMetadataTiming };
 	idempotencyId: AiRequestIdempotencyId;
 	executor: AiRequestExecutor;
-	timing: AiRequestMetadataTiming;
 }
 export type AiRequestMetadataStringified = Record<keyof AiRequestMetadata, string>;
 
