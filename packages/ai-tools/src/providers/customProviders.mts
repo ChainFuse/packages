@@ -39,7 +39,7 @@ export class AiCustomProviders extends AiBase {
 										const compatibleServers = new AzureServerSelector(this.config).closestServers(model.modelId);
 										const lastServerIndex = compatibleServers.findIndex((s) => s.id.toLowerCase() === lastServer.toLowerCase());
 
-										if (args.logging ?? this.config.environment !== 'production') console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.red('FAIL'), compatibleServers[lastServerIndex]!.id, 'REMAINING', JSON.stringify(compatibleServers.slice(lastServerIndex + 1).map((s) => s.id)));
+										if (args.logging ?? !this.config.environment.startsWith('production')) console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.red('FAIL'), compatibleServers[lastServerIndex]!.id, 'REMAINING', JSON.stringify(compatibleServers.slice(lastServerIndex + 1).map((s) => s.id)));
 
 										// Should retry with the next server
 										const leftOverServers = compatibleServers.slice(lastServerIndex + 1);
@@ -47,13 +47,13 @@ export class AiCustomProviders extends AiBase {
 
 										for (const nextServer of leftOverServers) {
 											try {
-												if (args.logging ?? this.config.environment !== 'production') console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.blue('FALLBACK'), nextServer.id, 'REMAINING', JSON.stringify(leftOverServers.slice(leftOverServers.indexOf(nextServer) + 1).map((s) => s.id)));
+												if (args.logging ?? !this.config.environment.startsWith('production')) console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.blue('FALLBACK'), nextServer.id, 'REMAINING', JSON.stringify(leftOverServers.slice(leftOverServers.indexOf(nextServer) + 1).map((s) => s.id)));
 
 												// Must be double awaited to prevent a promise from being returned
 												return await (await raw.azOpenai({ ...args, idempotencyId }, nextServer))(model.modelId).doGenerate(params);
 											} catch (nextServerError) {
 												if (APICallError.isInstance(nextServerError)) {
-													if (args.logging ?? this.config.environment !== 'production') console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.red('FAIL'), nextServer.id, 'REMAINING', JSON.stringify(leftOverServers.slice(leftOverServers.indexOf(nextServer) + 1).map((s) => s.id)));
+													if (args.logging ?? !this.config.environment.startsWith('production')) console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.red('FAIL'), nextServer.id, 'REMAINING', JSON.stringify(leftOverServers.slice(leftOverServers.indexOf(nextServer) + 1).map((s) => s.id)));
 
 													errors.push(nextServerError);
 												} else {
