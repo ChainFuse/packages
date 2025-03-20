@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 0.8.0
+
+### Minor Changes
+
+- [`d04b418`](https://github.com/ChainFuse/packages/commit/d04b418ccbf5c39f257bf347ed9964790b2a78f1) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Change metadata fields to more searchable values
+
+### Patch Changes
+
+- [`776a704`](https://github.com/ChainFuse/packages/commit/776a70415a186af986b252a7fe10a53472c0ab75) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix type for message id
+
 ## 0.7.1
 
 ### Patch Changes
