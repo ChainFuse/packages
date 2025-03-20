@@ -100,7 +100,7 @@ export interface AiRequestConfig {
 
 export interface AiRequestMetadataDbInfo {
 	dataspaceId: AiRequestConfig['dataspaceId'];
-	messageId: AiRequestConfig['dataspaceId'];
+	messageId: AiRequestConfig['messageId'];
 }
 export interface AiRequestMetadataServerInfo {
 	name: 'anthropic' | 'cloudflare' | 'googleai' | 'openai';
