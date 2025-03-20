@@ -48,8 +48,8 @@ export class AiRawProviders extends AiBase {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dbInfo: JSON.stringify({
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 						} satisfies AiRequestMetadata['dbInfo']),
 						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
@@ -117,8 +117,8 @@ export class AiRawProviders extends AiBase {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dbInfo: JSON.stringify({
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 						} satisfies AiRequestMetadata['dbInfo']),
 						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
@@ -187,8 +187,8 @@ export class AiRawProviders extends AiBase {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dbInfo: JSON.stringify({
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 						} satisfies AiRequestMetadata['dbInfo']),
 						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
@@ -367,8 +367,8 @@ export class AiRawProviders extends AiBase {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dbInfo: JSON.stringify({
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 						} satisfies AiRequestMetadata['dbInfo']),
 						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
@@ -430,8 +430,8 @@ export class AiRawProviders extends AiBase {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dbInfo: JSON.stringify({
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 						} satisfies AiRequestMetadata['dbInfo']),
 						executor: JSON.stringify(args.executor),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
@@ -496,8 +496,8 @@ export class AiRawProviders extends AiBase {
 						...(args.skipCache && { skipCache: true }),
 						metadata: {
 							dbInfo: JSON.stringify({
-								messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 								dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+								messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							} satisfies AiRequestMetadata['dbInfo']),
 							executor: JSON.stringify(args.executor),
 							// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
