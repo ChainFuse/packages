@@ -6,27 +6,32 @@ import haversine from 'haversine-distance';
 import { z } from 'zod';
 import { AiBase } from '../base.mjs';
 import type { Server } from '../serverSelector/types.mjs';
-import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified, AiRequestMetadataTiming } from '../types.mjs';
+import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified } from '../types.mjs';
 import type { WorkersAIProvider } from './types.mts';
 
 export class AiRawProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
 	private readonly cacheTtl = 2628288;
 
-	private async updateGatewayLog(response: Response, metadataHeader: AiRequestMetadata, startRoundTrip: ReturnType<typeof performance.now>, modelTime?: number) {
+	private async updateGatewayLog(response: Response, metadataHeader: AiRequestMetadataStringified, startRoundTrip: ReturnType<typeof performance.now>, modelTime?: number) {
 		const updateMetadata = NetHelpers.cfApi(this.config.gateway.apiToken).then((cf) =>
 			cf.aiGateway.logs.edit(this.config.environment, response.headers.get('cf-aig-log-id')!, {
 				account_id: this.config.gateway.accountId,
 				metadata: {
-					...Object.entries(metadataHeader).reduce((acc, [key, value]) => {
+					...Object.entries({
+						...metadataHeader,
+						serverInfo: {
+							...(JSON.parse(metadataHeader.serverInfo) as AiRequestMetadata['serverInfo']),
+							timing: {
+								fromCache: response.headers.get('cf-aig-cache-status')?.toLowerCase() === 'hit',
+								totalRoundtripTime: performance.now() - startRoundTrip,
+								modelTime,
+							},
+						},
+					} satisfies AiRequestMetadata).reduce((acc, [key, value]) => {
 						acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
 						return acc;
 					}, {} as AiRequestMetadataStringified),
-					timing: JSON.stringify({
-						fromCache: response.headers.get('cf-aig-cache-status')?.toLowerCase() === 'hit',
-						totalRoundtripTime: performance.now() - startRoundTrip,
-						modelTime,
-					} satisfies AiRequestMetadataTiming),
 				} satisfies AiRequestMetadataStringified,
 			}),
 		);
@@ -47,21 +52,14 @@ export class AiRawProviders extends AiBase {
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
-						dbInfo: JSON.stringify({
-							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
-						} satisfies AiRequestMetadata['dbInfo']),
-						executor: JSON.stringify(args.executor),
-						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+						messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 						serverInfo: JSON.stringify({
 							name: 'openai',
 						} satisfies AiRequestMetadata['serverInfo']),
-						/**
-						 * Blank at first, add after request finishes
-						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
-						 */
-						timing: JSON.stringify({}),
+						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						executor: JSON.stringify(args.executor),
 					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
@@ -71,7 +69,7 @@ export class AiRawProviders extends AiBase {
 					const startRoundTrip = performance.now();
 
 					const headers = new Headers(rawInit?.headers);
-					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
+					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
 						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
@@ -116,13 +114,8 @@ export class AiRawProviders extends AiBase {
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
-						dbInfo: JSON.stringify({
-							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
-						} satisfies AiRequestMetadata['dbInfo']),
-						executor: JSON.stringify(args.executor),
-						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+						messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 						serverInfo: JSON.stringify({
 							name: `azure-${server.id}`,
 							distance: haversine(
@@ -133,11 +126,9 @@ export class AiRawProviders extends AiBase {
 								server.coordinate,
 							),
 						} satisfies AiRequestMetadata['serverInfo']),
-						/**
-						 * Blank at first, add after request finishes
-						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
-						 */
-						timing: JSON.stringify({}),
+						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						executor: JSON.stringify(args.executor),
 					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
@@ -146,7 +137,7 @@ export class AiRawProviders extends AiBase {
 					const startRoundTrip = performance.now();
 
 					const headers = new Headers(rawInit?.headers);
-					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
+					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
 						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
@@ -186,21 +177,14 @@ export class AiRawProviders extends AiBase {
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
-						dbInfo: JSON.stringify({
-							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
-						} satisfies AiRequestMetadata['dbInfo']),
-						executor: JSON.stringify(args.executor),
-						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+						messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 						serverInfo: JSON.stringify({
 							name: 'anthropic',
 						} satisfies AiRequestMetadata['serverInfo']),
-						/**
-						 * Blank at first, add after request finishes
-						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
-						 */
-						timing: JSON.stringify({}),
+						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						executor: JSON.stringify(args.executor),
 					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
@@ -209,7 +193,7 @@ export class AiRawProviders extends AiBase {
 					const startRoundTrip = performance.now();
 
 					const headers = new Headers(rawInit?.headers);
-					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
+					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
 						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
@@ -366,21 +350,14 @@ export class AiRawProviders extends AiBase {
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
-						dbInfo: JSON.stringify({
-							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
-						} satisfies AiRequestMetadata['dbInfo']),
-						executor: JSON.stringify(args.executor),
-						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+						messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 						serverInfo: JSON.stringify({
 							name: 'googleai',
 						} satisfies AiRequestMetadata['serverInfo']),
-						/**
-						 * Blank at first, add after request finishes
-						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
-						 */
-						timing: JSON.stringify({}),
+						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						executor: JSON.stringify(args.executor),
 					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
@@ -389,7 +366,7 @@ export class AiRawProviders extends AiBase {
 					const startRoundTrip = performance.now();
 
 					const headers = new Headers(rawInit?.headers);
-					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
+					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
 						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
@@ -429,21 +406,14 @@ export class AiRawProviders extends AiBase {
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
-						dbInfo: JSON.stringify({
-							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
-						} satisfies AiRequestMetadata['dbInfo']),
-						executor: JSON.stringify(args.executor),
-						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+						messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 						serverInfo: JSON.stringify({
 							name: 'cloudflare',
 						} satisfies AiRequestMetadata['serverInfo']),
-						/**
-						 * Blank at first, add after request finishes
-						 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
-						 */
-						timing: JSON.stringify({}),
+						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						executor: JSON.stringify(args.executor),
 					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
@@ -453,7 +423,7 @@ export class AiRawProviders extends AiBase {
 					const startRoundTrip = performance.now();
 
 					const headers = new Headers(rawInit?.headers);
-					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadata;
+					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
 						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
@@ -495,21 +465,14 @@ export class AiRawProviders extends AiBase {
 						...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
 						...(args.skipCache && { skipCache: true }),
 						metadata: {
-							dbInfo: JSON.stringify({
-								dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-								messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
-							} satisfies AiRequestMetadata['dbInfo']),
-							executor: JSON.stringify(args.executor),
-							// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-							idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
 							serverInfo: JSON.stringify({
 								name: 'cloudflare',
 							} satisfies AiRequestMetadata['serverInfo']),
-							/**
-							 * Blank at first, add after request finishes
-							 * CF AI Gateway allows only editing existing metadata not creating new ones after the request is made
-							 */
-							timing: JSON.stringify({}),
+							// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+							idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+							executor: JSON.stringify(args.executor),
 						} satisfies AiRequestMetadataStringified,
 					} satisfies GatewayOptions,
 				}) as WorkersAIProvider,
