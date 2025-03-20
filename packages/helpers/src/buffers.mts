@@ -13,6 +13,19 @@ export class BufferHelpers {
 	 */
 	public static readonly base64urlRegex = new RegExp(/^[a-z\d_-]+$/i);
 
+	public static bigintToBuffer(number: bigint): Promise<UuidExport['blob']> {
+		const hexString = number.toString(16);
+		return this.hexToBuffer(hexString.length % 2 === 0 ? hexString : `0${hexString}`);
+	}
+
+	public static bigintToHex(number: bigint): UuidExport['hex'] {
+		return number.toString(16).length % 2 === 0 ? number.toString(16) : `0${number.toString(16)}`;
+	}
+
+	public static bufferToBigint(buffer: UuidExport['blob'] | D1Blob) {
+		return this.bufferToHex(buffer).then((hex) => BigInt(`0x${hex}`));
+	}
+
 	public static hexToBuffer(hex: UuidExport['hex']): Promise<UuidExport['blob']> {
 		return (
 			import('node:buffer')
@@ -113,7 +126,7 @@ export class BufferHelpers {
 	public static uuidConvert(input: UuidExport['base64']): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['base64url']): Promise<UuidExport>;
 	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-	public static uuidConvert(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExport['blob'] | D1Blob | UuidExport['base64'] | UuidExport['base64url']): Promise<UuidExport | UndefinedProperties<UuidExport>> {
+	public static uuidConvert(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExport['blob'] | D1Blob): Promise<UuidExport | UndefinedProperties<UuidExport>> {
 		if (input) {
 			if (typeof input === 'string') {
 				if (this.utf8Regex.test(input)) {
