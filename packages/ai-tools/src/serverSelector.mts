@@ -163,7 +163,7 @@ export class ServerSelector extends AiBase {
 				// Extract the ids of the sorted servers
 				const sortedServers = serversWithDistances.map(([server]) => server);
 
-				return sortedServers;
+				return sortedServers as unknown as Servers;
 			} else {
 				throw new Error(`No server with the capability ${requiredCapability} available in a region covered under ${JSON.stringify(privacyRegion)}`);
 			}
