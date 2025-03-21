@@ -198,5 +198,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
       - run: git add packages/types/src/ai-tools/azure/catalog.ts
-      - run: git commit -m "Updated azure inventory" || echo "inventory not touched"
+      - run: git commit -m "Updated azure catalog" || echo "catalog not touched"
       - run: git push

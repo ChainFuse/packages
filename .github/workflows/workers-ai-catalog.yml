@@ -140,5 +140,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
       - run: git add packages/types/src/ai-tools/workers-ai/catalog.ts
-      - run: git commit -m "Updated model catalog" || echo "model catalog not touched"
+      - run: git commit -m "Updated workers-ai model catalog" || echo "model catalog not touched"
       - run: git push
