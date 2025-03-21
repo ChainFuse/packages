@@ -108,7 +108,7 @@ export class ServerSelector extends AiBase {
 
 			if (privacyRegionFilteredServers.length > 0) {
 				// Calculate distance for each server and store it as a tuple [Server, distance]
-				const serversWithDistances: [Server, number][] = privacyRegionFilteredServers.map((server) => {
+				const serversWithDistances: [(typeof servers)[number], number][] = privacyRegionFilteredServers.map((server) => {
 					// Match decimal point length
 					return [
 						server,
