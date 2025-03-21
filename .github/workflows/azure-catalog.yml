@@ -65,6 +65,36 @@ jobs:
                 return accounts;
               })(),
             ]);
+
+            function parseShorthandNumber(input: string): number {
+              const multipliers = Object.freeze({
+                k: 1e3,
+                m: 1e6,
+                b: 1e9,
+                t: 1e12,
+              });
+
+              const normalized = input.trim().toLowerCase();
+              const match = new RegExp(/^([\d.,]+)([kmbt])?$/i).exec(normalized);
+
+              if (!match) {
+                throw new Error(`Invalid shorthand number format: "${input}"`);
+              }
+
+              const [, numberPart, suffix] = match;
+              if (numberPart) {
+                const numeric = parseFloat((numberPart ?? '').replace(/,/g, ''));
+
+                if (isNaN(numeric)) {
+                  throw new Error(`Invalid numeric part in input: "${input}"`);
+                }
+
+                // @ts-expect-error it's fine because regex would fail if it was invalid
+                return numeric * (suffix ? multipliers[suffix] : 1);
+              } else {
+                throw new Error(`Invalid numeric part in input: "${input}"`);
+              }
+            }
         env:
           AZURE_SUB_ID: ${{ secrets.AZURE_SUB_ID }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
