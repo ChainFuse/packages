@@ -1,4 +1,5 @@
 import type { Coordinate, PrefixedUuid, UuidExport } from '@chainfuse/types';
+import type { azureCatalog } from '@chainfuse/types/ai-tools/catalog/azure';
 import type { Ai, ExecutionContext, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import type haversine from 'haversine-distance';
 
@@ -57,6 +58,8 @@ export interface AiConfigWorkersaiRest {
 }
 // Use `extends` to avoid type errors when just a model list has been updated - only if structural changes have been made
 export type AiConfigWorkersaiBinding<T extends Ai = Ai> = T;
+
+export type PrivacyRegion = Extract<(typeof azureCatalog)[number], { privacyRegion: string }>['privacyRegion'];
 
 /**
  * It's a UUID, but the last block is SHA256 of the request body

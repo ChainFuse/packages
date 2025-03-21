@@ -1,22 +1,10 @@
 import { Helpers } from '@chainfuse/helpers';
 import type { Coordinate } from '@chainfuse/types';
+import type { azureCatalog } from '@chainfuse/types/ai-tools/catalog/azure';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import haversine from 'haversine-distance';
 import { AiBase } from './base.mts';
-
-export enum PrivacyRegion {
-	Australian_Privacy_Principles = 'APPs',
-	Brazil_General_Data_protection_Law = 'LGPD',
-	Canada_Personal_Information_Protection_and_Electronic_Documents_Act = 'PIPEDA',
-	General_Data_Protection_Regulation = 'GDPR',
-	Indian_Personal_Protection = 'PDP',
-	Japan_Act_on_the_Protection_of_Personal_Information = 'APPI',
-	Korean_Personal_Information_Protection_Act = 'PIPA',
-	Norwegian_Personal_Data_Act = 'NPDA',
-	SouthAfrica_Protection_Personal_Information_Act = 'PoPIA',
-	Swiss_Federal_Act_on_Data_Protection = 'revFADP',
-	UK_General_Data_Protection_Regulation = 'UK-GDPR',
-}
+import type { PrivacyRegion } from './types.mjs';
 
 export class ServerSelector extends AiBase {
 	public static determinePrivacyRegion(country?: IncomingRequestCfProperties['country'], continent?: IncomingRequestCfProperties['continent']) {
@@ -25,61 +13,61 @@ export class ServerSelector extends AiBase {
 		if (country) {
 			switch (country.toUpperCase()) {
 				case 'AU':
-					regions.add(PrivacyRegion.Australian_Privacy_Principles);
+					regions.add('APPs');
 					break;
 				case 'BR':
-					regions.add(PrivacyRegion.Brazil_General_Data_protection_Law);
+					regions.add('LGPD');
 					break;
 				case 'CA':
-					regions.add(PrivacyRegion.Canada_Personal_Information_Protection_and_Electronic_Documents_Act);
-					regions.add(PrivacyRegion.General_Data_Protection_Regulation);
-					regions.add(PrivacyRegion.Swiss_Federal_Act_on_Data_Protection);
-					regions.add(PrivacyRegion.UK_General_Data_Protection_Regulation);
+					regions.add('PIPEDA');
+					regions.add('GDPR');
+					regions.add('revFADP');
+					regions.add('UK-GDPR');
 					break;
 				case 'IN':
-					regions.add(PrivacyRegion.Indian_Personal_Protection);
+					regions.add('PDP');
 					break;
 				case 'JP':
-					regions.add(PrivacyRegion.Japan_Act_on_the_Protection_of_Personal_Information);
-					regions.add(PrivacyRegion.General_Data_Protection_Regulation);
-					regions.add(PrivacyRegion.UK_General_Data_Protection_Regulation);
+					regions.add('APPI');
+					regions.add('GDPR');
+					regions.add('UK-GDPR');
 					break;
 				case 'KR':
-					regions.add(PrivacyRegion.Korean_Personal_Information_Protection_Act);
-					regions.add(PrivacyRegion.General_Data_Protection_Regulation);
-					regions.add(PrivacyRegion.UK_General_Data_Protection_Regulation);
+					regions.add('PIPA');
+					regions.add('GDPR');
+					regions.add('UK-GDPR');
 					break;
 				case 'NO':
-					regions.add(PrivacyRegion.Norwegian_Personal_Data_Act);
-					regions.add(PrivacyRegion.Canada_Personal_Information_Protection_and_Electronic_Documents_Act);
-					regions.add(PrivacyRegion.General_Data_Protection_Regulation);
-					regions.add(PrivacyRegion.Japan_Act_on_the_Protection_of_Personal_Information);
-					regions.add(PrivacyRegion.Korean_Personal_Information_Protection_Act);
-					regions.add(PrivacyRegion.Swiss_Federal_Act_on_Data_Protection);
-					regions.add(PrivacyRegion.UK_General_Data_Protection_Regulation);
+					regions.add('NPDA');
+					regions.add('PIPEDA');
+					regions.add('GDPR');
+					regions.add('APPI');
+					regions.add('PIPA');
+					regions.add('revFADP');
+					regions.add('UK-GDPR');
 					break;
 				case 'ZA':
-					regions.add(PrivacyRegion.SouthAfrica_Protection_Personal_Information_Act);
+					regions.add('PoPIA');
 					break;
 				case 'CH':
-					regions.add(PrivacyRegion.Swiss_Federal_Act_on_Data_Protection);
-					regions.add(PrivacyRegion.Canada_Personal_Information_Protection_and_Electronic_Documents_Act);
-					regions.add(PrivacyRegion.General_Data_Protection_Regulation);
-					regions.add(PrivacyRegion.Japan_Act_on_the_Protection_of_Personal_Information);
-					regions.add(PrivacyRegion.Korean_Personal_Information_Protection_Act);
-					regions.add(PrivacyRegion.Norwegian_Personal_Data_Act);
-					regions.add(PrivacyRegion.Swiss_Federal_Act_on_Data_Protection);
-					regions.add(PrivacyRegion.UK_General_Data_Protection_Regulation);
+					regions.add('revFADP');
+					regions.add('PIPEDA');
+					regions.add('GDPR');
+					regions.add('APPI');
+					regions.add('PIPA');
+					regions.add('NPDA');
+					regions.add('revFADP');
+					regions.add('UK-GDPR');
 					break;
 				case 'GB':
-					regions.add(PrivacyRegion.UK_General_Data_Protection_Regulation);
-					regions.add(PrivacyRegion.Canada_Personal_Information_Protection_and_Electronic_Documents_Act);
-					regions.add(PrivacyRegion.General_Data_Protection_Regulation);
-					regions.add(PrivacyRegion.Japan_Act_on_the_Protection_of_Personal_Information);
-					regions.add(PrivacyRegion.Korean_Personal_Information_Protection_Act);
-					regions.add(PrivacyRegion.Norwegian_Personal_Data_Act);
-					regions.add(PrivacyRegion.Swiss_Federal_Act_on_Data_Protection);
-					regions.add(PrivacyRegion.UK_General_Data_Protection_Regulation);
+					regions.add('UK-GDPR');
+					regions.add('PIPEDA');
+					regions.add('GDPR');
+					regions.add('APPI');
+					regions.add('PIPA');
+					regions.add('NPDA');
+					regions.add('revFADP');
+					regions.add('UK-GDPR');
 					break;
 			}
 		}
@@ -87,13 +75,13 @@ export class ServerSelector extends AiBase {
 		if (continent) {
 			switch (continent.toUpperCase()) {
 				case 'EU':
-					regions.add(PrivacyRegion.General_Data_Protection_Regulation);
-					regions.add(PrivacyRegion.Canada_Personal_Information_Protection_and_Electronic_Documents_Act);
-					regions.add(PrivacyRegion.Japan_Act_on_the_Protection_of_Personal_Information);
-					regions.add(PrivacyRegion.Korean_Personal_Information_Protection_Act);
-					regions.add(PrivacyRegion.Norwegian_Personal_Data_Act);
-					regions.add(PrivacyRegion.Swiss_Federal_Act_on_Data_Protection);
-					regions.add(PrivacyRegion.UK_General_Data_Protection_Regulation);
+					regions.add('GDPR');
+					regions.add('PIPEDA');
+					regions.add('APPI');
+					regions.add('PIPA');
+					regions.add('NPDA');
+					regions.add('revFADP');
+					regions.add('UK-GDPR');
 					break;
 			}
 		}
@@ -102,6 +90,7 @@ export class ServerSelector extends AiBase {
 	}
 
 	public closestServers(
+		servers: typeof azureCatalog,
 		requiredCapability?: string,
 		userCoordinate: Coordinate = {
 			lat: this.config.geoRouting?.userCoordinate?.lat ?? '0',
@@ -111,11 +100,11 @@ export class ServerSelector extends AiBase {
 	) {
 		// Skip over the rest of logic if the server can't handle the incoming request
 		// @ts-expect-error it's always strings, just sometimes string literals
-		const featureFilteredServers = requiredCapability ? Array.from(this.servers).filter((server) => server.languageModelAvailability.includes(requiredCapability) || server.textEmbeddingModelAvailability.includes(requiredCapability)) : Array.from(this.servers);
+		const featureFilteredServers = requiredCapability ? servers.filter((server) => server.languageModelAvailability.includes(requiredCapability) || server.textEmbeddingModelAvailability.includes(requiredCapability)) : servers;
 
 		if (featureFilteredServers.length > 0) {
 			// Skip over servers not in the save privacy region except if undefined, then you can use any
-			const privacyRegionFilteredServers = featureFilteredServers.filter((server) => privacyRegion.length === 0 || (server.privacyRegion && privacyRegion.includes(server.privacyRegion)));
+			const privacyRegionFilteredServers = featureFilteredServers.filter((server) => privacyRegion.length === 0 || ('privacyRegion' in server && privacyRegion.includes(server.privacyRegion)));
 
 			if (privacyRegionFilteredServers.length > 0) {
 				// Calculate distance for each server and store it as a tuple [Server, distance]
