@@ -89,27 +89,46 @@ export class ServerSelector extends AiBase {
 		return Array.from(regions);
 	}
 
-	public async closestServers(
-		servers: typeof azureCatalog,
-		requiredCapability?: string,
-		userCoordinate: Coordinate = {
-			lat: this.config.geoRouting?.userCoordinate?.lat ?? '0',
-			lon: this.config.geoRouting?.userCoordinate?.lon ?? '0',
-		},
-		privacyRegion: PrivacyRegion[] = ServerSelector.determinePrivacyRegion(this.config.geoRouting?.country, this.config.geoRouting?.continent),
-	) {
-		if (!this.config.geoRouting?.userCoordinate?.lat || !this.config.geoRouting?.userCoordinate?.lon || !this.config.geoRouting?.country || !this.config.geoRouting?.continent) {
+	public async determineLocation(geoRouting = this.config.geoRouting): Promise<{
+		coordinate: Coordinate;
+		country: IncomingRequestCfProperties['country'];
+		continent: IncomingRequestCfProperties['continent'];
+	}> {
+		if (!geoRouting?.userCoordinate?.lat || !geoRouting?.userCoordinate?.lon || !geoRouting?.country || !geoRouting?.continent) {
 			console.warn('Location not provided, falling back to nearest Cloudflare POP', 'WARNING: This is slow');
 
 			try {
 				const geoJson = await fetch(new URL('https://workers.cloudflare.com/cf.json')).then((geoResponse) => geoResponse.json().then((json) => json as IncomingRequestCfProperties));
 
-				if (!this.config.geoRouting?.userCoordinate?.lat) userCoordinate.lat = geoJson.latitude ?? '0';
-				if (!this.config.geoRouting?.userCoordinate?.lon) userCoordinate.lon = geoJson.longitude ?? '0';
-				if (!this.config.geoRouting?.country || !this.config.geoRouting?.continent) privacyRegion = ServerSelector.determinePrivacyRegion(geoJson.country, geoJson.continent);
+				return {
+					coordinate: {
+						lat: geoRouting?.userCoordinate?.lat ?? geoJson.latitude ?? '0',
+						lon: geoRouting?.userCoordinate?.lon ?? geoJson.longitude ?? '0',
+					},
+					country: geoRouting?.country ?? geoJson.country,
+					continent: geoRouting?.continent ?? geoJson.continent,
+				};
 			} catch (error) {
-				console.error('Failed to use nearest Cloudflare POP, service distance and privacy regions will be wrong');
+				console.error('Failed to use nearest Cloudflare POP, service distance and privacy regions will be wrong', error);
 			}
+		}
+
+		return {
+			coordinate: {
+				lat: geoRouting?.userCoordinate?.lat ?? '0',
+				lon: geoRouting?.userCoordinate?.lon ?? '0',
+			},
+			country: geoRouting?.country,
+			continent: geoRouting?.continent,
+		};
+	}
+
+	public async closestServers(servers: typeof azureCatalog, requiredCapability?: string, userCoordinate?: Coordinate, privacyRegion?: PrivacyRegion[]) {
+		if (!userCoordinate || !privacyRegion) {
+			const { coordinate, country, continent } = await this.determineLocation();
+
+			if (!userCoordinate) userCoordinate = coordinate;
+			if (!privacyRegion) privacyRegion = ServerSelector.determinePrivacyRegion(country, continent);
 		}
 
 		// Skip over the rest of logic if the server can't handle the incoming request
