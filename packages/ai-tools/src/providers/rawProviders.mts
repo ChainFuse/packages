@@ -1,13 +1,12 @@
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { BufferHelpers, CryptoHelpers, DnsHelpers, Helpers, NetHelpers } from '@chainfuse/helpers';
 import type { cloudflareModelPossibilities } from '@chainfuse/types';
-import type { azureCatalog } from '@chainfuse/types/ai-tools/catalog/azure';
 import type { GatewayOptions } from '@cloudflare/workers-types/experimental';
 import haversine from 'haversine-distance';
 import { z } from 'zod';
 import { AiBase } from '../base.mjs';
 import { ServerSelector } from '../serverSelector.mts';
-import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified } from '../types.mjs';
+import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified, Servers } from '../types.mjs';
 import type { WorkersAIProvider } from './types.mts';
 
 export class AiRawProviders extends AiBase {
@@ -102,7 +101,7 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public azOpenai(args: AiRequestConfig, server: (typeof azureCatalog)[number]) {
+	public azOpenai(args: AiRequestConfig, server: Servers[number]) {
 		return import('@ai-sdk/azure').then(async ({ createAzure }) =>
 			createAzure({
 				apiKey: this.config.providers.azureOpenAi.apiTokens[`AZURE_API_KEY_${server.id.toUpperCase().replaceAll('-', '_')}`]!,

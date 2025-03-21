@@ -1,8 +1,7 @@
 import type { Coordinate } from '@chainfuse/types';
-import type { azureCatalog } from '@chainfuse/types/ai-tools/catalog/azure';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import { AiBase } from './base.mts';
-import type { PrivacyRegion } from './types.mjs';
+import type { PrivacyRegion, Servers } from './types.mjs';
 
 export class ServerSelector extends AiBase {
 	public static determinePrivacyRegion(country?: IncomingRequestCfProperties['country'], continent?: IncomingRequestCfProperties['continent']) {
@@ -121,7 +120,7 @@ export class ServerSelector extends AiBase {
 		};
 	}
 
-	public async closestServers(servers: typeof azureCatalog, requiredCapability?: string, userCoordinate?: Coordinate, privacyRegion?: PrivacyRegion[]) {
+	public async closestServers(servers: Servers, requiredCapability?: string, userCoordinate?: Coordinate, privacyRegion?: PrivacyRegion[]): Promise<Servers> {
 		if (!userCoordinate || !privacyRegion) {
 			const { coordinate, country, continent } = await this.determineLocation();
 
