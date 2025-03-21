@@ -45,7 +45,6 @@ jobs:
             const [locations, rawServers] = await Promise.all([
               (async () => {
                 const subClient = new SubscriptionClient(credential);
-                type LocationItem = Awaited<ReturnType<typeof subClient.subscriptions.listLocations>> extends AsyncIterable<infer T> ? T : never;
                 const locations: LocationItem[] = [];
                 for await (const location of subClient.subscriptions.listLocations(subscriptionId)) {
                   locations.push(location);
@@ -55,7 +54,6 @@ jobs:
               })(),
               (async () => {
                 const aiClient = new CognitiveServicesManagementClient(credential, subscriptionId);
-                type ServerItem = Awaited<ReturnType<typeof aiClient.accounts.list>> extends AsyncIterable<infer T> ? T : never;
 
                 const accounts: ServerItem[] = [];
                 for await (const account of aiClient.accounts.list()) {
