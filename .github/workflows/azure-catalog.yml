@@ -32,7 +32,7 @@ jobs:
           node-version: lts/*
           check-latest: true
           cache: 'npm'
-      - run: npm install --include-workspace-root --omit prod
+      - run: npm install --include-workspace-root
       - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
