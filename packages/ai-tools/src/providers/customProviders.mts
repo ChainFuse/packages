@@ -26,7 +26,7 @@ export class AiCustomProviders extends AiBase {
 					const acc = await accPromise;
 					// @ts-expect-error override for types
 					acc[model as AzureChatModels] = wrapLanguageModel({
-						model: (await raw.azOpenai(args, server!))(model),
+						model: (await raw.azOpenai(args, server))(model),
 						middleware: {
 							wrapGenerate: async ({ doGenerate, model, params }) => {
 								try {
@@ -90,7 +90,7 @@ export class AiCustomProviders extends AiBase {
 				async (accPromise, model) => {
 					const acc = await accPromise;
 					// @ts-expect-error override for types
-					acc[model as AzureEmbeddingModels] = (await raw.azOpenai(args, server!)).textEmbeddingModel(model);
+					acc[model as AzureEmbeddingModels] = (await raw.azOpenai(args, server)).textEmbeddingModel(model);
 					return acc;
 				},
 				Promise.resolve({} as Record<AzureEmbeddingModels, Awaited<ReturnType<AiRawProviders['azOpenai']>>>),
