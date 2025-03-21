@@ -112,7 +112,6 @@ jobs:
                   throw new Error(`Invalid numeric part in input: "${input}"`);
                 }
 
-                // @ts-expect-error it's fine because regex would fail if it was invalid
                 return numeric * (suffix ? multipliers[suffix] : 1);
               } else {
                 throw new Error(`Invalid numeric part in input: "${input}"`);
@@ -129,7 +128,7 @@ jobs:
                     const idParts = server.id?.split('/');
                     const resourceGroupName = idParts?.[idParts.indexOf('resourceGroups') + 1];
 
-                    const deployments: DeploymentItem[] = [];
+                    const deployments = [];
                     for await (const deployment of aiClient.deployments.list(resourceGroupName!, server.name!)) {
                       deployments.push(deployment);
                     }
