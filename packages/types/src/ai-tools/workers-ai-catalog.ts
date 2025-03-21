@@ -296,6 +296,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						context_window: 24000,
+						function_calling: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE',
 					},
 				},
