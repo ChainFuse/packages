@@ -172,8 +172,8 @@ jobs:
 
                       return {
                         name: deployment.name,
-                        inputTokenCost: (inputTokenPrice?.unitOfMeasure ? (inputTokenPrice.unitPrice / parseShorthandNumber(inputTokenPrice.unitOfMeasure)).toFixed(20) : inputTokenPrice?.unitPrice.toFixed(20))?.replace(/0+$/i, ''),
-                        outputTokenCost: (outputTokenPrice?.unitOfMeasure ? (outputTokenPrice.unitPrice / parseShorthandNumber(outputTokenPrice.unitOfMeasure)).toFixed(20) : outputTokenPrice?.unitPrice.toFixed(20))?.replace(/0+$/i, ''),
+                        inputTokenCost: parseFloat(inputTokenPrice?.unitOfMeasure ? (inputTokenPrice.unitPrice / parseShorthandNumber(inputTokenPrice.unitOfMeasure)).toFixed(20) : inputTokenPrice?.unitPrice.toFixed(20)),
+                        outputTokenCost: parseFloat(outputTokenPrice?.unitOfMeasure ? (outputTokenPrice.unitPrice / parseShorthandNumber(outputTokenPrice.unitOfMeasure)).toFixed(20) : outputTokenPrice?.unitPrice.toFixed(20)),
                       };
                     }),
                   imageModelAvailability: deployments.filter((model) => model.properties?.capabilities?.['imageGenerations'] === 'true').map((model) => model.name),
