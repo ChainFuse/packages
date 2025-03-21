@@ -1,6 +1,6 @@
 import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmImageProviders, enabledCloudflareLlmProviders, type CloudflareFunctionModelsEnum, type CloudflareModelsEnum } from './workers-ai/index.js';
 
-export * from './azure/index.js';
+// export * from './azure/index.js';
 export * from './workers-ai/index.js';
 
 export interface Coordinate {
