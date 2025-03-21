@@ -5,6 +5,7 @@ export const azureCatalog = [
 			lat: '-33.86',
 			lon: '151.2094',
 		},
+		privacyRegion: 'APPs',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4-turbo',
@@ -36,6 +37,7 @@ export const azureCatalog = [
 			lat: '-23.55',
 			lon: '-46.633',
 		},
+		privacyRegion: 'LGPD',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4-turbo',
@@ -91,6 +93,7 @@ export const azureCatalog = [
 			lat: '52.3667',
 			lon: '4.9',
 		},
+		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4o',
@@ -230,6 +233,7 @@ export const azureCatalog = [
 			lat: '43.653',
 			lon: '-79.383',
 		},
+		privacyRegion: 'PIPEDA',
 		languageModelAvailability: [],
 		imageModelAvailability: [],
 		textEmbeddingModelAvailability: [],
@@ -240,6 +244,7 @@ export const azureCatalog = [
 			lat: '35.68',
 			lon: '139.77',
 		},
+		privacyRegion: 'APPI',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4o',
@@ -271,6 +276,7 @@ export const azureCatalog = [
 			lat: '50.941',
 			lon: '-0.799',
 		},
+		privacyRegion: 'UK-GDPR',
 		languageModelAvailability: [
 			{
 				name: 'gpt-35-turbo',
@@ -302,6 +308,7 @@ export const azureCatalog = [
 			lat: '37.5665',
 			lon: '126.978',
 		},
+		privacyRegion: 'PIPA',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4o',
@@ -326,6 +333,7 @@ export const azureCatalog = [
 			lat: '46.3772',
 			lon: '2.373',
 		},
+		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4o',
@@ -388,6 +396,7 @@ export const azureCatalog = [
 			lat: '-25.73134',
 			lon: '28.21837',
 		},
+		privacyRegion: 'PoPIA',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4o',
@@ -431,6 +440,7 @@ export const azureCatalog = [
 			lat: '60.67488',
 			lon: '17.14127',
 		},
+		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
 				name: 'gpt-35-turbo',
@@ -472,6 +482,7 @@ export const azureCatalog = [
 			lat: '47.451542',
 			lon: '8.564572',
 		},
+		privacyRegion: 'revFADP',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4o',
@@ -501,6 +512,7 @@ export const azureCatalog = [
 			lat: '46.204391',
 			lon: '6.143158',
 		},
+		privacyRegion: 'revFADP',
 		languageModelAvailability: [],
 		imageModelAvailability: [],
 		textEmbeddingModelAvailability: [],
@@ -511,6 +523,7 @@ export const azureCatalog = [
 			lat: '50.110924',
 			lon: '8.682127',
 		},
+		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4o',
@@ -535,6 +548,7 @@ export const azureCatalog = [
 			lat: '59.913868',
 			lon: '10.752245',
 		},
+		privacyRegion: 'NPDA',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4o',
@@ -588,6 +602,7 @@ export const azureCatalog = [
 			lat: '46.817',
 			lon: '-71.217',
 		},
+		privacyRegion: 'PIPEDA',
 		languageModelAvailability: [
 			{
 				name: 'gpt-35-turbo',
@@ -619,6 +634,7 @@ export const azureCatalog = [
 			lat: '52.23334',
 			lon: '21.01666',
 		},
+		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4o',
@@ -643,6 +659,7 @@ export const azureCatalog = [
 			lat: '12.9822',
 			lon: '80.1636',
 		},
+		privacyRegion: 'PDP',
 		languageModelAvailability: [
 			{
 				name: 'gpt-35-turbo',
@@ -672,6 +689,7 @@ export const azureCatalog = [
 			lat: '40.4259',
 			lon: '3.4209',
 		},
+		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
 				name: 'gpt-4-turbo',
