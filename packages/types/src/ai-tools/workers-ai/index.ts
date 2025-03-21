@@ -2,7 +2,7 @@ import { workersAiCatalog } from './catalog.js';
 
 type cloudflareModelTypes = keyof typeof workersAiCatalog.modelGroups;
 type cloudflareModelPossibilitiesRaw<M extends cloudflareModelTypes = cloudflareModelTypes> = (typeof workersAiCatalog.modelGroups)[M]['models'][number];
-type cloudflareModelPossibilities<M extends cloudflareModelTypes = cloudflareModelTypes> = cloudflareModelPossibilitiesRaw<M>['name'];
+export type cloudflareModelPossibilities<M extends cloudflareModelTypes = cloudflareModelTypes> = cloudflareModelPossibilitiesRaw<M>['name'];
 type cloudflareModelProperties<Model> = Model extends { properties: infer Props } ? keyof Props : never;
 type cloudflareModelPossibilitiesProperties<M extends cloudflareModelTypes = cloudflareModelTypes> = cloudflareModelProperties<cloudflareModelPossibilitiesRaw<M>>;
 type cloudflareFilteredModelPossibilitiesRaw<M extends cloudflareModelTypes = cloudflareModelTypes, K extends cloudflareModelPossibilitiesProperties<M> = cloudflareModelPossibilitiesProperties<M>, V extends cloudflareModelPossibilitiesRaw<M>['properties'][K] = any> = cloudflareModelPossibilitiesRaw<M> extends infer Model ? (Model extends { properties: Record<K, V> } ? Model : never) : never;
