@@ -42,7 +42,32 @@ jobs:
 
             const credential = new ClientSecretCredential(process.env.AZURE_TENANT_ID, process.env.AZURE_CLIENT_ID, process.env.AZURE_CLIENT_SECRET);
 
-            const [locations, rawServers] = await Promise.all([
+            const [pricing, locations, rawServers] = await Promise.all([
+              (async () => {
+                let url: URL | null = new URL('api/retail/prices', 'https://prices.azure.com');
+                url.searchParams.set('$filter', "productName eq 'Azure OpenAI'");
+
+                const pricing = [];
+
+                while (url) {
+                  const response = await fetch(url);
+                  if (response.ok) {
+                    const { Items, NextPageLink } = await response.json();
+
+                    pricing.push(...Items);
+
+                    if (NextPageLink) {
+                      url = new URL(NextPageLink);
+                    } else {
+                      url = null;
+                    }
+                  } else {
+                    url = null;
+                  }
+                }
+
+                return pricing;
+              })(),
               (async () => {
                 const subClient = new SubscriptionClient(credential);
                 const locations: LocationItem[] = [];
