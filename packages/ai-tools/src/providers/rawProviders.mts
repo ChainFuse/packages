@@ -1,11 +1,12 @@
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { BufferHelpers, CryptoHelpers, DnsHelpers, Helpers, NetHelpers } from '@chainfuse/helpers';
 import type { cloudflareModelPossibilities } from '@chainfuse/types';
+import type { azureCatalog } from '@chainfuse/types/ai-tools/catalog/azure';
 import type { GatewayOptions } from '@cloudflare/workers-types/experimental';
 import haversine from 'haversine-distance';
 import { z } from 'zod';
 import { AiBase } from '../base.mjs';
-import type { Server } from '../serverSelector/types.mjs';
+import { ServerSelector } from '../serverSelector.mts';
 import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified } from '../types.mjs';
 import type { WorkersAIProvider } from './types.mts';
 
@@ -101,7 +102,7 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public azOpenai(args: AiRequestConfig, server: Server) {
+	public azOpenai(args: AiRequestConfig, server: (typeof azureCatalog)[number]) {
 		return import('@ai-sdk/azure').then(async ({ createAzure }) =>
 			createAzure({
 				apiKey: this.config.providers.azureOpenAi.apiTokens[`AZURE_API_KEY_${server.id.toUpperCase().replaceAll('-', '_')}`]!,
@@ -119,11 +120,15 @@ export class AiRawProviders extends AiBase {
 						serverInfo: JSON.stringify({
 							name: `azure-${server.id}`,
 							distance: haversine(
+								await (async () =>
+									new ServerSelector(this.config).determineLocation().then(({ coordinate }) => ({
+										lat: Helpers.precisionFloat(coordinate.lat),
+										lon: Helpers.precisionFloat(coordinate.lon),
+									})))(),
 								{
-									lat: Helpers.precisionFloat(this.config.geoRouting?.userCoordinate?.lat ?? '0'),
-									lon: Helpers.precisionFloat(this.config.geoRouting?.userCoordinate?.lon ?? '0'),
+									lat: Helpers.precisionFloat(server.coordinate.lat),
+									lon: Helpers.precisionFloat(server.coordinate.lon),
 								},
-								server.coordinate,
 							),
 						} satisfies AiRequestMetadata['serverInfo']),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
