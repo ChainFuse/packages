@@ -129,7 +129,7 @@ jobs:
                     const resourceGroupName = idParts?.[idParts.indexOf('resourceGroups') + 1];
 
                     const deployments = [];
-                    for await (const deployment of aiClient.deployments.list(resourceGroupName!, server.name!)) {
+                    for await (const deployment of aiClient.deployments.list(resourceGroupName, server.name)) {
                       deployments.push(deployment);
                     }
 
@@ -137,7 +137,7 @@ jobs:
                   })(),
                   (async () => {
                     const models = [];
-                    for await (const model of aiClient.models.list(location!.name!)) {
+                    for await (const model of aiClient.models.list(location.name)) {
                       models.push(model);
                     }
 
@@ -164,7 +164,7 @@ jobs:
                           model.model?.version === deployment?.properties?.model?.version,
                       );
 
-                      const skuCost = model?.model?.skus?.find((sku) => sku.name === deployment?.sku?.name)?.costs as CostItem;
+                      const skuCost = model?.model?.skus?.find((sku) => sku.name === deployment?.sku?.name)?.costs;
 
                       const inputTokenMeter = skuCost?.find((costItem) => costItem.name === 'ContextToken' || costItem.name === 'NoCachedContextToken')?.meterId;
                       const inputTokenPrice = pricing.find((price) => price.meterId === inputTokenMeter);
