@@ -118,8 +118,8 @@ export class ServerSelector extends AiBase {
 								lon: Helpers.precisionFloat(userCoordinate.lon),
 							},
 							{
-								lat: server.coordinate.lat,
-								lon: server.coordinate.lon,
+								lat: Helpers.precisionFloat(server.coordinate.lat),
+								lon: Helpers.precisionFloat(server.coordinate.lon),
 							},
 						),
 					];
