@@ -44,7 +44,7 @@ jobs:
 
             const [pricing, locations, rawServers] = await Promise.all([
               (async () => {
-                let url: URL | null = new URL('api/retail/prices', 'https://prices.azure.com');
+                let url = new URL('api/retail/prices', 'https://prices.azure.com');
                 url.searchParams.set('$filter', "productName eq 'Azure OpenAI'");
 
                 const pricing = [];
@@ -70,7 +70,7 @@ jobs:
               })(),
               (async () => {
                 const subClient = new SubscriptionClient(credential);
-                const locations: LocationItem[] = [];
+                const locations = [];
                 for await (const location of subClient.subscriptions.listLocations(subscriptionId)) {
                   locations.push(location);
                 }
@@ -80,7 +80,7 @@ jobs:
               (async () => {
                 const aiClient = new CognitiveServicesManagementClient(credential, subscriptionId);
 
-                const accounts: ServerItem[] = [];
+                const accounts = [];
                 for await (const account of aiClient.accounts.list()) {
                   accounts.push(account);
                 }
@@ -89,7 +89,7 @@ jobs:
               })(),
             ]);
 
-            function parseShorthandNumber(input: string): number {
+            function parseShorthandNumber(input) {
               const multipliers = Object.freeze({
                 k: 1e3,
                 m: 1e6,
