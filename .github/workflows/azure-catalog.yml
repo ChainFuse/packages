@@ -120,7 +120,7 @@ jobs:
 
             const json = await Promise.all(
               rawServers.map(async (server) => {
-                const aiClient = new CognitiveServicesManagementClient(credential, subscriptionId);
+                const aiClient = new CognitiveServicesManagementClient(credential, process.env.AZURE_SUB_ID);
                 const location = locations.find((location) => location.name === server.location);
 
                 const [deployments, models] = await Promise.all([
