@@ -1,0 +1,54 @@
+name: Ai Catalog
+
+on:
+  push:
+    paths:
+      - '.github/workflows/azure-catalog.yml'
+      - 'packages/types/src/ai-tools/azure-catalog.ts'
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  azure:
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
+    steps:
+      - uses: step-security/harden-runner@4d991eb9b905ef189e4c376166672c3f2f230481 # v2.11.0
+        with:
+          disable-sudo: true
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        with:
+          node-version: lts/*
+          check-latest: true
+          cache: 'npm'
+      - run: npm install --include-workspace-root --omit prod
+      - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const [{ CognitiveServicesManagementClient }, { SubscriptionClient }, { ClientSecretCredential }] = await Promise.all([import('@azure/arm-cognitiveservices'), import('@azure/arm-resources-subscriptions'), import('@azure/identity')]);
+
+            const credential = new ClientSecretCredential(process.env.AZURE_TENANT_ID, process.env.AZURE_CLIENT_ID, process.env.AZURE_CLIENT_SECRET);
+          env:
+            AZURE_SUB_ID: ${{ secrets.AZURE_SUB_ID }}
+            AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+            AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+            AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      # - run: npx prettier --write packages/types/src/ai-tools/azure-catalog.ts
+      # - name: Git Setup
+      #   run: |
+      #     git config user.name "github-actions[bot]"
+      #     git config user.email "github-actions[bot]@users.noreply.github.com"
+      # - run: git add packages/types/src/ai-tools/azure-catalog.ts
+      # - run: git commit -m "Updated azure inventory" || echo "inventory not touched"
+      # - run: git push
