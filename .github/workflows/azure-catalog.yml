@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/azure-catalog.yml'
-      - 'packages/types/src/ai-tools/azure-catalog.ts'
+      - 'packages/types/src/ai-tools/azure/catalog.ts'
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
@@ -183,7 +183,7 @@ jobs:
             );
 
             await import('node:fs').then(({ createWriteStream }) => {
-              const writeStream = createWriteStream('packages/types/src/ai-tools/azure-catalog.ts', { encoding: 'utf8' });
+              const writeStream = createWriteStream('packages/types/src/ai-tools/azure/catalog.ts', { encoding: 'utf8' });
               writeStream.write(`export const azureCatalog = ${JSON.stringify(json, null, '\t')} as const`);
               writeStream.end();
             });
@@ -192,11 +192,11 @@ jobs:
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      - run: npx prettier --write packages/types/src/ai-tools/azure-catalog.ts
+      - run: npx prettier --write packages/types/src/ai-tools/azure/catalog.ts
       - name: Git Setup
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-      - run: git add packages/types/src/ai-tools/azure-catalog.ts
+      - run: git add packages/types/src/ai-tools/azure/catalog.ts
       - run: git commit -m "Updated azure inventory" || echo "inventory not touched"
       - run: git push

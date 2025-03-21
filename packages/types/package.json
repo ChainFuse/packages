@@ -67,25 +67,17 @@
 			"import": "./dist/discourse/topic/index.js",
 			"types": "./dist/discourse/topic/index.d.ts"
 		},
-		"./super-ai": {
-			"import": "./dist/super-ai/index.js",
-			"types": "./dist/super-ai/index.d.ts"
-		},
-		"./super-ai/catalog/workers-ai": {
-			"import": "./dist/ai-tools/workers-ai-catalog.js",
-			"types": "./dist/ai-tools/workers-ai-catalog.d.ts"
-		},
 		"./ai-tools": {
 			"import": "./dist/ai-tools/index.js",
 			"types": "./dist/ai-tools/index.d.ts"
 		},
 		"./ai-tools/catalog/workers-ai": {
-			"import": "./dist/ai-tools/workers-ai-catalog.js",
-			"types": "./dist/ai-tools/workers-ai-catalog.d.ts"
+			"import": "./dist/ai-tools/workers-ai/catalog.js",
+			"types": "./dist/ai-tools/workers-ai/catalog.d.ts"
 		},
 		"./ai-tools/catalog/azure": {
-			"import": "./dist/ai-tools/azure-catalog.js",
-			"types": "./dist/ai-tools/azure-catalog.d.ts"
+			"import": "./dist/ai-tools/azure/catalog.js",
+			"types": "./dist/ai-tools/azure/catalog.d.ts"
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",
