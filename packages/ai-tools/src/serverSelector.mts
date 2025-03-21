@@ -3,7 +3,6 @@ import type { Coordinate } from '@chainfuse/types';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import haversine from 'haversine-distance';
 import { AiBase } from './base.mts';
-import type { Server } from './types.mjs';
 
 export enum PrivacyRegion {
 	Australian_Privacy_Principles = 'APPs',
