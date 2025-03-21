@@ -1,8 +1,6 @@
-import { Helpers } from '@chainfuse/helpers';
 import type { Coordinate } from '@chainfuse/types';
 import type { azureCatalog } from '@chainfuse/types/ai-tools/catalog/azure';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
-import haversine from 'haversine-distance';
 import { AiBase } from './base.mts';
 import type { PrivacyRegion } from './types.mjs';
 
@@ -141,22 +139,24 @@ export class ServerSelector extends AiBase {
 
 			if (privacyRegionFilteredServers.length > 0) {
 				// Calculate distance for each server and store it as a tuple [Server, distance]
-				const serversWithDistances: [(typeof servers)[number], number][] = privacyRegionFilteredServers.map((server) => {
-					// Match decimal point length
-					return [
-						server,
-						haversine(
-							{
-								lat: Helpers.precisionFloat(userCoordinate.lat),
-								lon: Helpers.precisionFloat(userCoordinate.lon),
-							},
-							{
-								lat: Helpers.precisionFloat(server.coordinate.lat),
-								lon: Helpers.precisionFloat(server.coordinate.lon),
-							},
-						),
-					];
-				});
+				const serversWithDistances: [(typeof servers)[number], number][] = await Promise.all([import('haversine-distance'), import('@chainfuse/helpers')]).then(([{ default: haversine }, { Helpers }]) =>
+					privacyRegionFilteredServers.map((server) => {
+						// Match decimal point length
+						return [
+							server,
+							haversine(
+								{
+									lat: Helpers.precisionFloat(userCoordinate.lat),
+									lon: Helpers.precisionFloat(userCoordinate.lon),
+								},
+								{
+									lat: Helpers.precisionFloat(server.coordinate.lat),
+									lon: Helpers.precisionFloat(server.coordinate.lon),
+								},
+							),
+						];
+					}),
+				);
 
 				// Sort the servers by distance
 				serversWithDistances.sort((a, b) => a[1] - b[1]);
