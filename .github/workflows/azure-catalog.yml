@@ -41,6 +41,30 @@ jobs:
             const { ClientSecretCredential } = require('@azure/identity');
 
             const credential = new ClientSecretCredential(process.env.AZURE_TENANT_ID, process.env.AZURE_CLIENT_ID, process.env.AZURE_CLIENT_SECRET);
+
+            const [locations, rawServers] = await Promise.all([
+              (async () => {
+                const subClient = new SubscriptionClient(credential);
+                type LocationItem = Awaited<ReturnType<typeof subClient.subscriptions.listLocations>> extends AsyncIterable<infer T> ? T : never;
+                const locations: LocationItem[] = [];
+                for await (const location of subClient.subscriptions.listLocations(subscriptionId)) {
+                  locations.push(location);
+                }
+
+                return locations;
+              })(),
+              (async () => {
+                const aiClient = new CognitiveServicesManagementClient(credential, subscriptionId);
+                type ServerItem = Awaited<ReturnType<typeof aiClient.accounts.list>> extends AsyncIterable<infer T> ? T : never;
+
+                const accounts: ServerItem[] = [];
+                for await (const account of aiClient.accounts.list()) {
+                  accounts.push(account);
+                }
+
+                return accounts;
+              })(),
+            ]);
         env:
           AZURE_SUB_ID: ${{ secrets.AZURE_SUB_ID }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
