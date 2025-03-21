@@ -1,23 +1,12 @@
-import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmProviders, type cloudflareFilteredModelPossibilities, type cloudflareModelPossibilities, type cloudflareModelTypes } from '../super-ai/index.js';
-import { workersAiCatalog } from './workers-ai-catalog.js';
+import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmImageProviders, enabledCloudflareLlmProviders, type CloudflareFunctionModelsEnum, type CloudflareModelsEnum } from './workers-ai/index.js';
 
-export interface RawCoordinate {
+export * from './azure/index.js';
+export * from './workers-ai/index.js';
+
+export interface Coordinate {
 	lat: string;
 	lon: string;
 }
-
-export const enabledCloudflareLlmImageProviders: cloudflareModelPossibilities<'Text-to-Image'>[] = workersAiCatalog.modelGroups['Text-to-Image'].models.map((model) => model.name);
-
-export type CloudflareModelsEnum<M extends cloudflareModelTypes = cloudflareModelTypes> = {
-	[K in cloudflareModelPossibilities<M>]: `workersai:${K}`;
-};
-export type CloudflareFunctionModelsEnum = {
-	[K in cloudflareFilteredModelPossibilities<'Text Generation', 'function_calling', true>]: `workersai:${K}`;
-};
-
-export type AzureChatModels = 'gpt-35-turbo' | 'gpt-4-turbo' | 'gpt-4o' | 'gpt-4o-mini' | 'o1' | 'o3-mini';
-export type AzureImageModels = 'dall-e-3';
-export type AzureEmbeddingModels = 'text-embedding-3-small' | 'text-embedding-3-large';
 
 export namespace AiModels {
 	export namespace LanguageModels {
