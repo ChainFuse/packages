@@ -29,7 +29,7 @@ export class AiCustomProviders extends AiBase {
 					const acc = await accPromise;
 					// @ts-expect-error override for types
 					acc[model.name] = wrapLanguageModel({
-						model: (await raw.azOpenai(args, server))(model.name),
+						model: (await raw.azOpenai(args, server, 'inputTokenCost' in model || 'outputTokenCost' in model ? { inputTokenCost: model.inputTokenCost, outputTokenCost: model.outputTokenCost } : undefined))(model.name),
 						middleware: {
 							wrapGenerate: async ({ doGenerate, model, params }) => {
 								try {
@@ -53,7 +53,24 @@ export class AiCustomProviders extends AiBase {
 												if (args.logging ?? !this.config.environment.startsWith('production')) console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.blue('FALLBACK'), nextServer.id, 'REMAINING', JSON.stringify(leftOverServers.slice(leftOverServers.indexOf(nextServer) + 1).map((s) => s.id)));
 
 												// Must be double awaited to prevent a promise from being returned
-												return await (await raw.azOpenai({ ...args, idempotencyId }, nextServer))(model.modelId).doGenerate(params);
+												return await (
+													await raw.azOpenai(
+														{ ...args, idempotencyId },
+														nextServer,
+														(() => {
+															const foundModel = server.languageModelAvailability.find((languageModel) => languageModel.name === model.modelId);
+
+															if (foundModel && ('inputTokenCost' in foundModel || 'outputTokenCost' in foundModel)) {
+																return {
+																	inputTokenCost: foundModel.inputTokenCost,
+																	outputTokenCost: foundModel.outputTokenCost,
+																};
+															} else {
+																return undefined;
+															}
+														})(),
+													)
+												)(model.modelId).doGenerate(params);
 											} catch (nextServerError) {
 												if (APICallError.isInstance(nextServerError)) {
 													if (args.logging ?? !this.config.environment.startsWith('production')) console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.red('FAIL'), nextServer.id, 'REMAINING', JSON.stringify(leftOverServers.slice(leftOverServers.indexOf(nextServer) + 1).map((s) => s.id)));
