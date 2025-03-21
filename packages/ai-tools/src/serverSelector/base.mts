@@ -1,5 +1,5 @@
 import { Helpers } from '@chainfuse/helpers';
-import type { RawCoordinate } from '@chainfuse/types';
+import type { Coordinate } from '@chainfuse/types';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import haversine from 'haversine-distance';
 import { AiBase } from '../base.mjs';
@@ -106,7 +106,7 @@ export abstract class ServerSelector extends AiBase {
 
 	public closestServers(
 		requiredCapability?: (Server['languageModelAvailability'] | Server['textEmbeddingModelAvailability'])[number],
-		userCoordinate: RawCoordinate = {
+		userCoordinate: Coordinate = {
 			lat: this.config.geoRouting?.userCoordinate?.lat ?? '0',
 			lon: this.config.geoRouting?.userCoordinate?.lon ?? '0',
 		},
