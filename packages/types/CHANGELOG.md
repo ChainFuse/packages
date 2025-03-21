@@ -1,5 +1,23 @@
 # @chainfuse/types
 
+## 2.0.0
+
+### Major Changes
+
+- [`8276bc9`](https://github.com/ChainFuse/packages/commit/8276bc92c52abd3a8f6e4e9c0fb595f453f0e0b3) Thanks [@demosjarco](https://github.com/demosjarco)! - types(deprecate): Drop `super-ai`
+
+### Minor Changes
+
+- [`eae84cc`](https://github.com/ChainFuse/packages/commit/eae84cca1554adcc4f1b998fe1b823e82a5af33e) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Auto generate azure catalog
+
+### Patch Changes
+
+- [#327](https://github.com/ChainFuse/packages/pull/327) [`eebc217`](https://github.com/ChainFuse/packages/commit/eebc2177aef539edb4b0f3a3748c211b58c435c0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai
+
+- [#329](https://github.com/ChainFuse/packages/pull/329) [`35cb8c8`](https://github.com/ChainFuse/packages/commit/35cb8c8363ced2bf15f44cb4aced9ef560479df9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint
+
+- [#328](https://github.com/ChainFuse/packages/pull/328) [`09ca2c4`](https://github.com/ChainFuse/packages/commit/09ca2c43646c36e1e4e3fa00ee7ee9d576a75e4e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 1.7.3
 
 ### Patch Changes
