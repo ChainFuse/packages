@@ -6,8 +6,8 @@ import { APICallError, customProvider, TypeValidationError, wrapLanguageModel, t
 import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
 import { ZodError } from 'zod';
 import { AiBase } from '../base.mjs';
-import { AzureServerSelector } from '../serverSelector/azure.mjs';
-import type { AiConfigWorkersai, AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId } from '../types.mjs';
+import { ServerSelector } from '../serverSelector.mts';
+import type { AiConfigWorkersai, AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId, AzureServers } from '../types.mjs';
 import { AiRawProviders } from './rawProviders.mjs';
 import type { AzureOpenAIProvider, WorkersAIProvider } from './types.mjs';
 
@@ -16,17 +16,20 @@ export class AiCustomProviders extends AiBase {
 		return new AiRawProviders(this.config).oaiOpenai(args);
 	}
 
-	public async azOpenai(args: AiRequestConfig, [server, ...servers] = new AzureServerSelector(this.config).closestServers()): Promise<AzureOpenAIProvider> {
+	public async azOpenai(args: AiRequestConfig, filteredServers?: AzureServers): Promise<AzureOpenAIProvider> {
+		if (!filteredServers) filteredServers = await new ServerSelector(this.config).closestServers(await import('@chainfuse/types/ai-tools/catalog/azure').then(({ azureCatalog }) => azureCatalog));
+		const [server, ...servers] = filteredServers;
+
 		const raw = new AiRawProviders(this.config);
 
 		return customProvider({
 			// @ts-expect-error override for types
-			languageModels: await server!.languageModelAvailability.reduce(
+			languageModels: await server.languageModelAvailability.reduce(
 				async (accPromise, model) => {
 					const acc = await accPromise;
 					// @ts-expect-error override for types
 					acc[model as AzureChatModels] = wrapLanguageModel({
-						model: (await raw.azOpenai(args, server))(model),
+						model: (await raw.azOpenai(args, server))(model.name),
 						middleware: {
 							wrapGenerate: async ({ doGenerate, model, params }) => {
 								try {
@@ -36,7 +39,7 @@ export class AiCustomProviders extends AiBase {
 									if (APICallError.isInstance(error)) {
 										const idempotencyId = new Headers(error.responseHeaders).get('X-Idempotency-Id') as AiRequestIdempotencyId;
 										const lastServer = new URL(error.url).pathname.split('/')[5]!;
-										const compatibleServers = new AzureServerSelector(this.config).closestServers(model.modelId);
+										const compatibleServers = await new ServerSelector(this.config).closestServers(await import('@chainfuse/types/ai-tools/catalog/azure').then(({ azureCatalog }) => azureCatalog), model.modelId);
 										const lastServerIndex = compatibleServers.findIndex((s) => s.id.toLowerCase() === lastServer.toLowerCase());
 
 										if (args.logging ?? !this.config.environment.startsWith('production')) console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.red('FAIL'), compatibleServers[lastServerIndex]!.id, 'REMAINING', JSON.stringify(compatibleServers.slice(lastServerIndex + 1).map((s) => s.id)));
@@ -86,17 +89,17 @@ export class AiCustomProviders extends AiBase {
 			// 	Promise.resolve({} as Record<AzureImageModels, Awaited<ReturnType<AiRawProviders['azOpenai']>>>),
 			// ),
 			// @ts-expect-error override for types
-			textEmbeddingModels: await server!.textEmbeddingModelAvailability.reduce(
+			textEmbeddingModels: await server.textEmbeddingModelAvailability.reduce(
 				async (accPromise, model) => {
 					const acc = await accPromise;
 					// @ts-expect-error override for types
-					acc[model as AzureEmbeddingModels] = (await raw.azOpenai(args, server)).textEmbeddingModel(model);
+					acc[model] = (await raw.azOpenai(args, server)).textEmbeddingModel(model);
 					return acc;
 				},
 				Promise.resolve({} as Record<AzureEmbeddingModels, Awaited<ReturnType<AiRawProviders['azOpenai']>>>),
 			),
 			// An optional fallback provider to use when a requested model is not found in the custom provider.
-			...(servers.length > 0 && { fallbackProvider: await this.azOpenai(args, servers) }),
+			...(servers.length > 0 && { fallbackProvider: await this.azOpenai(args, servers as unknown as AzureServers) }),
 		}) as AzureOpenAIProvider; // Override type so autocomplete works
 	}
 
