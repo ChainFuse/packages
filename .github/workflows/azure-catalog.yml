@@ -39,11 +39,11 @@ jobs:
             const [{ CognitiveServicesManagementClient }, { SubscriptionClient }, { ClientSecretCredential }] = await Promise.all([import('@azure/arm-cognitiveservices'), import('@azure/arm-resources-subscriptions'), import('@azure/identity')]);
 
             const credential = new ClientSecretCredential(process.env.AZURE_TENANT_ID, process.env.AZURE_CLIENT_ID, process.env.AZURE_CLIENT_SECRET);
-          env:
-            AZURE_SUB_ID: ${{ secrets.AZURE_SUB_ID }}
-            AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-            AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-            AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        env:
+          AZURE_SUB_ID: ${{ secrets.AZURE_SUB_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       # - run: npx prettier --write packages/types/src/ai-tools/azure-catalog.ts
       # - name: Git Setup
       #   run: |
