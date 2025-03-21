@@ -100,7 +100,7 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public azOpenai(args: AiRequestConfig, server: Servers[number]) {
+	public azOpenai(args: AiRequestConfig, server: Servers[number], cost?: { inputTokenCost?: string; outputTokenCost?: string }) {
 		return import('@ai-sdk/azure').then(async ({ createAzure }) =>
 			createAzure({
 				apiKey: this.config.providers.azureOpenAi.apiTokens[`AZURE_API_KEY_${server.id.toUpperCase().replaceAll('-', '_')}`]!,
@@ -112,6 +112,7 @@ export class AiRawProviders extends AiBase {
 				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'azure-openai', server.id.toLowerCase()].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
+					...(cost && { 'cf-aig-custom-cost': JSON.stringify({ per_token_in: cost.inputTokenCost ? parseFloat(cost.inputTokenCost) : undefined, per_token_out: cost.outputTokenCost ? parseFloat(cost.outputTokenCost) : undefined }) }),
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
