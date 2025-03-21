@@ -89,7 +89,7 @@ export class ServerSelector extends AiBase {
 		return Array.from(regions);
 	}
 
-	public closestServers(
+	public async closestServers(
 		servers: typeof azureCatalog,
 		requiredCapability?: string,
 		userCoordinate: Coordinate = {
@@ -98,6 +98,20 @@ export class ServerSelector extends AiBase {
 		},
 		privacyRegion: PrivacyRegion[] = ServerSelector.determinePrivacyRegion(this.config.geoRouting?.country, this.config.geoRouting?.continent),
 	) {
+		if (!this.config.geoRouting?.userCoordinate?.lat || !this.config.geoRouting?.userCoordinate?.lon || !this.config.geoRouting?.country || !this.config.geoRouting?.continent) {
+			console.warn('Location not provided, falling back to nearest Cloudflare POP', 'WARNING: This is slow');
+
+			try {
+				const geoJson = await fetch(new URL('https://workers.cloudflare.com/cf.json')).then((geoResponse) => geoResponse.json().then((json) => json as IncomingRequestCfProperties));
+
+				if (!this.config.geoRouting?.userCoordinate?.lat) userCoordinate.lat = geoJson.latitude ?? '0';
+				if (!this.config.geoRouting?.userCoordinate?.lon) userCoordinate.lon = geoJson.longitude ?? '0';
+				if (!this.config.geoRouting?.country || !this.config.geoRouting?.continent) privacyRegion = ServerSelector.determinePrivacyRegion(geoJson.country, geoJson.continent);
+			} catch (error) {
+				console.error('Failed to use nearest Cloudflare POP, service distance and privacy regions will be wrong');
+			}
+		}
+
 		// Skip over the rest of logic if the server can't handle the incoming request
 		// @ts-expect-error it's always strings, just sometimes string literals
 		const featureFilteredServers = requiredCapability ? servers.filter((server) => server.languageModelAvailability.includes(requiredCapability) || server.textEmbeddingModelAvailability.includes(requiredCapability)) : servers;
