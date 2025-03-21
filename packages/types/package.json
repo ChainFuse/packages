@@ -82,6 +82,10 @@
 		"./ai-tools/catalog/workers-ai": {
 			"import": "./dist/ai-tools/workers-ai-catalog.js",
 			"types": "./dist/ai-tools/workers-ai-catalog.d.ts"
+		},
+		"./ai-tools/catalog/azure": {
+			"import": "./dist/ai-tools/azure-catalog.js",
+			"types": "./dist/ai-tools/azure-catalog.d.ts"
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",
