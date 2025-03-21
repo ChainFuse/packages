@@ -2,7 +2,7 @@ import { Helpers } from '@chainfuse/helpers';
 import type { Coordinate } from '@chainfuse/types';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import haversine from 'haversine-distance';
-import { AiBase } from '../base.mjs';
+import { AiBase } from './base.mts';
 import type { Server } from './types.mjs';
 
 export enum PrivacyRegion {
@@ -19,9 +19,7 @@ export enum PrivacyRegion {
 	UK_General_Data_Protection_Regulation = 'UK-GDPR',
 }
 
-export abstract class ServerSelector extends AiBase {
-	public readonly servers = new Set<Server>();
-
+export class ServerSelector extends AiBase {
 	public static determinePrivacyRegion(country?: IncomingRequestCfProperties['country'], continent?: IncomingRequestCfProperties['continent']) {
 		const regions = new Set<PrivacyRegion>();
 
@@ -105,7 +103,7 @@ export abstract class ServerSelector extends AiBase {
 	}
 
 	public closestServers(
-		requiredCapability?: (Server['languageModelAvailability'] | Server['textEmbeddingModelAvailability'])[number],
+		requiredCapability?: string,
 		userCoordinate: Coordinate = {
 			lat: this.config.geoRouting?.userCoordinate?.lat ?? '0',
 			lon: this.config.geoRouting?.userCoordinate?.lon ?? '0',
