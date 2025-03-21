@@ -158,7 +158,6 @@ jobs:
                       const model = models.find(
                         (model) =>
                           model.kind === server.kind &&
-                          //
                           model.model?.format === deployment?.properties?.model?.format &&
                           model.model?.name === deployment?.properties?.model?.name &&
                           model.model?.version === deployment?.properties?.model?.version,
