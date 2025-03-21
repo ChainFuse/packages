@@ -118,6 +118,77 @@ jobs:
                 throw new Error(`Invalid numeric part in input: "${input}"`);
               }
             }
+
+            const json = await Promise.all(
+              rawServers.map(async (server) => {
+                const aiClient = new CognitiveServicesManagementClient(credential, subscriptionId);
+                const location = locations.find((location) => location.name === server.location);
+
+                const [deployments, models] = await Promise.all([
+                  (async () => {
+                    const idParts = server.id?.split('/');
+                    const resourceGroupName = idParts?.[idParts.indexOf('resourceGroups') + 1];
+
+                    const deployments: DeploymentItem[] = [];
+                    for await (const deployment of aiClient.deployments.list(resourceGroupName!, server.name!)) {
+                      deployments.push(deployment);
+                    }
+
+                    return deployments;
+                  })(),
+                  (async () => {
+                    const models = [];
+                    for await (const model of aiClient.models.list(location!.name!)) {
+                      models.push(model);
+                    }
+
+                    return models;
+                  })(),
+                ]);
+
+                return {
+                  id: server.name,
+                  coordinate: {
+                    lat: location?.metadata?.latitude,
+                    lon: location?.metadata?.longitude,
+                  },
+                  privacyRegion: server.tags?.['privacy-region'],
+                  languageModelAvailability: deployments
+                    .filter((deployment) => deployment.properties?.capabilities?.['chatCompletion'] === 'true')
+                    .map((deployment) => {
+                      const model = models.find(
+                        (model) =>
+                          model.kind === server.kind &&
+                          //
+                          model.model?.format === deployment?.properties?.model?.format &&
+                          model.model?.name === deployment?.properties?.model?.name &&
+                          model.model?.version === deployment?.properties?.model?.version,
+                      );
+
+                      const skuCost = model?.model?.skus?.find((sku) => sku.name === deployment?.sku?.name)?.costs as CostItem;
+
+                      const inputTokenMeter = skuCost?.find((costItem) => costItem.name === 'ContextToken' || costItem.name === 'NoCachedContextToken')?.meterId;
+                      const inputTokenPrice = pricing.find((price) => price.meterId === inputTokenMeter);
+                      const outputTokenMeter = skuCost?.find((costItem) => costItem.name === 'GeneratedToken')?.meterId;
+                      const outputTokenPrice = pricing.find((price) => price.meterId === outputTokenMeter);
+
+                      return {
+                        name: deployment.name,
+                        inputTokenCost: (inputTokenPrice?.unitOfMeasure ? (inputTokenPrice.unitPrice / parseShorthandNumber(inputTokenPrice.unitOfMeasure)).toFixed(20) : inputTokenPrice?.unitPrice.toFixed(20))?.replace(/0+$/i, ''),
+                        outputTokenCost: (outputTokenPrice?.unitOfMeasure ? (outputTokenPrice.unitPrice / parseShorthandNumber(outputTokenPrice.unitOfMeasure)).toFixed(20) : outputTokenPrice?.unitPrice.toFixed(20))?.replace(/0+$/i, ''),
+                      };
+                    }),
+                  imageModelAvailability: deployments.filter((model) => model.properties?.capabilities?.['imageGenerations'] === 'true').map((model) => model.name),
+                  textEmbeddingModelAvailability: deployments.filter((model) => model.properties?.capabilities?.['embeddings'] === 'true').map((model) => model.name),
+                };
+              }),
+            );
+
+            await import('node:fs').then(({ createWriteStream }) => {
+              const writeStream = createWriteStream('packages/types/src/ai-tools/azure-catalog.ts', { encoding: 'utf8' });
+              writeStream.write(`export const azureCatalog = ${JSON.stringify(json, null, '\t')} as const`);
+              writeStream.end();
+            });
         env:
           AZURE_SUB_ID: ${{ secrets.AZURE_SUB_ID }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
