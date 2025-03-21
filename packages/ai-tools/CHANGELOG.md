@@ -1,5 +1,25 @@
 # @chainfuse/ai-tools
 
+## 0.9.0
+
+### Minor Changes
+
+- [`d8ea94f`](https://github.com/ChainFuse/packages/commit/d8ea94fb703e0947bcc24ce16a8b31ca610d57f7) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools (feat): Now provide cost data to ai gateway
+
+### Patch Changes
+
+- [#327](https://github.com/ChainFuse/packages/pull/327) [`eebc217`](https://github.com/ChainFuse/packages/commit/eebc2177aef539edb4b0f3a3748c211b58c435c0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai
+
+- [#329](https://github.com/ChainFuse/packages/pull/329) [`35cb8c8`](https://github.com/ChainFuse/packages/commit/35cb8c8363ced2bf15f44cb4aced9ef560479df9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint
+
+- [#328](https://github.com/ChainFuse/packages/pull/328) [`09ca2c4`](https://github.com/ChainFuse/packages/commit/09ca2c43646c36e1e4e3fa00ee7ee9d576a75e4e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [`aacbeea`](https://github.com/ChainFuse/packages/commit/aacbeea173af926477de373ebf96be260a13464f) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Update to new auto generated catalog
+
+- Updated dependencies [[`eebc217`](https://github.com/ChainFuse/packages/commit/eebc2177aef539edb4b0f3a3748c211b58c435c0), [`35cb8c8`](https://github.com/ChainFuse/packages/commit/35cb8c8363ced2bf15f44cb4aced9ef560479df9), [`09ca2c4`](https://github.com/ChainFuse/packages/commit/09ca2c43646c36e1e4e3fa00ee7ee9d576a75e4e), [`8276bc9`](https://github.com/ChainFuse/packages/commit/8276bc92c52abd3a8f6e4e9c0fb595f453f0e0b3), [`eae84cc`](https://github.com/ChainFuse/packages/commit/eae84cca1554adcc4f1b998fe1b823e82a5af33e)]:
+    - @chainfuse/helpers@2.1.1
+    - @chainfuse/types@2.0.0
+
 ## 0.8.0
 
 ### Minor Changes
