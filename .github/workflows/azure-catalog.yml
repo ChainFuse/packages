@@ -36,7 +36,9 @@ jobs:
       - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
-            const [{ CognitiveServicesManagementClient }, { SubscriptionClient }, { ClientSecretCredential }] = await Promise.all([import('@azure/arm-cognitiveservices'), import('@azure/arm-resources-subscriptions'), import('@azure/identity')]);
+            const { CognitiveServicesManagementClient } = require('@azure/arm-cognitiveservices');
+            const { SubscriptionClient } = require('@azure/arm-resources-subscriptions');
+            const { ClientSecretCredential } = require('@azure/identity');
 
             const credential = new ClientSecretCredential(process.env.AZURE_TENANT_ID, process.env.AZURE_CLIENT_ID, process.env.AZURE_CLIENT_SECRET);
         env:
