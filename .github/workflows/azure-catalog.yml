@@ -71,14 +71,14 @@ jobs:
               (async () => {
                 const subClient = new SubscriptionClient(credential);
                 const locations = [];
-                for await (const location of subClient.subscriptions.listLocations(subscriptionId)) {
+                for await (const location of subClient.subscriptions.listLocations(process.env.AZURE_SUB_ID)) {
                   locations.push(location);
                 }
 
                 return locations;
               })(),
               (async () => {
-                const aiClient = new CognitiveServicesManagementClient(credential, subscriptionId);
+                const aiClient = new CognitiveServicesManagementClient(credential, process.env.AZURE_SUB_ID);
 
                 const accounts = [];
                 for await (const account of aiClient.accounts.list()) {
