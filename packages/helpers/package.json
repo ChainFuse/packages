@@ -1,6 +1,6 @@
 {
 	"name": "@chainfuse/helpers",
-	"version": "2.1.1",
+	"version": "2.2.0",
 	"description": "",
 	"author": "ChainFuse",
 	"homepage": "https://github.com/ChainFuse/packages/tree/main/packages/helpers#readme",
@@ -54,7 +54,7 @@
 		"uuid": "^11.1.0"
 	},
 	"devDependencies": {
-		"@chainfuse/types": "^2.0.0",
+		"@chainfuse/types": "^2.1.0",
 		"@cloudflare/workers-types": "^4.20250320.0",
 		"@types/node": "^22.13.11"
 	}

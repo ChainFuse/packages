@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 2.2.0
+
+### Minor Changes
+
+- [`6f89634`](https://github.com/ChainFuse/packages/commit/6f896348bc5aba5e83045552da1fc92251b47c81) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(deprecate): `D1Blob` isn't used anymore
+
 ## 2.1.1
 
 ### Patch Changes
