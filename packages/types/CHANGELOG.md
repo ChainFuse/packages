@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.1.0
+
+### Minor Changes
+
+- [`6518211`](https://github.com/ChainFuse/packages/commit/651821160afa2b9965f457befa9903d02021bd86) Thanks [@demosjarco](https://github.com/demosjarco)! - types(deprecate): `D1Blob` isn't used anymore
+
 ## 2.0.0
 
 ### Major Changes
