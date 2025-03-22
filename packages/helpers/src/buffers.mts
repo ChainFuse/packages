@@ -1,4 +1,4 @@
-import type { D1Blob, PrefixedUuid, UndefinedProperties, UuidExport } from '@chainfuse/types';
+import type { PrefixedUuid, UndefinedProperties, UuidExport } from '@chainfuse/types';
 import { CryptoHelpers } from './crypto.mjs';
 
 export class BufferHelpers {
@@ -22,7 +22,7 @@ export class BufferHelpers {
 		return number.toString(16).length % 2 === 0 ? number.toString(16) : `0${number.toString(16)}`;
 	}
 
-	public static bufferToBigint(buffer: UuidExport['blob'] | D1Blob) {
+	public static bufferToBigint(buffer: UuidExport['blob']) {
 		return this.bufferToHex(buffer).then((hex) => BigInt(`0x${hex}`));
 	}
 
@@ -40,15 +40,15 @@ export class BufferHelpers {
 		);
 	}
 
-	public static bufferToHex(buffer: UuidExport['blob'] | D1Blob): Promise<UuidExport['hex']> {
+	public static bufferToHex(buffer: UuidExport['blob']): Promise<UuidExport['hex']> {
 		return (
 			import('node:buffer')
-				// @ts-expect-error `ArrayBufferLike` or D1Blob is actually accepted and fine
+				// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
 				.then(({ Buffer }) => Buffer.from(buffer).toString('hex'))
 				/**
 				 * @link https://jsbm.dev/AoXo8dEke1GUg
 				 */
-				// @ts-expect-error `ArrayBufferLike` or D1Blob is actually accepted and fine
+				// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
 				.catch(() => new Uint8Array(buffer).reduce((output, elem) => output + ('0' + elem.toString(16)).slice(-2), ''))
 		);
 	}
@@ -83,10 +83,10 @@ export class BufferHelpers {
 		}
 	}
 
-	public static bufferToBase64(buffer: UuidExport['blob'] | D1Blob, urlSafe: boolean): Promise<string> {
+	public static bufferToBase64(buffer: UuidExport['blob'], urlSafe: boolean): Promise<string> {
 		return (
 			import('node:buffer')
-				// @ts-expect-error `ArrayBufferLike` or D1Blob is actually accepted and fine
+				// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
 				.then(({ Buffer }) => Buffer.from(buffer).toString(urlSafe ? 'base64url' : 'base64'))
 				.catch(() => {
 					// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
@@ -122,11 +122,10 @@ export class BufferHelpers {
 	public static uuidConvert(input: UuidExport['utf8']): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['hex']): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['blob']): Promise<UuidExport>;
-	public static uuidConvert(input: D1Blob): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['base64']): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['base64url']): Promise<UuidExport>;
 	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-	public static uuidConvert(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExport['blob'] | D1Blob): Promise<UuidExport | UndefinedProperties<UuidExport>> {
+	public static uuidConvert(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExport['blob']): Promise<UuidExport | UndefinedProperties<UuidExport>> {
 		if (input) {
 			if (typeof input === 'string') {
 				if (this.utf8Regex.test(input)) {
@@ -187,7 +186,7 @@ export class BufferHelpers {
 				return Promise.all([this.bufferToHex(input), this.bufferToBase64(input, false), this.bufferToBase64(input, true)]).then(([hex, base64, base64url]) => ({
 					utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}`,
 					hex,
-					// @ts-expect-error `ArrayBufferLike` or D1Blob is actually accepted and fine
+					// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
 					blob: new Uint8Array(input).buffer,
 					base64,
 					base64url,
