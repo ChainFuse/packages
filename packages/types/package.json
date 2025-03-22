@@ -43,6 +43,10 @@
 			"import": "./dist/index.js",
 			"types": "./dist/index.d.ts"
 		},
+		"./d0": {
+			"import": "./dist/d0/index.js",
+			"types": "./dist/d0/index.d.ts"
+		},
 		"./d1": {
 			"import": "./dist/d1/index.js",
 			"types": "./dist/d1/index.d.ts"
