@@ -14,7 +14,7 @@ export class AiRawProviders extends AiBase {
 		const updateMetadata = import('@chainfuse/helpers')
 			.then(({ NetHelpers }) => NetHelpers.cfApi(this.config.gateway.apiToken))
 			.then((cf) =>
-				cf.aiGateway.logs.edit(this.config.environment, response.headers.get('cf-aig-log-id')!, {
+				cf.aiGateway.logs.edit(this.gatewayName, response.headers.get('cf-aig-log-id')!, {
 					account_id: this.config.gateway.accountId,
 					metadata: {
 						...Object.entries({
@@ -45,7 +45,7 @@ export class AiRawProviders extends AiBase {
 	public oaiOpenai(args: AiRequestConfig) {
 		return import('@ai-sdk/openai').then(async ({ createOpenAI }) =>
 			createOpenAI({
-				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'openai'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
+				baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'openai'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: this.config.providers.openAi.apiToken,
 				organization: this.config.providers.openAi.organization,
 				headers: {
@@ -74,10 +74,10 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						await this.updateGatewayLog(response, metadataHeader, startRoundTrip, response.headers.has('openai-processing-ms') ? parseInt(response.headers.get('openai-processing-ms')!) : undefined);
 
@@ -109,7 +109,7 @@ export class AiRawProviders extends AiBase {
 				 * From the table, pick the `Latest GA release` for `Data plane - inference`
 				 */
 				apiVersion: '2024-10-21',
-				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'azure-openai', server.id.toLowerCase()].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
+				baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'azure-openai', server.id.toLowerCase()].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					...(cost && { 'cf-aig-custom-cost': JSON.stringify({ per_token_in: cost.inputTokenCost ?? undefined, per_token_out: cost.outputTokenCost ?? undefined }) }),
@@ -150,10 +150,10 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						await this.updateGatewayLog(response, metadataHeader, startRoundTrip, response.headers.has('x-envoy-upstream-service-time') ? parseInt(response.headers.get('x-envoy-upstream-service-time')!) : undefined);
 
@@ -179,7 +179,7 @@ export class AiRawProviders extends AiBase {
 	public anthropic(args: AiRequestConfig) {
 		return import('@ai-sdk/anthropic').then(async ({ createAnthropic }) =>
 			createAnthropic({
-				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'anthropic'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
+				baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'anthropic'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: this.config.providers.anthropic.apiToken,
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
@@ -206,10 +206,10 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
 
@@ -302,10 +302,10 @@ export class AiRawProviders extends AiBase {
 												headers.set('X-Idempotency-Id', idempotencyId);
 											}
 
-											if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+											if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 											return fetch(input, { ...rawInit, headers }).then(async (response) => {
-												if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+												if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 												// Inject it to have it available for retries
 												const mutableHeaders = new Headers(response.headers);
@@ -356,7 +356,7 @@ export class AiRawProviders extends AiBase {
 				 * `v1beta` is the only one that supports function calls as of now
 				 * @link https://ai.google.dev/gemini-api/docs/api-versions
 				 */
-				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'google-ai-studio', 'v1beta'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
+				baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'google-ai-studio', 'v1beta'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: this.config.providers.googleAi.apiToken,
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
@@ -383,10 +383,10 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
 
@@ -412,7 +412,7 @@ export class AiRawProviders extends AiBase {
 	public restWorkersAi(args: AiRequestConfig): Promise<OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Embeddings'>>> {
 		return import('@ai-sdk/openai-compatible').then(async ({ createOpenAICompatible }) =>
 			createOpenAICompatible({
-				baseURL: new URL(['v1', this.config.gateway.accountId, this.config.environment, 'workers-ai', 'v1'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
+				baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'workers-ai', 'v1'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: (this.config.providers.workersAi as AiConfigWorkersaiRest).apiToken,
 				headers: {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
@@ -440,10 +440,10 @@ export class AiRawProviders extends AiBase {
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
-					if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+					if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? !this.config.environment.startsWith('production')) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+						if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
 
@@ -472,7 +472,7 @@ export class AiRawProviders extends AiBase {
 				createWorkersAI({
 					binding: this.config.providers.workersAi,
 					gateway: {
-						id: this.config.environment,
+						id: this.gatewayName,
 						...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
 						...(args.skipCache && { skipCache: true }),
 						metadata: {
