@@ -82,10 +82,19 @@
 		"./discourse/topic": {
 			"import": "./dist/discourse/topic/index.js",
 			"types": "./dist/discourse/topic/index.d.ts"
+		},
+		"./wf": {
+			"import": "./dist/wf/index.js",
+			"types": "./dist/wf/index.d.ts"
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20250321.0"
+		"@cloudflare/workers-types": "^4.20250321.0",
+		"@types/validator": "^13.12.3"
+	},
+	"dependencies": {
+		"validator": "^13.15.0",
+		"zod": "^3.24.2"
 	}
 }
