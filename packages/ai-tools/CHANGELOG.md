@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.11.0
+
+### Minor Changes
+
+- [`58d9e1a`](https://github.com/ChainFuse/packages/commit/58d9e1a2b589513207e97213d1d12c4295240013) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Export wf stuff
+
 ## 0.10.0
 
 ### Minor Changes
