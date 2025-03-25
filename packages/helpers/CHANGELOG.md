@@ -1,5 +1,13 @@
 # @chainfuse/helpers
 
+## 2.2.1
+
+### Patch Changes
+
+- [#335](https://github.com/ChainFuse/packages/pull/335) [`a70965f`](https://github.com/ChainFuse/packages/commit/a70965f316d0321dddfe6737519d058e2b0ca123) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#334](https://github.com/ChainFuse/packages/pull/334) [`b2e26d9`](https://github.com/ChainFuse/packages/commit/b2e26d9a67c7551d8835c25d77a8a2ef1633896e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 2.2.0
 
 ### Minor Changes

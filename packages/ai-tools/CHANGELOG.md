@@ -1,5 +1,21 @@
 # @chainfuse/ai-tools
 
+## 0.10.0
+
+### Minor Changes
+
+- [`a3f7276`](https://github.com/ChainFuse/packages/commit/a3f7276271ffeb2a5c7e6b3e9d0cfa83f8811a66) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): More flexible gateway environment
+
+### Patch Changes
+
+- [#335](https://github.com/ChainFuse/packages/pull/335) [`a70965f`](https://github.com/ChainFuse/packages/commit/a70965f316d0321dddfe6737519d058e2b0ca123) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#334](https://github.com/ChainFuse/packages/pull/334) [`b2e26d9`](https://github.com/ChainFuse/packages/commit/b2e26d9a67c7551d8835c25d77a8a2ef1633896e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- Updated dependencies [[`a70965f`](https://github.com/ChainFuse/packages/commit/a70965f316d0321dddfe6737519d058e2b0ca123), [`b2e26d9`](https://github.com/ChainFuse/packages/commit/b2e26d9a67c7551d8835c25d77a8a2ef1633896e)]:
+    - @chainfuse/helpers@2.2.1
+    - @chainfuse/types@2.1.1
+
 ## 0.9.0
 
 ### Minor Changes
