@@ -38,7 +38,7 @@
 		"@azure/identity": "^4.8.0",
 		"@demosjarco/prettier-config": "^1.0.2",
 		"@eslint/js": "^9.23.0",
-		"@types/node": "^22.13.11",
+		"@types/node": "^22.13.13",
 		"eslint": "^9.23.0",
 		"prettier": "^3.5.3",
 		"tsx": "^4.19.3",
