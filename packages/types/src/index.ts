@@ -2,6 +2,7 @@ export * from './ai-tools/index.js';
 export * from './d0/index.js';
 export * from './d1/index.js';
 export * from './discourse/index.js';
+export * from './wf/index.js';
 
 type MethodKeys<T> = {
 	[P in keyof T]: T[P] extends (...args: any[]) => any ? P : never;
