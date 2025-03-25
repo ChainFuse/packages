@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.2.0
+
+### Minor Changes
+
+- [`34d1e72`](https://github.com/ChainFuse/packages/commit/34d1e7270bd3f5499283db54abcf6ca9d4e0842a) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Export wf stuff
+
 ## 2.1.1
 
 ### Patch Changes
