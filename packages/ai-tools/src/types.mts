@@ -13,7 +13,23 @@ export interface AiConfig {
 		country?: IncomingRequestCfProperties['country'];
 		continent?: IncomingRequestCfProperties['continent'];
 	};
-	environment: 'internal' | 'production-passive' | 'preview-passive' | 'production-active' | 'preview-active';
+	billing:
+		| {
+				noCost: true;
+		  }
+		| ({
+				noCost: false;
+				environment: 'production' | 'preview';
+		  } & (
+				| {
+						user: 'bot';
+						action: 'passive';
+				  }
+				| {
+						user: 'human' | 'bot';
+						action: 'active';
+				  }
+		  ));
 	providers: AiConfigProviders;
 	backgroundContext?: ExecutionContext;
 }

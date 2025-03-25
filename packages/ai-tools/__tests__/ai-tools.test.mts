@@ -42,7 +42,9 @@ await describe('AI Tests', () => {
 				country: geoJson.country,
 				continent: geoJson.continent,
 			},
-			environment: 'internal',
+			billing: {
+				noCost: true,
+			},
 			providers: {
 				anthropic: {
 					apiToken: 'sk-ant-*',
