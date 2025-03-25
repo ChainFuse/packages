@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.11.1
+
+### Patch Changes
+
+- [`fd7bd8a`](https://github.com/ChainFuse/packages/commit/fd7bd8a3aaa55242c49e8dab6c6d20c3ec115796) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Export `ServerSelector`
+
 ## 0.11.0
 
 ### Minor Changes
