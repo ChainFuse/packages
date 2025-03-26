@@ -40,52 +40,67 @@ jobs:
 
             const credential = new ClientSecretCredential(process.env.AZURE_TENANT_ID, process.env.AZURE_CLIENT_ID, process.env.AZURE_CLIENT_SECRET);
 
-            const [pricing, locations, rawServers] = await Promise.all([
-              (async () => {
-                let url = new URL('api/retail/prices', 'https://prices.azure.com');
-                url.searchParams.set('$filter', "productName eq 'Azure OpenAI'");
+            core.startGroup('Azure Pricing API');
+            const pricing = await (async () => {
+              let url = new URL('api/retail/prices', 'https://prices.azure.com');
+              url.searchParams.set('$filter', "productName eq 'Azure OpenAI'");
+              let page = 0;
 
-                const pricing = [];
+              const pricing = [];
 
-                while (url) {
-                  const response = await fetch(url);
-                  if (response.ok) {
-                    const { Items, NextPageLink } = await response.json();
+              while (url) {
+                core.info(`Fetching pricing page ${++page}`);
+                const response = await fetch(url);
+                if (response.ok) {
+                  const { Items, NextPageLink } = await response.json();
 
-                    pricing.push(...Items);
+                  pricing.push(...Items);
 
-                    if (NextPageLink) {
-                      url = new URL(NextPageLink);
-                    } else {
-                      url = null;
-                    }
+                  if (NextPageLink) {
+                    url = new URL(NextPageLink);
                   } else {
                     url = null;
                   }
+                } else {
+                  url = null;
                 }
+              }
 
-                return pricing;
-              })(),
-              (async () => {
-                const subClient = new SubscriptionClient(credential);
-                const locations = [];
-                for await (const location of subClient.subscriptions.listLocations(process.env.AZURE_SUB_ID)) {
-                  locations.push(location);
-                }
+              core.info(`Fetched ${pricing.length} pricing items from ${page} pages`);
+              return pricing;
+            })();
+            core.endGroup();
 
-                return locations;
-              })(),
-              (async () => {
-                const aiClient = new CognitiveServicesManagementClient(credential, process.env.AZURE_SUB_ID);
+            core.startGroup('Azure Locations API');
+            const locations = await (async () => {
+              const subClient = new SubscriptionClient(credential);
+              const locations = [];
 
-                const accounts = [];
-                for await (const account of aiClient.accounts.list()) {
-                  accounts.push(account);
-                }
+              core.info('Fetching locations');
+              for await (const location of subClient.subscriptions.listLocations(process.env.AZURE_SUB_ID)) {
+                locations.push(location);
+              }
 
-                return accounts;
-              })(),
-            ]);
+              core.info(`Fetched ${locations.length} locations`);
+              return locations;
+            })();
+            core.endGroup();
+
+            core.startGroup('Deployed Azure AI Servers');
+            const rawServers = await (async () => {
+              const aiClient = new CognitiveServicesManagementClient(credential, process.env.AZURE_SUB_ID);
+
+              const accounts = [];
+
+              core.info('Fetching servers');
+              for await (const account of aiClient.accounts.list()) {
+                accounts.push(account);
+              }
+
+              core.info(`Fetched ${accounts.length} servers`);
+              return accounts;
+            })();
+            core.endGroup();
 
             function parseShorthandNumber(input) {
               const multipliers = Object.freeze({
