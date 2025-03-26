@@ -16,6 +16,6 @@ export class AiRegistry extends AiBase {
 	}
 
 	public registry(args: AiRequestConfig) {
-		return import('ai').then(async ({ experimental_createProviderRegistry: createProviderRegistry }) => createProviderRegistry(await this.providers(args)));
+		return import('ai').then(async ({ createProviderRegistry }) => createProviderRegistry(await this.providers(args)));
 	}
 }
