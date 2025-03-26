@@ -210,7 +210,7 @@ jobs:
             core.endGroup();
 
             core.startGroup('Merging catalog');
-            const finalJson = await import('@chainfuse/types/ai-tools/catalog/azure')
+            const finalJson = await import(`${{ github.workspace }}/packages/types/dist/ai-tools/azure/catalog.js`)
               .then(({ azureCatalog }) => {
                 core.info('Loaded existing catalog');
 
