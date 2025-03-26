@@ -9,22 +9,17 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
 				outputTokenCost: 0.00003,
 			},
 			{
 				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
-				outputTokenCost: 0.0000015,
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
 				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
-				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
 			},
 		],
@@ -41,7 +36,6 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
 				outputTokenCost: 0.00003,
 			},
 			{
@@ -76,7 +70,6 @@ export const azureCatalog = [
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.65e-7,
-				outputTokenCost: 6.6e-7,
 			},
 			{
 				name: 'gpt-4o',
@@ -97,18 +90,14 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4-turbo',
 				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
-				outputTokenCost: 6e-7,
 			},
 		],
 		imageModelAvailability: [],
@@ -144,7 +133,6 @@ export const azureCatalog = [
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.65e-7,
-				outputTokenCost: 6.6e-7,
 			},
 			{
 				name: 'gpt-4o',
@@ -169,7 +157,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
 				outputTokenCost: 0.0000015,
 			},
 			{
@@ -201,17 +188,13 @@ export const azureCatalog = [
 			{
 				name: 'gpt-35-turbo',
 				inputTokenCost: 5e-7,
-				outputTokenCost: 0.0000015,
 			},
 			{
 				name: 'gpt-4o-mini',
-				inputTokenCost: 1.65e-7,
-				outputTokenCost: 6.6e-7,
 			},
 			{
 				name: 'o1',
 				inputTokenCost: 0.000015,
-				outputTokenCost: 0.00005999999999999999,
 			},
 			{
 				name: 'o3-mini',
@@ -220,7 +203,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
 				outputTokenCost: 0.00001,
 			},
 		],
@@ -253,17 +235,14 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
 				outputTokenCost: 0.00003,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
-				outputTokenCost: 6e-7,
 			},
 			{
 				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
 				outputTokenCost: 0.0000015,
 			},
 		],
@@ -280,13 +259,11 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
 				outputTokenCost: 0.0000015,
 			},
 			{
 				name: 'gpt-4o',
 				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4-turbo',
@@ -312,7 +289,6 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
 				outputTokenCost: 0.00001,
 			},
 			{
@@ -320,7 +296,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4o-mini',
-				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
 			},
 		],
@@ -347,7 +322,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4-turbo',
-				outputTokenCost: 0.00003,
 			},
 			{
 				name: 'gpt-4o-mini',
@@ -367,7 +341,6 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
 				outputTokenCost: 0.0000015,
 			},
 			{
@@ -377,7 +350,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4o-mini',
-				inputTokenCost: 1.65e-7,
 				outputTokenCost: 6.6e-7,
 			},
 			{
@@ -449,7 +421,6 @@ export const azureCatalog = [
 			{
 				name: 'gpt-4-turbo',
 				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
 			},
 			{
 				name: 'gpt-4o-mini',
@@ -458,17 +429,13 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'o1',
-				inputTokenCost: 0.000015,
 				outputTokenCost: 0.00005999999999999999,
 			},
 			{
 				name: 'o3-mini',
-				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
 			},
 		],
@@ -490,7 +457,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
 				outputTokenCost: 0.00003,
 			},
 			{
@@ -611,16 +577,12 @@ export const azureCatalog = [
 			{
 				name: 'gpt-4o',
 				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
 			},
 			{
 				name: 'gpt-4o-mini',
-				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
 			},
 		],
@@ -646,7 +608,6 @@ export const azureCatalog = [
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
-				outputTokenCost: 6e-7,
 			},
 		],
 		imageModelAvailability: [],
@@ -670,12 +631,10 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4-turbo',
-				outputTokenCost: 0.00003,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
-				outputTokenCost: 6e-7,
 			},
 		],
 		imageModelAvailability: [],
@@ -696,7 +655,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
 				outputTokenCost: 0.00001,
 			},
 		],
