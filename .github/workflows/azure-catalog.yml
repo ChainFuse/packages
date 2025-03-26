@@ -180,9 +180,33 @@ jobs:
               }),
             );
 
+            const finalJson = await import('./packages/types/dist/ai-tools/azure/catalog.js')
+              .then(({ azureCatalog }) =>
+                import('deepmerge').then(({ default: merge }) =>
+                  merge(azureCatalog, json, {
+                    arrayMerge: (target, source, options) => {
+                      const destination = target.slice();
+
+                      source.forEach((item) => {
+                        const existingIndex = destination.findIndex((destItem) => destItem.id === item.id);
+
+                        if (existingIndex === -1) {
+                          destination.push(options.cloneUnlessOtherwiseSpecified(item, options));
+                        } else if (options.isMergeableObject(item)) {
+                          destination[existingIndex] = merge(destination[existingIndex], item, options);
+                        }
+                      });
+
+                      return destination;
+                    },
+                  }),
+                ),
+              )
+              .catch(() => json);
+
             await import('node:fs').then(({ createWriteStream }) => {
               const writeStream = createWriteStream('packages/types/src/ai-tools/azure/catalog.ts', { encoding: 'utf8' });
-              writeStream.write(`export const azureCatalog = ${JSON.stringify(json, null, '\t')} as const`);
+              writeStream.write(`export const azureCatalog = ${JSON.stringify(finalJson, null, '\t')} as const`);
               writeStream.end();
             });
         env:
