@@ -202,7 +202,7 @@ jobs:
               .then(({ azureCatalog }) => {
                 core.info('Loaded existing catalog');
 
-                return import('deepmerge').then(({ default: merge }) =>
+                return import('deepmerge').then(({ default: merge }) => {
                   const mergedJson = merge(azureCatalog, json, {
                     arrayMerge: (target, source, options) => {
                       const destination = target.slice();
@@ -223,7 +223,7 @@ jobs:
 
                   core.info('Merged catalogs'),
                   return mergedJson;
-                ).catch((e) => {
+                }).catch((e) => {
                   core.warning('Failed merge, using new catalog only');
                   throw e;
                 })
