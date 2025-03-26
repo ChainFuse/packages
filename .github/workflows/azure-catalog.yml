@@ -236,14 +236,14 @@ jobs:
                   core.info('Merged catalogs');
                   return mergedJson;
                 }).catch((e) => {
-                  core.warning('Failed merge, using new catalog only');
                   console.error(e);
+                  core.warning('Failed merge, using new catalog only');
                   throw e;
                 })
               })
               .catch((e) => {
-                core.warning('Failed to load existing catalog found, using new catalog only');
                 console.error(e);
+                core.warning('Failed to load existing catalog found, using new catalog only');
                 return json;
               });
             core.endGroup();
