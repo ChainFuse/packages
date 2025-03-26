@@ -17,7 +17,7 @@ export class AiCustomProviders extends AiBase {
 	}
 
 	public async azOpenai(args: AiRequestConfig, filteredServers?: AzureServers): Promise<AzureOpenAIProvider> {
-		if (!filteredServers) filteredServers = await new ServerSelector(this.config).closestServers(await import('@chainfuse/types/ai-tools/catalog/azure').then(({ azureCatalog }) => azureCatalog));
+		filteredServers ??= await new ServerSelector(this.config).closestServers(await import('@chainfuse/types/ai-tools/catalog/azure').then(({ azureCatalog }) => azureCatalog));
 		const [server, ...servers] = filteredServers;
 
 		const raw = new AiRawProviders(this.config);
