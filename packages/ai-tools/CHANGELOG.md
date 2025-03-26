@@ -1,5 +1,17 @@
 # @chainfuse/ai-tools
 
+## 0.11.2
+
+### Patch Changes
+
+- [`b4757c8`](https://github.com/ChainFuse/packages/commit/b4757c8b64a2e65c43aabb1b8eb1138337616fd3) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): `createProviderRegistry()` no longer experimental
+
+- [`0188d1e`](https://github.com/ChainFuse/packages/commit/0188d1e9152d70260adcda9ef22cf2934ff73cbd) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- Updated dependencies [[`be6f193`](https://github.com/ChainFuse/packages/commit/be6f193beffe2f7af40224fafb32858c25d87918), [`0188d1e`](https://github.com/ChainFuse/packages/commit/0188d1e9152d70260adcda9ef22cf2934ff73cbd)]:
+    - @chainfuse/types@2.2.1
+    - @chainfuse/helpers@2.2.2
+
 ## 0.11.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 2.2.2
+
+### Patch Changes
+
+- [`0188d1e`](https://github.com/ChainFuse/packages/commit/0188d1e9152d70260adcda9ef22cf2934ff73cbd) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
 ## 2.2.1
 
 ### Patch Changes
