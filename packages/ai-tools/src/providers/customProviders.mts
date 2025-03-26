@@ -29,7 +29,18 @@ export class AiCustomProviders extends AiBase {
 					const acc = await accPromise;
 					// @ts-expect-error override for types
 					acc[model.name] = wrapLanguageModel({
-						model: (await raw.azOpenai(args, server, 'inputTokenCost' in model || 'outputTokenCost' in model ? { inputTokenCost: model.inputTokenCost, outputTokenCost: model.outputTokenCost } : undefined))(model.name),
+						model: (
+							await raw.azOpenai(
+								args,
+								server,
+								'inputTokenCost' in model || 'outputTokenCost' in model
+									? {
+											inputTokenCost: 'inputTokenCost' in model && !isNaN(model.inputTokenCost as number) ? (model.inputTokenCost as number) : undefined,
+											outputTokenCost: 'outputTokenCost' in model && !isNaN(model.outputTokenCost as number) ? (model.outputTokenCost as number) : undefined,
+										}
+									: undefined,
+							)
+						)(model.name),
 						middleware: {
 							wrapGenerate: async ({ doGenerate, model, params }) => {
 								try {
@@ -62,8 +73,8 @@ export class AiCustomProviders extends AiBase {
 
 															if (foundModel && ('inputTokenCost' in foundModel || 'outputTokenCost' in foundModel)) {
 																return {
-																	inputTokenCost: foundModel.inputTokenCost,
-																	outputTokenCost: foundModel.outputTokenCost,
+																	inputTokenCost: 'inputTokenCost' in model && !isNaN(model.inputTokenCost as number) ? (model.inputTokenCost as number) : undefined,
+																	outputTokenCost: 'outputTokenCost' in model && !isNaN(model.outputTokenCost as number) ? (model.outputTokenCost as number) : undefined,
 																};
 															} else {
 																return undefined;
