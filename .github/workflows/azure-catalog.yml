@@ -219,9 +219,9 @@ jobs:
 
                       return destination;
                     },
-                  }),
+                  });
 
-                  core.info('Merged catalogs'),
+                  core.info('Merged catalogs');
                   return mergedJson;
                 }).catch((e) => {
                   core.warning('Failed merge, using new catalog only');
