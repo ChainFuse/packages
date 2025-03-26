@@ -212,7 +212,7 @@ jobs:
             core.startGroup('Merging catalog');
             const finalJson = await import(`${{ github.workspace }}/packages/types/dist/ai-tools/azure/catalog.js`)
               .then(({ azureCatalog }) => {
-                core.info('Loaded existing catalog');
+                core.info(`Loaded existing catalog with ${azureCatalog.length} items`);
 
                 try {
                   const merge = require('deepmerge');
@@ -235,7 +235,7 @@ jobs:
                     },
                   });
 
-                  core.info('Merged catalogs');
+                  core.info(`Merged catalogs with ${mergedJson.length} items`);
                   return mergedJson;
                 } catch (e) {
                   console.error(e);
