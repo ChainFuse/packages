@@ -1,6 +1,6 @@
 {
 	"name": "@chainfuse/ai-tools",
-	"version": "0.11.1",
+	"version": "0.11.2",
 	"description": "",
 	"author": "ChainFuse",
 	"homepage": "https://github.com/ChainFuse/packages/tree/main/packages/ai-tools#readme",
@@ -53,8 +53,8 @@
 		"@ai-sdk/google": "^1.2.3",
 		"@ai-sdk/openai": "^1.0.5",
 		"@ai-sdk/openai-compatible": "^0.2.2",
-		"@chainfuse/helpers": "^2.2.1",
-		"@chainfuse/types": "^2.1.1",
+		"@chainfuse/helpers": "^2.2.2",
+		"@chainfuse/types": "^2.2.1",
 		"ai": "^4.2.6",
 		"chalk": "^5.4.1",
 		"haversine-distance": "^1.2.3",

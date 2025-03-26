@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 2.2.1
+
+### Patch Changes
+
+- [`be6f193`](https://github.com/ChainFuse/packages/commit/be6f193beffe2f7af40224fafb32858c25d87918) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Import with extension
+
+- [`0188d1e`](https://github.com/ChainFuse/packages/commit/0188d1e9152d70260adcda9ef22cf2934ff73cbd) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
 ## 2.2.0
 
 ### Minor Changes
