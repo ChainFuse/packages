@@ -160,6 +160,8 @@ jobs:
                   })(),
                 ]);
 
+                core.info(`Server ${server.name} with ${deployments.length} models`);
+
                 return {
                   id: server.name,
                   coordinate: {
@@ -225,12 +227,12 @@ jobs:
                   core.info('Merged catalogs');
                   return mergedJson;
                 }).catch((e) => {
-                  core.warning('Failed merge, using new catalog only');
+                  core.warning('Failed merge, using new catalog only', e);
                   throw e;
                 })
               })
-              .catch(() => {
-                core.warning('Failed to load existing catalog found, using new catalog only');
+              .catch((e) => {
+                core.warning('Failed to load existing catalog found, using new catalog only', e);
                 return json;
               });
             core.endGroup();
@@ -239,7 +241,7 @@ jobs:
             await import('node:fs').then(({ createWriteStream }) => {
               const writeStream = createWriteStream('packages/types/src/ai-tools/azure/catalog.ts', { encoding: 'utf8' });
 
-              core.info('Writing catalog');
+              core.info(`Writing catalog with ${finalJson.length} items`);
               writeStream.write(`export const azureCatalog = ${JSON.stringify(finalJson, null, '\t')} as const`);
 
               writeStream.end();
