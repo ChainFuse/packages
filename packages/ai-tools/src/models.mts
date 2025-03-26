@@ -28,6 +28,7 @@ export class AiModel extends AiBase {
 			.then((registry) =>
 				import('ai').then(({ extractReasoningMiddleware, wrapLanguageModel }) =>
 					wrapLanguageModel({
+						// @ts-expect-error types are or-ed, but correct
 						model: registry.languageModel(model ? `${modelOrProvider}:${model}` : modelOrProvider),
 						middleware: [extractReasoningMiddleware({ tagName: 'think' }), this.middleware],
 					}),
@@ -44,7 +45,12 @@ export class AiModel extends AiBase {
 	public wrappedTextEmbeddingModel<P extends ValidProviders>(args: AiRequestConfig, provider: P, model: ProviderTextEmbeddingModels[P]): Promise<Parameters<typeof embed | typeof embedMany>[0]['model']>;
 	public wrappedTextEmbeddingModel(args: AiRequestConfig, model: TextEmbeddingModelValues): Promise<Parameters<typeof embed | typeof embedMany>[0]['model']>;
 	public wrappedTextEmbeddingModel<P extends ValidProviders>(args: AiRequestConfig, modelOrProvider: TextEmbeddingModelValues | P, model?: ProviderTextEmbeddingModels[P]): Promise<Parameters<typeof embed | typeof embedMany>[0]['model']> {
-		return import('./registry.mjs').then(({ AiRegistry }) => new AiRegistry(this.config).registry(args)).then((registry) => registry.textEmbeddingModel(model ? `${modelOrProvider}:${model}` : modelOrProvider));
+		return import('./registry.mjs')
+			.then(({ AiRegistry }) => new AiRegistry(this.config).registry(args))
+			.then((registry) =>
+				// @ts-expect-error types are or-ed, but correct
+				registry.textEmbeddingModel(model ? `${modelOrProvider}:${model}` : modelOrProvider),
+			);
 	}
 
 	private get middleware(): LanguageModelV1Middleware {
