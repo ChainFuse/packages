@@ -239,7 +239,7 @@ jobs:
                   console.error(e);
                   core.warning('Failed merge, using new catalog only');
                   throw e;
-                })
+                });
               })
               .catch((e) => {
                 console.error(e);
