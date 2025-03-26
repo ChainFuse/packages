@@ -18,7 +18,6 @@ await describe('AI Tests', () => {
 	let config: AiConfig;
 	let geoJson: IncomingRequestCfProperties;
 	const args: AiRequestConfig = {
-		messageId: randomUUID(),
 		dataspaceId: 'd_00000000-0000-0000-0000-000000000002_p',
 		executor: {
 			type: GH_RUNNER_ID ? 'githubCicd' : 'workflow',
