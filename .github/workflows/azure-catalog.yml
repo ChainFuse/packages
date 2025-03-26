@@ -201,12 +201,14 @@ jobs:
                         inputTokenCost: inputTokenPrice?.unitPrice ? parseFloat(inputTokenPrice?.unitOfMeasure ? (inputTokenPrice.unitPrice / parseShorthandNumber(inputTokenPrice.unitOfMeasure)).toFixed(20) : inputTokenPrice?.unitPrice.toFixed(20)) : undefined,
                         outputTokenCost: outputTokenPrice?.unitPrice ? parseFloat(outputTokenPrice?.unitOfMeasure ? (outputTokenPrice.unitPrice / parseShorthandNumber(outputTokenPrice.unitOfMeasure)).toFixed(20) : outputTokenPrice?.unitPrice.toFixed(20)) : undefined,
                       };
-                    }),
-                  imageModelAvailability: deployments.filter((model) => model.properties?.capabilities?.['imageGenerations'] === 'true').map((model) => model.name),
-                  textEmbeddingModelAvailability: deployments.filter((model) => model.properties?.capabilities?.['embeddings'] === 'true').map((model) => model.name),
+                    })
+                    .sort((a, b) => a.name.localeCompare(b.name)),
+                  imageModelAvailability: deployments.filter((model) => model.properties?.capabilities?.['imageGenerations'] === 'true').map((model) => model.name).sort((a, b) => a.localeCompare(b)),
+                  textEmbeddingModelAvailability: deployments.filter((model) => model.properties?.capabilities?.['embeddings'] === 'true').map((model) => model.name).sort((a, b) => a.localeCompare(b)),
                 };
               }),
-            );
+            )
+            .sort((a, b) => a.id.localeCompare(b.id));
             core.endGroup();
 
             core.startGroup('Merging catalog');
