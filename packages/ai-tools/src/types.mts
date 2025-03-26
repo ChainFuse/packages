@@ -95,7 +95,7 @@ export interface AiRequestConfig {
 	 */
 	cache?: boolean | number;
 	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-	messageId: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'];
+	groupBillingId?: UuidExport['utf8'] | UuidExport['hex'];
 	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 	dataspaceId: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'];
 	/**
@@ -141,12 +141,14 @@ export interface AiRequestMetadataServerInfoWithLocation {
 
 export interface AiRequestMetadata {
 	dataspaceId: AiRequestConfig['dataspaceId'];
-	messageId: AiRequestConfig['messageId'];
+	groupBillingId?: AiRequestConfig['groupBillingId'];
 	serverInfo: (AiRequestMetadataServerInfo | AiRequestMetadataServerInfoWithLocation) & { timing?: AiRequestMetadataTiming };
 	idempotencyId: AiRequestIdempotencyId;
 	executor: AiRequestExecutor;
 }
-export type AiRequestMetadataStringified = Record<keyof AiRequestMetadata, string>;
+export type AiRequestMetadataStringified = {
+	[K in keyof AiRequestMetadata]: AiRequestMetadata[K] extends undefined ? undefined : string;
+};
 
 /**
  * Extracts the chunk type from an asynchronous iterable.

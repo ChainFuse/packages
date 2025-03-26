@@ -52,7 +52,7 @@ export class AiRawProviders extends AiBase {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
+						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
 						serverInfo: JSON.stringify({
 							name: 'openai',
 						} satisfies AiRequestMetadata['serverInfo']),
@@ -115,7 +115,7 @@ export class AiRawProviders extends AiBase {
 					...(cost && { 'cf-aig-custom-cost': JSON.stringify({ per_token_in: cost.inputTokenCost ?? undefined, per_token_out: cost.outputTokenCost ?? undefined }) }),
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
+						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
 						serverInfo: JSON.stringify({
 							name: `azure-${server.id}`,
 							distance: await import('haversine-distance').then(async ({ default: haversine }) =>
@@ -185,7 +185,7 @@ export class AiRawProviders extends AiBase {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
+						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
 						serverInfo: JSON.stringify({
 							name: 'anthropic',
 						} satisfies AiRequestMetadata['serverInfo']),
@@ -362,7 +362,7 @@ export class AiRawProviders extends AiBase {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
+						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
 						serverInfo: JSON.stringify({
 							name: 'googleai',
 						} satisfies AiRequestMetadata['serverInfo']),
@@ -418,7 +418,7 @@ export class AiRawProviders extends AiBase {
 					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
+						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
 						serverInfo: JSON.stringify({
 							name: 'cloudflare',
 						} satisfies AiRequestMetadata['serverInfo']),
@@ -477,7 +477,7 @@ export class AiRawProviders extends AiBase {
 						...(args.skipCache && { skipCache: true }),
 						metadata: {
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-							messageId: (await BufferHelpers.uuidConvert(args.messageId)).utf8,
+							...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
 							serverInfo: JSON.stringify({
 								name: 'cloudflare',
 							} satisfies AiRequestMetadata['serverInfo']),
