@@ -1,4 +1,4 @@
-import isHexadecimal from 'validator/es/lib/isHexadecimal';
+import isHexadecimal from 'validator/es/lib/isHexadecimal.js';
 import { z } from 'zod';
 
 export const ZodUuidExportInput = z.union([
