@@ -347,6 +347,7 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4-turbo',
+				inputTokenCost: 0.00001,
 				outputTokenCost: 0.00003,
 			},
 			{
@@ -670,6 +671,7 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4-turbo',
+				inputTokenCost: 0.00001,
 				outputTokenCost: 0.00003,
 			},
 			{
