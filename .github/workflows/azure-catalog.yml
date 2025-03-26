@@ -131,6 +131,7 @@ jobs:
               }
             }
 
+            core.startGroup('Generating catalog');
             const json = await Promise.all(
               rawServers.map(async (server) => {
                 const aiClient = new CognitiveServicesManagementClient(credential, process.env.AZURE_SUB_ID);
@@ -194,11 +195,15 @@ jobs:
                 };
               }),
             );
+            core.endGroup();
 
+            core.startGroup('Merging catalog');
             const finalJson = await import('./packages/types/dist/ai-tools/azure/catalog.js')
-              .then(({ azureCatalog }) =>
-                import('deepmerge').then(({ default: merge }) =>
-                  merge(azureCatalog, json, {
+              .then(({ azureCatalog }) => {
+                core.info('Loaded existing catalog');
+
+                return import('deepmerge').then(({ default: merge }) =>
+                  const mergedJson = merge(azureCatalog, json, {
                     arrayMerge: (target, source, options) => {
                       const destination = target.slice();
 
@@ -215,15 +220,31 @@ jobs:
                       return destination;
                     },
                   }),
-                ),
-              )
-              .catch(() => json);
 
+                  core.info('Merged catalogs'),
+                  return mergedJson;
+                ).catch((e) => {
+                  core.warning('Failed merge, using new catalog only');
+                  throw e;
+                })
+              })
+              .catch(() => {
+                core.warning('Failed to load existing catalog found, using new catalog only');
+                return json;
+              });
+            core.endGroup();
+
+            core.startGroup('Saving catalog');
             await import('node:fs').then(({ createWriteStream }) => {
               const writeStream = createWriteStream('packages/types/src/ai-tools/azure/catalog.ts', { encoding: 'utf8' });
+
+              core.info('Writing catalog');
               writeStream.write(`export const azureCatalog = ${JSON.stringify(finalJson, null, '\t')} as const`);
+
               writeStream.end();
+              core.info('Catalog saved');
             });
+            core.endGroup();
         env:
           AZURE_SUB_ID: ${{ secrets.AZURE_SUB_ID }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
