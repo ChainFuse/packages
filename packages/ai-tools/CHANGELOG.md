@@ -1,5 +1,16 @@
 # @chainfuse/ai-tools
 
+## 0.12.0
+
+### Minor Changes
+
+- [`e876571`](https://github.com/ChainFuse/packages/commit/e876571011526238709d2308d6db2baff30d350f) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Drop `messageId` in favor for billing group id
+
+### Patch Changes
+
+- Updated dependencies [[`31b4a41`](https://github.com/ChainFuse/packages/commit/31b4a4107d5fa976a5c8569b6751112c0cbeb75b)]:
+    - @chainfuse/types@2.2.2
+
 ## 0.11.2
 
 ### Patch Changes
