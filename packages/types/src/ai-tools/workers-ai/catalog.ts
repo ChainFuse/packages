@@ -9,6 +9,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/qwen/qwen1.5-0.5b-chat',
 					description: 'Qwen1.5 is the improved version of Qwen, the large language model series developed by Alibaba Cloud.',
+					created_at: '2024-02-27 18:23:37.344',
 					tags: [],
 					properties: {
 						beta: true,
@@ -21,6 +22,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/google/gemma-2b-it-lora',
 					description: 'This is a Gemma-2B base model that Cloudflare dedicates for inference with LoRA adapters. Gemma is a family of lightweight, state-of-the-art open models from Google, built from the same research and technology used to create the Gemini models.',
+					created_at: '2024-04-02 00:19:34.669',
 					tags: [],
 					properties: {
 						beta: true,
@@ -33,6 +35,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/nexusflow/starling-lm-7b-beta',
 					description: 'We introduce Starling-LM-7B-beta, an open large language model (LLM) trained by Reinforcement Learning from AI Feedback (RLAIF). Starling-LM-7B-beta is trained from Openchat-3.5-0106 with our new reward model Nexusflow/Starling-RM-34B and policy optimization method Fine-Tuning Language Models from Human Preferences (PPO).',
+					created_at: '2024-04-01 23:49:31.797',
 					tags: [],
 					properties: {
 						beta: true,
@@ -48,8 +51,19 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/llama-3-8b-instruct',
 					description: 'Generation over generation, Meta Llama 3 demonstrates state-of-the-art performance on a wide range of industry benchmarks and offers new capabilities, including improved reasoning.',
+					created_at: '2024-04-18 20:31:47.273',
 					tags: [],
 					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: '$0.28',
+							},
+							{
+								unit: 'per M output tokens',
+								price: '$0.83',
+							},
+						],
 						context_window: 7968,
 						info: 'https://llama.meta.com',
 						terms: 'https://llama.meta.com/llama3/license/#',
@@ -60,8 +74,19 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/llama-3.2-3b-instruct',
 					description: 'The Llama 3.2 instruction-tuned text only models are optimized for multilingual dialogue use cases, including agentic retrieval and summarization tasks.',
+					created_at: '2024-09-25 20:05:43.986',
 					tags: [],
 					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: '$0.051',
+							},
+							{
+								unit: 'per M output tokens',
+								price: '$0.34',
+							},
+						],
 						context_window: 128000,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
@@ -71,6 +96,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/thebloke/llamaguard-7b-awq',
 					description: 'Llama Guard is a model for classifying the safety of LLM prompts and responses, using a taxonomy of safety risks.\n',
+					created_at: '2024-02-06 18:13:59.060',
 					tags: [],
 					properties: {
 						beta: true,
@@ -82,6 +108,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/thebloke/neural-chat-7b-v3-1-awq',
 					description: 'This model is a fine-tuned 7B parameter LLM on the Intel Gaudi 2 processor from the mistralai/Mistral-7B-v0.1 on the open source dataset Open-Orca/SlimOrca.',
+					created_at: '2024-02-06 18:12:30.722',
 					tags: [],
 					properties: {
 						beta: true,
@@ -93,14 +120,27 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/llama-guard-3-8b',
 					description: 'Llama Guard 3 is a Llama-3.1-8B pretrained model, fine-tuned for content safety classification. Similar to previous versions, it can be used to classify content in both LLM inputs (prompt classification) and in LLM responses (response classification). It acts as an LLM – it generates text in its output that indicates whether a given prompt or response is safe or unsafe, and if unsafe, it also lists the content categories violated.',
+					created_at: '2025-01-22 23:26:23.495',
 					tags: [],
-					properties: {},
+					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: '$0.48',
+							},
+							{
+								unit: 'per M output tokens',
+								price: '$0.030',
+							},
+						],
+					},
 				},
 				{
 					id: 'ca54bcd6-0d98-4739-9b3b-5c8b4402193d',
 					source: 1,
 					name: '@cf/meta/llama-2-7b-chat-fp16',
 					description: 'Full precision (fp16) generative text model with 7 billion parameters from Meta',
+					created_at: '2023-11-07 11:54:20.229',
 					tags: [],
 					properties: {
 						beta: true,
@@ -114,6 +154,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/mistral/mistral-7b-instruct-v0.1',
 					description: 'Instruct fine-tuned version of the Mistral-7b generative text model with 7 billion parameters',
+					created_at: '2023-11-07 11:54:20.229',
 					tags: [],
 					properties: {
 						beta: true,
@@ -127,6 +168,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/mistral/mistral-7b-instruct-v0.2-lora',
 					description: 'The Mistral-7B-Instruct-v0.2 Large Language Model (LLM) is an instruct fine-tuned version of the Mistral-7B-v0.2.',
+					created_at: '2024-04-01 22:14:40.529',
 					tags: [],
 					properties: {
 						beta: true,
@@ -139,6 +181,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/tinyllama/tinyllama-1.1b-chat-v1.0',
 					description: 'The TinyLlama project aims to pretrain a 1.1B Llama model on 3 trillion tokens. This is the chat model finetuned on top of TinyLlama/TinyLlama-1.1B-intermediate-step-1431k-3T.',
+					created_at: '2024-02-27 18:25:37.524',
 					tags: [],
 					properties: {
 						beta: true,
@@ -151,6 +194,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/mistral/mistral-7b-instruct-v0.2',
 					description: 'The Mistral-7B-Instruct-v0.2 Large Language Model (LLM) is an instruct fine-tuned version of the Mistral-7B-v0.2. Mistral-7B-v0.2 has the following changes compared to Mistral-7B-v0.1: 32k context window (vs 8k context in v0.1), rope-theta = 1e6, and no Sliding-Window Attention.',
+					created_at: '2024-04-02 13:00:59.244',
 					tags: [],
 					properties: {
 						beta: true,
@@ -167,6 +211,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/fblgit/una-cybertron-7b-v2-bf16',
 					description: "Cybertron 7B v2 is a 7B MistralAI based model, best on it's series. It was trained with SFT, DPO and UNA (Unified Neural Alignment) on multiple datasets.",
+					created_at: '2024-04-24 14:37:19.494',
 					tags: [],
 					properties: {
 						beta: true,
@@ -178,9 +223,19 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b',
 					description: 'DeepSeek-R1-Distill-Qwen-32B is a model distilled from DeepSeek-R1 based on Qwen2.5. It outperforms OpenAI-o1-mini across various benchmarks, achieving new state-of-the-art results for dense models.',
+					created_at: '2025-01-22 19:48:55.776',
 					tags: [],
 					properties: {
-						context_window: 80000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: '$0.50',
+							},
+							{
+								unit: 'per M output tokens',
+								price: '$4.88',
+							},
+						],
 						terms: 'https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE',
 					},
 				},
@@ -189,6 +244,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/thebloke/discolm-german-7b-v1-awq',
 					description: 'DiscoLM German 7b is a Mistral-based large language model with a focus on German-language applications. AWQ is an efficient, accurate and blazing-fast low-bit weight quantization method, currently supporting 4-bit quantization.',
+					created_at: '2024-02-27 18:23:05.178',
 					tags: [],
 					properties: {
 						beta: true,
@@ -201,6 +257,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/llama-2-7b-chat-int8',
 					description: 'Quantized (int8) generative text model with 7 billion parameters from Meta',
+					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
 						context_window: 8192,
@@ -211,8 +268,19 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/llama-3.1-8b-instruct-fp8',
 					description: 'Llama 3.1 8B quantized to FP8 precision',
+					created_at: '2024-07-25 17:28:43.328',
 					tags: [],
 					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: '$0.15',
+							},
+							{
+								unit: 'per M output tokens',
+								price: '$0.29',
+							},
+						],
 						context_window: 32000,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
 					},
@@ -222,6 +290,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/thebloke/mistral-7b-instruct-v0.1-awq',
 					description: 'Mistral 7B Instruct v0.1 AWQ is an efficient, accurate and blazing-fast low-bit weight quantized Mistral variant.',
+					created_at: '2023-11-24 00:27:15.869',
 					tags: [],
 					properties: {
 						beta: true,
@@ -234,6 +303,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/qwen/qwen1.5-7b-chat-awq',
 					description: 'Qwen1.5 is the improved version of Qwen, the large language model series developed by Alibaba Cloud. AWQ is an efficient, accurate and blazing-fast low-bit weight quantization method, currently supporting 4-bit quantization.',
+					created_at: '2024-02-27 18:24:11.709',
 					tags: [],
 					properties: {
 						beta: true,
@@ -246,8 +316,19 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/llama-3.2-1b-instruct',
 					description: 'The Llama 3.2 instruction-tuned text only models are optimized for multilingual dialogue use cases, including agentic retrieval and summarization tasks.',
+					created_at: '2024-09-25 21:36:32.050',
 					tags: [],
 					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: '$0.027',
+							},
+							{
+								unit: 'per M output tokens',
+								price: '$0.20',
+							},
+						],
 						context_window: 60000,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
@@ -257,6 +338,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/thebloke/llama-2-13b-chat-awq',
 					description: 'Llama 2 13B Chat AWQ is an efficient, accurate and blazing-fast low-bit weight quantized Llama 2 variant.',
+					created_at: '2023-11-24 00:27:15.869',
 					tags: [],
 					properties: {
 						beta: true,
@@ -269,6 +351,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/thebloke/deepseek-coder-6.7b-base-awq',
 					description: 'Deepseek Coder is composed of a series of code language models, each trained from scratch on 2T tokens, with a composition of 87% code and 13% natural language in both English and Chinese.',
+					created_at: '2024-02-06 18:16:27.183',
 					tags: [],
 					properties: {
 						beta: true,
@@ -281,6 +364,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta-llama/llama-2-7b-chat-hf-lora',
 					description: 'This is a Llama2 base model that Cloudflare dedicated for inference with LoRA adapters. Llama 2 is a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. This is the repository for the 7B fine-tuned model, optimized for dialogue use cases and converted for the Hugging Face Transformers format. ',
+					created_at: '2024-04-02 00:17:18.579',
 					tags: [],
 					properties: {
 						beta: true,
@@ -293,8 +377,19 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
 					description: 'Llama 3.3 70B quantized to fp8 precision, optimized to be faster.',
+					created_at: '2024-12-06 17:09:18.338',
 					tags: [],
 					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: '$0.29',
+							},
+							{
+								unit: 'per M output tokens',
+								price: '$2.25',
+							},
+						],
 						context_window: 24000,
 						function_calling: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE',
@@ -305,6 +400,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/thebloke/openhermes-2.5-mistral-7b-awq',
 					description: 'OpenHermes 2.5 Mistral 7B is a state of the art Mistral Fine-tune, a continuation of OpenHermes 2 model, which trained on additional code datasets.',
+					created_at: '2024-02-06 18:04:22.846',
 					tags: [],
 					properties: {
 						beta: true,
@@ -316,6 +412,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/thebloke/deepseek-coder-6.7b-instruct-awq',
 					description: 'Deepseek Coder is composed of a series of code language models, each trained from scratch on 2T tokens, with a composition of 87% code and 13% natural language in both English and Chinese.',
+					created_at: '2024-02-06 18:18:27.462',
 					tags: [],
 					properties: {
 						beta: true,
@@ -328,6 +425,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/deepseek-ai/deepseek-math-7b-instruct',
 					description: 'DeepSeekMath-Instruct 7B is a mathematically instructed tuning model derived from DeepSeekMath-Base 7B. DeepSeekMath is initialized with DeepSeek-Coder-v1.5 7B and continues pre-training on math-related tokens sourced from Common Crawl, together with natural language and code data for 500B tokens.',
+					created_at: '2024-02-27 17:54:17.459',
 					tags: [],
 					properties: {
 						beta: true,
@@ -341,6 +439,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/tiiuae/falcon-7b-instruct',
 					description: 'Falcon-7B-Instruct is a 7B parameters causal decoder-only model built by TII based on Falcon-7B and finetuned on a mixture of chat/instruct datasets.',
+					created_at: '2024-02-27 18:21:15.796',
 					tags: [],
 					properties: {
 						beta: true,
@@ -353,6 +452,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/nousresearch/hermes-2-pro-mistral-7b',
 					description: 'Hermes 2 Pro on Mistral 7B is the new flagship 7B Hermes! Hermes 2 Pro is an upgraded, retrained version of Nous Hermes 2, consisting of an updated and cleaned version of the OpenHermes 2.5 Dataset, as well as a newly introduced Function Calling and JSON Mode dataset developed in-house.',
+					created_at: '2024-04-01 23:45:53.800',
 					tags: [],
 					properties: {
 						beta: true,
@@ -366,8 +466,19 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/llama-3.1-8b-instruct',
 					description: 'The Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models. The Llama 3.1 instruction tuned text only models are optimized for multilingual dialogue use cases and outperform many of the available open source and closed chat models on common industry benchmarks.',
+					created_at: '2024-07-18 22:53:33.746',
 					tags: [],
 					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: '$0.28',
+							},
+							{
+								unit: 'per M output tokens',
+								price: '$0.83',
+							},
+						],
 						context_window: 7968,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
 					},
@@ -377,8 +488,19 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/llama-3.1-8b-instruct-awq',
 					description: 'Quantized (int4) generative text model with 8 billion parameters from Meta.\n',
+					created_at: '2024-07-25 17:46:04.304',
 					tags: [],
 					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: '$0.12',
+							},
+							{
+								unit: 'per M output tokens',
+								price: '$0.27',
+							},
+						],
 						context_window: 8192,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
 					},
@@ -388,6 +510,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/thebloke/zephyr-7b-beta-awq',
 					description: 'Zephyr 7B Beta AWQ is an efficient, accurate and blazing-fast low-bit weight quantized Zephyr model variant.',
+					created_at: '2023-11-24 00:27:15.869',
 					tags: [],
 					properties: {
 						beta: true,
@@ -400,6 +523,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/google/gemma-7b-it-lora',
 					description: '  This is a Gemma-7B base model that Cloudflare dedicates for inference with LoRA adapters. Gemma is a family of lightweight, state-of-the-art open models from Google, built from the same research and technology used to create the Gemini models.',
+					created_at: '2024-04-02 00:20:19.633',
 					tags: [],
 					properties: {
 						beta: true,
@@ -412,6 +536,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/qwen/qwen1.5-1.8b-chat',
 					description: 'Qwen1.5 is the improved version of Qwen, the large language model series developed by Alibaba Cloud.',
+					created_at: '2024-02-27 18:30:31.723',
 					tags: [],
 					properties: {
 						beta: true,
@@ -424,8 +549,19 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/llama-3-8b-instruct-awq',
 					description: 'Quantized (int4) generative text model with 8 billion parameters from Meta.',
+					created_at: '2024-05-09 23:32:47.584',
 					tags: [],
 					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: '$0.12',
+							},
+							{
+								unit: 'per M output tokens',
+								price: '$0.27',
+							},
+						],
 						context_window: 8192,
 						info: 'https://llama.meta.com',
 						terms: 'https://llama.meta.com/llama3/license/#',
@@ -436,8 +572,19 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/llama-3.2-11b-vision-instruct',
 					description: ' The Llama 3.2-Vision instruction-tuned models are optimized for visual recognition, image reasoning, captioning, and answering general questions about an image.',
+					created_at: '2024-09-25 05:36:04.547',
 					tags: [],
 					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: '$0.049',
+							},
+							{
+								unit: 'per M output tokens',
+								price: '$0.68',
+							},
+						],
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
@@ -446,6 +593,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/defog/sqlcoder-7b-2',
 					description: 'This model is intended to be used by non-technical users to understand data inside their SQL databases. ',
+					created_at: '2024-02-27 18:18:46.095',
 					tags: [],
 					properties: {
 						beta: true,
@@ -459,6 +607,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/microsoft/phi-2',
 					description: 'Phi-2 is a Transformer-based model with a next-word prediction objective, trained on 1.4T tokens from multiple passes on a mixture of Synthetic and Web datasets for NLP and coding.',
+					created_at: '2024-02-27 18:26:21.126',
 					tags: [],
 					properties: {
 						beta: true,
@@ -471,6 +620,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/meta-llama/meta-llama-3-8b-instruct',
 					description: 'Generation over generation, Meta Llama 3 demonstrates state-of-the-art performance on a wide range of industry benchmarks and offers new capabilities, including improved reasoning.\t',
+					created_at: '2024-05-22 18:21:04.371',
 					tags: [],
 					properties: {
 						context_window: 8192,
@@ -481,6 +631,7 @@ export const workersAiCatalog = {
 					source: 2,
 					name: '@hf/google/gemma-7b-it',
 					description: 'Gemma is a family of lightweight, state-of-the-art open models from Google, built from the same research and technology used to create the Gemini models. They are text-to-text, decoder-only large language models, available in English, with open weights, pre-trained variants, and instruction-tuned variants.',
+					created_at: '2024-04-01 23:51:35.866',
 					tags: [],
 					properties: {
 						beta: true,
@@ -495,6 +646,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/qwen/qwen1.5-14b-chat-awq',
 					description: 'Qwen1.5 is the improved version of Qwen, the large language model series developed by Alibaba Cloud. AWQ is an efficient, accurate and blazing-fast low-bit weight quantization method, currently supporting 4-bit quantization.',
+					created_at: '2024-02-27 18:24:45.316',
 					tags: [],
 					properties: {
 						beta: true,
@@ -507,6 +659,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/openchat/openchat-3.5-0106',
 					description: 'OpenChat is an innovative library of open-source language models, fine-tuned with C-RLFT - a strategy inspired by offline reinforcement learning.',
+					created_at: '2024-02-27 18:20:39.169',
 					tags: [],
 					properties: {
 						beta: true,
@@ -525,6 +678,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/baai/bge-m3',
 					description: 'Multi-Functionality, Multi-Linguality, and Multi-Granularity embeddings model.',
+					created_at: '2024-05-22 19:27:09.781',
 					tags: [],
 					properties: {},
 				},
@@ -533,6 +687,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/baai/bge-small-en-v1.5',
 					description: 'BAAI general embedding (Small) model that transforms any given text into a 384-dimensional vector',
+					created_at: '2023-11-07 15:43:58.042',
 					tags: [],
 					properties: {
 						beta: true,
@@ -546,6 +701,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/baai/bge-base-en-v1.5',
 					description: 'BAAI general embedding (Base) model that transforms any given text into a 768-dimensional vector',
+					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
 						beta: true,
@@ -559,6 +715,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/baai/bge-large-en-v1.5',
 					description: 'BAAI general embedding (Large) model that transforms any given text into a 1024-dimensional vector',
+					created_at: '2023-11-07 15:43:58.042',
 					tags: [],
 					properties: {
 						beta: true,
@@ -578,6 +735,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/huggingface/distilbert-sst-2-int8',
 					description: 'Distilled BERT model that was finetuned on SST-2 for sentiment classification',
+					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
 						beta: true,
@@ -589,6 +747,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/baai/bge-reranker-base',
 					description: 'Different from embedding model, reranker uses question and document as input and directly output similarity instead of embedding. You can get a relevance score by inputting query and passage to the reranker. And the score can be mapped to a float value in [0,1] by sigmoid function.\n\n',
+					created_at: '2025-02-14 12:28:19.009',
 					tags: [],
 					properties: {},
 				},
@@ -603,6 +762,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/facebook/detr-resnet-50',
 					description: 'DEtection TRansformer (DETR) model trained end-to-end on COCO 2017 object detection (118k annotated images).',
+					created_at: '2024-02-27 17:43:51.922',
 					tags: [],
 					properties: {
 						beta: true,
@@ -619,6 +779,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/myshell-ai/melotts',
 					description: 'MeloTTS is a high-quality multi-lingual text-to-speech library by MyShell.ai.',
+					created_at: '2024-07-19 15:51:04.819',
 					tags: [],
 					properties: {},
 				},
@@ -633,6 +794,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/openai/whisper',
 					description: 'Whisper is a general-purpose speech recognition model. It is trained on a large dataset of diverse audio and is also a multitasking model that can perform multilingual speech recognition, speech translation, and language identification.',
+					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
 						beta: true,
@@ -644,6 +806,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/openai/whisper-tiny-en',
 					description: 'Whisper is a pre-trained model for automatic speech recognition (ASR) and speech translation. Trained on 680k hours of labelled data, Whisper models demonstrate a strong ability to generalize to many datasets and domains without the need for fine-tuning. This is the English-only version of the Whisper Tiny model which was trained on the task of speech recognition.',
+					created_at: '2024-04-22 20:59:02.731',
 					tags: [],
 					properties: {
 						beta: true,
@@ -654,8 +817,16 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/openai/whisper-large-v3-turbo',
 					description: 'Whisper is a pre-trained model for automatic speech recognition (ASR) and speech translation. ',
+					created_at: '2024-05-22 00:02:18.656',
 					tags: [],
-					properties: {},
+					properties: {
+						price: [
+							{
+								unit: 'per audio minute',
+								price: '$0.00051',
+							},
+						],
+					},
 				},
 			],
 		},
@@ -668,6 +839,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/llava-hf/llava-1.5-7b-hf',
 					description: 'LLaVA is an open-source chatbot trained by fine-tuning LLaMA/Vicuna on GPT-generated multimodal instruction-following data. It is an auto-regressive language model, based on the transformer architecture.',
+					created_at: '2024-05-01 18:00:39.971',
 					tags: [],
 					properties: {
 						beta: true,
@@ -678,6 +850,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/unum/uform-gen2-qwen-500m',
 					description: 'UForm-Gen is a small generative vision-language model primarily designed for Image Captioning and Visual Question Answering. The model was pre-trained on the internal image captioning dataset and fine-tuned on public instructions datasets: SVIT, LVIS, VQAs datasets.',
+					created_at: '2024-02-27 18:28:52.485',
 					tags: [],
 					properties: {
 						beta: true,
@@ -695,6 +868,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/runwayml/stable-diffusion-v1-5-inpainting',
 					description: 'Stable Diffusion Inpainting is a latent text-to-image diffusion model capable of generating photo-realistic images given any text input, with the extra capability of inpainting the pictures by using a mask.',
+					created_at: '2024-02-27 17:23:57.528',
 					tags: [],
 					properties: {
 						beta: true,
@@ -707,6 +881,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/black-forest-labs/flux-1-schnell',
 					description: 'FLUX.1 [schnell] is a 12 billion parameter rectified flow transformer capable of generating images from text descriptions. ',
+					created_at: '2024-08-29 16:37:39.541',
 					tags: [],
 					properties: {},
 				},
@@ -715,6 +890,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/bytedance/stable-diffusion-xl-lightning',
 					description: 'SDXL-Lightning is a lightning-fast text-to-image generation model. It can generate high-quality 1024px images in a few steps.',
+					created_at: '2024-02-27 17:41:29.578',
 					tags: [],
 					properties: {
 						beta: true,
@@ -726,6 +902,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/lykon/dreamshaper-8-lcm',
 					description: 'Stable Diffusion model that has been fine-tuned to be better at photorealism without sacrificing range.',
+					created_at: '2024-02-27 17:40:38.881',
 					tags: [],
 					properties: {
 						beta: true,
@@ -737,6 +914,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
 					description: 'Diffusion-based text-to-image generative model by Stability AI. Generates and modify images based on text prompts.',
+					created_at: '2023-11-10 10:54:43.694',
 					tags: [],
 					properties: {
 						beta: true,
@@ -749,6 +927,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/runwayml/stable-diffusion-v1-5-img2img',
 					description: 'Stable Diffusion is a latent text-to-image diffusion model capable of generating photo-realistic images. Img2img generate a new image from an input image with Stable Diffusion. ',
+					created_at: '2024-02-27 17:32:28.581',
 					tags: [],
 					properties: {
 						beta: true,
@@ -767,6 +946,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/microsoft/resnet-50',
 					description: '50 layers deep image classification CNN trained on more than 1M images from ImageNet',
+					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
 						beta: true,
@@ -784,6 +964,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/meta/m2m100-1.2b',
 					description: 'Multilingual encoder-decoder (seq-to-seq) model trained for Many-to-Many multilingual translation',
+					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
 						beta: true,
@@ -803,6 +984,7 @@ export const workersAiCatalog = {
 					source: 1,
 					name: '@cf/facebook/bart-large-cnn',
 					description: 'BART is a transformer encoder-encoder (seq2seq) model with a bidirectional (BERT-like) encoder and an autoregressive (GPT-like) decoder. You can use this model for text summarization.',
+					created_at: '2024-02-27 18:28:11.833',
 					tags: [],
 					properties: {
 						beta: true,
