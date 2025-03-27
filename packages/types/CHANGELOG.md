@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.2.2
+
+### Patch Changes
+
+- [`31b4a41`](https://github.com/ChainFuse/packages/commit/31b4a4107d5fa976a5c8569b6751112c0cbeb75b) Thanks [@demosjarco](https://github.com/demosjarco)! - types(update): Update workers ai model catalog
+
 ## 2.2.1
 
 ### Patch Changes
