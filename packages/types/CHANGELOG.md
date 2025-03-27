@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.3.0
+
+### Minor Changes
+
+- [`6ab3e14`](https://github.com/ChainFuse/packages/commit/6ab3e14879b0763dc3f83cdf55e63e9569d78f7b) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Force tree shaking imports for `wf`
+
 ## 2.2.2
 
 ### Patch Changes
