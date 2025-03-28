@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.3.1
+
+### Patch Changes
+
+- [`4f60509`](https://github.com/ChainFuse/packages/commit/4f6050981a6f1f09973b4ea4bede1b2a3e957629) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Dynamic import `validator.js`
+
 ## 2.3.0
 
 ### Minor Changes
