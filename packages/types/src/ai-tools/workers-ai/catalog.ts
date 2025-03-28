@@ -883,7 +883,18 @@ export const workersAiCatalog = {
 					description: 'FLUX.1 [schnell] is a 12 billion parameter rectified flow transformer capable of generating images from text descriptions. ',
 					created_at: '2024-08-29 16:37:39.541',
 					tags: [],
-					properties: {},
+					properties: {
+						price: [
+							{
+								unit: 'per 512 by 512 tile',
+								price: '$0.000053',
+							},
+							{
+								unit: 'per step',
+								price: '$0.00011',
+							},
+						],
+					},
 				},
 				{
 					id: '7f797b20-3eb0-44fd-b571-6cbbaa3c423b',
