@@ -57,11 +57,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: '$0.28',
+								price: 0.28,
+								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: '$0.83',
+								price: 0.83,
+								currency: 'USD',
 							},
 						],
 						context_window: 7968,
@@ -80,11 +82,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: '$0.051',
+								price: 0.051,
+								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: '$0.34',
+								price: 0.34,
+								currency: 'USD',
 							},
 						],
 						context_window: 128000,
@@ -126,11 +130,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: '$0.48',
+								price: 0.48,
+								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: '$0.030',
+								price: 0.03,
+								currency: 'USD',
 							},
 						],
 					},
@@ -229,11 +235,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: '$0.50',
+								price: 0.5,
+								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: '$4.88',
+								price: 4.88,
+								currency: 'USD',
 							},
 						],
 						terms: 'https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE',
@@ -274,11 +282,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: '$0.15',
+								price: 0.15,
+								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: '$0.29',
+								price: 0.29,
+								currency: 'USD',
 							},
 						],
 						context_window: 32000,
@@ -322,11 +332,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: '$0.027',
+								price: 0.027,
+								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: '$0.20',
+								price: 0.2,
+								currency: 'USD',
 							},
 						],
 						context_window: 60000,
@@ -383,11 +395,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: '$0.29',
+								price: 0.29,
+								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: '$2.25',
+								price: 2.25,
+								currency: 'USD',
 							},
 						],
 						context_window: 24000,
@@ -472,11 +486,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: '$0.28',
+								price: 0.28,
+								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: '$0.83',
+								price: 0.83,
+								currency: 'USD',
 							},
 						],
 						context_window: 7968,
@@ -494,11 +510,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: '$0.12',
+								price: 0.12,
+								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: '$0.27',
+								price: 0.27,
+								currency: 'USD',
 							},
 						],
 						context_window: 8192,
@@ -555,11 +573,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: '$0.12',
+								price: 0.12,
+								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: '$0.27',
+								price: 0.27,
+								currency: 'USD',
 							},
 						],
 						context_window: 8192,
@@ -578,11 +598,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: '$0.049',
+								price: 0.049,
+								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: '$0.68',
+								price: 0.68,
+								currency: 'USD',
 							},
 						],
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
@@ -680,7 +702,15 @@ export const workersAiCatalog = {
 					description: 'Multi-Functionality, Multi-Linguality, and Multi-Granularity embeddings model.',
 					created_at: '2024-05-22 19:27:09.781',
 					tags: [],
-					properties: {},
+					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.012,
+								currency: 'USD',
+							},
+						],
+					},
 				},
 				{
 					id: '57fbd08a-a4c4-411c-910d-b9459ff36c20',
@@ -823,7 +853,8 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per audio minute',
-								price: '$0.00051',
+								price: 0.00051,
+								currency: 'USD',
 							},
 						],
 					},
@@ -887,11 +918,13 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per 512 by 512 tile',
-								price: '$0.000053',
+								price: 0.000053,
+								currency: 'USD',
 							},
 							{
 								unit: 'per step',
-								price: '$0.00011',
+								price: 0.00011,
+								currency: 'USD',
 							},
 						],
 					},
