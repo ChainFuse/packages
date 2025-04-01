@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.12.2
+
+### Patch Changes
+
+- [`472b773`](https://github.com/ChainFuse/packages/commit/472b77359d5f3ebd7f5f19d6f2213c8e0d5061da) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Don't update gateway log if invalid log id
+
 ## 0.12.1
 
 ### Patch Changes
