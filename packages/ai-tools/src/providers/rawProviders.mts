@@ -11,34 +11,40 @@ export class AiRawProviders extends AiBase {
 	private readonly cacheTtl = 2628288;
 
 	private async updateGatewayLog(response: Response, metadataHeader: AiRequestMetadataStringified, startRoundTrip: ReturnType<typeof performance.now>, modelTime?: number) {
-		const updateMetadata = import('@chainfuse/helpers')
-			.then(({ NetHelpers }) => NetHelpers.cfApi(this.config.gateway.apiToken))
-			.then((cf) =>
-				cf.aiGateway.logs.edit(this.gatewayName, response.headers.get('cf-aig-log-id')!, {
-					account_id: this.config.gateway.accountId,
-					metadata: {
-						...Object.entries({
-							...(metadataHeader as unknown as AiRequestMetadata),
-							serverInfo: {
-								...(JSON.parse(metadataHeader.serverInfo) as AiRequestMetadata['serverInfo']),
-								timing: {
-									fromCache: response.headers.get('cf-aig-cache-status')?.toLowerCase() === 'hit',
-									totalRoundtripTime: performance.now() - startRoundTrip,
-									modelTime,
-								},
-							},
-						} satisfies AiRequestMetadata).reduce((acc, [key, value]) => {
-							acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
-							return acc;
-						}, {} as AiRequestMetadataStringified),
-					} satisfies AiRequestMetadataStringified,
-				}),
-			);
+		const logId = response.headers.get('cf-aig-log-id');
 
-		if (this.config.backgroundContext) {
-			this.config.backgroundContext.waitUntil(updateMetadata);
+		if (logId) {
+			const updateMetadata = import('@chainfuse/helpers')
+				.then(({ NetHelpers }) => NetHelpers.cfApi(this.config.gateway.apiToken))
+				.then((cf) =>
+					cf.aiGateway.logs.edit(this.gatewayName, logId, {
+						account_id: this.config.gateway.accountId,
+						metadata: {
+							...Object.entries({
+								...(metadataHeader as unknown as AiRequestMetadata),
+								serverInfo: {
+									...(JSON.parse(metadataHeader.serverInfo) as AiRequestMetadata['serverInfo']),
+									timing: {
+										fromCache: response.headers.get('cf-aig-cache-status')?.toLowerCase() === 'hit',
+										totalRoundtripTime: performance.now() - startRoundTrip,
+										modelTime,
+									},
+								},
+							} satisfies AiRequestMetadata).reduce((acc, [key, value]) => {
+								acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
+								return acc;
+							}, {} as AiRequestMetadataStringified),
+						} satisfies AiRequestMetadataStringified,
+					}),
+				);
+
+			if (this.config.backgroundContext) {
+				this.config.backgroundContext.waitUntil(updateMetadata);
+			} else {
+				await updateMetadata;
+			}
 		} else {
-			await updateMetadata;
+			console.warn('Not updating gateway log, no cf-aig-log-id header');
 		}
 	}
 
