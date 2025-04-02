@@ -208,6 +208,7 @@ summary.addTable(
 		})),
 	),
 );
+void summary.write({ overwrite: true });
 
 startGroup('Saving catalog');
 await import('node:fs').then(({ createWriteStream }) => {
