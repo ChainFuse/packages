@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/azure-catalog.yml'
+      - 'ciScripts/azure-catalog.mts'
       - 'packages/types/src/ai-tools/azure/catalog.ts'
   workflow_dispatch:
 
