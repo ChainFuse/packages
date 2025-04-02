@@ -1,4 +1,4 @@
-import { endGroup, info, startGroup } from '@actions/core';
+import { endGroup, info, startGroup, summary } from '@actions/core';
 import { CognitiveServicesManagementClient, type BillingMeterInfo } from '@azure/arm-cognitiveservices';
 import { SubscriptionClient } from '@azure/arm-resources-subscriptions';
 import { ClientSecretCredential } from '@azure/identity';
@@ -181,6 +181,33 @@ const json = (
 	)
 ).sort((a, b) => a.id!.localeCompare(b.id!));
 endGroup();
+
+function convertObjectsToSummaryTable<T extends Record<string, string>>(items: T[]) {
+	if (items.length === 0) return [];
+
+	const headers = Object.keys(items[0]);
+	const table: Parameters<(typeof summary)['addTable']>[0] = [];
+
+	// Add header row
+	table.push(headers.map((key) => ({ data: key, header: true })));
+
+	// Add data rows
+	for (const item of items) {
+		table.push(headers.map((key) => ({ data: item[key] ?? '' })));
+	}
+
+	return table;
+}
+summary.addTable(
+	convertObjectsToSummaryTable(
+		json.map((server) => ({
+			server: server.id ?? 'N/A',
+			languageModels: server.languageModelAvailability.map((model) => model.name).join(', '),
+			imageModels: server.imageModelAvailability.join(', '),
+			textEmbeddingModels: server.textEmbeddingModelAvailability.join(', '),
+		})),
+	),
+);
 
 startGroup('Saving catalog');
 await import('node:fs').then(({ createWriteStream }) => {
