@@ -130,7 +130,7 @@ export class ServerSelector extends AiBase {
 
 		// Skip over the rest of logic if the server can't handle the incoming request
 		// @ts-expect-error it's always strings, just sometimes string literals
-		const featureFilteredServers = requiredCapability ? servers.filter((server) => server.languageModelAvailability.includes(requiredCapability) || server.textEmbeddingModelAvailability.includes(requiredCapability)) : servers;
+		const featureFilteredServers = requiredCapability ? servers.filter((server) => server.languageModelAvailability.map((model) => model.name).includes(requiredCapability) || server.textEmbeddingModelAvailability.map((model) => model.name).includes(requiredCapability)) : servers;
 
 		if (featureFilteredServers.length > 0) {
 			// Skip over servers not in the save privacy region except if undefined, then you can use any
