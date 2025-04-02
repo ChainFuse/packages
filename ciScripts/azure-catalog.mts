@@ -58,6 +58,8 @@ const locations = await (async () => {
 
 	info('Fetching locations');
 	for await (const location of subClient.subscriptions.listLocations(AZURE_SUB_ID!)) {
+		info(`Got ${location.metadata?.physicalLocation} (${location.name})`);
+
 		locations.push(location);
 	}
 
@@ -74,6 +76,8 @@ const rawServers = await (async () => {
 
 	info('Fetching servers');
 	for await (const account of aiClient.accounts.list()) {
+		info(`Got ${account.name} (${account.location})`);
+
 		accounts.push(account);
 	}
 
