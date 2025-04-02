@@ -21,7 +21,7 @@ permissions: read-all
 jobs:
   analysis:
     name: Scorecard analysis
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     environment:
       name: ${{ github.base_ref || github.ref_name }}
       url: https://securityscorecards.dev/viewer/?uri=github.com/${{ github.repository }}
