@@ -198,6 +198,7 @@ function convertObjectsToSummaryTable<T extends Record<string, string>>(items: T
 
 	return table;
 }
+summary.addHeading('Server inventory');
 summary.addTable(
 	convertObjectsToSummaryTable(
 		json.map((server) => ({
@@ -208,7 +209,19 @@ summary.addTable(
 		})),
 	),
 );
-void summary.write({ overwrite: true });
+await summary.write({ overwrite: true });
+
+summary.addHeading('Language Model Pricing');
+const dedupedLanguageModels = new Set(json.map((server) => server.languageModelAvailability.map((model) => model.name!)).flat());
+const everyLanguageModel = json.map((server) => server.languageModelAvailability).flat();
+const temp = Array.from(dedupedLanguageModels).map((modelName) => {
+	const relevantModels = everyLanguageModel.filter((model) => model.name === modelName);
+	const modelsWithInputPrice = relevantModels.filter((model) => model.inputTokenCost).length;
+	const modelsWithOutputPrice = relevantModels.filter((model) => model.outputTokenCost).length;
+	return { [modelName]: ((modelsWithInputPrice + modelsWithOutputPrice) / (relevantModels.length * 2)).toString() };
+});
+summary.addTable(convertObjectsToSummaryTable(temp));
+await summary.write();
 
 startGroup('Saving catalog');
 await import('node:fs').then(({ createWriteStream }) => {
