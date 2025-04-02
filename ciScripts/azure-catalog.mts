@@ -178,8 +178,20 @@ const json = (
 					.sort((a, b) => a!.localeCompare(b!)),
 				textEmbeddingModelAvailability: deployments
 					.filter((deployment) => deployment.properties?.capabilities?.['embeddings'] === 'true')
-					.map((deployment) => deployment.name)
-					.sort((a, b) => a!.localeCompare(b!)),
+					.map((deployment) => {
+						const model = models.find((model) => model.kind === server.kind && model.model?.format === deployment?.properties?.model?.format && model.model?.name === deployment?.properties?.model?.name && model.model?.version === deployment?.properties?.model?.version);
+
+						const skuCost = model?.model?.skus?.find((sku) => sku.name === deployment?.sku?.name)?.costs as BillingMeterInfo[];
+
+						const tokenMeter = skuCost?.find((costItem) => costItem.name === 'TotalToken')?.meterId;
+						const tokenPrice = pricing.find((price) => price.meterId === tokenMeter);
+
+						return {
+							name: deployment.name,
+							tokenCost: tokenPrice?.unitPrice ? parseFloat(tokenPrice?.unitOfMeasure ? (tokenPrice.unitPrice / parseShorthandNumber(tokenPrice.unitOfMeasure)).toFixed(20) : tokenPrice?.unitPrice.toFixed(20)) : undefined,
+						};
+					})
+					.sort((a, b) => a.name!.localeCompare(b.name!)),
 			};
 		}),
 	)
@@ -209,7 +221,7 @@ summary.addTable(
 			server: server.id ?? 'N/A',
 			languageModels: server.languageModelAvailability.map((model) => model.name).join(', '),
 			imageModels: server.imageModelAvailability.join(', '),
-			textEmbeddingModels: server.textEmbeddingModelAvailability.join(', '),
+			textEmbeddingModels: server.languageModelAvailability.map((model) => model.name).join(', '),
 		})),
 	),
 );
@@ -228,6 +240,20 @@ const pricedLanguageModels = Array.from(dedupedLanguageModels).map((modelName) =
 	};
 });
 summary.addTable(convertObjectsToSummaryTable(pricedLanguageModels));
+await summary.write();
+
+summary.addHeading('Embedding Model Pricing');
+const dedupedEmbedModels = new Set(json.map((server) => server.textEmbeddingModelAvailability.map((model) => model.name!)).flat());
+const everyEmbedModel = json.map((server) => server.textEmbeddingModelAvailability).flat();
+const pricedEmbedModels = Array.from(dedupedEmbedModels).map((modelName) => {
+	const relevantModels = everyEmbedModel.filter((model) => model.name === modelName);
+	const modelsWithPrice = relevantModels.filter((model) => model.tokenCost).length;
+	return {
+		modelName,
+		completeness: `${(modelsWithPrice / relevantModels.length) * 100}%`,
+	};
+});
+summary.addTable(convertObjectsToSummaryTable(pricedEmbedModels));
 await summary.write();
 
 startGroup('Saving catalog');
