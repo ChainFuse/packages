@@ -48,7 +48,16 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: ['dall-e-3'],
-		textEmbeddingModelAvailability: ['text-embedding-3-large', 'text-embedding-3-small'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-BR-SaoPauloState',
@@ -107,7 +116,16 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: ['text-embedding-3-large', 'text-embedding-3-small'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
 	},
 	{
 		id: 'OpenAI-CA-Toronto',
@@ -159,7 +177,16 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: ['text-embedding-3-large', 'text-embedding-3-small'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-EU-Frankfurt',
@@ -226,7 +253,12 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: ['dall-e-3'],
-		textEmbeddingModelAvailability: ['text-embedding-3-large'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+		],
 	},
 	{
 		id: 'OpenAI-EU-Madrid',
@@ -307,7 +339,12 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: ['text-embedding-3-large'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-EU-Warsaw',
@@ -332,7 +369,11 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: ['text-embedding-3-large'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+		],
 	},
 	{
 		id: 'OpenAi-IN-Chennai',
@@ -362,7 +403,11 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: ['text-embedding-3-large'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+		],
 	},
 	{
 		id: 'OpenAi-JP-Tokyo',
@@ -394,7 +439,15 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: ['text-embedding-3-large', 'text-embedding-3-small'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-KR-Seoul',
@@ -446,7 +499,12 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: ['text-embedding-3-large'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-SG-Singapore',
@@ -488,7 +546,12 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: ['text-embedding-3-large'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-US-California',
@@ -575,7 +638,11 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: ['text-embedding-3-large'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+		],
 	},
 	{
 		id: 'OpenAi-US-Texas',
@@ -637,7 +704,16 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: ['dall-e-3'],
-		textEmbeddingModelAvailability: ['text-embedding-3-large', 'text-embedding-3-small'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-US-Virginia2',
@@ -678,7 +754,16 @@ export const azureCatalog = [
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: ['text-embedding-3-large', 'text-embedding-3-small'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-ZA-Johannesburg',
