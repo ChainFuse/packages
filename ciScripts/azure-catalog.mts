@@ -1,4 +1,4 @@
-import { endGroup, info, startGroup, warning } from '@actions/core';
+import { endGroup, info, startGroup } from '@actions/core';
 import { CognitiveServicesManagementClient, type BillingMeterInfo } from '@azure/arm-cognitiveservices';
 import { SubscriptionClient } from '@azure/arm-resources-subscriptions';
 import { ClientSecretCredential } from '@azure/identity';
@@ -182,54 +182,12 @@ const json = (
 ).sort((a, b) => a.id!.localeCompare(b.id!));
 endGroup();
 
-startGroup('Merging catalog');
-const finalJson = await import('../packages/types/dist/ai-tools/azure/catalog.js')
-	.then(({ azureCatalog }) => {
-		info(`Loaded existing catalog with ${azureCatalog.length} items`);
-
-		return import('deepmerge')
-			.then(({ default: merge }) =>
-				merge(azureCatalog, json, {
-					arrayMerge: (target, source, options) => {
-						const destination = target.slice();
-
-						source.forEach((item) => {
-							const existingIndex = destination.findIndex((destItem) => destItem.id === item.id);
-
-							if (existingIndex === -1) {
-								destination.push(options.cloneUnlessOtherwiseSpecified(item, options));
-							} else if (options.isMergeableObject(item)) {
-								destination[existingIndex] = merge(destination[existingIndex], item, options);
-							}
-						});
-
-						return destination;
-					},
-				}),
-			)
-			.then((mergedJson) => {
-				info(`Merged catalogs with ${mergedJson.length} items`);
-				return mergedJson;
-			})
-			.catch((e) => {
-				console.error(e);
-				warning('Failed merge, using new catalog only');
-				throw e;
-			});
-	})
-	.catch((e) => {
-		console.error(e);
-		warning('Failed to load existing catalog found, using new catalog only');
-		return json;
-	});
-endGroup();
-
 startGroup('Saving catalog');
 await import('node:fs').then(({ createWriteStream }) => {
 	const writeStream = createWriteStream('packages/types/src/ai-tools/azure/catalog.ts', { encoding: 'utf8' });
 
-	info(`Writing catalog with ${finalJson.length} items`);
-	writeStream.write(`export const azureCatalog = ${JSON.stringify(finalJson, null, '\t')} as const`);
+	info(`Writing catalog with ${json.length} items`);
+	writeStream.write(`export const azureCatalog = ${JSON.stringify(json, null, '\t')} as const`);
 
 	writeStream.end();
 	info('Catalog saved');
