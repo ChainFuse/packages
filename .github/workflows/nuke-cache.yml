@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   delete-cache:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     permissions: write-all
     steps:
       - uses: step-security/harden-runner@c6295a65d1254861815972266d5933fd6e532bdf # v2.11.1
