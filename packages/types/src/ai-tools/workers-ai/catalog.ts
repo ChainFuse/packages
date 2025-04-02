@@ -149,7 +149,18 @@ export const workersAiCatalog = {
 					created_at: '2023-11-07 11:54:20.229',
 					tags: [],
 					properties: {
-						beta: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.56,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 6.67,
+								currency: 'USD',
+							},
+						],
 						context_window: 4096,
 						info: 'https://ai.meta.com/llama/',
 						terms: 'https://ai.meta.com/resources/models-and-libraries/llama-downloads/',
@@ -163,7 +174,18 @@ export const workersAiCatalog = {
 					created_at: '2023-11-07 11:54:20.229',
 					tags: [],
 					properties: {
-						beta: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.11,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.19,
+								currency: 'USD',
+							},
+						],
 						context_window: 2824,
 						info: 'https://mistral.ai/news/announcing-mistral-7b/',
 						lora: true,
@@ -720,7 +742,13 @@ export const workersAiCatalog = {
 					created_at: '2023-11-07 15:43:58.042',
 					tags: [],
 					properties: {
-						beta: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.02,
+								currency: 'USD',
+							},
+						],
 						info: 'https://huggingface.co/BAAI/bge-base-en-v1.5',
 						max_input_tokens: 512,
 						output_dimensions: 384,
@@ -734,7 +762,13 @@ export const workersAiCatalog = {
 					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
-						beta: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.067,
+								currency: 'USD',
+							},
+						],
 						info: 'https://huggingface.co/BAAI/bge-base-en-v1.5',
 						max_input_tokens: 512,
 						output_dimensions: 768,
@@ -748,7 +782,13 @@ export const workersAiCatalog = {
 					created_at: '2023-11-07 15:43:58.042',
 					tags: [],
 					properties: {
-						beta: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.2,
+								currency: 'USD',
+							},
+						],
 						info: 'https://huggingface.co/BAAI/bge-base-en-v1.5',
 						max_input_tokens: 512,
 						output_dimensions: 1024,
@@ -768,7 +808,13 @@ export const workersAiCatalog = {
 					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
-						beta: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.026,
+								currency: 'USD',
+							},
+						],
 						info: 'https://huggingface.co/Intel/distilbert-base-uncased-finetuned-sst-2-english-int8-static',
 					},
 				},
@@ -827,7 +873,13 @@ export const workersAiCatalog = {
 					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
-						beta: true,
+						price: [
+							{
+								unit: 'per audio minute',
+								price: 0.00045,
+								currency: 'USD',
+							},
+						],
 						info: 'https://openai.com/research/whisper',
 					},
 				},
@@ -993,7 +1045,13 @@ export const workersAiCatalog = {
 					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
-						beta: true,
+						price: [
+							{
+								unit: 'per inference request',
+								price: 0.0000025,
+								currency: 'USD',
+							},
+						],
 						info: 'https://www.microsoft.com/en-us/research/blog/microsoft-vision-model-resnet-50-combines-web-scale-data-and-multi-task-learning-to-achieve-state-of-the-art/',
 					},
 				},
@@ -1011,7 +1069,18 @@ export const workersAiCatalog = {
 					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
-						beta: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.34,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.34,
+								currency: 'USD',
+							},
+						],
 						info: 'https://github.com/facebookresearch/fairseq/tree/main/examples/m2m_100',
 						languages: 'english, chinese, french, spanish, arabic, russian, german, japanese, portuguese, hindi',
 						terms: 'https://github.com/facebookresearch/fairseq/blob/main/LICENSE',
