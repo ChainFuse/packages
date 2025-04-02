@@ -224,7 +224,7 @@ const temp = Array.from(dedupedLanguageModels).map((modelName) => {
 	const modelsWithOutputPrice = relevantModels.filter((model) => model.outputTokenCost).length;
 	return {
 		modelName,
-		completeness: ((modelsWithInputPrice + modelsWithOutputPrice) / (relevantModels.length * 2)).toString(),
+		completeness: `${((modelsWithInputPrice + modelsWithOutputPrice) / (relevantModels.length * 2)) * 100}%`,
 	};
 });
 summary.addTable(convertObjectsToSummaryTable(temp));
