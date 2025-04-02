@@ -173,12 +173,12 @@ const json = (
 					})
 					.sort((a, b) => a.name!.localeCompare(b.name!)),
 				imageModelAvailability: deployments
-					.filter((model) => model.properties?.capabilities?.['imageGenerations'] === 'true')
-					.map((model) => model.name)
+					.filter((deployment) => deployment.properties?.capabilities?.['imageGenerations'] === 'true')
+					.map((deployment) => deployment.name)
 					.sort((a, b) => a!.localeCompare(b!)),
 				textEmbeddingModelAvailability: deployments
-					.filter((model) => model.properties?.capabilities?.['embeddings'] === 'true')
-					.map((model) => model.name)
+					.filter((deployment) => deployment.properties?.capabilities?.['embeddings'] === 'true')
+					.map((deployment) => deployment.name)
 					.sort((a, b) => a!.localeCompare(b!)),
 			};
 		}),
