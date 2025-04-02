@@ -20,6 +20,7 @@ export interface AzureOpenAIProvider extends Provider {
 	// imageModel(modelId: AzureImageModels, settings?: Parameters<OpenAIProvider['imageModel']>[1]): ImageModelV1;
 }
 
+// @ts-expect-error I'm forcing it to have types rather than be `any`
 export interface WorkersAIProvider extends WorkersAI {
 	(modelId: cloudflareModelPossibilities<'Text Generation'>, settings?: Parameters<typeof createWorkersAI>[0]): ReturnType<ReturnType<typeof createWorkersAI>>;
 	/**
