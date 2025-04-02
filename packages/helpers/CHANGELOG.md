@@ -1,5 +1,17 @@
 # @chainfuse/helpers
 
+## 2.2.4
+
+### Patch Changes
+
+- [#351](https://github.com/ChainFuse/packages/pull/351) [`b92b0b0`](https://github.com/ChainFuse/packages/commit/b92b0b0c586db365572b595ffa0872dce96fecf5) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump step-security/harden-runner, actions/dependency-review-action
+
+- [#349](https://github.com/ChainFuse/packages/pull/349) [`4425727`](https://github.com/ChainFuse/packages/commit/442572739807f9d2dff5d0ab396dfcc2a11e9fd7) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/openai-compatible, workers-ai-provider, openai
+
+- [#350](https://github.com/ChainFuse/packages/pull/350) [`3f7073b`](https://github.com/ChainFuse/packages/commit/3f7073b41ec95bde72ff8f571920a5a54f641768) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [`2da74cf`](https://github.com/ChainFuse/packages/commit/2da74cf7ca4da4acc9a3ec0904a3d2c2124ebebe) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @types/node
+
 ## 2.2.3
 
 ### Patch Changes
