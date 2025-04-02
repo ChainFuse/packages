@@ -218,7 +218,7 @@ await summary.write({ overwrite: true });
 summary.addHeading('Language Model Pricing');
 const dedupedLanguageModels = new Set(json.map((server) => server.languageModelAvailability.map((model) => model.name!)).flat());
 const everyLanguageModel = json.map((server) => server.languageModelAvailability).flat();
-const temp = Array.from(dedupedLanguageModels).map((modelName) => {
+const pricedLanguageModels = Array.from(dedupedLanguageModels).map((modelName) => {
 	const relevantModels = everyLanguageModel.filter((model) => model.name === modelName);
 	const modelsWithInputPrice = relevantModels.filter((model) => model.inputTokenCost).length;
 	const modelsWithOutputPrice = relevantModels.filter((model) => model.outputTokenCost).length;
@@ -227,7 +227,7 @@ const temp = Array.from(dedupedLanguageModels).map((modelName) => {
 		completeness: `${((modelsWithInputPrice + modelsWithOutputPrice) / (relevantModels.length * 2)) * 100}%`,
 	};
 });
-summary.addTable(convertObjectsToSummaryTable(temp));
+summary.addTable(convertObjectsToSummaryTable(pricedLanguageModels));
 await summary.write();
 
 startGroup('Saving catalog');
