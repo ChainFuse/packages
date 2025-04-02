@@ -207,7 +207,7 @@ summary.addTable(
 	convertObjectsToSummaryTable(
 		json.map((server) => ({
 			server: server.id ?? 'N/A',
-			languageModels: server.languageModelAvailability.map((model) => model.name).join(', '),
+			languageModels: server.languageModelAvailability.map((model) => `${model.inputTokenCost ? '$' : ''}${model.name}${model.outputTokenCost ? '$' : ''}`).join(', '),
 			imageModels: server.imageModelAvailability.join(', '),
 			textEmbeddingModels: server.textEmbeddingModelAvailability.join(', '),
 		})),
