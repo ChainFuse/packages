@@ -4,7 +4,6 @@ import type { cloudflareModelPossibilities } from '@chainfuse/types';
 import type { GatewayOptions } from '@cloudflare/workers-types/experimental';
 import { AiBase } from '../base.mjs';
 import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified, Servers } from '../types.mjs';
-import type { WorkersAIProvider } from './types.mts';
 
 export class AiRawProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
@@ -492,7 +491,7 @@ export class AiRawProviders extends AiBase {
 							executor: JSON.stringify(args.executor),
 						} satisfies AiRequestMetadataStringified,
 					} satisfies GatewayOptions,
-				}) as WorkersAIProvider,
+				}) as unknown as Promise<OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>>>,
 		);
 	}
 }
