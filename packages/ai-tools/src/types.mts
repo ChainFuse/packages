@@ -129,7 +129,7 @@ export interface AiRequestMetadataTiming {
 }
 
 export interface AiRequestMetadataServerInfo {
-	name: 'anthropic' | 'cloudflare' | 'googleai' | 'openai';
+	name: 'anthropic' | 'cloudflare' | `cloudflare-${string}` | 'googleai' | 'openai';
 }
 export interface AiRequestMetadataServerInfoWithLocation {
 	name: `${'azure' | 'google'}-${string}`;
