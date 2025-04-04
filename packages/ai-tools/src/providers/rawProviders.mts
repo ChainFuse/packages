@@ -9,8 +9,25 @@ export class AiRawProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
 	private readonly cacheTtl = 2628288;
 
+	private static serverTimingHeader(metrics: Record<string, number>) {
+		return Object.entries(metrics)
+			.map(([name, duration]) => `${name};dur=${duration}`)
+			.join(', ');
+	}
 	private async updateGatewayLog(response: Response, metadataHeader: AiRequestMetadataStringified, startRoundTrip: ReturnType<typeof performance.now>, modelTime?: number) {
 		const logId = response.headers.get('cf-aig-log-id');
+
+		const rawMetadata: AiRequestMetadata = {
+			...(metadataHeader as unknown as AiRequestMetadata),
+			serverInfo: {
+				...(JSON.parse(metadataHeader.serverInfo) as AiRequestMetadata['serverInfo']),
+				timing: {
+					fromCache: response.headers.get('cf-aig-cache-status')?.toLowerCase() === 'hit',
+					totalRoundtripTime: performance.now() - startRoundTrip,
+					modelTime,
+				},
+			},
+		};
 
 		if (logId) {
 			const updateMetadata = import('@chainfuse/helpers')
@@ -19,17 +36,7 @@ export class AiRawProviders extends AiBase {
 					cf.aiGateway.logs.edit(this.gatewayName, logId, {
 						account_id: this.config.gateway.accountId,
 						metadata: {
-							...Object.entries({
-								...(metadataHeader as unknown as AiRequestMetadata),
-								serverInfo: {
-									...(JSON.parse(metadataHeader.serverInfo) as AiRequestMetadata['serverInfo']),
-									timing: {
-										fromCache: response.headers.get('cf-aig-cache-status')?.toLowerCase() === 'hit',
-										totalRoundtripTime: performance.now() - startRoundTrip,
-										modelTime,
-									},
-								},
-							} satisfies AiRequestMetadata).reduce((acc, [key, value]) => {
+							...Object.entries(rawMetadata).reduce((acc, [key, value]) => {
 								acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
 								return acc;
 							}, {} as AiRequestMetadataStringified),
@@ -45,6 +52,11 @@ export class AiRawProviders extends AiBase {
 		} else {
 			console.warn('Not updating gateway log, no cf-aig-log-id header');
 		}
+
+		return AiRawProviders.serverTimingHeader({
+			total: rawMetadata.serverInfo.timing!.totalRoundtripTime,
+			...(rawMetadata.serverInfo.timing?.modelTime && { model: rawMetadata.serverInfo.timing.modelTime }),
+		});
 	}
 
 	public oaiOpenai(args: AiRequestConfig) {
@@ -84,12 +96,12 @@ export class AiRawProviders extends AiBase {
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
 						if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
-						await this.updateGatewayLog(response, metadataHeader, startRoundTrip, response.headers.has('openai-processing-ms') ? parseInt(response.headers.get('openai-processing-ms')!) : undefined);
+						const serverTiming = await this.updateGatewayLog(response, metadataHeader, startRoundTrip, response.headers.has('openai-processing-ms') ? parseInt(response.headers.get('openai-processing-ms')!) : undefined);
 
 						// Inject it to have it available for retries
 						const mutableHeaders = new Headers(response.headers);
 						mutableHeaders.set('X-Idempotency-Id', metadataHeader.idempotencyId);
-
+						mutableHeaders.set('Server-Timing', serverTiming);
 						if (response.ok) {
 							return new Response(response.body, { ...response, headers: mutableHeaders });
 						} else {
@@ -160,12 +172,12 @@ export class AiRawProviders extends AiBase {
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
 						if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
-						await this.updateGatewayLog(response, metadataHeader, startRoundTrip, response.headers.has('x-envoy-upstream-service-time') ? parseInt(response.headers.get('x-envoy-upstream-service-time')!) : undefined);
+						const serverTiming = await this.updateGatewayLog(response, metadataHeader, startRoundTrip, response.headers.has('x-envoy-upstream-service-time') ? parseInt(response.headers.get('x-envoy-upstream-service-time')!) : undefined);
 
 						// Inject it to have it available for retries
 						const mutableHeaders = new Headers(response.headers);
 						mutableHeaders.set('X-Idempotency-Id', metadataHeader.idempotencyId);
-
+						mutableHeaders.set('Server-Timing', serverTiming);
 						if (response.ok) {
 							return new Response(response.body, { ...response, headers: mutableHeaders });
 						} else {
@@ -216,12 +228,12 @@ export class AiRawProviders extends AiBase {
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
 						if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
-						await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
+						const serverTiming = await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
 
 						// Inject it to have it available for retries
 						const mutableHeaders = new Headers(response.headers);
 						mutableHeaders.set('X-Idempotency-Id', metadataHeader.idempotencyId);
-
+						mutableHeaders.set('Server-Timing', serverTiming);
 						if (response.ok) {
 							return new Response(response.body, { ...response, headers: mutableHeaders });
 						} else {
@@ -393,12 +405,12 @@ export class AiRawProviders extends AiBase {
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
 						if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
-						await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
+						const serverTiming = await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
 
 						// Inject it to have it available for retries
 						const mutableHeaders = new Headers(response.headers);
 						mutableHeaders.set('X-Idempotency-Id', metadataHeader.idempotencyId);
-
+						mutableHeaders.set('Server-Timing', serverTiming);
 						if (response.ok) {
 							return new Response(response.body, { ...response, headers: mutableHeaders });
 						} else {
@@ -450,11 +462,12 @@ export class AiRawProviders extends AiBase {
 					return fetch(input, { ...rawInit, headers }).then(async (response) => {
 						if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
-						await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
+						const serverTiming = await this.updateGatewayLog(response, metadataHeader, startRoundTrip);
 
 						// Inject it to have it available for retries
 						const mutableHeaders = new Headers(response.headers);
 						mutableHeaders.set('X-Idempotency-Id', metadataHeader.idempotencyId);
+						mutableHeaders.set('Server-Timing', serverTiming);
 
 						if (response.ok) {
 							return new Response(response.body, { ...response, headers: mutableHeaders });
