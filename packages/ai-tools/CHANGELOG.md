@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 0.13.0
+
+### Minor Changes
+
+- [`3d9a75e`](https://github.com/ChainFuse/packages/commit/3d9a75e944dadf069b7216bfcd78cf24aafdb38f) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Add `Server-Timing` header to ai responses
+
+### Patch Changes
+
+- [`a317f4f`](https://github.com/ChainFuse/packages/commit/a317f4f97bf4c85f445f5b8f39eaf7bf735cbf4e) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Add cf colo to server info metadata
+
 ## 0.12.4
 
 ### Patch Changes
