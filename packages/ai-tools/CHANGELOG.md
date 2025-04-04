@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.12.4
+
+### Patch Changes
+
+- [`4764eb3`](https://github.com/ChainFuse/packages/commit/4764eb3ea8348241191e41ac9ddefa19960146cb) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix workers aibinding calls
+
 ## 0.12.3
 
 ### Patch Changes
