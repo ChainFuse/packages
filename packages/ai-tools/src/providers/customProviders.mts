@@ -1,5 +1,4 @@
 import type { GoogleGenerativeAIProvider } from '@ai-sdk/google';
-import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { Helpers } from '@chainfuse/helpers';
 import { AiModels, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
 import { APICallError, customProvider, TypeValidationError, wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
@@ -9,7 +8,7 @@ import { AiBase } from '../base.mjs';
 import { ServerSelector } from '../serverSelector.mts';
 import type { AiConfigWorkersai, AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId, AzureServers } from '../types.mjs';
 import { AiRawProviders } from './rawProviders.mjs';
-import type { AzureOpenAIProvider, WorkersAIProvider } from './types.mjs';
+import type { AzureOpenAIProvider } from './types.mjs';
 
 export class AiCustomProviders extends AiBase {
 	public oaiOpenai(args: AiRequestConfig) {
@@ -231,55 +230,9 @@ export class AiCustomProviders extends AiBase {
 					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['restWorkersAi']>>>),
 				),
 				fallbackProvider: await raw.restWorkersAi(args),
-			}) as OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Embeddings'>>;
+			}) as Awaited<ReturnType<(typeof raw)['restWorkersAi']>>;
 		} else {
-			return customProvider({
-				// @ts-expect-error override for types
-				languageModels: await enabledCloudflareLlmProviders.reduce(
-					async (accPromise, model) => {
-						const acc = await accPromise;
-						/**
-						 * Intercept and add in missing index property to be OpenAI compatible
-						 */
-						// @ts-expect-error override for types
-						acc[model] = wrapLanguageModel({
-							model: (await raw.bindingWorkersAi(args))(model),
-							middleware: [
-								// Fix output generation where it's correct, but encapsulated in a code fence
-								{
-									wrapGenerate: async ({ doGenerate, model }) => {
-										const result = await doGenerate();
-
-										/**
-										 * `chunkSchema` is undocumented but always present in `model` regardless of model
-										 * Can't use `responseFormat` (in `params`) because it isn't always present because some models don't support that part of openai api spec.
-										 */
-										if ('chunkSchema' in model) {
-											const codeFenceStart = new RegExp(/^`{1,3}\w*\s*(?=[\[{])/i);
-											const codefenceEnd = new RegExp(/(?![\]}])\s*`{1,3}$/i);
-
-											return {
-												...result,
-												/**
-												 * 1. trim initially to remove any leading/trailing whitespace
-												 * 2. Remove start and end
-												 * 3. Trim again to remove any leading/trailing whitespace
-												 */
-												text: result.text?.trim().replace(codeFenceStart, '').replace(codefenceEnd, '').trim(),
-											};
-										}
-
-										return result;
-									},
-								},
-							],
-						});
-						return acc;
-					},
-					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['bindingWorkersAi']>>>),
-				),
-				fallbackProvider: await new AiRawProviders(this.config).bindingWorkersAi(args),
-			}) as unknown as WorkersAIProvider;
+			return new AiRawProviders(this.config).bindingWorkersAi(args);
 		}
 	}
 
