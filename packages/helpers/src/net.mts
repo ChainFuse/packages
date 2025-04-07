@@ -15,10 +15,12 @@ export class NetHelpers {
 	}
 
 	public static stripSensitiveHeaders(originalHeaders: Headers = new Headers()) {
-		originalHeaders.delete('Set-Cookie');
-		originalHeaders.delete('Authorization');
+		const mutableHeaders = new Headers(originalHeaders);
 
-		return originalHeaders;
+		mutableHeaders.delete('Set-Cookie');
+		mutableHeaders.delete('Authorization');
+
+		return mutableHeaders;
 	}
 
 	public static cfApi(apiKey: string, logger: CustomLoging = false) {
