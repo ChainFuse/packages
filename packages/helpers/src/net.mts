@@ -75,7 +75,6 @@ export class NetHelpers {
 							.catch(() => console.debug(...loggingItems));
 					}
 				} else {
-					 
 					logger(...loggingItems);
 				}
 
@@ -113,7 +112,6 @@ export class NetHelpers {
 											.catch(() => console.debug(...loggingItems));
 									}
 								} else {
-									 
 									logger(...loggingItems);
 								}
 
