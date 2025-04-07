@@ -711,6 +711,29 @@ export const workersAiCatalog = {
 						info: 'https://huggingface.co/openchat/openchat-3.5-0106',
 					},
 				},
+				{
+					id: '06455e78-19f7-487b-93cd-c05a3dd07813',
+					source: 1,
+					name: '@cf/meta/llama-4-scout-17b-16e-instruct',
+					description: "Meta's Llama 4 Scout is a 17 billion parameter model with 16 experts that is natively multimodal. These models leverage a mixture-of-experts architecture to offer industry-leading performance in text and image understanding.",
+					created_at: '2025-04-05 20:25:56.137',
+					tags: [],
+					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0,
+								currency: 'USD',
+							},
+						],
+						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE',
+					},
+				},
 			],
 		},
 		'Text Embeddings': {
