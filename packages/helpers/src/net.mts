@@ -26,84 +26,86 @@ export class NetHelpers {
 			({ Cloudflare }) =>
 				new Cloudflare({
 					apiToken: apiKey,
-					fetch: (info, init) =>
-						// eslint-disable-next-line @typescript-eslint/no-misused-promises
-						new Promise<Awaited<ReturnType<typeof fetch>>>(async (resolve) => {
-							const cacheKey = new Request(info, { ...init, headers: this.stripSensitiveHeaders(new Headers(init?.headers)) });
-							if (typeof logger === 'boolean') {
-								if (logger) {
-									await import('chalk')
-										.then(({ Chalk }) => {
-											const chalk = new Chalk({ level: 1 });
-											console.debug(chalk.magenta('CF Fetch request'), chalk.magenta(cacheKey.url), JSON.stringify(this.initBodyTrimmer({ ...init, headers: Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) }), null, '\t'));
-										})
-										.catch(() => console.debug('CF Fetch request', cacheKey.url, JSON.stringify(this.initBodyTrimmer({ ...init, headers: Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) }), null, '\t')));
-								}
-							} else {
-								logger(`CF Fetch request ${cacheKey.url} ${JSON.stringify(this.initBodyTrimmer({ ...init, headers: Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) }), null, '\t')}`);
-							}
+					fetch: async (info, init) => {
+						if (typeof logger === 'boolean' && logger) {
+							logger = (date: string, id: string, methodOrStatus: string | number, url: string, headers: Record<string, string>) => {
+								const customUrl = new URL(url);
 
-							if (typeof logger === 'boolean') {
-								if (logger) {
-									await import('chalk')
-										.then(({ Chalk }) => {
-											const chalk = new Chalk({ level: 1 });
-											console.warn(chalk.yellow('CF Cache ignored'), cacheKey.url);
-										})
-										.catch(() => console.warn('CF Cache ignored', cacheKey.url));
-								}
-							} else {
-								logger(`CF Cache ignored ${cacheKey.url}`);
-							}
-							resolve(this.loggingFetch(info, init, undefined, logger));
-						}),
+								const loggingItems = [date, id, methodOrStatus, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
+
+								const customHeaders = new Headers(headers);
+								if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, customHeaders.get('cf-ray')!);
+
+								console.debug(...loggingItems);
+							};
+						}
+
+						return this.loggingFetch(info, init, undefined, logger);
+					},
 				}),
 		);
 	}
 
+	private static isRequestLike(obj: Parameters<typeof fetch>[0]): obj is Request {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+		return typeof (obj as any)?.url === 'string';
+	}
+
 	public static loggingFetch(info: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1], body = false, logger: CustomLoging = false) {
-		// eslint-disable-next-line @typescript-eslint/no-misused-promises
-		return new Promise<Awaited<ReturnType<typeof fetch>>>((resolve, reject) =>
-			fetch(info, init)
-				.then(async (response) => {
-					resolve(response.clone());
+		return import('./crypto.mts')
+			.then(({ CryptoHelpers }) => CryptoHelpers.base62secret(8))
+			.then(async (id) => {
+				if (typeof logger === 'boolean') {
+					if (logger) {
+						await Promise.all([import('chalk'), import('./index.mts')])
+							.then(([{ Chalk }, { Helpers }]) => {
+								const chalk = new Chalk({ level: 1 });
 
-					// Allow mutable headers
-					response = new Response(response.body, response);
-					const loggingContent: Record<string, any> = {
-						headers: Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()),
-						status: response.status,
-						statusText: response.statusText,
-						ok: response.ok,
-						type: response.type,
-					};
-					if (body) {
-						if (response.headers.get('Content-Type')?.toLowerCase().startsWith('application/json')) {
-							// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-							loggingContent['body'] = await response.json();
-						} else {
-							loggingContent['body'] = await response.text();
-						}
+								console.debug(new Date().toISOString(), chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`), init?.method ?? 'GET', this.isRequestLike(info) ? info.url : info.toString());
+							})
+							.catch(() => console.debug(new Date().toISOString(), `[${id}]`, init?.method ?? 'GET', this.isRequestLike(info) ? info.url : info.toString()));
 					}
+				} else {
+					logger(new Date().toISOString(), id, init?.method ?? 'GET', this.isRequestLike(info) ? info.url : info.toString(), Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()), this.initBodyTrimmer(init));
+				}
 
-					if (typeof logger === 'boolean') {
-						if (logger) {
-							await import('chalk')
-								.then(({ Chalk }) => {
-									const chalk = new Chalk({ level: 1 });
-									// eslint-disable-next-line @typescript-eslint/no-base-to-string
-									console.debug(response.ok ? chalk.green('Fetch response') : chalk.red('Fetch response'), response.ok, response.ok ? chalk.green(response.url || info.toString()) : chalk.red(response.url || info.toString()), JSON.stringify(loggingContent, null, '\t'));
-								})
-								// eslint-disable-next-line @typescript-eslint/no-base-to-string
-								.catch(() => console.debug('Fetch response', response.ok, response.url || info.toString(), JSON.stringify(loggingContent, null, '\t')));
-						}
-					} else {
-						// eslint-disable-next-line @typescript-eslint/no-base-to-string
-						logger(`Fetch response ${response.ok} ${response.url || info.toString()} ${JSON.stringify(loggingContent, null, '\t')}`);
-					}
-				})
-				.catch(reject),
-		);
+				return id;
+			})
+			.then(
+				(id) =>
+					// eslint-disable-next-line @typescript-eslint/no-misused-promises
+					new Promise<Awaited<ReturnType<typeof fetch>>>((resolve, reject) =>
+						fetch(info, init)
+							.then(async (response) => {
+								resolve(response.clone());
+
+								let loggingContentBody: object | string | undefined;
+								if (body) {
+									if (response.headers.get('Content-Type')?.toLowerCase().startsWith('application/json')) {
+										// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+										loggingContentBody = await response.json();
+									} else {
+										loggingContentBody = await response.text();
+									}
+								}
+
+								if (typeof logger === 'boolean') {
+									if (logger) {
+										await Promise.all([import('chalk'), import('./index.mts')])
+											.then(([{ Chalk }, { Helpers }]) => {
+												const chalk = new Chalk({ level: 1 });
+
+												console.debug(new Date().toISOString(), chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`), response.status, response.url);
+											})
+											.catch(() => console.debug(new Date().toISOString(), `[${id}]`, response.status, response.url));
+									}
+								} else {
+									logger(new Date().toISOString(), id, response.status, response.url, Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()), loggingContentBody);
+								}
+							})
+							.catch(reject),
+					),
+			);
 	}
 
 	/**
