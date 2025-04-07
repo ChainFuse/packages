@@ -33,7 +33,7 @@ export class NetHelpers {
 							logger = (date: string, id: string, methodOrStatus: string | number, url: string, headers: Record<string, string>) => {
 								const customUrl = new URL(url);
 
-								const loggingItems = [date, id, methodOrStatus, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
+								const loggingItems = ['CF Rest', date, id, methodOrStatus, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 								const customHeaders = new Headers(headers);
 								if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, customHeaders.get('cf-ray')!);
