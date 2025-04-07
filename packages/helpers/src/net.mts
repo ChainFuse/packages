@@ -55,18 +55,26 @@ export class NetHelpers {
 		return import('./crypto.mts')
 			.then(({ CryptoHelpers }) => CryptoHelpers.base62secret(8))
 			.then(async (id) => {
+				const loggingItems: any[] = [new Date().toISOString(), id, init?.method ?? 'GET', this.isRequestLike(info) ? info.url : info.toString(), Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries())];
+				if (body) loggingItems.push(this.initBodyTrimmer(init));
+
 				if (typeof logger === 'boolean') {
 					if (logger) {
 						await Promise.all([import('chalk'), import('./index.mts')])
 							.then(([{ Chalk }, { Helpers }]) => {
 								const chalk = new Chalk({ level: 1 });
 
-								console.debug(new Date().toISOString(), chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`), init?.method ?? 'GET', this.isRequestLike(info) ? info.url : info.toString());
+								loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
+
+								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+								console.debug(...loggingItems);
 							})
-							.catch(() => console.debug(new Date().toISOString(), `[${id}]`, init?.method ?? 'GET', this.isRequestLike(info) ? info.url : info.toString()));
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+							.catch(() => console.debug(...loggingItems));
 					}
 				} else {
-					logger(new Date().toISOString(), id, init?.method ?? 'GET', this.isRequestLike(info) ? info.url : info.toString(), Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()), this.initBodyTrimmer(init));
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+					logger(...loggingItems);
 				}
 
 				return id;
@@ -77,15 +85,14 @@ export class NetHelpers {
 					new Promise<Awaited<ReturnType<typeof fetch>>>((resolve, reject) =>
 						fetch(info, init)
 							.then(async (response) => {
-								resolve(response.clone());
-
-								let loggingContentBody: object | string | undefined;
+								const loggingItems: any[] = [new Date().toISOString(), id, response.status, response.url, Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries())];
 								if (body) {
+									const loggingClone = response.clone();
+
 									if (response.headers.get('Content-Type')?.toLowerCase().startsWith('application/json')) {
-										// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-										loggingContentBody = await response.json();
+										loggingItems.push(await loggingClone.json());
 									} else {
-										loggingContentBody = await response.text();
+										loggingItems.push(await loggingClone.text());
 									}
 								}
 
@@ -95,13 +102,20 @@ export class NetHelpers {
 											.then(([{ Chalk }, { Helpers }]) => {
 												const chalk = new Chalk({ level: 1 });
 
-												console.debug(new Date().toISOString(), chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`), response.status, response.url);
+												loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
+
+												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+												console.debug(...loggingItems);
 											})
-											.catch(() => console.debug(new Date().toISOString(), `[${id}]`, response.status, response.url));
+											// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+											.catch(() => console.debug(...loggingItems));
 									}
 								} else {
-									logger(new Date().toISOString(), id, response.status, response.url, Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()), loggingContentBody);
+									// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+									logger(...loggingItems);
 								}
+
+								resolve(response);
 							})
 							.catch(reject),
 					),
