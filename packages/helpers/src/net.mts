@@ -75,7 +75,7 @@ export class NetHelpers {
 							.catch(() => console.debug(...loggingItems));
 					}
 				} else {
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+					 
 					logger(...loggingItems);
 				}
 
@@ -113,7 +113,7 @@ export class NetHelpers {
 											.catch(() => console.debug(...loggingItems));
 									}
 								} else {
-									// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+									 
 									logger(...loggingItems);
 								}
 
