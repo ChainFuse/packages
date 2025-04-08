@@ -30,10 +30,11 @@ export class NetHelpers {
 					apiToken: apiKey,
 					fetch: async (info, init) => {
 						if (typeof logger === 'boolean' && logger) {
-							logger = (date: string, id: string, methodOrStatus: string | number, url: string, headers: Record<string, string>) => {
+							logger = (date: string, id: string, methodOrStatus: string | number, url: string, headers: Record<string, string>, ...rest: any[]) => {
 								const customUrl = new URL(url);
 
-								const loggingItems = ['CF Rest', date, id, methodOrStatus, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
+								// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+								const loggingItems = ['CF Rest', date, id, methodOrStatus, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`, ...rest];
 
 								const customHeaders = new Headers(headers);
 								if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, customHeaders.get('cf-ray')!);
