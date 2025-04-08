@@ -1,5 +1,13 @@
 # @chainfuse/helpers
 
+## 2.3.1
+
+### Patch Changes
+
+- [`00795bb`](https://github.com/ChainFuse/packages/commit/00795bb1ed6b863215b44ab7c89e61de70db123e) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Fix body logging
+
+- [`ce567ed`](https://github.com/ChainFuse/packages/commit/ce567ed938c898fd6bc1d4125687748319c902a0) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Pass in body through
+
 ## 2.3.0
 
 ### Minor Changes
