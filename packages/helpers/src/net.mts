@@ -59,7 +59,13 @@ export class NetHelpers {
 			.then(({ CryptoHelpers }) => CryptoHelpers.base62secret(8))
 			.then(async (id) => {
 				const loggingItems: any[] = [new Date().toISOString(), id, init?.method ?? 'GET', this.isRequestLike(info) ? info.url : info.toString(), Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries())];
-				if (body) loggingItems.push(this.initBodyTrimmer(init));
+				if (body && init?.body) {
+					if (new Headers(init.headers).get('Content-Type')?.toLowerCase().startsWith('application/json')) {
+						loggingItems.push(JSON.parse(init?.body as string));
+					} else {
+						loggingItems.push(init.body);
+					}
+				}
 
 				if (typeof logger === 'boolean') {
 					if (logger) {
