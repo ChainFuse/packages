@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import type { EnumOrEnumLike } from '../index.js';
 import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmImageProviders, enabledCloudflareLlmProviders, type CloudflareFunctionModelsEnum, type CloudflareModelsEnum } from './workers-ai/index.js';
 
@@ -87,9 +88,33 @@ export namespace AiModels {
 	}
 }
 
-export type LanguageModelValues = EnumOrEnumLike<(typeof AiModels.LanguageModels)[keyof typeof AiModels.LanguageModels]>;
-export type ImageModelValues = EnumOrEnumLike<(typeof AiModels.ImageModels)[keyof typeof AiModels.ImageModels]>;
-export type TextEmbeddingModelValues = EnumOrEnumLike<(typeof AiModels.TextEmbeddingModels)[keyof typeof AiModels.TextEmbeddingModels]>;
+const ZodLanguageModelValuesRaw = Object.entries(AiModels.LanguageModels).reduce(
+	(acc, [, value]) => {
+		acc.push(value as unknown as EnumOrEnumLike<(typeof AiModels.LanguageModels)[keyof typeof AiModels.LanguageModels]>);
+		return acc;
+	},
+	[] as EnumOrEnumLike<(typeof AiModels.LanguageModels)[keyof typeof AiModels.LanguageModels]>[],
+);
+export const ZodLanguageModelValues = z.enum(ZodLanguageModelValuesRaw as [(typeof ZodLanguageModelValuesRaw)[number], ...typeof ZodLanguageModelValuesRaw]);
+export type LanguageModelValues = z.infer<typeof ZodLanguageModelValues>;
+const ZodImageModelValuesRaw = Object.entries(AiModels.ImageModels).reduce(
+	(acc, [, value]) => {
+		acc.push(value as unknown as EnumOrEnumLike<(typeof AiModels.ImageModels)[keyof typeof AiModels.ImageModels]>);
+		return acc;
+	},
+	[] as EnumOrEnumLike<(typeof AiModels.ImageModels)[keyof typeof AiModels.ImageModels]>[],
+);
+export const ZodImageModelValues = z.enum(ZodImageModelValuesRaw as [(typeof ZodImageModelValuesRaw)[number], ...typeof ZodImageModelValuesRaw]);
+export type ImageModelValues = z.infer<typeof ZodImageModelValues>;
+const ZodTextEmbeddingModelValuesRaw = Object.entries(AiModels.TextEmbeddingModels).reduce(
+	(acc, [, value]) => {
+		acc.push(value as unknown as EnumOrEnumLike<(typeof AiModels.TextEmbeddingModels)[keyof typeof AiModels.TextEmbeddingModels]>);
+		return acc;
+	},
+	[] as EnumOrEnumLike<(typeof AiModels.TextEmbeddingModels)[keyof typeof AiModels.TextEmbeddingModels]>[],
+);
+export const ZodTextEmbeddingModelValues = z.enum(ZodTextEmbeddingModelValuesRaw as [(typeof ZodTextEmbeddingModelValuesRaw)[number], ...typeof ZodTextEmbeddingModelValuesRaw]);
+export type TextEmbeddingModelValues = z.infer<typeof ZodTextEmbeddingModelValues>;
 
 export const default_mc_generic: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
 export const default_mc_summary: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o;
