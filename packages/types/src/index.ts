@@ -62,3 +62,20 @@ export type UndefinedProperties<T extends object> = {
 
 export type CustomLogCallback = (message?: any, ...optionalParams: any[]) => void;
 export type CustomLoging = boolean | CustomLogCallback;
+
+/**
+ * @link https://developers.cloudflare.com/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction
+ */
+export enum DOLocations {
+	'The European Union' = 'eu',
+	'FedRAMP-compliant data centers' = 'fedramp',
+	'Western North America' = 'wnam',
+	'Eastern North America' = 'enam',
+	'South America' = 'sam',
+	'Western Europe' = 'weur',
+	'Eastern Europe' = 'eeur',
+	'Asia-Pacific' = 'apac',
+	'Oceania' = 'oc',
+	'Africa' = 'afr',
+	'Middle East' = 'me',
+}
