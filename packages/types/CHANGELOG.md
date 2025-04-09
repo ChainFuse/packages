@@ -1,5 +1,17 @@
 # @chainfuse/types
 
+## 2.8.0
+
+### Minor Changes
+
+- [`09f2ca6`](https://github.com/ChainFuse/packages/commit/09f2ca6a272ca6493004d221c053799f5920ab76) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Export zod check for models
+
+- [`a44bcfa`](https://github.com/ChainFuse/packages/commit/a44bcfa15bfd168033c7bc606950b823fd59d711) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Bring over `NamespaceEnumObject` from internal types
+
+### Patch Changes
+
+- [`28d990d`](https://github.com/ChainFuse/packages/commit/28d990d89cba73215320e26131209ddee11cf6c0) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Move `EnumOrEnumLike` to higher level export
+
 ## 2.7.0
 
 ### Minor Changes
