@@ -55,7 +55,7 @@
 	},
 	"devDependencies": {
 		"@chainfuse/types": "^2.5.0",
-		"@cloudflare/workers-types": "^4.20250407.0",
+		"@cloudflare/workers-types": "^4.20250409.0",
 		"@types/node": "^22.14.0"
 	}
 }
