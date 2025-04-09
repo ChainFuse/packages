@@ -4,6 +4,9 @@ export * from './d1/index.js';
 export * from './discourse/index.js';
 
 export type EnumOrEnumLike<T> = T extends Record<string, infer V> ? V : T extends Readonly<Record<string, infer V>> ? V : never;
+export type NamespaceEnumObject<T> = {
+	[K in keyof T as EnumOrEnumLike<T[K]> extends never ? never : K]?: T[K] extends Record<any, any> ? T[K][keyof T[K]] : never;
+};
 
 type MethodKeys<T> = {
 	[P in keyof T]: T[P] extends (...args: any[]) => any ? P : never;
