@@ -1,5 +1,15 @@
 # @chainfuse/types
 
+## 2.6.0
+
+### Minor Changes
+
+- [`949d408`](https://github.com/ChainFuse/packages/commit/949d40882212c502af743d1491ee9029f50a5e64) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add DO locations
+
+### Patch Changes
+
+- [#364](https://github.com/ChainFuse/packages/pull/364) [`b4e8d7f`](https://github.com/ChainFuse/packages/commit/b4e8d7f2202e3ff3c4bac0675d834c7fd847ce65) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
 ## 2.5.0
 
 ### Minor Changes
