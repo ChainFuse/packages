@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.7.0
+
+### Minor Changes
+
+- [`daffcc3`](https://github.com/ChainFuse/packages/commit/daffcc39d87498b94e3e1c9184f763b45bbe1252) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add new uuid format
+
 ## 2.6.0
 
 ### Minor Changes
