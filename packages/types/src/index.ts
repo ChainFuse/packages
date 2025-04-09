@@ -3,6 +3,8 @@ export * from './d0/index.js';
 export * from './d1/index.js';
 export * from './discourse/index.js';
 
+export type EnumOrEnumLike<T> = T extends Record<string, infer V> ? V : T extends Readonly<Record<string, infer V>> ? V : never;
+
 type MethodKeys<T> = {
 	[P in keyof T]: T[P] extends (...args: any[]) => any ? P : never;
 }[keyof T];
