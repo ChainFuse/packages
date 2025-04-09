@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 2.3.2
+
+### Patch Changes
+
+- [#364](https://github.com/ChainFuse/packages/pull/364) [`b4e8d7f`](https://github.com/ChainFuse/packages/commit/b4e8d7f2202e3ff3c4bac0675d834c7fd847ce65) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
 ## 2.3.1
 
 ### Patch Changes
