@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.9.0
+
+### Minor Changes
+
+- [`0bffbbf`](https://github.com/ChainFuse/packages/commit/0bffbbfa8b2daa66cd58df692f4f55b423f27906) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Separate DO Locations and jurisdictions
+
 ## 2.8.0
 
 ### Minor Changes
