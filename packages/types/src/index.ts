@@ -71,9 +71,14 @@ export type CustomLoging = boolean | CustomLogCallback;
 /**
  * @link https://developers.cloudflare.com/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction
  */
-export enum DOLocations {
+export enum DOJurisdictions {
 	'The European Union' = 'eu',
 	'FedRAMP-compliant data centers' = 'fedramp',
+}
+/**
+ * @link https://developers.cloudflare.com/durable-objects/reference/data-location/#provide-a-location-hint
+ */
+export enum DOLocations {
 	'Western North America' = 'wnam',
 	'Eastern North America' = 'enam',
 	'South America' = 'sam',
