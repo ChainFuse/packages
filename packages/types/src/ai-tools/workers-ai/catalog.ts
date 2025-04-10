@@ -139,6 +139,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						lora: true,
 					},
 				},
 				{
@@ -254,6 +255,7 @@ export const workersAiCatalog = {
 					created_at: '2025-01-22 19:48:55.776',
 					tags: [],
 					properties: {
+						context_window: 80000,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -266,6 +268,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						lora: true,
 						terms: 'https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE',
 					},
 				},
@@ -414,6 +417,7 @@ export const workersAiCatalog = {
 					created_at: '2024-12-06 17:09:18.338',
 					tags: [],
 					properties: {
+						context_window: 24000,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -426,7 +430,6 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-						context_window: 24000,
 						function_calling: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE',
 					},
@@ -629,6 +632,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						lora: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
@@ -719,6 +723,7 @@ export const workersAiCatalog = {
 					created_at: '2025-04-05 20:25:56.137',
 					tags: [],
 					properties: {
+						context_window: 131000,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -812,7 +817,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-						info: 'https://huggingface.co/BAAI/bge-base-en-v1.5',
+						info: 'https://huggingface.co/BAAI/bge-large-en-v1.5',
 						max_input_tokens: 512,
 						output_dimensions: 1024,
 					},
@@ -848,7 +853,15 @@ export const workersAiCatalog = {
 					description: 'Different from embedding model, reranker uses question and document as input and directly output similarity instead of embedding. You can get a relevance score by inputting query and passage to the reranker. And the score can be mapped to a float value in [0,1] by sigmoid function.\n\n',
 					created_at: '2025-02-14 12:28:19.009',
 					tags: [],
-					properties: {},
+					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.0031,
+								currency: 'USD',
+							},
+						],
+					},
 				},
 			],
 		},
@@ -865,6 +878,13 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						price: [
+							{
+								unit: 'per inference request',
+								price: 0.0000075,
+								currency: 'USD',
+							},
+						],
 					},
 				},
 			],
@@ -880,7 +900,15 @@ export const workersAiCatalog = {
 					description: 'MeloTTS is a high-quality multi-lingual text-to-speech library by MyShell.ai.',
 					created_at: '2024-07-19 15:51:04.819',
 					tags: [],
-					properties: {},
+					properties: {
+						price: [
+							{
+								unit: 'per audio minute',
+								price: 0.0002,
+								currency: 'USD',
+							},
+						],
+					},
 				},
 			],
 		},
@@ -978,6 +1006,13 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						price: [
+							{
+								unit: 'per step',
+								price: 0,
+								currency: 'USD',
+							},
+						],
 						info: 'https://huggingface.co/runwayml/stable-diffusion-inpainting',
 						terms: 'https://github.com/runwayml/stable-diffusion/blob/main/LICENSE',
 					},
@@ -1013,6 +1048,13 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						price: [
+							{
+								unit: 'per step',
+								price: 0,
+								currency: 'USD',
+							},
+						],
 						info: 'https://huggingface.co/ByteDance/SDXL-Lightning',
 					},
 				},
@@ -1037,6 +1079,13 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						price: [
+							{
+								unit: 'per step',
+								price: 0,
+								currency: 'USD',
+							},
+						],
 						info: 'https://stability.ai/stable-diffusion',
 						terms: 'https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md',
 					},
@@ -1050,6 +1099,13 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						price: [
+							{
+								unit: 'per step',
+								price: 0,
+								currency: 'USD',
+							},
+						],
 						info: 'https://huggingface.co/runwayml/stable-diffusion-v1-5',
 						terms: 'https://github.com/runwayml/stable-diffusion/blob/main/LICENSE',
 					},
@@ -1124,6 +1180,13 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0,
+								currency: 'USD',
+							},
+						],
 					},
 				},
 			],
