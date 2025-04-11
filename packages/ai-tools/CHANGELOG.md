@@ -1,5 +1,23 @@
 # @chainfuse/ai-tools
 
+## 0.13.2
+
+### Patch Changes
+
+- [`9de7152`](https://github.com/ChainFuse/packages/commit/9de71529afa645e3ffe68f0b56da006406c33701) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Bring log format in sync with `NetHelpers`
+
+- [#369](https://github.com/ChainFuse/packages/pull/369) [`f9c5af0`](https://github.com/ChainFuse/packages/commit/f9c5af0afd6579a9db0739cd3e620d992c4753a0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/azure, @ai-sdk/openai, @ai-sdk/openai-compatible, ai
+
+- [#371](https://github.com/ChainFuse/packages/pull/371) [`5074bcc`](https://github.com/ChainFuse/packages/commit/5074bcca98dd864da0ac53cc9179b97acd92f808) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump lerna
+
+- [#370](https://github.com/ChainFuse/packages/pull/370) [`fa916e1`](https://github.com/ChainFuse/packages/commit/fa916e1e79b727a9f2a4b66849bd83341dffb8a1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [`23af00d`](https://github.com/ChainFuse/packages/commit/23af00df8fb7f8cc516379debececd8a6194828a) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Azure now uses universal gateway for load balancing
+
+- Updated dependencies [[`f9c5af0`](https://github.com/ChainFuse/packages/commit/f9c5af0afd6579a9db0739cd3e620d992c4753a0), [`5074bcc`](https://github.com/ChainFuse/packages/commit/5074bcca98dd864da0ac53cc9179b97acd92f808), [`fa916e1`](https://github.com/ChainFuse/packages/commit/fa916e1e79b727a9f2a4b66849bd83341dffb8a1), [`2dc0788`](https://github.com/ChainFuse/packages/commit/2dc0788f9865ec644be881f868baecbcd47697e6)]:
+    - @chainfuse/helpers@2.3.3
+    - @chainfuse/types@2.9.1
+
 ## 0.13.1
 
 ### Patch Changes
