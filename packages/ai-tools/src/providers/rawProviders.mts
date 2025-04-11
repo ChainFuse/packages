@@ -1,9 +1,10 @@
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
 import type { cloudflareModelPossibilities } from '@chainfuse/types';
-import type { GatewayOptions } from '@cloudflare/workers-types/experimental';
+import type { AIGatewayUniversalRequest, GatewayOptions } from '@cloudflare/workers-types/experimental';
 import { AiBase } from '../base.mjs';
-import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified, Servers } from '../types.mjs';
+import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified } from '../types.mjs';
+import type { AzureOpenAIProvider } from './types.mts';
 
 export class AiRawProviders extends AiBase {
 	// 2628288 seconds is what cf defines as 1 month in their cache rules
@@ -118,80 +119,159 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public azOpenai(args: AiRequestConfig, server: Servers[number], cost?: { inputTokenCost?: number; outputTokenCost?: number }) {
-		return import('@ai-sdk/azure').then(async ({ createAzure }) =>
-			createAzure({
-				apiKey: this.config.providers.azureOpenAi.apiTokens[`AZURE_API_KEY_${server.id.toUpperCase().replaceAll('-', '_')}`]!,
-				/**
-				 * @link https://learn.microsoft.com/en-us/azure/ai-services/openai/reference#api-specs
-				 * From the table, pick the `Latest GA release` for `Data plane - inference`
-				 */
-				apiVersion: '2024-10-21',
-				baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'azure-openai', server.id.toLowerCase()].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
-				headers: {
-					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
-					...(cost && { 'cf-aig-custom-cost': JSON.stringify({ per_token_in: cost.inputTokenCost ?? undefined, per_token_out: cost.outputTokenCost ?? undefined }) }),
-					'cf-aig-metadata': JSON.stringify({
-						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
-						serverInfo: JSON.stringify({
-							name: `azure-${server.id}`,
-							distance: await import('haversine-distance').then(async ({ default: haversine }) =>
-								haversine(
-									await import('../serverSelector.mts').then(({ ServerSelector }) =>
-										new ServerSelector(this.config).determineLocation().then(({ coordinate }) => ({
-											lat: Helpers.precisionFloat(coordinate.lat),
-											lon: Helpers.precisionFloat(coordinate.lon),
-										})),
+	public azOpenai(args: AiRequestConfig) {
+		return import('@ai-sdk/azure').then(
+			async ({ createAzure }) =>
+				createAzure({
+					apiKey: 'apikey-placeholder',
+					/**
+					 * @link https://learn.microsoft.com/en-us/azure/ai-services/openai/reference#api-specs
+					 * From the table, pick the `Latest GA release` for `Data plane - inference`
+					 */
+					apiVersion: '2024-10-21',
+					baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'azure-openai', 'server-placeholder'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
+					headers: {
+						'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
+						// ...(cost && { 'cf-aig-custom-cost': JSON.stringify({ per_token_in: cost.inputTokenCost ?? undefined, per_token_out: cost.outputTokenCost ?? undefined }) }),
+						'cf-aig-metadata': JSON.stringify({
+							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+							...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
+							// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+							idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+							executor: JSON.stringify(args.executor),
+							// @ts-expect-error server info gets added in afterwards
+						} satisfies AiRequestMetadataStringified),
+						...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
+						...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
+					},
+					fetch: (input, rawInit) =>
+						Promise.all([import('../serverSelector.mjs'), import('@chainfuse/types/ai-tools/catalog/azure')])
+							.then(([{ ServerSelector }, { azureCatalog }]) => new ServerSelector(this.config).closestServers(azureCatalog))
+							.then(async (filteredServers) => {
+								const startRoundTrip = performance.now();
+
+								const headers = new Headers(rawInit?.headers);
+								const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
+								// Calculate the idempotencyId if it doesn't exist yet
+								if (metadataHeader.idempotencyId.split('-').length === 4) {
+									metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
+									headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
+								}
+
+								// Get endpoint dynamically from library
+								const fallbackedUrl = await import('@chainfuse/helpers').then(({ NetHelpers }) => (NetHelpers.isRequestLike(input) ? new URL(input.url) : new URL(input)));
+								const fallbackedEndpointParts = (() => {
+									const pathParts = fallbackedUrl.pathname
+										.split('/')
+										// removes empty from leading/trailing slashes
+										.filter(Boolean);
+
+									const index = pathParts.indexOf('azure-openai');
+									return index === -1 ? [] : pathParts.slice(index + 2);
+								})();
+
+								// Prevent double stringification
+								let fallbackedQuery: AIGatewayUniversalRequest['query'];
+								try {
+									fallbackedQuery = JSON.parse(rawInit?.body as string);
+									// eslint-disable-next-line @typescript-eslint/no-unused-vars
+								} catch (error) {
+									fallbackedQuery = rawInit?.body;
+								}
+
+								// Build universal gateway request
+								const fallbackedBody = await Promise.all([import('haversine-distance'), import('../serverSelector.mts')]).then(([{ default: haversine }, { ServerSelector }]) =>
+									Promise.all(
+										filteredServers.map(async (server) => {
+											const fallbackedHeaders: AIGatewayUniversalRequest['headers'] = {
+												...Object.fromEntries(Array.from(headers.entries()).filter(([key]) => !key.toLowerCase().startsWith('cf-aig-'))),
+												'api-key': this.config.providers.azureOpenAi.apiTokens[`AZURE_API_KEY_${server.id.toUpperCase().replaceAll('-', '_')}`]!,
+												'cf-aig-metadata': JSON.stringify({
+													...metadataHeader,
+													serverInfo: JSON.stringify({
+														name: `azure-${server.id}`,
+														distance: haversine(
+															await new ServerSelector(this.config).determineLocation().then(({ coordinate }) => ({
+																lat: Helpers.precisionFloat(coordinate.lat),
+																lon: Helpers.precisionFloat(coordinate.lon),
+															})),
+															{
+																lat: Helpers.precisionFloat(server.coordinate.lat),
+																lon: Helpers.precisionFloat(server.coordinate.lon),
+															},
+														),
+													} satisfies AiRequestMetadata['serverInfo']),
+												}),
+											};
+
+											const modelName = fallbackedEndpointParts[0]!;
+											const languageModel = server.languageModelAvailability.find((model) => model.name === modelName);
+											if (languageModel && ('inputTokenCost' in languageModel || 'outputTokenCost' in languageModel)) {
+												fallbackedHeaders['cf-aig-custom-cost'] = {
+													per_token_in: 'inputTokenCost' in languageModel && !isNaN(languageModel.inputTokenCost as number) ? (languageModel.inputTokenCost as number) : undefined,
+													per_token_out: 'outputTokenCost' in languageModel && !isNaN(languageModel.outputTokenCost as number) ? (languageModel.outputTokenCost as number) : undefined,
+												};
+											}
+											const embeddingModel = server.textEmbeddingModelAvailability.find((model) => model.name === modelName);
+											if (embeddingModel && 'tokenCost' in embeddingModel) {
+												fallbackedHeaders['cf-aig-custom-cost'] = {
+													per_token_in: 'tokenCost' in embeddingModel && !isNaN(embeddingModel.tokenCost as number) ? (embeddingModel.tokenCost as number) : undefined,
+												};
+											}
+
+											return {
+												provider: 'azure-openai',
+												endpoint: `${[server.id.toLowerCase(), ...fallbackedEndpointParts].join('/')}${fallbackedUrl.search}${fallbackedUrl.hash}`,
+												headers: fallbackedHeaders,
+												query: fallbackedQuery,
+											} as AIGatewayUniversalRequest;
+										}),
 									),
-									{
-										lat: Helpers.precisionFloat(server.coordinate.lat),
-										lon: Helpers.precisionFloat(server.coordinate.lon),
-									},
-								),
-							),
-						} satisfies AiRequestMetadata['serverInfo']),
-						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
-						executor: JSON.stringify(args.executor),
-					} satisfies AiRequestMetadataStringified),
-					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
-					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
-				},
-				fetch: async (input, rawInit) => {
-					const startRoundTrip = performance.now();
+								);
 
-					const headers = new Headers(rawInit?.headers);
-					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
-					if (metadataHeader.idempotencyId.split('-').length === 4) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
-						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
-					}
+								if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
-					if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
+								return fetch(new URL(['v1', this.config.gateway.accountId, this.gatewayName].join('/'), 'https://gateway.ai.cloudflare.com'), { ...rawInit, headers, body: JSON.stringify(fallbackedBody) }).then(async (response) => {
+									// Inject it to have it available for retries
+									const mutableHeaders = new Headers(response.headers);
+									// Carry down
+									mutableHeaders.set('X-Idempotency-Id', metadataHeader.idempotencyId);
 
-					return fetch(input, { ...rawInit, headers }).then(async (response) => {
-						if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+									// Step references which server it hit
+									const fallbackedServerRaw = response.headers.get('cf-aig-step');
+									if (fallbackedServerRaw) {
+										const fallbackedRequest = fallbackedBody[parseInt(fallbackedServerRaw)];
 
-						// Inject it to have it available for retries
-						const mutableHeaders = new Headers(response.headers);
+										if (fallbackedRequest) {
+											// Get the server's specific metadata
+											const fallbackedMetadataHeader = JSON.parse(new Headers(fallbackedRequest.headers as HeadersInit).get('cf-aig-metadata')!) as AiRequestMetadataStringified;
 
-						const serverTiming = await this.updateGatewayLog(response, metadataHeader, startRoundTrip, response.headers.has('x-envoy-upstream-service-time') ? parseInt(response.headers.get('x-envoy-upstream-service-time')!) : undefined);
+											if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname), response.ok ? this.chalk.green(`[${fallbackedRequest.endpoint.split('/')[0]}]`) : this.chalk.red(`[${fallbackedRequest.endpoint.split('/')[0]}]`));
 
-						mutableHeaders.set('X-Idempotency-Id', metadataHeader.idempotencyId);
-						mutableHeaders.set('Server-Timing', serverTiming);
-						if (response.ok) {
-							return new Response(response.body, { ...response, headers: mutableHeaders });
-						} else {
-							const [body1, body2] = response.body!.tee();
+											const serverTiming = await this.updateGatewayLog(response, fallbackedMetadataHeader, startRoundTrip, response.headers.has('x-envoy-upstream-service-time') ? parseInt(response.headers.get('x-envoy-upstream-service-time')!) : undefined);
 
-							console.error('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
+											mutableHeaders.set('Server-Timing', serverTiming);
+										} else {
+											// Log without picked server
+											if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+										}
+									} else {
+										// Log without picked server
+										if (args.logging ?? this.gatewayLog) console.info('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
+									}
 
-							return new Response(body2, { ...response, headers: mutableHeaders });
-						}
-					});
-				},
-			}),
+									if (response.ok) {
+										return new Response(response.body, { ...response, headers: mutableHeaders });
+									} else {
+										const [body1, body2] = response.body!.tee();
+
+										console.error('ai', 'raw provider', this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
+
+										return new Response(body2, { ...response, headers: mutableHeaders });
+									}
+								});
+							}),
+				}) as AzureOpenAIProvider,
 		);
 	}
 

@@ -1,133 +1,20 @@
 import type { GoogleGenerativeAIProvider } from '@ai-sdk/google';
 import { Helpers } from '@chainfuse/helpers';
-import { AiModels, enabledCloudflareLlmProviders, type AzureChatModels, type AzureEmbeddingModels, type cloudflareModelPossibilities } from '@chainfuse/types';
-import { APICallError, customProvider, TypeValidationError, wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
+import { AiModels, enabledCloudflareLlmProviders, type cloudflareModelPossibilities } from '@chainfuse/types';
+import { customProvider, TypeValidationError, wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
 import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
 import { ZodError } from 'zod';
 import { AiBase } from '../base.mjs';
-import { ServerSelector } from '../serverSelector.mts';
-import type { AiConfigWorkersai, AiConfigWorkersaiRest, AiRequestConfig, AiRequestIdempotencyId, AzureServers } from '../types.mjs';
+import type { AiConfigWorkersai, AiConfigWorkersaiRest, AiRequestConfig } from '../types.mjs';
 import { AiRawProviders } from './rawProviders.mjs';
-import type { AzureOpenAIProvider } from './types.mjs';
 
 export class AiCustomProviders extends AiBase {
 	public oaiOpenai(args: AiRequestConfig) {
 		return new AiRawProviders(this.config).oaiOpenai(args);
 	}
 
-	public async azOpenai(args: AiRequestConfig, filteredServers?: AzureServers): Promise<AzureOpenAIProvider> {
-		filteredServers ??= await new ServerSelector(this.config).closestServers(await import('@chainfuse/types/ai-tools/catalog/azure').then(({ azureCatalog }) => azureCatalog));
-		const [server, ...servers] = filteredServers;
-
-		const raw = new AiRawProviders(this.config);
-
-		return customProvider({
-			// @ts-expect-error override for types
-			languageModels: await server.languageModelAvailability.reduce(
-				async (accPromise, model) => {
-					const acc = await accPromise;
-					// @ts-expect-error override for types
-					acc[model.name] = wrapLanguageModel({
-						model: (
-							await raw.azOpenai(
-								args,
-								server,
-								'inputTokenCost' in model || 'outputTokenCost' in model
-									? {
-											inputTokenCost: 'inputTokenCost' in model && !isNaN(model.inputTokenCost as number) ? (model.inputTokenCost as number) : undefined,
-											outputTokenCost: 'outputTokenCost' in model && !isNaN(model.outputTokenCost as number) ? (model.outputTokenCost as number) : undefined,
-										}
-									: undefined,
-							)
-						)(model.name),
-						middleware: {
-							wrapGenerate: async ({ doGenerate, model, params }) => {
-								try {
-									// Must be double awaited to prevent a promise from being returned
-									return await doGenerate();
-								} catch (error) {
-									if (APICallError.isInstance(error)) {
-										const idempotencyId = new Headers(error.responseHeaders).get('X-Idempotency-Id') as AiRequestIdempotencyId;
-										const lastServer = new URL(error.url).pathname.split('/')[5]!;
-										const compatibleServers = await new ServerSelector(this.config).closestServers(await import('@chainfuse/types/ai-tools/catalog/azure').then(({ azureCatalog }) => azureCatalog), model.modelId);
-										const lastServerIndex = compatibleServers.findIndex((s) => s.id.toLowerCase() === lastServer.toLowerCase());
-
-										if (args.logging ?? this.gatewayLog) console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.red('FAIL'), compatibleServers[lastServerIndex]!.id, 'REMAINING', JSON.stringify(compatibleServers.slice(lastServerIndex + 1).map((s) => s.id)));
-
-										// Should retry with the next server
-										const leftOverServers = compatibleServers.slice(lastServerIndex + 1);
-										const errors: unknown[] = [error];
-
-										for (const nextServer of leftOverServers) {
-											try {
-												if (args.logging ?? this.gatewayLog) console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.blue('FALLBACK'), nextServer.id, 'REMAINING', JSON.stringify(leftOverServers.slice(leftOverServers.indexOf(nextServer) + 1).map((s) => s.id)));
-
-												// Must be double awaited to prevent a promise from being returned
-												return await (
-													await raw.azOpenai(
-														{ ...args, idempotencyId },
-														nextServer,
-														(() => {
-															const foundModel = server.languageModelAvailability.find((languageModel) => languageModel.name === model.modelId);
-
-															if (foundModel && ('inputTokenCost' in foundModel || 'outputTokenCost' in foundModel)) {
-																return {
-																	inputTokenCost: 'inputTokenCost' in model && !isNaN(model.inputTokenCost as number) ? (model.inputTokenCost as number) : undefined,
-																	outputTokenCost: 'outputTokenCost' in model && !isNaN(model.outputTokenCost as number) ? (model.outputTokenCost as number) : undefined,
-																};
-															} else {
-																return undefined;
-															}
-														})(),
-													)
-												)(model.modelId).doGenerate(params);
-											} catch (nextServerError) {
-												if (APICallError.isInstance(nextServerError)) {
-													if (args.logging ?? this.gatewayLog) console.error('ai', 'custom provider', this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.red('FAIL'), nextServer.id, 'REMAINING', JSON.stringify(leftOverServers.slice(leftOverServers.indexOf(nextServer) + 1).map((s) => s.id)));
-
-													errors.push(nextServerError);
-												} else {
-													errors.push(nextServerError);
-													throw nextServerError;
-												}
-											}
-										}
-
-										// eslint-disable-next-line @typescript-eslint/only-throw-error
-										throw errors;
-									} else {
-										throw error;
-									}
-								}
-							},
-						},
-					});
-					return acc;
-				},
-				Promise.resolve({} as Record<AzureChatModels, Awaited<ReturnType<AiRawProviders['azOpenai']>>>),
-			),
-			// imageModels: await server!.imageModelAvailability.reduce(
-			// 	async (accPromise, model) => {
-			// 		const acc = await accPromise;
-			// 		// @ts-expect-error override for types
-			// 		acc[model as AzureImageModels] = (await raw.azOpenai(args, server!)).imageModel(model);
-			// 		return acc;
-			// 	},
-			// 	Promise.resolve({} as Record<AzureImageModels, Awaited<ReturnType<AiRawProviders['azOpenai']>>>),
-			// ),
-			// @ts-expect-error override for types
-			textEmbeddingModels: await server.textEmbeddingModelAvailability.reduce(
-				async (accPromise, model) => {
-					const acc = await accPromise;
-					// @ts-expect-error override for types
-					acc[model.name] = (await raw.azOpenai(args, server)).textEmbeddingModel(model.name);
-					return acc;
-				},
-				Promise.resolve({} as Record<AzureEmbeddingModels, Awaited<ReturnType<AiRawProviders['azOpenai']>>>),
-			),
-			// An optional fallback provider to use when a requested model is not found in the custom provider.
-			...(servers.length > 0 && { fallbackProvider: await this.azOpenai(args, servers as unknown as AzureServers) }),
-		}) as AzureOpenAIProvider; // Override type so autocomplete works
+	public async azOpenai(args: AiRequestConfig) {
+		return new AiRawProviders(this.config).azOpenai(args);
 	}
 
 	public anthropic(args: AiRequestConfig) {
