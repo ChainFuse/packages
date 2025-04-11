@@ -268,7 +268,6 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-						lora: true,
 						terms: 'https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE',
 					},
 				},
@@ -753,6 +752,7 @@ export const workersAiCatalog = {
 					created_at: '2024-05-22 19:27:09.781',
 					tags: [],
 					properties: {
+						async_queue: true,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -770,6 +770,7 @@ export const workersAiCatalog = {
 					created_at: '2023-11-07 15:43:58.042',
 					tags: [],
 					properties: {
+						async_queue: true,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -790,6 +791,7 @@ export const workersAiCatalog = {
 					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
+						async_queue: true,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -810,6 +812,7 @@ export const workersAiCatalog = {
 					created_at: '2023-11-07 15:43:58.042',
 					tags: [],
 					properties: {
+						async_queue: true,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -1148,6 +1151,7 @@ export const workersAiCatalog = {
 					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
+						async_queue: true,
 						price: [
 							{
 								unit: 'per M input tokens',
