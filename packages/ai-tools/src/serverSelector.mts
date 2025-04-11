@@ -124,8 +124,8 @@ export class ServerSelector extends AiBase {
 		if (!userCoordinate || !privacyRegion) {
 			const { coordinate, country, continent } = await this.determineLocation();
 
-			if (!userCoordinate) userCoordinate = coordinate;
-			if (!privacyRegion) privacyRegion = ServerSelector.determinePrivacyRegion(country, continent);
+			userCoordinate ??= coordinate;
+			privacyRegion ??= ServerSelector.determinePrivacyRegion(country, continent);
 		}
 
 		// Skip over the rest of logic if the server can't handle the incoming request
