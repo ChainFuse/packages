@@ -49,7 +49,7 @@ export class NetHelpers {
 		);
 	}
 
-	private static isRequestLike(obj: Parameters<typeof fetch>[0]): obj is Request {
+	public static isRequestLike(obj: Parameters<typeof fetch>[0]): obj is Request {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
 		return typeof (obj as any)?.url === 'string';
 	}
