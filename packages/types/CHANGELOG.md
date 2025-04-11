@@ -1,5 +1,15 @@
 # @chainfuse/types
 
+## 2.9.1
+
+### Patch Changes
+
+- [#369](https://github.com/ChainFuse/packages/pull/369) [`f9c5af0`](https://github.com/ChainFuse/packages/commit/f9c5af0afd6579a9db0739cd3e620d992c4753a0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/azure, @ai-sdk/openai, @ai-sdk/openai-compatible, ai
+
+- [#371](https://github.com/ChainFuse/packages/pull/371) [`5074bcc`](https://github.com/ChainFuse/packages/commit/5074bcca98dd864da0ac53cc9179b97acd92f808) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump lerna
+
+- [#370](https://github.com/ChainFuse/packages/pull/370) [`fa916e1`](https://github.com/ChainFuse/packages/commit/fa916e1e79b727a9f2a4b66849bd83341dffb8a1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
 ## 2.9.0
 
 ### Minor Changes
