@@ -1,5 +1,13 @@
 # @chainfuse/helpers
 
+## 2.4.1
+
+### Patch Changes
+
+- [`c455d46`](https://github.com/ChainFuse/packages/commit/c455d46bdb0c102e0404294ed3f699e40ae10cea) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add method colors matching to swagger
+
+- [`bf61557`](https://github.com/ChainFuse/packages/commit/bf61557ecfa68271bbc1febcd2ab02d69b26d328) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Upgrade logs to trucolor
+
 ## 2.4.0
 
 ### Minor Changes
