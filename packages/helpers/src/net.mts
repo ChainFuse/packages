@@ -39,7 +39,7 @@ export class NetHelpers {
 
 								await import('chalk')
 									.then(({ Chalk }) => {
-										const chalk = new Chalk({ level: 1 });
+										const chalk = new Chalk({ level: 2 });
 
 										// Replace with color
 										loggingItems.splice(0, 1, chalk.rgb(245, 130, 30)('CF Rest'));
@@ -82,7 +82,7 @@ export class NetHelpers {
 
 				await Promise.all([import('chalk'), import('./index.mts')])
 					.then(([{ Chalk }, { Helpers }]) => {
-						const chalk = new Chalk({ level: 1 });
+						const chalk = new Chalk({ level: 2 });
 
 						loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
 					})
@@ -120,7 +120,7 @@ export class NetHelpers {
 
 								await Promise.all([import('chalk'), import('./index.mts')])
 									.then(([{ Chalk }, { Helpers }]) => {
-										const chalk = new Chalk({ level: 1 });
+										const chalk = new Chalk({ level: 2 });
 
 										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
 										loggingItems.splice(2, 1, response.ok ? chalk.green(response.status) : chalk.red(response.status));
