@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 2.4.2
+
+### Patch Changes
+
+- [`0596581`](https://github.com/ChainFuse/packages/commit/059658109552b0fcf84324242a984069b7b2038c) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): macos terminal only supports 2
+
 ## 2.4.1
 
 ### Patch Changes
