@@ -30,15 +30,28 @@ export class NetHelpers {
 					apiToken: apiKey,
 					fetch: async (info, init) => {
 						if (typeof logger === 'boolean' && logger) {
-							logger = (date: string, id: string, methodOrStatus: string | number, url: string, headers: Record<string, string>, ...rest: any[]) => {
+							logger = async (date: string, id: string, methodOrStatus: string | number, url: string, headers: Record<string, string>, ...rest: any[]) => {
 								const customUrl = new URL(url);
 
 								// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 								const loggingItems = ['CF Rest', date, id, methodOrStatus, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`, ...rest];
-
 								const customHeaders = new Headers(headers);
-								if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, customHeaders.get('cf-ray')!);
 
+								await import('chalk')
+									.then(({ Chalk }) => {
+										const chalk = new Chalk({ level: 1 });
+
+										// Replace with color
+										loggingItems.splice(0, 1, chalk.rgb(245, 130, 30)('CF Rest'));
+										// Add in with color
+										if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, chalk.rgb(245, 130, 30)(customHeaders.get('cf-ray')!));
+									})
+									.catch(() => {
+										// Add in ray id
+										if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, customHeaders.get('cf-ray')!);
+									});
+
+								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 								console.debug(...loggingItems);
 							};
 						}
@@ -112,6 +125,7 @@ export class NetHelpers {
 												const chalk = new Chalk({ level: 1 });
 
 												loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
+												loggingItems.splice(2, 1, response.ok ? chalk.green(response.status) : chalk.red(response.status));
 
 												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 												console.debug(...loggingItems);
