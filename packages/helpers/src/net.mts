@@ -95,6 +95,7 @@ export class NetHelpers {
 						console.debug(...loggingItems);
 					}
 				} else {
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 					await logger(...loggingItems);
 				}
 
@@ -133,6 +134,7 @@ export class NetHelpers {
 										console.debug(...loggingItems);
 									}
 								} else {
+									// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 									await logger(...loggingItems);
 								}
 
