@@ -80,21 +80,22 @@ export class NetHelpers {
 					}
 				}
 
+				await Promise.all([import('chalk'), import('./index.mts')])
+					.then(([{ Chalk }, { Helpers }]) => {
+						const chalk = new Chalk({ level: 1 });
+
+						loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
+					})
+					// eslint-disable-next-line @typescript-eslint/no-empty-function
+					.catch(() => {});
+
 				if (typeof logger === 'boolean') {
 					if (logger) {
-						await Promise.all([import('chalk'), import('./index.mts')])
-							.then(([{ Chalk }, { Helpers }]) => {
-								const chalk = new Chalk({ level: 1 });
-
-								loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
-
-								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-								console.debug(...loggingItems);
-							})
-							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-							.catch(() => console.debug(...loggingItems));
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+						console.debug(...loggingItems);
 					}
 				} else {
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 					await logger(...loggingItems);
 				}
 
@@ -117,20 +118,20 @@ export class NetHelpers {
 									}
 								}
 
+								await Promise.all([import('chalk'), import('./index.mts')])
+									.then(([{ Chalk }, { Helpers }]) => {
+										const chalk = new Chalk({ level: 1 });
+
+										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
+										loggingItems.splice(2, 1, response.ok ? chalk.green(response.status) : chalk.red(response.status));
+									})
+									// eslint-disable-next-line @typescript-eslint/no-empty-function
+									.catch(() => {});
+
 								if (typeof logger === 'boolean') {
 									if (logger) {
-										await Promise.all([import('chalk'), import('./index.mts')])
-											.then(([{ Chalk }, { Helpers }]) => {
-												const chalk = new Chalk({ level: 1 });
-
-												loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
-												loggingItems.splice(2, 1, response.ok ? chalk.green(response.status) : chalk.red(response.status));
-
-												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-												console.debug(...loggingItems);
-											})
-											// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-											.catch(() => console.debug(...loggingItems));
+										// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+										console.debug(...loggingItems);
 									}
 								} else {
 									// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
