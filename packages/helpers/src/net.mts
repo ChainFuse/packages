@@ -95,7 +95,6 @@ export class NetHelpers {
 							.catch(() => console.debug(...loggingItems));
 					}
 				} else {
-					 
 					await logger(...loggingItems);
 				}
 
