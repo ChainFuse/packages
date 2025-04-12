@@ -65,7 +65,7 @@ export type UndefinedProperties<T extends object> = {
 	[P in keyof T]: undefined;
 };
 
-export type CustomLogCallback = (message?: any, ...optionalParams: any[]) => void;
+export type CustomLogCallback = (message?: any, ...optionalParams: any[]) => PromiseLike<void> | void;
 export type CustomLoging = boolean | CustomLogCallback;
 
 /**
