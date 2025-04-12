@@ -2,7 +2,7 @@ import { Chalk } from 'chalk';
 import type { AiConfig } from './types.mjs';
 
 export class AiBase {
-	protected readonly chalk = new Chalk({ level: 3 });
+	protected readonly chalk = new Chalk({ level: 2 });
 	protected _config: AiConfig;
 
 	constructor(config: AiConfig) {
