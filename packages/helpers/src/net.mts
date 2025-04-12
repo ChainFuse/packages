@@ -95,7 +95,6 @@ export class NetHelpers {
 						console.debug(...loggingItems);
 					}
 				} else {
-					 
 					await logger(...loggingItems);
 				}
 
@@ -134,7 +133,6 @@ export class NetHelpers {
 										console.debug(...loggingItems);
 									}
 								} else {
-									 
 									await logger(...loggingItems);
 								}
 
