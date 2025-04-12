@@ -416,6 +416,7 @@ export const workersAiCatalog = {
 					created_at: '2024-12-06 17:09:18.338',
 					tags: [],
 					properties: {
+						async_queue: true,
 						context_window: 24000,
 						price: [
 							{
@@ -456,6 +457,30 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 4096,
 						terms: 'https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-AWQ',
+					},
+				},
+				{
+					id: '51b71d5b-8bc0-4489-a107-95e542b69914',
+					source: 1,
+					name: '@cf/qwen/qwen2.5-coder-32b-instruct',
+					description: 'Qwen2.5-Coder is the latest series of Code-Specific Qwen large language models (formerly known as CodeQwen). As of now, Qwen2.5-Coder has covered six mainstream model sizes, 0.5, 1.5, 3, 7, 14, 32 billion parameters, to meet the needs of different developers. Qwen2.5-Coder brings the following improvements upon CodeQwen1.5:',
+					created_at: '2025-02-27 00:31:43.829',
+					tags: [],
+					properties: {
+						context_window: 32768,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.66,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 1,
+								currency: 'USD',
+							},
+						],
+						lora: true,
 					},
 				},
 				{
@@ -584,6 +609,29 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 32000,
 						info: 'https://huggingface.co/qwen/qwen1.5-1.8b-chat',
+					},
+				},
+				{
+					id: '31690291-ebdc-4f98-bcfc-a44844e215b7',
+					source: 1,
+					name: '@cf/mistralai/mistral-small-3.1-24b-instruct',
+					description: 'Building upon Mistral Small 3 (2501), Mistral Small 3.1 (2503) adds state-of-the-art vision understanding and enhances long context capabilities up to 128k tokens without compromising text performance. With 24 billion parameters, this model achieves top-tier capabilities in both text and vision tasks.',
+					created_at: '2025-03-18 03:28:37.890',
+					tags: [],
+					properties: {
+						context_window: 128000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.35,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.56,
+								currency: 'USD',
+							},
+						],
 					},
 				},
 				{
@@ -736,6 +784,54 @@ export const workersAiCatalog = {
 							},
 						],
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE',
+					},
+				},
+				{
+					id: '053d5ac0-861b-4d3b-8501-e58d00417ef8',
+					source: 1,
+					name: '@cf/google/gemma-3-12b-it',
+					description: 'Gemma 3 models are well-suited for a variety of text generation and image understanding tasks, including question answering, summarization, and reasoning. Gemma 3 models are multimodal, handling text and image input and generating text output, with a large, 128K context window, multilingual support in over 140 languages, and is available in more sizes than previous versions.',
+					created_at: '2025-03-18 03:58:02.423',
+					tags: [],
+					properties: {
+						context_window: 1280000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.35,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.56,
+								currency: 'USD',
+							},
+						],
+						lora: true,
+					},
+				},
+				{
+					id: '02c16efa-29f5-4304-8e6c-3d188889f875',
+					source: 1,
+					name: '@cf/qwen/qwq-32b',
+					description: 'QwQ is the reasoning model of the Qwen series. Compared with conventional instruction-tuned models, QwQ, which is capable of thinking and reasoning, can achieve significantly enhanced performance in downstream tasks, especially hard problems. QwQ-32B is the medium-sized reasoning model, which is capable of achieving competitive performance against state-of-the-art reasoning models, e.g., DeepSeek-R1, o1-mini.',
+					created_at: '2025-03-05 21:52:40.974',
+					tags: [],
+					properties: {
+						context_window: 24000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.66,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 1,
+								currency: 'USD',
+							},
+						],
+						lora: true,
 					},
 				},
 			],
