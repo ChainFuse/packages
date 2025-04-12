@@ -1,5 +1,15 @@
 # @chainfuse/helpers
 
+## 2.4.0
+
+### Minor Changes
+
+- [`995d30b`](https://github.com/ChainFuse/packages/commit/995d30bea8940f30a37feb8bc9fa76a59a23de1b) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Allow async loggers
+
+### Patch Changes
+
+- [`1dd19e2`](https://github.com/ChainFuse/packages/commit/1dd19e21dcd2848aa68a40972b3d805a38608058) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add in colors for net helpers logging
+
 ## 2.3.3
 
 ### Patch Changes
