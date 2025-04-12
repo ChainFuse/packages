@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.13.3
+
+### Patch Changes
+
+- [`3d334d4`](https://github.com/ChainFuse/packages/commit/3d334d45f636d3b235d1b00740cc10e306f859dd) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Add `AzureContentFilterError` error typing
+
 ## 0.13.2
 
 ### Patch Changes
