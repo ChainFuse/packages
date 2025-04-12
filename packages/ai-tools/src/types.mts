@@ -154,3 +154,21 @@ export type AiRequestMetadataStringified = {
  * Extracts the chunk type from an asynchronous iterable.
  */
 export type AiStreamChunkType<T> = T extends AsyncIterable<infer U> ? Awaited<U> : never;
+
+export interface AzureContentFilterError {
+	message: string;
+	type: unknown;
+	param: string;
+	code: string;
+	status: number;
+	innererror: {
+		code: string;
+		content_filter_result: Record<
+			string,
+			{
+				filtered: boolean;
+				severity: 'safe' | 'low' | 'medium' | 'high';
+			}
+		>;
+	};
+}
