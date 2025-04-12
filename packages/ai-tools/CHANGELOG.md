@@ -1,5 +1,14 @@
 # @chainfuse/ai-tools
 
+## 0.13.4
+
+### Patch Changes
+
+- [`0596581`](https://github.com/ChainFuse/packages/commit/059658109552b0fcf84324242a984069b7b2038c) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): macos terminal only supports 2
+
+- Updated dependencies [[`0596581`](https://github.com/ChainFuse/packages/commit/059658109552b0fcf84324242a984069b7b2038c)]:
+    - @chainfuse/helpers@2.4.2
+
 ## 0.13.3
 
 ### Patch Changes
