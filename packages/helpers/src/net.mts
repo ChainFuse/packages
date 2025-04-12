@@ -85,6 +85,31 @@ export class NetHelpers {
 						const chalk = new Chalk({ level: 3 });
 
 						loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
+
+						const initMethod = (loggingItems[2] as RequestInit['method'])!.toUpperCase();
+						/**
+						 * @link https://github.com/swagger-api/swagger-ui/blob/master/src/style/_variables.scss#L48-L53
+						 */
+						switch (initMethod) {
+							case 'POST':
+								loggingItems.splice(2, 1, chalk.hex('#49cc90')(initMethod));
+								break;
+							case 'GET':
+								loggingItems.splice(2, 1, chalk.hex('#61affe')(initMethod));
+								break;
+							case 'PUT':
+								loggingItems.splice(2, 1, chalk.hex('#fca130')(initMethod));
+								break;
+							case 'DELETE':
+								loggingItems.splice(2, 1, chalk.hex('#f93e3e')(initMethod));
+								break;
+							case 'HEAD':
+								loggingItems.splice(2, 1, chalk.hex('#9012fe')(initMethod));
+								break;
+							case 'PATCH':
+								loggingItems.splice(2, 1, chalk.hex('#50e3c2')(initMethod));
+								break;
+						}
 					})
 					// eslint-disable-next-line @typescript-eslint/no-empty-function
 					.catch(() => {});
