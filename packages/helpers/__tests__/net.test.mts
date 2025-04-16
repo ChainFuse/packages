@@ -4,7 +4,9 @@ import { NetHelpers } from '../dist/net.mjs';
 
 void describe('Logging fetch', () => {
 	void it(`Fetch JSON`, async () => {
-		const response = await NetHelpers.loggingFetch(new URL('cf.json', 'https://workers.cloudflare.com'), undefined, true, true);
+		const response = await NetHelpers.loggingFetch(new URL('cf.json', 'https://workers.cloudflare.com'), {
+			logging: { level: 3 },
+		});
 		ok(response.ok);
 
 		const json = await response.json();

@@ -1,4 +1,18 @@
 import type { CustomLoging } from '@chainfuse/types';
+import type { z } from 'zod';
+
+export type LoggingFetchInitType<RI extends RequestInit = RequestInit> = RI & z.input<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>;
+export enum Methods {
+	'GET' = 'GET',
+	'HEAD' = 'HEAD',
+	'POST' = 'POST',
+	'PUT' = 'PUT',
+	'DELETE' = 'DELETE',
+	'CONNECT' = 'CONNECT',
+	'OPTIONS' = 'OPTIONS',
+	'TRACE' = 'TRACE',
+	'PATCH' = 'PATCH',
+}
 
 export class NetHelpers {
 	/**
@@ -56,7 +70,7 @@ export class NetHelpers {
 							};
 						}
 
-						return this.loggingFetch(info, init, undefined, logger);
+						return this.loggingFetch(info, init);
 					},
 				}),
 		);
@@ -67,105 +81,212 @@ export class NetHelpers {
 		return typeof (obj as any)?.url === 'string';
 	}
 
-	public static loggingFetch(info: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1], body = false, logger: CustomLoging = false) {
-		return import('./crypto.mts')
-			.then(({ CryptoHelpers }) => CryptoHelpers.base62secret(8))
-			.then(async (id) => {
-				const loggingItems: any[] = [new Date().toISOString(), id, init?.method ?? 'GET', this.isRequestLike(info) ? info.url : info.toString(), Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries())];
-				if (body && init?.body) {
-					if (new Headers(init.headers).get('Content-Type')?.toLowerCase().startsWith('application/json')) {
-						loggingItems.push(JSON.parse(init?.body as string));
-					} else {
-						loggingItems.push(init.body);
-					}
-				}
+	public static loggingFetchInit() {
+		return Promise.all([import('zod'), this.loggingFetchInitLogging()]).then(([{ z }, logging]) =>
+			z.object({
+				logging,
+			}),
+		);
+	}
+	public static loggingFetchInitLogging() {
+		return import('zod').then(({ z }) => {
+			/**
+			 * @link https://zod.dev/?id=json-type
+			 */
+			const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
+			type Json = z.infer<typeof literalSchema> | { [key: string]: Json } | Json[];
+			const jsonSchema: z.ZodType<Json> = z.lazy(() => z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)]));
 
-				await Promise.all([import('chalk'), import('./index.mts')])
-					.then(([{ Chalk }, { Helpers }]) => {
-						const chalk = new Chalk({ level: 2 });
+			return z
+				.discriminatedUnion('level', [
+					z.object({
+						level: z.literal(0),
+					}),
+					z.object({
+						level: z.literal(1),
+						color: z.boolean().default(true),
+						custom: z
+							.function()
+							.args(
+								//
+								z.coerce.date(),
+								z.string().length(10),
+								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
+								z.string().trim().nonempty().url(),
+							)
+							.returns(z.union([z.void(), z.promise(z.void())]))
+							.optional(),
+					}),
+					z.object({
+						level: z.literal(2),
+						color: z.boolean().default(true),
+						custom: z
+							.function()
+							.args(
+								//
+								z.coerce.date(),
+								z.string().length(10),
+								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
+								z.string().trim().nonempty().url(),
+								z.record(z.string().trim().nonempty(), z.string().trim().nonempty()),
+							)
+							.returns(z.union([z.void(), z.promise(z.void())]))
+							.optional(),
+					}),
+					z.object({
+						level: z.literal(3),
+						color: z.boolean().default(true),
+						custom: z
+							.function()
+							.args(
+								//
+								z.coerce.date(),
+								z.string().length(10),
+								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
+								z.string().trim().nonempty().url(),
+								z.record(z.string().trim().nonempty(), z.string().trim().nonempty()),
+								z.union([jsonSchema.optional(), z.string(), z.array(z.number().int().min(0).max(255))]),
+							)
+							.returns(z.union([z.void(), z.promise(z.void())]))
+							.optional(),
+					}),
+				])
+				.default({
+					level: 0,
+				});
+		});
+	}
 
-						loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
+	public static loggingFetch<RI extends RequestInit = RequestInit>(info: Parameters<typeof fetch>[0], init?: LoggingFetchInitType<RI>) {
+		return NetHelpers.loggingFetchInit()
+			.then((parser) => parser.passthrough().parseAsync(init))
+			.then((parsed) => parsed as unknown as RI & z.output<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>)
+			.then((init) =>
+				import('./crypto.mts')
+					.then(({ CryptoHelpers }) => CryptoHelpers.base62secret(8))
+					.then(async (id) => {
+						if (init.logging.level) {
+							// eslint-disable-next-line @typescript-eslint/no-explicit-any
+							const loggingItems: any[] = [new Date(), `[${id}]`, init?.method ?? Methods.GET, this.isRequestLike(info) ? info.url : info.toString()];
 
-						const initMethod = init?.method ?? 'GET';
-						/**
-						 * @link https://github.com/swagger-api/swagger-ui/blob/master/src/style/_variables.scss#L48-L53
-						 */
-						switch (initMethod) {
-							case 'POST':
-								loggingItems.splice(2, 1, chalk.hex('#49cc90')(initMethod));
-								break;
-							case 'GET':
-								loggingItems.splice(2, 1, chalk.hex('#61affe')(initMethod));
-								break;
-							case 'PUT':
-								loggingItems.splice(2, 1, chalk.hex('#fca130')(initMethod));
-								break;
-							case 'DELETE':
-								loggingItems.splice(2, 1, chalk.hex('#f93e3e')(initMethod));
-								break;
-							case 'HEAD':
-								loggingItems.splice(2, 1, chalk.hex('#9012fe')(initMethod));
-								break;
-							case 'PATCH':
-								loggingItems.splice(2, 1, chalk.hex('#50e3c2')(initMethod));
-								break;
-						}
-					})
-					// eslint-disable-next-line @typescript-eslint/no-empty-function
-					.catch(() => {});
+							if (init.logging.level >= 2) {
+								loggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) as Record<string, string>);
+							}
 
-				if (typeof logger === 'boolean') {
-					if (logger) {
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-						console.debug(...loggingItems);
-					}
-				} else {
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-					await logger(...loggingItems);
-				}
-
-				return id;
-			})
-			.then(
-				(id) =>
-					// eslint-disable-next-line @typescript-eslint/no-misused-promises
-					new Promise<Awaited<ReturnType<typeof fetch>>>((resolve, reject) =>
-						fetch(info, init)
-							.then(async (response) => {
-								const loggingItems: any[] = [new Date().toISOString(), id, response.status, response.url, Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries())];
-								if (body) {
-									const loggingClone = response.clone();
-
-									if (response.headers.get('Content-Type')?.toLowerCase().startsWith('application/json')) {
-										loggingItems.push(await loggingClone.json());
-									} else {
-										loggingItems.push(await loggingClone.text());
-									}
+							if (init.logging.level >= 3 && init?.body) {
+								if (init.body instanceof ReadableStream) {
+									loggingItems.push(Array.from(new Uint8Array(await new Response(init.body).arrayBuffer())));
+								} else if (new Headers(init.headers).get('Content-Type')?.toLowerCase().startsWith('application/json')) {
+									loggingItems.push(JSON.parse(init.body as string));
+								} else {
+									loggingItems.push(init.body);
 								}
+							}
 
+							if (init.logging.color) {
 								await Promise.all([import('chalk'), import('./index.mts')])
 									.then(([{ Chalk }, { Helpers }]) => {
 										const chalk = new Chalk({ level: 2 });
 
-										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
-										loggingItems.splice(2, 1, response.ok ? chalk.green(response.status) : chalk.red(response.status));
+										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id.slice(1, -1)}]`));
+
+										const initMethod = loggingItems[2] as Methods;
+										/**
+										 * @link https://github.com/swagger-api/swagger-ui/blob/master/src/style/_variables.scss#L48-L55
+										 */
+										switch (initMethod) {
+											case Methods.GET:
+												loggingItems.splice(2, 1, chalk.hex('#61affe')(initMethod));
+												break;
+											case Methods.HEAD:
+												loggingItems.splice(2, 1, chalk.hex('#9012fe')(initMethod));
+												break;
+											case Methods.POST:
+												loggingItems.splice(2, 1, chalk.hex('#49cc90')(initMethod));
+												break;
+											case Methods.PUT:
+												loggingItems.splice(2, 1, chalk.hex('#fca130')(initMethod));
+												break;
+											case Methods.DELETE:
+												loggingItems.splice(2, 1, chalk.hex('#f93e3e')(initMethod));
+												break;
+											case Methods.OPTIONS:
+												loggingItems.splice(2, 1, chalk.hex('#0d5aa7')(initMethod));
+												break;
+											case Methods.PATCH:
+												loggingItems.splice(2, 1, chalk.hex('#50e3c2')(initMethod));
+												break;
+										}
 									})
 									// eslint-disable-next-line @typescript-eslint/no-empty-function
 									.catch(() => {});
+							}
 
-								if (typeof logger === 'boolean') {
-									if (logger) {
-										// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-										console.debug(...loggingItems);
-									}
-								} else {
-									// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-									await logger(...loggingItems);
-								}
+							if (init.logging.custom) {
+								// @ts-expect-error logging items type is fine
+								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+								await init.logging.custom(...loggingItems);
+							} else {
+								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+								console.debug(...loggingItems);
+							}
+						}
 
-								resolve(response);
-							})
-							.catch(reject),
+						return id;
+					})
+					.then(
+						(id) =>
+							// eslint-disable-next-line @typescript-eslint/no-misused-promises
+							new Promise<Awaited<ReturnType<typeof fetch>>>((resolve, reject) =>
+								fetch(info, init)
+									.then(async (response) => {
+										if (init.logging.level) {
+											// eslint-disable-next-line @typescript-eslint/no-explicit-any
+											const loggingItems: any[] = [new Date(), `[${id}]`, response.status, response.url];
+
+											if (init.logging.level >= 2) {
+												loggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()) as Record<string, string>);
+											}
+
+											if (init.logging.level >= 3 && init?.body) {
+												const loggingClone = response.clone();
+
+												if (response.headers.get('Content-Type')?.toLowerCase().startsWith('application/json')) {
+													loggingItems.push(await loggingClone.json());
+												} else {
+													loggingItems.push(await loggingClone.text());
+												}
+												/**
+												 * @todo @demosjarco detect if the body is a stream and convert it to an array
+												 */
+											}
+
+											if (init.logging.color) {
+												await Promise.all([import('chalk'), import('./index.mts')])
+													.then(([{ Chalk }, { Helpers }]) => {
+														const chalk = new Chalk({ level: 2 });
+
+														loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id.slice(1, -1)}]`));
+														loggingItems.splice(2, 1, response.ok ? chalk.green(response.status) : chalk.red(response.status));
+													})
+													// eslint-disable-next-line @typescript-eslint/no-empty-function
+													.catch(() => {});
+											}
+
+											if (init.logging.custom) {
+												// @ts-expect-error logging items type is fine
+												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+												await init.logging.custom(...loggingItems);
+											} else {
+												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+												console.debug(...loggingItems);
+											}
+										}
+
+										resolve(response);
+									})
+									.catch(reject),
+							),
 					),
 			);
 	}
