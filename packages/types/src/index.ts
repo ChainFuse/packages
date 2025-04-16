@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 export * from './ai-tools/index.js';
 export * from './d0/index.js';
 export * from './d1/index.js';
@@ -89,3 +91,10 @@ export enum DOLocations {
 	'Africa' = 'afr',
 	'Middle East' = 'me',
 }
+
+/**
+ * @link https://zod.dev/?id=json-type
+ */
+const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
+type Json = z.infer<typeof literalSchema> | { [key: string]: Json } | Json[];
+export const jsonSchema: z.ZodType<Json> = z.lazy(() => z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)]));
