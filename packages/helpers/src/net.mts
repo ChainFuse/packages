@@ -75,15 +75,8 @@ export class NetHelpers {
 		);
 	}
 	public static loggingFetchInitLogging() {
-		return import('zod').then(({ z }) => {
-			/**
-			 * @link https://zod.dev/?id=json-type
-			 */
-			const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
-			type Json = z.infer<typeof literalSchema> | { [key: string]: Json } | Json[];
-			const jsonSchema: z.ZodType<Json> = z.lazy(() => z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)]));
-
-			return z
+		return Promise.all([import('zod'), import('@chainfuse/types')]).then(([{ z }, { jsonSchema }]) =>
+			z
 				.discriminatedUnion('level', [
 					z.object({
 						level: z.literal(0),
@@ -139,8 +132,8 @@ export class NetHelpers {
 				])
 				.default({
 					level: 0,
-				});
-		});
+				}),
+		);
 	}
 
 	public static loggingFetch<RI extends RequestInit = RequestInit>(info: Parameters<typeof fetch>[0], init?: LoggingFetchInitType<RI>) {
