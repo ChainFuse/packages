@@ -632,6 +632,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						function_calling: true,
 					},
 				},
 				{
@@ -783,6 +784,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						function_calling: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE',
 					},
 				},
@@ -794,7 +796,7 @@ export const workersAiCatalog = {
 					created_at: '2025-03-18 03:58:02.423',
 					tags: [],
 					properties: {
-						context_window: 1280000,
+						context_window: 80000,
 						price: [
 							{
 								unit: 'per M input tokens',
