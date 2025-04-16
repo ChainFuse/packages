@@ -1,4 +1,3 @@
-import type { CustomLoging } from '@chainfuse/types';
 import type { z } from 'zod';
 
 export type LoggingFetchInitType<RI extends RequestInit = RequestInit> = RI & z.input<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>;
@@ -15,19 +14,6 @@ export enum Methods {
 }
 
 export class NetHelpers {
-	/**
-	 * Removes the `body` property from a RequestInit object to reduce verbosity when logging.
-	 *
-	 * @param {RequestInit} [init={}] - The RequestInit object from which to remove the 'body' property. If not provided, an empty object will be used.
-	 *
-	 * @returns {RequestInit} The updated RequestInit object without the 'body' property.
-	 */
-	public static initBodyTrimmer(init: RequestInit = {}): RequestInit {
-		if ('cf' in init) delete init.cf;
-		delete init.body;
-		return init;
-	}
-
 	public static stripSensitiveHeaders(originalHeaders: Headers = new Headers()) {
 		const mutableHeaders = new Headers(originalHeaders);
 
