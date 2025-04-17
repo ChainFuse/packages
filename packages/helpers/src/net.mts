@@ -108,7 +108,7 @@ export class NetHelpers {
 															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 															// Wrap id in brackets
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-															.map((value, index) => (index === 1 ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value)),
+															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value)),
 													);
 												} else {
 													console.info(
@@ -120,7 +120,7 @@ export class NetHelpers {
 															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 															// Wrap id in brackets
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-															.map((value, index) => (index === 1 ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value)),
+															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value)),
 													);
 												}
 											});
@@ -248,7 +248,7 @@ export class NetHelpers {
 										.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 										// Wrap id in brackets
 										// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-										.map((value, index) => (index === 1 ? (value as string).replace(id, `[${id}]`) : value)),
+										.map((value) => (typeof value === 'string' && value.includes(id) ? value.replace(id, `[${id}]`) : value)),
 								);
 							}
 						}
@@ -306,7 +306,7 @@ export class NetHelpers {
 														.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 														// Wrap id in brackets
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-														.map((value, index) => (index === 1 ? (value as string).replace(id, `[${id}]`) : value)),
+														.map((value) => (typeof value === 'string' && value.includes(id) ? value.replace(id, `[${id}]`) : value)),
 												);
 											}
 										}
