@@ -247,7 +247,7 @@ export class NetHelpers {
 									.then(([{ Chalk }, { Helpers }]) => {
 										const chalk = new Chalk({ level: 2 });
 
-										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id.slice(1, -1)}]`));
+										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
 
 										const initMethod = loggingItems[2] as Methods;
 										/**
@@ -325,7 +325,7 @@ export class NetHelpers {
 													.then(([{ Chalk }, { Helpers }]) => {
 														const chalk = new Chalk({ level: 2 });
 
-														loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id.slice(1, -1)}]`));
+														loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
 														loggingItems.splice(2, 1, response.ok ? chalk.green(response.status) : chalk.red(response.status));
 													})
 													// eslint-disable-next-line @typescript-eslint/no-empty-function
