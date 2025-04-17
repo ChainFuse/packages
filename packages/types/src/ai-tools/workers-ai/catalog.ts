@@ -775,12 +775,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0,
+								price: 0.27,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0,
+								price: 0.85,
 								currency: 'USD',
 							},
 						],
