@@ -24,72 +24,18 @@ export class NetHelpers {
 	}
 
 	public static cfApiLogging() {
-		return Promise.all([import('zod'), import('@chainfuse/types')]).then(([{ z }, { jsonSchema }]) =>
+		return import('zod').then(({ z }) =>
 			z
-				.discriminatedUnion('level', [
+				.union([
 					z.object({
 						level: z.literal(0),
 					}),
 					z.object({
-						level: z.literal(1),
+						level: z.coerce.number().int().min(1).max(3),
 						color: z.boolean().default(true),
 						custom: z
 							.function()
-							.args(
-								z.coerce.date(),
-								z.string().length(8),
-								z
-									.string()
-									.trim()
-									.min(16)
-									.max(20)
-									.regex(/[0-9a-f]{16}(-\w{3})?/i),
-								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
-								z.string().trim().nonempty().url(),
-							)
-							.returns(z.union([z.void(), z.promise(z.void())]))
-							.optional(),
-					}),
-					z.object({
-						level: z.literal(2),
-						color: z.boolean().default(true),
-						custom: z
-							.function()
-							.args(
-								z.coerce.date(),
-								z.string().length(8),
-								z
-									.string()
-									.trim()
-									.min(16)
-									.max(20)
-									.regex(/[0-9a-f]{16}(-\w{3})?/i),
-								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
-								z.string().trim().nonempty().url(),
-								z.record(z.string().trim().nonempty(), z.string().trim().nonempty()),
-							)
-							.returns(z.union([z.void(), z.promise(z.void())]))
-							.optional(),
-					}),
-					z.object({
-						level: z.literal(3),
-						color: z.boolean().default(true),
-						custom: z
-							.function()
-							.args(
-								z.coerce.date(),
-								z.string().length(8),
-								z
-									.string()
-									.trim()
-									.min(16)
-									.max(20)
-									.regex(/[0-9a-f]{16}(-\w{3})?/i),
-								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
-								z.string().trim().nonempty().url(),
-								z.record(z.string().trim().nonempty(), z.string().trim().nonempty()),
-								z.union([jsonSchema.optional(), z.string(), z.array(z.number().int().min(0).max(255))]),
-							)
+							.args()
 							.returns(z.union([z.void(), z.promise(z.void())]))
 							.optional(),
 					}),
@@ -109,34 +55,82 @@ export class NetHelpers {
 				new Cloudflare({
 					apiToken: apiKey,
 					fetch: async (info, init) => {
-						// if (typeof logger === 'boolean' && logger) {
-						// 	logger = async (date: string, id: string, methodOrStatus: string | number, url: string, headers: Record<string, string>, ...rest: any[]) => {
-						// 		const customUrl = new URL(url);
+						const loggingFetchInit: Parameters<typeof this.loggingFetch>[1] = {
+							...init,
+							logging: {
+								// Fake level 1 as 2 to get headers for ray-id
+								level: logging.level === 1 ? 2 : logging.level,
+								...('color' in logging && { color: logging.color }),
+								...(logging.level > 0 && {
+									custom: async (...args: any[]) => {
+										const [, id, , , headers] = args as [Date, string, Methods | number, string, Record<string, string>];
+										const customHeaders = new Headers(headers);
 
-						// 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-						// 		const loggingItems = ['CF Rest', date, id, methodOrStatus, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`, ...rest];
-						// 		const customHeaders = new Headers(headers);
+										if (customHeaders.has('cf-ray')) {
+											args.splice(3, 0, customHeaders.get('cf-ray'));
+										}
 
-						// 		await import('chalk')
-						// 			.then(({ Chalk }) => {
-						// 				const chalk = new Chalk({ level: 2 });
+										if ('color' in logging && logging.color) {
+											await import('chalk')
+												.then(({ Chalk }) => {
+													const chalk = new Chalk({ level: 2 });
 
-						// 				// Replace with color
-						// 				loggingItems.splice(0, 1, chalk.rgb(245, 130, 30)('CF Rest'));
-						// 				// Add in with color
-						// 				if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, chalk.rgb(245, 130, 30)(customHeaders.get('cf-ray')!));
-						// 			})
-						// 			.catch(() => {
-						// 				// Add in ray id
-						// 				if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, customHeaders.get('cf-ray')!);
-						// 			});
+													if (customHeaders.has('cf-ray')) {
+														args.splice(3, 1, chalk.rgb(255, 102, 51)(customHeaders.get('cf-ray')));
+													}
+												})
+												// eslint-disable-next-line @typescript-eslint/no-empty-function
+												.catch(() => {});
+										}
 
-						// 		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-						// 		console.debug(...loggingItems);
-						// 	};
-						// }
+										if ('custom' in logging && logging.custom) {
+											// We faked level 1 as 2 to get headers for ray-id
+											if (logging.level === 1) {
+												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+												return logging.custom(...args.slice(0, -1));
+											} else {
+												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+												return logging.custom(...args);
+											}
+										} else {
+											await Promise.all([import('strip-ansi'), import('chalk'), import('./index.mts')]).then(([{ default: stripAnsi }, { Chalk }, { Helpers }]) => {
+												const chalk = new Chalk({ level: 2 });
 
-						return this.loggingFetch(info, { ...init, logging });
+												// We faked level 1 as 2 to get headers for ray-id
+												if (logging.level === 1) {
+													console.info(
+														'CF Rest',
+														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+														...args
+															.slice(0, -1)
+															// Convert date to ISO string
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value, index) => (index === 0 ? (value as Date).toISOString() : value))
+															// Wrap id in brackets
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value, index) => (index === 1 ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value)),
+													);
+												} else {
+													console.info(
+														'CF Rest',
+														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+														...args
+															// Convert date to ISO string
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value, index) => (index === 0 ? (value as Date).toISOString() : value))
+															// Wrap id in brackets
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value, index) => (index === 1 ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value)),
+													);
+												}
+											});
+										}
+									},
+								}),
+							},
+						};
+
+						return this.loggingFetch(info, loggingFetchInit);
 					},
 				}),
 		);
@@ -155,57 +149,18 @@ export class NetHelpers {
 		);
 	}
 	public static loggingFetchInitLogging() {
-		return Promise.all([import('zod'), import('@chainfuse/types')]).then(([{ z }, { jsonSchema }]) =>
+		return import('zod').then(({ z }) =>
 			z
-				.discriminatedUnion('level', [
+				.union([
 					z.object({
 						level: z.literal(0),
 					}),
 					z.object({
-						level: z.literal(1),
+						level: z.coerce.number().int().min(1).max(3),
 						color: z.boolean().default(true),
 						custom: z
 							.function()
-							.args(
-								//
-								z.coerce.date(),
-								z.string().length(8),
-								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
-								z.string().trim().nonempty().url(),
-							)
-							.returns(z.union([z.void(), z.promise(z.void())]))
-							.optional(),
-					}),
-					z.object({
-						level: z.literal(2),
-						color: z.boolean().default(true),
-						custom: z
-							.function()
-							.args(
-								//
-								z.coerce.date(),
-								z.string().length(8),
-								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
-								z.string().trim().nonempty().url(),
-								z.record(z.string().trim().nonempty(), z.string().trim().nonempty()),
-							)
-							.returns(z.union([z.void(), z.promise(z.void())]))
-							.optional(),
-					}),
-					z.object({
-						level: z.literal(3),
-						color: z.boolean().default(true),
-						custom: z
-							.function()
-							.args(
-								//
-								z.coerce.date(),
-								z.string().length(8),
-								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
-								z.string().trim().nonempty().url(),
-								z.record(z.string().trim().nonempty(), z.string().trim().nonempty()),
-								z.union([jsonSchema.optional(), z.string(), z.array(z.number().int().min(0).max(255))]),
-							)
+							// .args()
 							.returns(z.union([z.void(), z.promise(z.void())]))
 							.optional(),
 					}),
@@ -242,7 +197,7 @@ export class NetHelpers {
 								}
 							}
 
-							if (init.logging.color) {
+							if ('color' in init.logging && init.logging.color) {
 								await Promise.all([import('chalk'), import('./index.mts')])
 									.then(([{ Chalk }, { Helpers }]) => {
 										const chalk = new Chalk({ level: 2 });
@@ -281,14 +236,16 @@ export class NetHelpers {
 									.catch(() => {});
 							}
 
-							if (init.logging.custom) {
-								// @ts-expect-error logging items type is fine
+							if ('custom' in init.logging && init.logging.custom) {
 								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 								await init.logging.custom(...loggingItems);
 							} else {
-								console.debug(
+								console.info(
 									// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 									...loggingItems
+										// Convert date to ISO string
+										// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+										.map((value, index) => (index === 0 ? (value as Date).toISOString() : value))
 										// Wrap id in brackets
 										// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 										.map((value, index) => (index === 1 ? (value as string).replace(id, `[${id}]`) : value)),
@@ -325,7 +282,7 @@ export class NetHelpers {
 												 */
 											}
 
-											if (init.logging.color) {
+											if ('color' in init.logging && init.logging.color) {
 												await Promise.all([import('chalk'), import('./index.mts')])
 													.then(([{ Chalk }, { Helpers }]) => {
 														const chalk = new Chalk({ level: 2 });
@@ -337,14 +294,16 @@ export class NetHelpers {
 													.catch(() => {});
 											}
 
-											if (init.logging.custom) {
-												// @ts-expect-error logging items type is fine
+											if ('custom' in init.logging && init.logging.custom) {
 												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 												await init.logging.custom(...loggingItems);
 											} else {
-												console.debug(
+												console.info(
 													// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 													...loggingItems
+														// Convert date to ISO string
+														// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+														.map((value, index) => (index === 0 ? (value as Date).toISOString() : value))
 														// Wrap id in brackets
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 														.map((value, index) => (index === 1 ? (value as string).replace(id, `[${id}]`) : value)),
