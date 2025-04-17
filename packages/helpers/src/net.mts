@@ -37,7 +37,7 @@ export class NetHelpers {
 							.function()
 							.args(
 								z.coerce.date(),
-								z.string().length(10),
+								z.string().length(8),
 								z
 									.string()
 									.trim()
@@ -57,7 +57,7 @@ export class NetHelpers {
 							.function()
 							.args(
 								z.coerce.date(),
-								z.string().length(10),
+								z.string().length(8),
 								z
 									.string()
 									.trim()
@@ -78,7 +78,7 @@ export class NetHelpers {
 							.function()
 							.args(
 								z.coerce.date(),
-								z.string().length(10),
+								z.string().length(8),
 								z
 									.string()
 									.trim()
@@ -169,7 +169,7 @@ export class NetHelpers {
 							.args(
 								//
 								z.coerce.date(),
-								z.string().length(10),
+								z.string().length(8),
 								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
 								z.string().trim().nonempty().url(),
 							)
@@ -184,7 +184,7 @@ export class NetHelpers {
 							.args(
 								//
 								z.coerce.date(),
-								z.string().length(10),
+								z.string().length(8),
 								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
 								z.string().trim().nonempty().url(),
 								z.record(z.string().trim().nonempty(), z.string().trim().nonempty()),
@@ -200,7 +200,7 @@ export class NetHelpers {
 							.args(
 								//
 								z.coerce.date(),
-								z.string().length(10),
+								z.string().length(8),
 								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
 								z.string().trim().nonempty().url(),
 								z.record(z.string().trim().nonempty(), z.string().trim().nonempty()),
@@ -226,7 +226,7 @@ export class NetHelpers {
 					.then(async (id) => {
 						if (init.logging.level) {
 							// eslint-disable-next-line @typescript-eslint/no-explicit-any
-							const loggingItems: any[] = [new Date(), `[${id}]`, init?.method ?? Methods.GET, this.isRequestLike(info) ? info.url : info.toString()];
+							const loggingItems: any[] = [new Date(), id, init?.method ?? Methods.GET, this.isRequestLike(info) ? info.url : info.toString()];
 
 							if (init.logging.level >= 2) {
 								loggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) as Record<string, string>);
@@ -247,7 +247,7 @@ export class NetHelpers {
 									.then(([{ Chalk }, { Helpers }]) => {
 										const chalk = new Chalk({ level: 2 });
 
-										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
+										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
 
 										const initMethod = loggingItems[2] as Methods;
 										/**
@@ -286,8 +286,13 @@ export class NetHelpers {
 								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 								await init.logging.custom(...loggingItems);
 							} else {
-								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-								console.debug(...loggingItems);
+								console.debug(
+									// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+									...loggingItems
+										// Wrap id in brackets
+										// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+										.map((value, index) => (index === 1 ? (value as string).replace(id, `[${id}]`) : value)),
+								);
 							}
 						}
 
@@ -301,7 +306,7 @@ export class NetHelpers {
 									.then(async (response) => {
 										if (init.logging.level) {
 											// eslint-disable-next-line @typescript-eslint/no-explicit-any
-											const loggingItems: any[] = [new Date(), `[${id}]`, response.status, response.url];
+											const loggingItems: any[] = [new Date(), id, response.status, response.url];
 
 											if (init.logging.level >= 2) {
 												loggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()) as Record<string, string>);
@@ -325,7 +330,7 @@ export class NetHelpers {
 													.then(([{ Chalk }, { Helpers }]) => {
 														const chalk = new Chalk({ level: 2 });
 
-														loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(`[${id}]`));
+														loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
 														loggingItems.splice(2, 1, response.ok ? chalk.green(response.status) : chalk.red(response.status));
 													})
 													// eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -337,8 +342,13 @@ export class NetHelpers {
 												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 												await init.logging.custom(...loggingItems);
 											} else {
-												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-												console.debug(...loggingItems);
+												console.debug(
+													// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+													...loggingItems
+														// Wrap id in brackets
+														// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+														.map((value, index) => (index === 1 ? (value as string).replace(id, `[${id}]`) : value)),
+												);
 											}
 										}
 
