@@ -1,5 +1,31 @@
 # @chainfuse/ai-tools
 
+## 0.13.5
+
+### Patch Changes
+
+- [#377](https://github.com/ChainFuse/packages/pull/377) [`be0689d`](https://github.com/ChainFuse/packages/commit/be0689d4f19981f854a6dee79ecd372f848b15df) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/setup-node
+
+- [#383](https://github.com/ChainFuse/packages/pull/383) [`33b06b4`](https://github.com/ChainFuse/packages/commit/33b06b4ad2ba47331b225e8f7bb869abd9ec3bae) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @azure/identity, @ai-sdk/azure, @ai-sdk/openai, ai, openai
+
+- [#378](https://github.com/ChainFuse/packages/pull/378) [`e8393bc`](https://github.com/ChainFuse/packages/commit/e8393bc6cc627c4dbdf5b65e4969cdaadb91da8b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#380](https://github.com/ChainFuse/packages/pull/380) [`2ce79bd`](https://github.com/ChainFuse/packages/commit/2ce79bd25d2f5719a37b0229734dedf75331d61e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#381](https://github.com/ChainFuse/packages/pull/381) [`5977e04`](https://github.com/ChainFuse/packages/commit/5977e04e498874daaed90d487c44740755141776) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @changesets/cli
+
+- [#385](https://github.com/ChainFuse/packages/pull/385) [`0764077`](https://github.com/ChainFuse/packages/commit/0764077f8f85070d9db2bc9ad6814e50d821bbfd) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
+
+- [#384](https://github.com/ChainFuse/packages/pull/384) [`ee55c0d`](https://github.com/ChainFuse/packages/commit/ee55c0d44fd8c511c6eb36ebed0ad7fd7e86961b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#379](https://github.com/ChainFuse/packages/pull/379) [`f442afc`](https://github.com/ChainFuse/packages/commit/f442afc57c9b3dd9f88b2547fde5943d37efee36) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types, @types/validator
+
+- [#386](https://github.com/ChainFuse/packages/pull/386) [`e7aff8c`](https://github.com/ChainFuse/packages/commit/e7aff8c83f00d97cf3ee333f0676c2e80fdcef02) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- Updated dependencies [[`98978cd`](https://github.com/ChainFuse/packages/commit/98978cd55e2e6e99a726492bbe4a7ab61a1c28ac), [`be0689d`](https://github.com/ChainFuse/packages/commit/be0689d4f19981f854a6dee79ecd372f848b15df), [`33b06b4`](https://github.com/ChainFuse/packages/commit/33b06b4ad2ba47331b225e8f7bb869abd9ec3bae), [`e8393bc`](https://github.com/ChainFuse/packages/commit/e8393bc6cc627c4dbdf5b65e4969cdaadb91da8b), [`2ce79bd`](https://github.com/ChainFuse/packages/commit/2ce79bd25d2f5719a37b0229734dedf75331d61e), [`5977e04`](https://github.com/ChainFuse/packages/commit/5977e04e498874daaed90d487c44740755141776), [`0764077`](https://github.com/ChainFuse/packages/commit/0764077f8f85070d9db2bc9ad6814e50d821bbfd), [`ee55c0d`](https://github.com/ChainFuse/packages/commit/ee55c0d44fd8c511c6eb36ebed0ad7fd7e86961b), [`f442afc`](https://github.com/ChainFuse/packages/commit/f442afc57c9b3dd9f88b2547fde5943d37efee36), [`e7aff8c`](https://github.com/ChainFuse/packages/commit/e7aff8c83f00d97cf3ee333f0676c2e80fdcef02), [`ad6acdb`](https://github.com/ChainFuse/packages/commit/ad6acdbd4bc7390b605eb9012a68d4032cf2e194), [`e7b9797`](https://github.com/ChainFuse/packages/commit/e7b9797400938b36d046baefd284c439198e36b3), [`b336f15`](https://github.com/ChainFuse/packages/commit/b336f155239c1c8f14f2faa1b2d173c180378021), [`bb8a735`](https://github.com/ChainFuse/packages/commit/bb8a7351934e5c33f3dae98a1289cc5b3f3d4178)]:
+    - @chainfuse/helpers@3.0.0
+    - @chainfuse/types@2.10.1
+
 ## 0.13.4
 
 ### Patch Changes
