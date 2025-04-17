@@ -1,6 +1,12 @@
 import type { z } from 'zod';
 
 export type LoggingFetchInitType<RI extends RequestInit = RequestInit> = RI & z.input<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>;
+
+/**
+ * Enum representing HTTP request methods.
+ *
+ * Each member of the enum corresponds to a standard HTTP method, which can be used to specify the desired action to be performed on a given resource.
+ */
 export enum Methods {
 	'GET' = 'GET',
 	'HEAD' = 'HEAD',
@@ -14,15 +20,6 @@ export enum Methods {
 }
 
 export class NetHelpers {
-	public static stripSensitiveHeaders(originalHeaders: Headers = new Headers()) {
-		const mutableHeaders = new Headers(originalHeaders);
-
-		mutableHeaders.delete('Set-Cookie');
-		mutableHeaders.delete('Authorization');
-
-		return mutableHeaders;
-	}
-
 	public static cfApiLogging() {
 		return import('zod').then(({ z }) =>
 			z
@@ -45,6 +42,24 @@ export class NetHelpers {
 				}),
 		);
 	}
+	/**
+	 * Creates an instance of the Cloudflare API client with enhanced logging capabilities.
+	 *
+	 * @param apiKey - The API token used to authenticate with the Cloudflare API.
+	 * @param logging - The logging configuration object, parsed using the `cfApiLogging` parser.
+	 *
+	 * @returns A promise that resolves to an instance of the Cloudflare API client.
+	 *
+	 * The logging configuration supports the following properties:
+	 * - `level`: The logging level. If set to `1`, it is internally treated as `2` to include headers for the `cf-ray` ID, but reset back to 1 for the returned logs.
+	 * - `color`: Optional. If `true`, enables colored output using the `chalk` library.
+	 * - `custom`: Optional. A custom logging function that receives detailed request and response information.
+	 *
+	 * The function also enhances logging by:
+	 * - Extracting and displaying the `cf-ray` ID from response headers.
+	 * - Formatting and coloring log output for better readability.
+	 * - Stripping redundant parts of URLs and wrapping unique IDs in brackets with color coding.
+	 */
 	public static cfApi(apiKey: string, logging: z.input<Awaited<ReturnType<typeof NetHelpers.cfApiLogging>>>) {
 		return Promise.all([
 			//
@@ -143,11 +158,6 @@ export class NetHelpers {
 		);
 	}
 
-	public static isRequestLike(obj: Parameters<typeof fetch>[0]): obj is Request {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-		return typeof (obj as any)?.url === 'string';
-	}
-
 	public static loggingFetchInit() {
 		return Promise.all([import('zod'), this.loggingFetchInitLogging()]).then(([{ z }, logging]) =>
 			z.object({
@@ -177,35 +187,34 @@ export class NetHelpers {
 				}),
 		);
 	}
-
-	public static methodColors(method: Methods) {
-		return import('chalk').then(({ Chalk }) => {
-			const chalk = new Chalk({ level: 2 });
-
-			/**
-			 * @link https://github.com/swagger-api/swagger-ui/blob/master/src/style/_variables.scss#L48-L55
-			 */
-			switch (method) {
-				case Methods.GET:
-					return chalk.hex('#61affe');
-				case Methods.HEAD:
-					return chalk.hex('#9012fe');
-				case Methods.POST:
-					return chalk.hex('#49cc90');
-				case Methods.PUT:
-					return chalk.hex('#fca130');
-				case Methods.DELETE:
-					return chalk.hex('#f93e3e');
-				case Methods.OPTIONS:
-					return chalk.hex('#0d5aa7');
-				case Methods.PATCH:
-					return chalk.hex('#50e3c2');
-				default:
-					throw new Error(`Unsupported method: ${method}`);
-			}
-		});
-	}
-
+	/**
+	 * A utility function that wraps the native `fetch` API with enhanced capabilities.
+	 * This function allows for customizable logging of request and response details, including headers, body, and status, with support for colorized output and custom logging handlers.
+	 *
+	 * @template RI - The type of the `RequestInit` object, defaulting to `RequestInit`. Intended for cloudflare's `RequestInit` variation.
+	 *
+	 * @param info - The input to the `fetch` function, which can be a `Request` object or a URL string.
+	 * @param init - An optional configuration object extending `RequestInit` with additional options.
+	 *
+	 * @returns A promise that resolves to the `Response` object returned by the `fetch` call.
+	 *
+	 * ### Logging Levels:
+	 * - `level >= 1`: Logs basic request details (timestamp, unique ID, method, and URL).
+	 * - `level >= 2`: Logs request headers (with sensitive headers stripped).
+	 * - `level >= 3`: Logs request body (if available) and response body (if available).
+	 *
+	 * ### Logging Options:
+	 * - `logging.level`: The verbosity level of logging (1, 2, or 3).
+	 * - `logging.color`: A boolean indicating whether to use colorized output.
+	 * - `logging.custom`: An optional custom logging function to handle the log output.
+	 *
+	 * ### Features:
+	 * - Automatically generates a unique ID for each request.
+	 * - Strips sensitive headers from logs to ensure security.
+	 * - Supports JSON and stream-based request/response bodies.
+	 * - Allows for colorized output using the `chalk` library.
+	 * - Provides hooks for custom logging implementations.
+	 */
 	public static loggingFetch<RI extends RequestInit = RequestInit>(info: Parameters<typeof fetch>[0], init?: LoggingFetchInitType<RI>) {
 		return NetHelpers.loggingFetchInit()
 			.then((parser) => parser.passthrough().parseAsync(init))
@@ -333,6 +342,73 @@ export class NetHelpers {
 							),
 					),
 			);
+	}
+
+	/**
+	 * Removes sensitive headers from the provided `Headers` object. Specifically, it deletes the `Set-Cookie` and `Authorization` headers.
+	 *
+	 * @param originalHeaders - The original `Headers` object to sanitize. Defaults to an empty `Headers` object if not provided.
+	 * @returns A new `Headers` object with the sensitive headers removed.
+	 */
+	public static stripSensitiveHeaders(originalHeaders: Headers = new Headers()) {
+		const mutableHeaders = new Headers(originalHeaders);
+
+		mutableHeaders.delete('Set-Cookie');
+		mutableHeaders.delete('Authorization');
+
+		return mutableHeaders;
+	}
+
+	/**
+	 * Determines if the given object is a `Request`-like object.
+	 *
+	 * This function checks if the provided object has a `url` property of type `string`,
+	 * which is a characteristic of the `Request` object used in the Fetch API.
+	 *
+	 * @param obj - The object to check, typically the first parameter of the `fetch` function.
+	 * @returns A boolean indicating whether the object is a `Request` instance.
+	 */
+	public static isRequestLike(obj: Parameters<typeof fetch>[0]): obj is Request {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+		return typeof (obj as any)?.url === 'string';
+	}
+
+	/**
+	 * Returns a promise that resolves to a `chalk` instance with a color corresponding to the provided HTTP method.
+	 *
+	 * The colors are based on the Swagger UI method colors:
+	 * @link https://github.com/swagger-api/swagger-ui/blob/master/src/style/_variables.scss#L48-L55
+	 *
+	 * @param method - The HTTP method for which to retrieve the color.
+	 * @returns A promise that resolves to a `chalk` instance with the color corresponding to the provided HTTP method.
+	 * @throws An error if the provided method is unsupported.
+	 */
+	public static methodColors(method: Methods) {
+		return import('chalk').then(({ Chalk }) => {
+			const chalk = new Chalk({ level: 2 });
+
+			/**
+			 * @link https://github.com/swagger-api/swagger-ui/blob/master/src/style/_variables.scss#L48-L55
+			 */
+			switch (method) {
+				case Methods.GET:
+					return chalk.hex('#61affe');
+				case Methods.HEAD:
+					return chalk.hex('#9012fe');
+				case Methods.POST:
+					return chalk.hex('#49cc90');
+				case Methods.PUT:
+					return chalk.hex('#fca130');
+				case Methods.DELETE:
+					return chalk.hex('#f93e3e');
+				case Methods.OPTIONS:
+					return chalk.hex('#0d5aa7');
+				case Methods.PATCH:
+					return chalk.hex('#50e3c2');
+				default:
+					throw new Error(`Unsupported method: ${method}`);
+			}
+		});
 	}
 
 	/**
