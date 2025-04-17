@@ -23,40 +23,120 @@ export class NetHelpers {
 		return mutableHeaders;
 	}
 
-	public static cfApi(apiKey: string, logger: CustomLoging = false) {
-		return import('cloudflare').then(
-			({ Cloudflare }) =>
+	public static cfApiLogging() {
+		return Promise.all([import('zod'), import('@chainfuse/types')]).then(([{ z }, { jsonSchema }]) =>
+			z
+				.discriminatedUnion('level', [
+					z.object({
+						level: z.literal(0),
+					}),
+					z.object({
+						level: z.literal(1),
+						color: z.boolean().default(true),
+						custom: z
+							.function()
+							.args(
+								z.coerce.date(),
+								z.string().length(10),
+								z
+									.string()
+									.trim()
+									.min(16)
+									.max(20)
+									.regex(/[0-9a-f]{16}(-\w{3})?/i),
+								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
+								z.string().trim().nonempty().url(),
+							)
+							.returns(z.union([z.void(), z.promise(z.void())]))
+							.optional(),
+					}),
+					z.object({
+						level: z.literal(2),
+						color: z.boolean().default(true),
+						custom: z
+							.function()
+							.args(
+								z.coerce.date(),
+								z.string().length(10),
+								z
+									.string()
+									.trim()
+									.min(16)
+									.max(20)
+									.regex(/[0-9a-f]{16}(-\w{3})?/i),
+								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
+								z.string().trim().nonempty().url(),
+								z.record(z.string().trim().nonempty(), z.string().trim().nonempty()),
+							)
+							.returns(z.union([z.void(), z.promise(z.void())]))
+							.optional(),
+					}),
+					z.object({
+						level: z.literal(3),
+						color: z.boolean().default(true),
+						custom: z
+							.function()
+							.args(
+								z.coerce.date(),
+								z.string().length(10),
+								z
+									.string()
+									.trim()
+									.min(16)
+									.max(20)
+									.regex(/[0-9a-f]{16}(-\w{3})?/i),
+								z.union([z.nativeEnum(Methods), z.coerce.number().int().min(100).max(599)]),
+								z.string().trim().nonempty().url(),
+								z.record(z.string().trim().nonempty(), z.string().trim().nonempty()),
+								z.union([jsonSchema.optional(), z.string(), z.array(z.number().int().min(0).max(255))]),
+							)
+							.returns(z.union([z.void(), z.promise(z.void())]))
+							.optional(),
+					}),
+				])
+				.default({
+					level: 0,
+				}),
+		);
+	}
+	public static cfApi(apiKey: string, logging: z.input<Awaited<ReturnType<typeof NetHelpers.cfApiLogging>>>) {
+		return Promise.all([
+			//
+			import('cloudflare'),
+			NetHelpers.cfApiLogging().then((parser) => parser.parseAsync(logging)),
+		]).then(
+			([{ Cloudflare }, logging]) =>
 				new Cloudflare({
 					apiToken: apiKey,
 					fetch: async (info, init) => {
-						if (typeof logger === 'boolean' && logger) {
-							logger = async (date: string, id: string, methodOrStatus: string | number, url: string, headers: Record<string, string>, ...rest: any[]) => {
-								const customUrl = new URL(url);
+						// if (typeof logger === 'boolean' && logger) {
+						// 	logger = async (date: string, id: string, methodOrStatus: string | number, url: string, headers: Record<string, string>, ...rest: any[]) => {
+						// 		const customUrl = new URL(url);
 
-								// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-								const loggingItems = ['CF Rest', date, id, methodOrStatus, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`, ...rest];
-								const customHeaders = new Headers(headers);
+						// 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+						// 		const loggingItems = ['CF Rest', date, id, methodOrStatus, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`, ...rest];
+						// 		const customHeaders = new Headers(headers);
 
-								await import('chalk')
-									.then(({ Chalk }) => {
-										const chalk = new Chalk({ level: 2 });
+						// 		await import('chalk')
+						// 			.then(({ Chalk }) => {
+						// 				const chalk = new Chalk({ level: 2 });
 
-										// Replace with color
-										loggingItems.splice(0, 1, chalk.rgb(245, 130, 30)('CF Rest'));
-										// Add in with color
-										if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, chalk.rgb(245, 130, 30)(customHeaders.get('cf-ray')!));
-									})
-									.catch(() => {
-										// Add in ray id
-										if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, customHeaders.get('cf-ray')!);
-									});
+						// 				// Replace with color
+						// 				loggingItems.splice(0, 1, chalk.rgb(245, 130, 30)('CF Rest'));
+						// 				// Add in with color
+						// 				if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, chalk.rgb(245, 130, 30)(customHeaders.get('cf-ray')!));
+						// 			})
+						// 			.catch(() => {
+						// 				// Add in ray id
+						// 				if (customHeaders.has('cf-ray')) loggingItems.splice(3, 0, customHeaders.get('cf-ray')!);
+						// 			});
 
-								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-								console.debug(...loggingItems);
-							};
-						}
+						// 		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+						// 		console.debug(...loggingItems);
+						// 	};
+						// }
 
-						return this.loggingFetch(info, init);
+						return this.loggingFetch(info, { ...init, logging });
 					},
 				}),
 		);
