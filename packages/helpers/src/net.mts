@@ -60,7 +60,7 @@ export class NetHelpers {
 	 * - Formatting and coloring log output for better readability.
 	 * - Stripping redundant parts of URLs and wrapping unique IDs in brackets with color coding.
 	 */
-	public static cfApi(apiKey: string, logging: z.input<Awaited<ReturnType<typeof NetHelpers.cfApiLogging>>>) {
+	public static cfApi(apiKey: string, logging?: z.input<Awaited<ReturnType<typeof NetHelpers.cfApiLogging>>>) {
 		return Promise.all([
 			//
 			import('cloudflare'),
