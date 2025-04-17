@@ -52,7 +52,7 @@
 		"chalk": "^5.4.1",
 		"cloudflare": "^4.2.0",
 		"uuid": "^11.1.0",
-		"zod": "^3.24.2"
+		"zod": "^3.24.3"
 	},
 	"devDependencies": {
 		"@chainfuse/types": "^2.10.0",
