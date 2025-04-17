@@ -105,7 +105,7 @@ export class NetHelpers {
 															.slice(0, -1)
 															// Convert date to ISO string
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-															.map((value, index) => (index === 0 ? (value as Date).toISOString() : value))
+															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 															// Wrap id in brackets
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value, index) => (index === 1 ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value)),
@@ -117,7 +117,7 @@ export class NetHelpers {
 														...args
 															// Convert date to ISO string
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-															.map((value, index) => (index === 0 ? (value as Date).toISOString() : value))
+															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 															// Wrap id in brackets
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value, index) => (index === 1 ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value)),
@@ -245,7 +245,7 @@ export class NetHelpers {
 									...loggingItems
 										// Convert date to ISO string
 										// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-										.map((value, index) => (index === 0 ? (value as Date).toISOString() : value))
+										.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 										// Wrap id in brackets
 										// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 										.map((value, index) => (index === 1 ? (value as string).replace(id, `[${id}]`) : value)),
@@ -303,7 +303,7 @@ export class NetHelpers {
 													...loggingItems
 														// Convert date to ISO string
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-														.map((value, index) => (index === 0 ? (value as Date).toISOString() : value))
+														.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 														// Wrap id in brackets
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 														.map((value, index) => (index === 1 ? (value as string).replace(id, `[${id}]`) : value)),
