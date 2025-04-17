@@ -56,7 +56,7 @@ export class DiscordHelpers {
 				 * Only cache GET requests
 				 * Empty method means GET
 				 */
-				if (cacheTtl && ((rawInit.method ?? 'GET').toLowerCase() === 'get' || forceCache)) {
+				if (caches && cacheTtl && ((rawInit.method ?? 'GET').toLowerCase() === 'get' || forceCache)) {
 					// const cfCacheRef: Promise<Cache> | undefined = caches?.open('cfApi');
 					const discordCacheRef = caches?.open(`discordApi`);
 
