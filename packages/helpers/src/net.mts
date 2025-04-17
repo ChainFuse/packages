@@ -63,7 +63,8 @@ export class NetHelpers {
 								...('color' in logging && { color: logging.color }),
 								...(logging.level > 0 && {
 									custom: async (...args: any[]) => {
-										const [, id, , , headers] = args as [Date, string, Methods | number, string, Record<string, string>];
+										const [, id, , url, headers] = args as [Date, string, Methods | number, string, Record<string, string>];
+										const customUrl = new URL(url);
 										const customHeaders = new Headers(headers);
 
 										if (customHeaders.has('cf-ray')) {
@@ -108,7 +109,10 @@ export class NetHelpers {
 															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 															// Wrap id in brackets
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value)),
+															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value))
+															// Strip out redundant parts of url
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
 													);
 												} else {
 													console.info(
@@ -120,7 +124,10 @@ export class NetHelpers {
 															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 															// Wrap id in brackets
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value)),
+															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value))
+															// Strip out redundant parts of url
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
 													);
 												}
 											});
