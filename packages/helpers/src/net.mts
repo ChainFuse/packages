@@ -178,6 +178,34 @@ export class NetHelpers {
 		);
 	}
 
+	public static methodColors(method: Methods) {
+		return import('chalk').then(({ Chalk }) => {
+			const chalk = new Chalk({ level: 2 });
+
+			/**
+			 * @link https://github.com/swagger-api/swagger-ui/blob/master/src/style/_variables.scss#L48-L55
+			 */
+			switch (method) {
+				case Methods.GET:
+					return chalk.hex('#61affe');
+				case Methods.HEAD:
+					return chalk.hex('#9012fe');
+				case Methods.POST:
+					return chalk.hex('#49cc90');
+				case Methods.PUT:
+					return chalk.hex('#fca130');
+				case Methods.DELETE:
+					return chalk.hex('#f93e3e');
+				case Methods.OPTIONS:
+					return chalk.hex('#0d5aa7');
+				case Methods.PATCH:
+					return chalk.hex('#50e3c2');
+				default:
+					throw new Error(`Unsupported method: ${method}`);
+			}
+		});
+	}
+
 	public static loggingFetch<RI extends RequestInit = RequestInit>(info: Parameters<typeof fetch>[0], init?: LoggingFetchInitType<RI>) {
 		return NetHelpers.loggingFetchInit()
 			.then((parser) => parser.passthrough().parseAsync(init))
@@ -210,33 +238,14 @@ export class NetHelpers {
 										const chalk = new Chalk({ level: 2 });
 
 										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
+									})
+									// eslint-disable-next-line @typescript-eslint/no-empty-function
+									.catch(() => {});
 
-										const initMethod = loggingItems[2] as Methods;
-										/**
-										 * @link https://github.com/swagger-api/swagger-ui/blob/master/src/style/_variables.scss#L48-L55
-										 */
-										switch (initMethod) {
-											case Methods.GET:
-												loggingItems.splice(2, 1, chalk.hex('#61affe')(initMethod));
-												break;
-											case Methods.HEAD:
-												loggingItems.splice(2, 1, chalk.hex('#9012fe')(initMethod));
-												break;
-											case Methods.POST:
-												loggingItems.splice(2, 1, chalk.hex('#49cc90')(initMethod));
-												break;
-											case Methods.PUT:
-												loggingItems.splice(2, 1, chalk.hex('#fca130')(initMethod));
-												break;
-											case Methods.DELETE:
-												loggingItems.splice(2, 1, chalk.hex('#f93e3e')(initMethod));
-												break;
-											case Methods.OPTIONS:
-												loggingItems.splice(2, 1, chalk.hex('#0d5aa7')(initMethod));
-												break;
-											case Methods.PATCH:
-												loggingItems.splice(2, 1, chalk.hex('#50e3c2')(initMethod));
-												break;
+								await this.methodColors(loggingItems[2] as Methods)
+									.then((color) => {
+										if (color) {
+											loggingItems.splice(2, 1, color(loggingItems[2]));
 										}
 									})
 									// eslint-disable-next-line @typescript-eslint/no-empty-function
