@@ -1,5 +1,19 @@
 # @chainfuse/ai-tools
 
+## 0.13.6
+
+### Patch Changes
+
+- [#388](https://github.com/ChainFuse/packages/pull/388) [`290c96a`](https://github.com/ChainFuse/packages/commit/290c96ad4dd744c6963792017804438a10b9e6a5) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @azure/identity, @ai-sdk/google, @ai-sdk/openai-compatible, openai
+
+- [#390](https://github.com/ChainFuse/packages/pull/390) [`5f485fd`](https://github.com/ChainFuse/packages/commit/5f485fd8bafcca95d2dbe8d815d82450df392868) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+- [#389](https://github.com/ChainFuse/packages/pull/389) [`b742fc1`](https://github.com/ChainFuse/packages/commit/b742fc124bed95d6affe02b6ba781403bdcb2cb3) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- Updated dependencies [[`44b0fec`](https://github.com/ChainFuse/packages/commit/44b0fec9e250c33efdef9428a06d0b14600c187b), [`290c96a`](https://github.com/ChainFuse/packages/commit/290c96ad4dd744c6963792017804438a10b9e6a5), [`5f485fd`](https://github.com/ChainFuse/packages/commit/5f485fd8bafcca95d2dbe8d815d82450df392868), [`b742fc1`](https://github.com/ChainFuse/packages/commit/b742fc124bed95d6affe02b6ba781403bdcb2cb3)]:
+    - @chainfuse/types@2.10.2
+    - @chainfuse/helpers@3.0.1
+
 ## 0.13.5
 
 ### Patch Changes
