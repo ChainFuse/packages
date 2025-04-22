@@ -1,5 +1,6 @@
-import type { Coordinate, PrefixedUuid, UuidExport } from '@chainfuse/types';
-import type { azureCatalog } from '@chainfuse/types/ai-tools/catalog/azure';
+import type { Coordinate } from '@chainfuse/types/ai-tools';
+import type { azureCatalog } from '@chainfuse/types/ai-tools/azure/catalog';
+import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
 import type { Ai, ExecutionContext, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import type haversine from 'haversine-distance';
 

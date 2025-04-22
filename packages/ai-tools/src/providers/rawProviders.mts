@@ -1,6 +1,6 @@
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
-import type { cloudflareModelPossibilities } from '@chainfuse/types';
+import type { cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
 import type { AIGatewayUniversalRequest, GatewayOptions } from '@cloudflare/workers-types/experimental';
 import { AiBase } from '../base.mjs';
 import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified } from '../types.mjs';
@@ -145,7 +145,7 @@ export class AiRawProviders extends AiBase {
 						...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 					},
 					fetch: (input, rawInit) =>
-						Promise.all([import('../serverSelector.mjs'), import('@chainfuse/types/ai-tools/catalog/azure')])
+						Promise.all([import('../serverSelector.mjs'), import('@chainfuse/types/ai-tools/azure/catalog')])
 							.then(([{ ServerSelector }, { azureCatalog }]) => new ServerSelector(this.config).closestServers(azureCatalog))
 							.then(async (filteredServers) => {
 								const startRoundTrip = performance.now();

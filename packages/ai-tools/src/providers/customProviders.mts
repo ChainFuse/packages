@@ -1,6 +1,7 @@
 import type { GoogleGenerativeAIProvider } from '@ai-sdk/google';
 import { Helpers } from '@chainfuse/helpers';
-import { AiModels, enabledCloudflareLlmProviders, type cloudflareModelPossibilities } from '@chainfuse/types';
+import { AiModels } from '@chainfuse/types/ai-tools';
+import { enabledCloudflareLlmProviders, type cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
 import { customProvider, TypeValidationError, wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
 import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
 import { ZodError } from 'zod';
