@@ -47,11 +47,19 @@
 			"import": "./dist/ai-tools/index.js",
 			"types": "./dist/ai-tools/index.d.ts"
 		},
-		"./ai-tools/catalog/azure": {
+		"./ai-tools/azure": {
+			"import": "./dist/ai-tools/azure/index.js",
+			"types": "./dist/ai-tools/azure/index.d.ts"
+		},
+		"./ai-tools/azure/catalog": {
 			"import": "./dist/ai-tools/azure/catalog.js",
 			"types": "./dist/ai-tools/azure/catalog.d.ts"
 		},
-		"./ai-tools/catalog/workers-ai": {
+		"./ai-tools/workers-ai": {
+			"import": "./dist/ai-tools/workers-ai/index.js",
+			"types": "./dist/ai-tools/workers-ai/index.d.ts"
+		},
+		"./ai-tools/workers-ai/catalog": {
 			"import": "./dist/ai-tools/workers-ai/catalog.js",
 			"types": "./dist/ai-tools/workers-ai/catalog.d.ts"
 		},
@@ -71,10 +79,6 @@
 			"import": "./dist/d1/users/index.js",
 			"types": "./dist/d1/users/index.d.ts"
 		},
-		"./discourse": {
-			"import": "./dist/discourse/index.js",
-			"types": "./dist/discourse/index.d.ts"
-		},
 		"./discourse/post": {
 			"import": "./dist/discourse/post/index.js",
 			"types": "./dist/discourse/post/index.d.ts"
@@ -86,6 +90,10 @@
 		"./wf": {
 			"import": "./dist/wf/index.js",
 			"types": "./dist/wf/index.d.ts"
+		},
+		"./zod": {
+			"import": "./dist/zod/index.js",
+			"types": "./dist/zod/index.d.ts"
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",
