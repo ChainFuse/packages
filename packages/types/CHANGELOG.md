@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.10.3
+
+### Patch Changes
+
+- [`d40fe03`](https://github.com/ChainFuse/packages/commit/d40fe038ad75c61d5bc04011f15bc860d8f938bc) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Force tree shake imports for vite
+
 ## 2.10.2
 
 ### Patch Changes
