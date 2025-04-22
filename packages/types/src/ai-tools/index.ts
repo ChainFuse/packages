@@ -1,10 +1,11 @@
 import { z } from 'zod';
 import type { EnumOrEnumLike } from '../index.js';
+import type { ZodCoordinate } from '../zod/index.js';
 import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmImageProviders, enabledCloudflareLlmProviders, type CloudflareFunctionModelsEnum, type CloudflareModelsEnum } from './workers-ai/index.js';
 
 export interface Coordinate {
-	lat: string;
-	lon: string;
+	lat: z.infer<typeof ZodCoordinate>;
+	lon: z.infer<typeof ZodCoordinate>;
 }
 
 export namespace AiModels {
