@@ -2,9 +2,6 @@ import { z } from 'zod';
 import type { EnumOrEnumLike } from '../index.js';
 import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmImageProviders, enabledCloudflareLlmProviders, type CloudflareFunctionModelsEnum, type CloudflareModelsEnum } from './workers-ai/index.js';
 
-export * from './azure/index.js';
-export * from './workers-ai/index.js';
-
 export interface Coordinate {
 	lat: string;
 	lon: string;
@@ -124,3 +121,6 @@ export const default_mc_sentiment: LanguageModelValues = AiModels.LanguageModels
 export const default_mc_safety: LanguageModelValues = AiModels.LanguageModels.Cloudflare['@hf/thebloke/llamaguard-7b-awq'];
 export const default_mc_image: ImageModelValues = AiModels.ImageModels.Cloudflare['@cf/stabilityai/stable-diffusion-xl-base-1.0'];
 export const default_mc_embedding: TextEmbeddingModelValues = AiModels.TextEmbeddingModels.Cloudflare['@cf/baai/bge-large-en-v1.5'];
+
+export * from './azure/index.js';
+export * from './workers-ai/index.js';
