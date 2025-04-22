@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 0.13.7
+
+### Patch Changes
+
+- [`d18cf80`](https://github.com/ChainFuse/packages/commit/d18cf80d48fd7a1ab6a8089638ba5b73a47db3dd) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Use new tree shake import
+
+- Updated dependencies [[`7e58ff4`](https://github.com/ChainFuse/packages/commit/7e58ff411721d0f34891f1388374e197a75ba569), [`d40fe03`](https://github.com/ChainFuse/packages/commit/d40fe038ad75c61d5bc04011f15bc860d8f938bc)]:
+    - @chainfuse/helpers@3.0.2
+    - @chainfuse/types@2.10.3
+
 ## 0.13.6
 
 ### Patch Changes

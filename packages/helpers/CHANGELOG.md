@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 3.0.2
+
+### Patch Changes
+
+- [`7e58ff4`](https://github.com/ChainFuse/packages/commit/7e58ff411721d0f34891f1388374e197a75ba569) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Use new tree shake import
+
 ## 3.0.1
 
 ### Patch Changes
