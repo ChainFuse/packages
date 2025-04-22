@@ -19,9 +19,3 @@ export const ZodUuidExportInput = z.union([
 	z.string().trim().nonempty().base64(),
 	z.string().trim().nonempty().base64url(),
 ]);
-
-export const ZodCoordinate = z
-	.string()
-	.trim()
-	.min(3)
-	.regex(new RegExp(/^-?\d+\.\d+$/i));
