@@ -1,4 +1,4 @@
-import type { LanguageModelValues, TextEmbeddingModelValues } from '@chainfuse/types';
+import type { LanguageModelValues, TextEmbeddingModelValues } from '@chainfuse/types/ai-tools';
 import type { embed, embedMany, LanguageModelV1Middleware, wrapLanguageModel } from 'ai';
 import { AiBase } from './base.mjs';
 import type { AiRegistry } from './registry.mjs';

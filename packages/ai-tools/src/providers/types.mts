@@ -1,6 +1,6 @@
 import type { OpenAIChatSettings, OpenAIEmbeddingSettings } from '@ai-sdk/openai/internal';
 import type { EmbeddingModelV1, LanguageModelV1 } from '@ai-sdk/provider';
-import type { AzureChatModels, AzureEmbeddingModels } from '@chainfuse/types';
+import type { AzureChatModels, AzureEmbeddingModels } from '@chainfuse/types/ai-tools/azure';
 import type { Provider } from 'ai';
 
 export interface AzureOpenAIProvider extends Provider {

@@ -1,4 +1,4 @@
-import type { Coordinate } from '@chainfuse/types';
+import type { Coordinate } from '@chainfuse/types/ai-tools';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import { AiBase } from './base.mts';
 import type { PrivacyRegion, Servers } from './types.mjs';
