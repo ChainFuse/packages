@@ -242,10 +242,8 @@ export class NetHelpers {
 							}
 
 							if ('color' in init.logging && init.logging.color) {
-								await Promise.all([import('chalk'), import('./index.mts')])
-									.then(([{ Chalk }, { Helpers }]) => {
-										const chalk = new Chalk({ level: 2 });
-
+								await Promise.all([
+									Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
 									})
 									// eslint-disable-next-line @typescript-eslint/no-empty-function
