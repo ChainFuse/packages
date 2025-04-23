@@ -23,23 +23,17 @@ export class NetHelpers {
 	public static cfApiLogging() {
 		return import('zod').then(({ z }) =>
 			z
-				.union([
-					z.object({
-						level: z.literal(0),
-					}),
-					z.object({
-						level: z.coerce.number().int().min(1).max(3),
-						color: z.boolean().default(true),
-						custom: z
-							.function()
-							.args()
-							.returns(z.union([z.void(), z.promise(z.void())]))
-							.optional(),
-					}),
-				])
-				.default({
-					level: 0,
-				}),
+				.object({
+					level: z.coerce.number().int().min(0).max(3).default(0),
+					error: z.coerce.number().int().min(0).max(3).default(1),
+					color: z.boolean().default(true),
+					custom: z
+						.function()
+						.args()
+						.returns(z.union([z.void(), z.promise(z.void())]))
+						.optional(),
+				})
+				.default({}),
 		);
 	}
 	/**
@@ -168,23 +162,16 @@ export class NetHelpers {
 	public static loggingFetchInitLogging() {
 		return import('zod').then(({ z }) =>
 			z
-				.union([
-					z.object({
-						level: z.literal(0),
-					}),
-					z.object({
-						level: z.coerce.number().int().min(1).max(3),
-						color: z.boolean().default(true),
-						custom: z
-							.function()
-							// .args()
-							.returns(z.union([z.void(), z.promise(z.void())]))
-							.optional(),
-					}),
-				])
-				.default({
-					level: 0,
-				}),
+				.object({
+					level: z.coerce.number().int().min(0).max(3).default(0),
+					error: z.coerce.number().int().min(0).max(3).default(1),
+					color: z.boolean().default(true),
+					custom: z
+						.function()
+						.returns(z.union([z.void(), z.promise(z.void())]))
+						.optional(),
+				})
+				.default({}),
 		);
 	}
 	/**
@@ -223,12 +210,16 @@ export class NetHelpers {
 				import('./crypto.mts')
 					.then(({ CryptoHelpers }) => CryptoHelpers.base62secret(8))
 					.then(async (id) => {
-						if (init.logging.level) {
+						if (init.logging.level || init.logging.error) {
 							// eslint-disable-next-line @typescript-eslint/no-explicit-any
 							const loggingItems: any[] = [new Date(), id, init?.method ?? Methods.GET, this.isRequestLike(info) ? info.url : info.toString()];
+							const errorItems: any[] = [new Date(), id, init?.method ?? Methods.GET, this.isRequestLike(info) ? info.url : info.toString()];
 
 							if (init.logging.level >= 2) {
 								loggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) as Record<string, string>);
+							}
+							if (init.logging.error >= 2) {
+								errorItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) as Record<string, string>);
 							}
 
 							if (init.logging.level >= 3 && init?.body) {
@@ -240,23 +231,34 @@ export class NetHelpers {
 									loggingItems.push(init.body);
 								}
 							}
+							if (init.logging.error >= 3 && init?.body) {
+								if (init.body instanceof ReadableStream) {
+									errorItems.push(Array.from(new Uint8Array(await new Response(init.body).arrayBuffer())));
+								} else if (new Headers(init.headers).get('Content-Type')?.toLowerCase().startsWith('application/json')) {
+									errorItems.push(JSON.parse(init.body as string));
+								} else {
+									errorItems.push(init.body);
+								}
+							}
 
 							if ('color' in init.logging && init.logging.color) {
 								await Promise.all([
 									Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
-									})
-									// eslint-disable-next-line @typescript-eslint/no-empty-function
-									.catch(() => {});
-
-								await this.methodColors(loggingItems[2] as Methods)
-									.then((color) => {
+										errorItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
+									}),
+									this.methodColors(loggingItems[2] as Methods).then((color) => {
 										if (color) {
 											loggingItems.splice(2, 1, color(loggingItems[2]));
 										}
-									})
+									}),
+									this.methodColors(errorItems[2] as Methods).then((color) => {
+										if (color) {
+											errorItems.splice(2, 1, color(errorItems[2]));
+										}
+									}),
 									// eslint-disable-next-line @typescript-eslint/no-empty-function
-									.catch(() => {});
+								]).catch(() => {});
 							}
 
 							if ('custom' in init.logging && init.logging.custom) {
