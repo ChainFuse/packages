@@ -102,7 +102,7 @@
 		"zod": "^3.24.3"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20250422.0",
+		"@cloudflare/workers-types": "^4.20250423.0",
 		"@types/validator": "^13.15.0"
 	}
 }
