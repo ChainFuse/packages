@@ -1,5 +1,21 @@
 # @chainfuse/helpers
 
+## 3.1.0
+
+### Minor Changes
+
+- [`51a0a96`](https://github.com/ChainFuse/packages/commit/51a0a962e0d52ef6a02b7238ee42996bbbd157e9) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add error logging
+
+### Patch Changes
+
+- [#387](https://github.com/ChainFuse/packages/pull/387) [`34d1123`](https://github.com/ChainFuse/packages/commit/34d1123a877b81e0b38b2af18f80ce1facd9e9bc) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump step-security/harden-runner
+
+- [#394](https://github.com/ChainFuse/packages/pull/394) [`ee7a3e1`](https://github.com/ChainFuse/packages/commit/ee7a3e135c8a34d3e33b590ed62119f156353741) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
+- [#395](https://github.com/ChainFuse/packages/pull/395) [`2ca24a1`](https://github.com/ChainFuse/packages/commit/2ca24a1c2583468353bdc5e4f7f17e33b9849b31) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, openai
+
+- [#396](https://github.com/ChainFuse/packages/pull/396) [`dd3d7ec`](https://github.com/ChainFuse/packages/commit/dd3d7ec2698f0f031b4c111ad3626c4d7229ef85) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
 ## 3.0.2
 
 ### Patch Changes
