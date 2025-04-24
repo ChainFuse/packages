@@ -63,14 +63,15 @@ export class NetHelpers {
 			([{ Cloudflare }, logging]) =>
 				new Cloudflare({
 					apiToken: apiKey,
-					fetch: async (info, init) => {
-						const loggingFetchInit: Parameters<typeof this.loggingFetch>[1] = {
+					fetch: (info, init) =>
+						this.loggingFetch(info, {
 							...init,
 							logging: {
 								// Fake level 1 as 2 to get headers for ray-id
 								level: logging.level === 1 ? 2 : logging.level,
+								error: logging.error === 1 ? 2 : logging.error,
 								...('color' in logging && { color: logging.color }),
-								...(logging.level > 0 && {
+								...((logging.level > 0 || logging.error > 0) && {
 									custom: async (...args: any[]) => {
 										const [, id, , url, headers] = args as [Date, string, Methods | number, string, Record<string, string>];
 										const customUrl = new URL(url);
@@ -95,7 +96,7 @@ export class NetHelpers {
 
 										if ('custom' in logging && logging.custom) {
 											// We faked level 1 as 2 to get headers for ray-id
-											if (logging.level === 1) {
+											if (logging.level === 1 || logging.error === 1) {
 												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 												return logging.custom(...args.slice(0, -1));
 											} else {
@@ -103,9 +104,7 @@ export class NetHelpers {
 												return logging.custom(...args);
 											}
 										} else {
-											await Promise.all([import('strip-ansi'), import('chalk'), import('./index.mts')]).then(([{ default: stripAnsi }, { Chalk }, { Helpers }]) => {
-												const chalk = new Chalk({ level: 2 });
-
+											await Promise.all([import('strip-ansi'), import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([{ default: stripAnsi }, chalk, { Helpers }]) => {
 												// We faked level 1 as 2 to get headers for ray-id
 												if (logging.level === 1) {
 													console.info(
@@ -123,8 +122,39 @@ export class NetHelpers {
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
 													);
-												} else {
+												} else if (logging.error === 1) {
+													console.error(
+														'CF Rest',
+														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+														...args
+															.slice(0, -1)
+															// Convert date to ISO string
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
+															// Wrap id in brackets
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value))
+															// Strip out redundant parts of url
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
+													);
+												} else if (logging.level > 0) {
 													console.info(
+														'CF Rest',
+														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+														...args
+															// Convert date to ISO string
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
+															// Wrap id in brackets
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value))
+															// Strip out redundant parts of url
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
+													);
+												} else if (logging.error > 0) {
+													console.error(
 														'CF Rest',
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 														...args
@@ -144,10 +174,7 @@ export class NetHelpers {
 									},
 								}),
 							},
-						};
-
-						return this.loggingFetch(info, loggingFetchInit);
-					},
+						}),
 				}),
 		);
 	}
@@ -178,7 +205,7 @@ export class NetHelpers {
 	 * A utility function that wraps the native `fetch` API with enhanced capabilities.
 	 * This function allows for customizable logging of request and response details, including headers, body, and status, with support for colorized output and custom logging handlers.
 	 *
-	 * @template RI - The type of the `RequestInit` object, defaulting to `RequestInit`. Intended for cloudflare's `RequestInit` variation.
+	 * @template RI - The type of the `RequestInit` object, defaulting to `RequestInit`. Intended for Cloudflare's `RequestInit` variation.
 	 *
 	 * @param info - The input to the `fetch` function, which can be a `Request` object or a URL string.
 	 * @param init - An optional configuration object extending `RequestInit` with additional options.
@@ -190,8 +217,14 @@ export class NetHelpers {
 	 * - `level >= 2`: Logs request headers (with sensitive headers stripped).
 	 * - `level >= 3`: Logs request body (if available) and response body (if available).
 	 *
+	 * ### Error Logging Levels:
+	 * - `error >= 1`: Logs basic request details (timestamp, unique ID, method, and URL) only if an error occurs.
+	 * - `error >= 2`: Logs request headers (with sensitive headers stripped) only if an error occurs.
+	 * - `error >= 3`: Logs request body (if available) and response body (if available) only if an error occurs.
+	 *
 	 * ### Logging Options:
 	 * - `logging.level`: The verbosity level of logging (1, 2, or 3).
+	 * - `logging.error`: The verbosity level of error logging (1, 2, or 3).
 	 * - `logging.color`: A boolean indicating whether to use colorized output.
 	 * - `logging.custom`: An optional custom logging function to handle the log output.
 	 *
@@ -203,71 +236,176 @@ export class NetHelpers {
 	 * - Provides hooks for custom logging implementations.
 	 */
 	public static loggingFetch<RI extends RequestInit = RequestInit>(info: Parameters<typeof fetch>[0], init?: LoggingFetchInitType<RI>) {
-		return NetHelpers.loggingFetchInit()
-			.then((parser) => parser.passthrough().parseAsync(init))
-			.then((parsed) => parsed as unknown as RI & z.output<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>)
-			.then((init) =>
-				import('./crypto.mts')
-					.then(({ CryptoHelpers }) => CryptoHelpers.base62secret(8))
-					.then(async (id) => {
+		return Promise.all([
+			NetHelpers.loggingFetchInit()
+				.then((parser) => parser.passthrough().parseAsync(init))
+				.then((parsed) => parsed as unknown as RI & z.output<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>),
+			import('./crypto.mts').then(({ CryptoHelpers }) => CryptoHelpers.base62secret(8)),
+		]).then(async ([init, id]) => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const requestErrorItems: any[] = [new Date(), id, init?.method ?? Methods.GET, this.isRequestLike(info) ? info.url : info.toString()];
+
+			if (init.logging.level || init.logging.error) {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const requestLoggingItems: any[] = [new Date(), id, init?.method ?? Methods.GET, this.isRequestLike(info) ? info.url : info.toString()];
+
+				if (init.logging.level >= 2) {
+					requestLoggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) as Record<string, string>);
+				}
+				if (init.logging.error >= 2) {
+					requestErrorItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) as Record<string, string>);
+				}
+
+				if (init.logging.level >= 3 && init?.body) {
+					if (init.body instanceof ReadableStream) {
+						requestLoggingItems.push(Array.from(new Uint8Array(await new Response(init.body).arrayBuffer())));
+					} else if (new Headers(init.headers).get('Content-Type')?.toLowerCase().startsWith('application/json')) {
+						requestLoggingItems.push(JSON.parse(init.body as string));
+					} else {
+						requestLoggingItems.push(init.body);
+					}
+				}
+				if (init.logging.error >= 3 && init?.body) {
+					if (init.body instanceof ReadableStream) {
+						requestErrorItems.push(Array.from(new Uint8Array(await new Response(init.body).arrayBuffer())));
+					} else if (new Headers(init.headers).get('Content-Type')?.toLowerCase().startsWith('application/json')) {
+						requestErrorItems.push(JSON.parse(init.body as string));
+					} else {
+						requestErrorItems.push(init.body);
+					}
+				}
+
+				if ('color' in init.logging && init.logging.color) {
+					await Promise.allSettled([
+						Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
+							requestLoggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
+							requestErrorItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
+						}),
+						this.methodColors(requestLoggingItems[2] as Methods).then((color) => {
+							if (color) {
+								requestLoggingItems.splice(2, 1, color(requestLoggingItems[2]));
+							}
+						}),
+						this.methodColors(requestErrorItems[2] as Methods).then((color) => {
+							if (color) {
+								requestErrorItems.splice(2, 1, color(requestErrorItems[2]));
+							}
+						}),
+						// eslint-disable-next-line @typescript-eslint/no-empty-function
+					]).catch(() => {});
+				}
+
+				if (init.logging.level > 0 && 'custom' in init.logging && init.logging.custom) {
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+					await init.logging.custom(...requestLoggingItems);
+				} else if (init.logging.level > 0) {
+					console.info(
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+						...requestLoggingItems
+							// Convert date to ISO string
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+							.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
+							// Wrap id in brackets
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+							.map((value) => (typeof value === 'string' && value.includes(id) ? value.replace(id, `[${id}]`) : value)),
+					);
+				}
+			}
+
+			// eslint-disable-next-line @typescript-eslint/no-misused-promises
+			return new Promise<Awaited<ReturnType<typeof fetch>>>((resolve, reject) =>
+				fetch(info, init)
+					.then(async (response) => {
 						if (init.logging.level || init.logging.error) {
 							// eslint-disable-next-line @typescript-eslint/no-explicit-any
-							const loggingItems: any[] = [new Date(), id, init?.method ?? Methods.GET, this.isRequestLike(info) ? info.url : info.toString()];
-							const errorItems: any[] = [new Date(), id, init?.method ?? Methods.GET, this.isRequestLike(info) ? info.url : info.toString()];
+							const responseLoggingItems: any[] = [new Date(), id, response.status, response.url];
+							// eslint-disable-next-line @typescript-eslint/no-explicit-any
+							const responseErrorItems: any[] = [new Date(), id, response.status, response.url];
 
 							if (init.logging.level >= 2) {
-								loggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) as Record<string, string>);
+								responseLoggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()) as Record<string, string>);
 							}
 							if (init.logging.error >= 2) {
-								errorItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) as Record<string, string>);
+								responseErrorItems.push(Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()) as Record<string, string>);
 							}
 
 							if (init.logging.level >= 3 && init?.body) {
-								if (init.body instanceof ReadableStream) {
-									loggingItems.push(Array.from(new Uint8Array(await new Response(init.body).arrayBuffer())));
-								} else if (new Headers(init.headers).get('Content-Type')?.toLowerCase().startsWith('application/json')) {
-									loggingItems.push(JSON.parse(init.body as string));
+								const loggingClone = response.clone();
+
+								if (response.headers.get('Content-Type')?.toLowerCase().startsWith('application/json')) {
+									responseLoggingItems.push(await loggingClone.json());
 								} else {
-									loggingItems.push(init.body);
+									responseLoggingItems.push(await loggingClone.text());
 								}
+								/**
+								 * @todo @demosjarco detect if the body is a stream and convert it to an array
+								 */
 							}
 							if (init.logging.error >= 3 && init?.body) {
-								if (init.body instanceof ReadableStream) {
-									errorItems.push(Array.from(new Uint8Array(await new Response(init.body).arrayBuffer())));
-								} else if (new Headers(init.headers).get('Content-Type')?.toLowerCase().startsWith('application/json')) {
-									errorItems.push(JSON.parse(init.body as string));
+								const loggingClone = response.clone();
+
+								if (response.headers.get('Content-Type')?.toLowerCase().startsWith('application/json')) {
+									responseErrorItems.push(await loggingClone.json());
 								} else {
-									errorItems.push(init.body);
+									responseErrorItems.push(await loggingClone.text());
 								}
+								/**
+								 * @todo @demosjarco detect if the body is a stream and convert it to an array
+								 */
 							}
 
 							if ('color' in init.logging && init.logging.color) {
-								await Promise.all([
-									Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
-										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
-										errorItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
-									}),
-									this.methodColors(loggingItems[2] as Methods).then((color) => {
-										if (color) {
-											loggingItems.splice(2, 1, color(loggingItems[2]));
-										}
-									}),
-									this.methodColors(errorItems[2] as Methods).then((color) => {
-										if (color) {
-											errorItems.splice(2, 1, color(errorItems[2]));
-										}
-									}),
+								await Promise.all([import('chalk'), import('./index.mts')])
+									.then(([{ Chalk }, { Helpers }]) => {
+										const chalk = new Chalk({ level: 2 });
+
+										responseLoggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
+										responseLoggingItems.splice(2, 1, response.ok ? chalk.green(response.status) : chalk.red(response.status));
+
+										responseErrorItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
+										responseErrorItems.splice(2, 1, response.ok ? chalk.green(response.status) : chalk.red(response.status));
+									})
 									// eslint-disable-next-line @typescript-eslint/no-empty-function
-								]).catch(() => {});
+									.catch(() => {});
 							}
 
-							if ('custom' in init.logging && init.logging.custom) {
+							if (init.logging.level > 0 && 'custom' in init.logging && init.logging.custom) {
 								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-								await init.logging.custom(...loggingItems);
-							} else {
+								await init.logging.custom(...responseLoggingItems);
+							} else if (init.logging.error > 0 && !response.ok && 'custom' in init.logging && init.logging.custom) {
+								// Send request errors too (since we barely now know if error or not)
+								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+								await init.logging.custom(...requestErrorItems);
+
+								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+								await init.logging.custom(...responseErrorItems);
+							} else if (init.logging.level > 0) {
 								console.info(
 									// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-									...loggingItems
+									...responseLoggingItems
+										// Convert date to ISO string
+										// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+										.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
+										// Wrap id in brackets
+										// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+										.map((value) => (typeof value === 'string' && value.includes(id) ? value.replace(id, `[${id}]`) : value)),
+								);
+							} else if (init.logging.error > 0 && !response.ok) {
+								// Send request errors too (since we barely now know if error or not)
+								console.error(
+									// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+									...requestErrorItems
+										// Convert date to ISO string
+										// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+										.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
+										// Wrap id in brackets
+										// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+										.map((value) => (typeof value === 'string' && value.includes(id) ? value.replace(id, `[${id}]`) : value)),
+								);
+
+								console.error(
+									// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+									...responseErrorItems
 										// Convert date to ISO string
 										// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 										.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
@@ -278,70 +416,11 @@ export class NetHelpers {
 							}
 						}
 
-						return id;
+						resolve(response);
 					})
-					.then(
-						(id) =>
-							// eslint-disable-next-line @typescript-eslint/no-misused-promises
-							new Promise<Awaited<ReturnType<typeof fetch>>>((resolve, reject) =>
-								fetch(info, init)
-									.then(async (response) => {
-										if (init.logging.level) {
-											// eslint-disable-next-line @typescript-eslint/no-explicit-any
-											const loggingItems: any[] = [new Date(), id, response.status, response.url];
-
-											if (init.logging.level >= 2) {
-												loggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()) as Record<string, string>);
-											}
-
-											if (init.logging.level >= 3 && init?.body) {
-												const loggingClone = response.clone();
-
-												if (response.headers.get('Content-Type')?.toLowerCase().startsWith('application/json')) {
-													loggingItems.push(await loggingClone.json());
-												} else {
-													loggingItems.push(await loggingClone.text());
-												}
-												/**
-												 * @todo @demosjarco detect if the body is a stream and convert it to an array
-												 */
-											}
-
-											if ('color' in init.logging && init.logging.color) {
-												await Promise.all([import('chalk'), import('./index.mts')])
-													.then(([{ Chalk }, { Helpers }]) => {
-														const chalk = new Chalk({ level: 2 });
-
-														loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(id))(id));
-														loggingItems.splice(2, 1, response.ok ? chalk.green(response.status) : chalk.red(response.status));
-													})
-													// eslint-disable-next-line @typescript-eslint/no-empty-function
-													.catch(() => {});
-											}
-
-											if ('custom' in init.logging && init.logging.custom) {
-												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-												await init.logging.custom(...loggingItems);
-											} else {
-												console.info(
-													// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-													...loggingItems
-														// Convert date to ISO string
-														// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-														.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
-														// Wrap id in brackets
-														// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-														.map((value) => (typeof value === 'string' && value.includes(id) ? value.replace(id, `[${id}]`) : value)),
-												);
-											}
-										}
-
-										resolve(response);
-									})
-									.catch(reject),
-							),
-					),
+					.catch(reject),
 			);
+		});
 	}
 
 	/**

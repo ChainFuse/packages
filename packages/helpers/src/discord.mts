@@ -38,23 +38,17 @@ export class DiscordHelpers {
 	public static disordRestLogging() {
 		return import('zod').then(({ z }) =>
 			z
-				.union([
-					z.object({
-						level: z.literal(0),
-					}),
-					z.object({
-						level: z.coerce.number().int().min(1).max(4),
-						color: z.boolean().default(true),
-						custom: z
-							.function()
-							.args()
-							.returns(z.union([z.void(), z.promise(z.void())]))
-							.optional(),
-					}),
-				])
-				.default({
-					level: 0,
-				}),
+				.object({
+					level: z.coerce.number().int().min(0).max(4).default(0),
+					error: z.coerce.number().int().min(0).max(4).default(1),
+					color: z.boolean().default(true),
+					custom: z
+						.function()
+						.args()
+						.returns(z.union([z.void(), z.promise(z.void())]))
+						.optional(),
+				})
+				.default({}),
 		);
 	}
 	public static discordRest(apiKey: string, logging: z.input<Awaited<ReturnType<typeof DiscordHelpers.disordRestLogging>>>, cacheTtl = 24 * 60 * 60, forceCache = false, executionContext?: ExecutionContext, restOptions?: Partial<Omit<RESTOptions, 'agent' | 'authPrefix' | 'makeRequest'>>) {
