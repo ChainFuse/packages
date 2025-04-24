@@ -1,4 +1,5 @@
-import type { UndefinedProperties, UuidExport } from '@chainfuse/types';
+import type { UndefinedProperties } from '@chainfuse/types';
+import type { UuidExport } from '@chainfuse/types/d1';
 import { deepStrictEqual, ok, strictEqual } from 'node:assert/strict';
 import { timingSafeEqual } from 'node:crypto';
 import { describe, it } from 'node:test';
