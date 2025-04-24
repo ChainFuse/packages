@@ -83,9 +83,7 @@ export class DiscordHelpers {
 											// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 											return logging.custom(...args);
 										} else {
-											await Promise.all([import('strip-ansi'), import('chalk'), import('./index.mts')]).then(([{ default: stripAnsi }, { Chalk }, { Helpers }]) => {
-												const chalk = new Chalk({ level: 2 });
-
+											await Promise.all([import('strip-ansi'), import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([{ default: stripAnsi }, chalk, { Helpers }]) => {
 												console.info(
 													'Discord Rest',
 													// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -129,9 +127,7 @@ export class DiscordHelpers {
 													const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, 'CACHE-HIT', `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 													if ('color' in logging && logging.color) {
-														await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-															const chalk = new Chalk({ level: 2 });
-
+														await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 															loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 															loggingItems.splice(3, 1, chalk.green(loggingItems[3]));
 														});
@@ -171,9 +167,7 @@ export class DiscordHelpers {
 													const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, 'CACHE-MISS', `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 													if ('color' in logging && logging.color) {
-														await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-															const chalk = new Chalk({ level: 2 });
-
+														await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 															loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 															loggingItems.splice(3, 1, chalk.yellow(loggingItems[3]));
 														});
@@ -216,9 +210,7 @@ export class DiscordHelpers {
 																				const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, 'CACHE-PUT', `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 																				if ('color' in logging && logging.color) {
-																					await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-																						const chalk = new Chalk({ level: 2 });
-
+																					await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 																						loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 																						loggingItems.splice(3, 1, chalk.blue(loggingItems[3]));
 																					});
@@ -248,9 +240,7 @@ export class DiscordHelpers {
 																				const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, `CACHE-ERROR: ${error}`, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 																				if ('color' in logging && logging.color) {
-																					await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-																						const chalk = new Chalk({ level: 2 });
-
+																					await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 																						loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 																						loggingItems.splice(3, 1, chalk.red(loggingItems[3]));
 																					});
@@ -284,9 +274,7 @@ export class DiscordHelpers {
 																			const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, 'CACHE-PUT', `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 																			if ('color' in logging && logging.color) {
-																				await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-																					const chalk = new Chalk({ level: 2 });
-
+																				await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 																					loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 																					loggingItems.splice(3, 1, chalk.blue(loggingItems[3]));
 																				});
@@ -316,9 +304,7 @@ export class DiscordHelpers {
 																			const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, `CACHE-ERROR: ${error}`, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 																			if ('color' in logging && logging.color) {
-																				await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-																					const chalk = new Chalk({ level: 2 });
-
+																				await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 																					loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 																					loggingItems.splice(3, 1, chalk.red(loggingItems[3]));
 																				});
@@ -355,9 +341,7 @@ export class DiscordHelpers {
 																					const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, 'CACHE-PUT', `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 																					if ('color' in logging && logging.color) {
-																						await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-																							const chalk = new Chalk({ level: 2 });
-
+																						await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 																							loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 																							loggingItems.splice(3, 1, chalk.blue(loggingItems[3]));
 																						});
@@ -388,9 +372,7 @@ export class DiscordHelpers {
 																				const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, `CACHE-ERROR: ${error}`, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 																				if ('color' in logging && logging.color) {
-																					await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-																						const chalk = new Chalk({ level: 2 });
-
+																					await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 																						loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 																						loggingItems.splice(3, 1, chalk.red(loggingItems[3]));
 																					});
@@ -425,9 +407,7 @@ export class DiscordHelpers {
 																				const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, 'CACHE-PUT', `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 																				if ('color' in logging && logging.color) {
-																					await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-																						const chalk = new Chalk({ level: 2 });
-
+																					await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 																						loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 																						loggingItems.splice(3, 1, chalk.blue(loggingItems[3]));
 																					});
@@ -458,9 +438,7 @@ export class DiscordHelpers {
 																			const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, `CACHE-ERROR: ${error}`, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 																			if ('color' in logging && logging.color) {
-																				await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-																					const chalk = new Chalk({ level: 2 });
-
+																				await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 																					loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 																					loggingItems.splice(3, 1, chalk.red(loggingItems[3]));
 																				});
@@ -498,9 +476,7 @@ export class DiscordHelpers {
 												const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, `CACHE-ERROR: ${error}`, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 												if ('color' in logging && logging.color) {
-													await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-														const chalk = new Chalk({ level: 2 });
-
+													await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 														loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 														loggingItems.splice(3, 1, chalk.red(loggingItems[3]));
 													});
@@ -533,9 +509,7 @@ export class DiscordHelpers {
 										const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, `CACHE-ERROR: ${error}`, `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 										if ('color' in logging && logging.color) {
-											await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-												const chalk = new Chalk({ level: 2 });
-
+											await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 												loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 												loggingItems.splice(3, 1, chalk.red(loggingItems[3]));
 											});
@@ -567,9 +541,7 @@ export class DiscordHelpers {
 								const loggingItems: any[] = [new Date(), potentialId, cacheKey?.method ?? Methods.GET, 'CACHE-IGNORE', `${customUrl.pathname}${customUrl.search}${customUrl.hash}`];
 
 								if ('color' in logging && logging.color) {
-									await Promise.all([import('chalk'), import('./index.mts')]).then(([{ Chalk }, { Helpers }]) => {
-										const chalk = new Chalk({ level: 2 });
-
+									await Promise.all([import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([chalk, { Helpers }]) => {
 										loggingItems.splice(1, 1, chalk.rgb(...Helpers.uniqueIdColor(potentialId))(loggingItems[1]));
 										loggingItems.splice(3, 1, chalk.yellow(loggingItems[3]));
 									});
