@@ -73,8 +73,9 @@ export class DiscordHelpers {
 							logging: {
 								// discordRest has a different log level 2
 								level: logging.level >= 2 ? logging.level - 1 : logging.level,
+								error: logging.error >= 2 ? logging.error - 1 : logging.error,
 								...('color' in logging && { color: logging.color }),
-								...(logging.level > 0 && {
+								...((logging.level > 0 || logging.error > 0) && {
 									custom: async (...args: any[]) => {
 										const [, id, , url] = args as [Date, string, Methods | number, string, Record<string, string>];
 										const customUrl = new URL(url);
@@ -84,20 +85,37 @@ export class DiscordHelpers {
 											return logging.custom(...args);
 										} else {
 											await Promise.all([import('strip-ansi'), import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([{ default: stripAnsi }, chalk, { Helpers }]) => {
-												console.info(
-													'Discord Rest',
-													// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-													...args
-														// Convert date to ISO string
-														// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-														.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
-														// Wrap id in brackets
-														// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-														.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value))
-														// Strip out redundant parts of url
-														// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-														.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
-												);
+												if (logging.level > 0) {
+													console.info(
+														'Discord Rest',
+														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+														...args
+															// Convert date to ISO string
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
+															// Wrap id in brackets
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value))
+															// Strip out redundant parts of url
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
+													);
+												} else if (logging.error > 0) {
+													console.error(
+														'Discord Rest',
+														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+														...args
+															// Convert date to ISO string
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
+															// Wrap id in brackets
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value))
+															// Strip out redundant parts of url
+															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
+													);
+												}
 											});
 										}
 									},
