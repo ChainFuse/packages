@@ -433,7 +433,28 @@ export class NetHelpers {
 		const mutableHeaders = new Headers(originalHeaders);
 
 		mutableHeaders.delete('Set-Cookie');
-		mutableHeaders.delete('Authorization');
+		if (mutableHeaders.has('Authorization')) {
+			const split = mutableHeaders.get('Authorization')!.split(' ');
+
+			if (split.length > 1) {
+				const [scheme, ...parameters] = split;
+				const maskedValue = parameters.join(' ').replaceAll(/./g, '*');
+				mutableHeaders.set('Authorization', `${scheme} ${maskedValue}`);
+			} else {
+				mutableHeaders.delete('Authorization');
+			}
+		}
+		if (mutableHeaders.has('cf-aig-authorization')) {
+			const split = mutableHeaders.get('cf-aig-authorization')!.split(' ');
+
+			if (split.length > 1) {
+				const [scheme, ...parameters] = split;
+				const maskedValue = parameters.join(' ').replaceAll(/./g, '*');
+				mutableHeaders.set('cf-aig-authorization', `${scheme} ${maskedValue}`);
+			} else {
+				mutableHeaders.delete('cf-aig-authorization');
+			}
+		}
 
 		return mutableHeaders;
 	}
