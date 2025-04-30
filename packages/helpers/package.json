@@ -48,7 +48,7 @@
 	},
 	"prettier": "@demosjarco/prettier-config",
 	"dependencies": {
-		"@discordjs/rest": "^2.4.3",
+		"@discordjs/rest": "^2.5.0",
 		"chalk": "^5.4.1",
 		"cloudflare": "^4.2.0",
 		"strip-ansi": "^7.1.0",
