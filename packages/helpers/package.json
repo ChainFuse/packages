@@ -53,7 +53,7 @@
 		"cloudflare": "^4.2.0",
 		"strip-ansi": "^7.1.0",
 		"uuid": "^11.1.0",
-		"zod": "^3.24.3"
+		"zod": "^3.24.4"
 	},
 	"devDependencies": {
 		"@chainfuse/types": "^2.10.5",
