@@ -1,5 +1,23 @@
 # @chainfuse/helpers
 
+## 3.2.1
+
+### Patch Changes
+
+- [#407](https://github.com/ChainFuse/packages/pull/407) [`d13b011`](https://github.com/ChainFuse/packages/commit/d13b011d6d952d8a51cdf61e0fe415974c3dc683) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump changesets/action
+
+- [#406](https://github.com/ChainFuse/packages/pull/406) [`5c8084d`](https://github.com/ChainFuse/packages/commit/5c8084d1a70d25bf4499f7d3c4d15cb8f00ccbbd) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
+- [#413](https://github.com/ChainFuse/packages/pull/413) [`4bbd7b2`](https://github.com/ChainFuse/packages/commit/4bbd7b2a60ec8a99dd66878c560d9fbee0681fce) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/google, ai, openai
+
+- [#412](https://github.com/ChainFuse/packages/pull/412) [`17f90d5`](https://github.com/ChainFuse/packages/commit/17f90d56f9aed30e92383b96d15a78390c743569) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+- [#409](https://github.com/ChainFuse/packages/pull/409) [`c3dabfa`](https://github.com/ChainFuse/packages/commit/c3dabfa5d48165e115e1b008492f2f7f35bed8dc) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
+
+- [#411](https://github.com/ChainFuse/packages/pull/411) [`229c2b2`](https://github.com/ChainFuse/packages/commit/229c2b2f9b153aa03ddaeb2a0ed2975400e526f6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#410](https://github.com/ChainFuse/packages/pull/410) [`e57dfff`](https://github.com/ChainFuse/packages/commit/e57dfffd817b6637e0c69ec32f241125d88b6355) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
 ## 3.2.0
 
 ### Minor Changes
