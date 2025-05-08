@@ -1,5 +1,13 @@
 # @chainfuse/helpers
 
+## 3.2.2
+
+### Patch Changes
+
+- [#416](https://github.com/ChainFuse/packages/pull/416) [`dbbc10c`](https://github.com/ChainFuse/packages/commit/dbbc10ced43cccf4ca685367688bfe86595c0505) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai
+
+- [#417](https://github.com/ChainFuse/packages/pull/417) [`76ce800`](https://github.com/ChainFuse/packages/commit/76ce800dfc30f066890e48fc353523317d81609f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+
 ## 3.2.1
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @chainfuse/types
 
+## 2.10.7
+
+### Patch Changes
+
+- [#416](https://github.com/ChainFuse/packages/pull/416) [`dbbc10c`](https://github.com/ChainFuse/packages/commit/dbbc10ced43cccf4ca685367688bfe86595c0505) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai
+
+- [#417](https://github.com/ChainFuse/packages/pull/417) [`76ce800`](https://github.com/ChainFuse/packages/commit/76ce800dfc30f066890e48fc353523317d81609f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node
+
+- [`04720f5`](https://github.com/ChainFuse/packages/commit/04720f5964c5558fea0eb4f534e3a1bc4ec4c240) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Fix correct types and zod enums for ai models
+
 ## 2.10.6
 
 ### Patch Changes
