@@ -1,5 +1,23 @@
 # @chainfuse/types
 
+## 2.10.8
+
+### Patch Changes
+
+- [#422](https://github.com/ChainFuse/packages/pull/422) [`a1d32c5`](https://github.com/ChainFuse/packages/commit/a1d32c5d519610944b14a872b6e322d5e145a6ae) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump changesets/action
+
+- [#421](https://github.com/ChainFuse/packages/pull/421) [`7865449`](https://github.com/ChainFuse/packages/commit/786544913fdbd7661d6203a7ae9c33693dd0f64a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump dependabot/fetch-metadata
+
+- [#420](https://github.com/ChainFuse/packages/pull/420) [`da9278d`](https://github.com/ChainFuse/packages/commit/da9278d878dea24a7b456d4524f4976d568f6acc) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump actions/dependency-review-action
+
+- [#419](https://github.com/ChainFuse/packages/pull/419) [`c67ea5f`](https://github.com/ChainFuse/packages/commit/c67ea5ffbc60d31ff07f1f7641a70904e1b7672d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/google, workers-ai-provider, openai
+
+- [#424](https://github.com/ChainFuse/packages/pull/424) [`0a46b22`](https://github.com/ChainFuse/packages/commit/0a46b22d33b758099c6e52bc9bc94a1bed19d81c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump typescript-eslint
+
+- [#425](https://github.com/ChainFuse/packages/pull/425) [`8528796`](https://github.com/ChainFuse/packages/commit/8528796d85c3633c2aed914ffb0100ae2df57950) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
+
+- [#423](https://github.com/ChainFuse/packages/pull/423) [`2857e89`](https://github.com/ChainFuse/packages/commit/2857e89eb48a4d1e1fd3aaa6a3a31fbedbc36ee1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 2.10.7
 
 ### Patch Changes
