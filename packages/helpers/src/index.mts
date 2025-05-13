@@ -1,11 +1,25 @@
-import type { WorkerVersionMetadata } from '@cloudflare/workers-types/experimental';
+import type { PlatformCloudflarePages } from '@builder.io/qwik-city/middleware/cloudflare-pages';
+import type { Request as CfRequest, ExecutionContext, WorkerVersionMetadata } from '@cloudflare/workers-types/experimental';
 import type { Chalk } from 'chalk';
+import type { PlatformProxy } from 'wrangler';
 
 export * from './buffers.mjs';
 export * from './crypto.mjs';
 export * from './discord.mjs';
 export * from './dns.mjs';
 export * from './net.mjs';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface QwikCityPlatformLive<E extends Record<string, any> = Record<string, any>> extends Omit<PlatformCloudflarePages, 'request'> {
+	request: CfRequest;
+	env: E;
+	ctx: ExecutionContext;
+	cf: never;
+}
+interface QwikCityPlatformLocal<E extends Record<string, any> = Record<string, any>> extends PlatformProxy<E> {
+	request?: never;
+}
+type QwikCityPlatform = QwikCityPlatformLive | QwikCityPlatformLocal;
 
 export class Helpers {
 	/**
@@ -86,7 +100,24 @@ export class Helpers {
 		return true;
 	}
 
-	public static isLocal(metadata: WorkerVersionMetadata): boolean {
-		return !('timestamp' in metadata);
+	private static isWorkerVersionMetadata(metadata: WorkerVersionMetadata | QwikCityPlatform): metadata is WorkerVersionMetadata {
+		return 'id' in metadata;
+	}
+
+	/**
+	 * Determines if the provided object is running local based on its type and properties.
+	 *
+	 * For `WorkerVersionMetadata`, it checks if the `timestamp` property is absent.
+	 * For `QwikCityPlatform`, it checks if the `request` property is absent.
+	 *
+	 * @param metadataOrPlatform - The object to evaluate, which can be either `WorkerVersionMetadata` or `QwikCityPlatform`.
+	 * @returns `true` if the running local, otherwise `false`.
+	 */
+	public static isLocal(metadataOrPlatform: WorkerVersionMetadata | QwikCityPlatform) {
+		if (this.isWorkerVersionMetadata(metadataOrPlatform)) {
+			return !('timestamp' in metadataOrPlatform);
+		} else {
+			return !('request' in metadataOrPlatform);
+		}
 	}
 }
