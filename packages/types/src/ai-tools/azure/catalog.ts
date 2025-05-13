@@ -10,6 +10,11 @@ export const azureCatalog = [
 				name: 'gpt-4-turbo',
 			},
 			{
+				name: 'gpt-4o',
+				inputTokenCost: 0.0000025,
+				outputTokenCost: 0.00001,
+			},
+			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
