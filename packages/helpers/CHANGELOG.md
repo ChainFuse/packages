@@ -1,5 +1,17 @@
 # @chainfuse/helpers
 
+## 3.2.4
+
+### Patch Changes
+
+- [#430](https://github.com/ChainFuse/packages/pull/430) [`07a43ab`](https://github.com/ChainFuse/packages/commit/07a43abfef4a9de33add5bb740379d914050dff5) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump actions/dependency-review-action
+
+- [#434](https://github.com/ChainFuse/packages/pull/434) [`2c16814`](https://github.com/ChainFuse/packages/commit/2c1681466c4872102eb04b54ddd1d01b8fc5c4b1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @azure/identity, workers-ai-provider
+
+- [#433](https://github.com/ChainFuse/packages/pull/433) [`5354679`](https://github.com/ChainFuse/packages/commit/53546793d55db39a568283f762199cf89c8e2f73) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump wrangler
+
+- [#432](https://github.com/ChainFuse/packages/pull/432) [`4ff1e4f`](https://github.com/ChainFuse/packages/commit/4ff1e4fbbcd4d3453c8b5521d089e12cbbcd4d3d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 3.2.3
 
 ### Patch Changes
