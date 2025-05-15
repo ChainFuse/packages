@@ -2,14 +2,30 @@ import { z } from 'zod';
 
 export type D0Blob = [number, ...number[]];
 
+const PrefixedUuidRaw = z
+	.string()
+	.trim()
+	.min(38)
+	.max(40)
+	.toLowerCase()
+	.regex(new RegExp(/^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i));
+
+export const PrefixedUuid = PrefixedUuidRaw.transform((value) => {
+	let type: 'dataspace' | 'tenant' | 'user';
+	if (value.startsWith('d_')) {
+		type = 'dataspace';
+	} else if (value.startsWith('t_')) {
+		type = 'tenant';
+	} else if (value.startsWith('u_')) {
+		type = 'user';
+	} else {
+		throw new Error('Invalid UUID prefix');
+	}
+
+	return { type, value, preview: value.endsWith('_p') };
+});
 export const ZodUuid = z.union([
-	// PrefixedUuid
-	z
-		.string()
-		.trim()
-		.min(38)
-		.max(40)
-		.regex(new RegExp(/^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i)),
+	PrefixedUuidRaw,
 	// utf=8
 	z
 		.string()
