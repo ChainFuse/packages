@@ -525,30 +525,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '41975cc2-c82e-4e98-b7b8-88ffb186a545',
-					source: 1,
-					name: '@cf/meta/llama-3.1-8b-instruct',
-					description: 'The Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models. The Llama 3.1 instruction tuned text only models are optimized for multilingual dialogue use cases and outperform many of the available open source and closed chat models on common industry benchmarks.',
-					created_at: '2024-07-18 22:53:33.746',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.28,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.83,
-								currency: 'USD',
-							},
-						],
-						context_window: 7968,
-						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
-					},
-				},
-				{
 					id: '3dcb4f2d-26a8-412b-b6e3-2a368beff66b',
 					source: 1,
 					name: '@cf/meta/llama-3.1-8b-instruct-awq',
