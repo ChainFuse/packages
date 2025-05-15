@@ -5,9 +5,9 @@ export type D0Blob = [number, ...number[]];
 const PrefixedUuidRaw = z
 	.string()
 	.trim()
+	.toLowerCase()
 	.min(38)
 	.max(40)
-	.toLowerCase()
 	.regex(new RegExp(/^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i));
 
 export const PrefixedUuid = PrefixedUuidRaw.transform((value) => {
@@ -30,14 +30,16 @@ export const ZodUuid = z.union([
 	z
 		.string()
 		.trim()
+		.toLowerCase()
 		.uuid()
 		.refine((value) => import('validator/es/lib/isUUID').then(({ default: isUUID }) => isUUID(value, 7)).catch(() => import('validator').then(({ default: validator }) => validator.isUUID(value, 7)))),
 	// hex
 	z
 		.string()
 		.trim()
+		.toLowerCase()
 		.length(32)
 		.refine((value) => import('validator/es/lib/isHexadecimal').then(({ default: isHexadecimal }) => isHexadecimal(value)).catch(() => import('validator').then(({ default: validator }) => validator.isHexadecimal(value)))),
-	z.string().trim().nonempty().base64(),
-	z.string().trim().nonempty().base64url(),
+	z.string().trim().nonempty().toLowerCase().base64(),
+	z.string().trim().nonempty().toLowerCase().base64url(),
 ]);
