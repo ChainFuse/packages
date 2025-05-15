@@ -61,7 +61,7 @@
 		"workers-ai-provider": "^0.4.0"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20250513.0",
+		"@cloudflare/workers-types": "^4.20250515.0",
 		"openai": "^4.98.0"
 	}
 }

@@ -58,8 +58,8 @@
 	"devDependencies": {
 		"@builder.io/qwik-city": "^1.13.0",
 		"@chainfuse/types": "^2.10.8",
-		"@cloudflare/workers-types": "^4.20250513.0",
-		"@types/node": "^22.15.17",
+		"@cloudflare/workers-types": "^4.20250515.0",
+		"@types/node": "^22.15.18",
 		"wrangler": "^4.15.0"
 	}
 }
