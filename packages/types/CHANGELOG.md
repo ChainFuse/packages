@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.10.10
+
+### Patch Changes
+
+- [`f6fafff`](https://github.com/ChainFuse/packages/commit/f6faffffa205d9f50e4090bd4fd1cdd7cfaa461b) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Make sure all zod uuid to be lowercase
+
 ## 2.10.9
 
 ### Patch Changes
