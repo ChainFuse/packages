@@ -334,21 +334,18 @@ export class AiRawProviders extends AiBase {
 
 	public custom(args: AiRequestConfig) {
 		if (this.config.providers.custom?.url) {
-			return import('zod')
+			return import('zod/v4')
 				.then(({ z }) =>
 					// Verify that the custom provider url is a valid URL
 					z
-						.string()
-						.trim()
 						.url()
+						.trim()
 						.transform((url) => new URL(url))
 						.parseAsync(this.config.providers.custom!.url)
 						.then((customProviderUrl) =>
 							// Verify that the custom provider url is not an IP address
 							z
-								.string()
-								.trim()
-								.ip()
+								.union([z.ipv4().trim(), z.ipv6().trim()])
 								.safeParseAsync(customProviderUrl.hostname)
 								.then(({ success }) => ({ customProviderUrl, success })),
 						),
