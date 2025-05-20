@@ -26,7 +26,14 @@ jobs:
         with:
           disable-sudo-and-containers: true
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+      - uses: actions/create-github-app-token@df432ceedc7162793a195dd1713ff69aefc7379e # v2.0.6
+        id: gh_cloudflare_token
+        with:
+          app-id: ${{ vars.GH_CLOUDFLARE_CLIENT_ID }}
+          private-key: ${{ secrets.GH_CLOUDFLARE_PRIVATE_KEY }}
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          token: ${{ steps.gh_cloudflare_token.outputs.token }}
       - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
@@ -137,8 +144,8 @@ jobs:
       - run: npx prettier --write packages/types/src/ai-tools/workers-ai/catalog.ts
       - name: Git Setup
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]"
+          git config user.email "${{ vars.GH_CLOUDFLARE_USER_ID }}+${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]@users.noreply.github.com"
       - run: git add packages/types/src/ai-tools/workers-ai/catalog.ts
       - run: git commit -m "Updated workers-ai model catalog" || echo "model catalog not touched"
       - run: git push
