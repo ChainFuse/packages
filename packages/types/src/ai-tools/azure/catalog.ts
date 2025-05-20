@@ -447,6 +447,7 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
