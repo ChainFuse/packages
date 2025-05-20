@@ -1,5 +1,27 @@
 # @chainfuse/types
 
+## 2.10.10
+
+### Patch Changes
+
+- [#439](https://github.com/ChainFuse/packages/pull/439) [`e0cb008`](https://github.com/ChainFuse/packages/commit/e0cb008b6221923c68ed7ba956093de9a19d5c18) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump changesets/action
+
+- [#438](https://github.com/ChainFuse/packages/pull/438) [`1586a98`](https://github.com/ChainFuse/packages/commit/1586a98db03d5c5b98842ae87f16ea012e14d811) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump github/codeql-action
+
+- [#437](https://github.com/ChainFuse/packages/pull/437) [`9ec6b62`](https://github.com/ChainFuse/packages/commit/9ec6b6229aef7a0b10ee04bc097189aac5340c23) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump ai, workers-ai-provider, openai
+
+- [#440](https://github.com/ChainFuse/packages/pull/440) [`0932744`](https://github.com/ChainFuse/packages/commit/0932744c8eb442c1a5bd4af9ae3ad96c0240f352) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump wrangler
+
+- [#442](https://github.com/ChainFuse/packages/pull/442) [`849697b`](https://github.com/ChainFuse/packages/commit/849697be6bfa232f7dc77ac85d69cb1070fe0e88) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint
+
+- [#441](https://github.com/ChainFuse/packages/pull/441) [`f16aec8`](https://github.com/ChainFuse/packages/commit/f16aec81e34c0348b775736a27d53bb17b57b95d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#443](https://github.com/ChainFuse/packages/pull/443) [`738c38d`](https://github.com/ChainFuse/packages/commit/738c38dbbf26bc04cd84686486e19ceba8409198) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump zod
+
+- [`f6fafff`](https://github.com/ChainFuse/packages/commit/f6faffffa205d9f50e4090bd4fd1cdd7cfaa461b) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Make sure all zod uuid to be lowercase
+
+- [`a4dc9ae`](https://github.com/ChainFuse/packages/commit/a4dc9aea3e44cc782ae5234259fab653456236db) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Update zod to 4
+
 ## 2.10.9
 
 ### Patch Changes
