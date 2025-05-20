@@ -4,7 +4,7 @@ import { AiModels } from '@chainfuse/types/ai-tools';
 import { enabledCloudflareLlmProviders, type cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
 import { customProvider, TypeValidationError, wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
 import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
-import { ZodError } from 'zod';
+import { ZodError } from 'zod/v3';
 import { AiBase } from '../base.mjs';
 import type { AiConfigWorkersai, AiConfigWorkersaiRest, AiRequestConfig } from '../types.mjs';
 import { AiRawProviders } from './rawProviders.mjs';

@@ -4,7 +4,7 @@ import { generateObject, generateText, Output, streamObject, streamText, tool } 
 import { doesNotReject, strictEqual } from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import test, { before, beforeEach, describe, it } from 'node:test';
-import { z } from 'zod';
+import { z } from 'zod/v3';
 import { AiModel, type AiConfig, type AiConfigOaiOpenai, type AiRequestConfig, type AiStreamChunkType } from '../dist/index.mjs';
 
 const { GH_RUNNER_ID } = process.env;
