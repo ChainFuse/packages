@@ -852,7 +852,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-						info: 'https://huggingface.co/BAAI/bge-base-en-v1.5',
+						info: 'https://huggingface.co/BAAI/bge-small-en-v1.5',
 						max_input_tokens: 512,
 						output_dimensions: 384,
 					},
