@@ -1,6 +1,6 @@
 import type { ExecutionContext } from '@cloudflare/workers-types/experimental';
 import { CDN, type RESTOptions } from '@discordjs/rest';
-import type { z } from 'zod';
+import type { z } from 'zod/v3';
 import type { Methods } from './net.mjs';
 
 export class DiscordHelpers {
