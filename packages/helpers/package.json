@@ -56,10 +56,10 @@
 		"zod": "^3.25.7"
 	},
 	"devDependencies": {
-		"@builder.io/qwik-city": "^1.13.0",
+		"@builder.io/qwik-city": "^1.14.1",
 		"@chainfuse/types": "^2.10.11",
-		"@cloudflare/workers-types": "^4.20250520.0",
-		"@types/node": "^22.15.19",
+		"@cloudflare/workers-types": "^4.20250521.0",
+		"@types/node": "^22.15.21",
 		"wrangler": "^4.16.0"
 	}
 }
