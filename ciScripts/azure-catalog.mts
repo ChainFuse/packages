@@ -233,7 +233,7 @@ summary.addTable(
 			.map((server) => ({
 				server: server.id ?? 'N/A',
 				languageModels: server.languageModelAvailability.map((model) => model.name).join(', '),
-				imageModels: server.imageModelAvailability.join(', '),
+				imageModels: server.imageModelAvailability.map((model) => model.name).join(', '),
 				textEmbeddingModels: server.languageModelAvailability.map((model) => model.name).join(', '),
 			}))
 			.sort((a, b) => a.server.toLowerCase().localeCompare(b.server.toLowerCase())),
