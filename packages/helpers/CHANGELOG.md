@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 3.2.6
+
+### Patch Changes
+
+- [`ff89407`](https://github.com/ChainFuse/packages/commit/ff8940775dfc06d91ed4cbb9b7236b69748bb643) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Force import from v3
+
 ## 3.2.5
 
 ### Patch Changes
