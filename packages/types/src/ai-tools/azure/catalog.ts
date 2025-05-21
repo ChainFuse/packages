@@ -7,21 +7,30 @@ export const azureCatalog = [
 		},
 		languageModelAvailability: [
 			{
-				name: 'gpt-4-turbo',
-			},
-			{
-				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
-			},
-			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
 			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.000015,
+				outputTokenCost: 0.00005999999999999999,
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
 		],
-		imageModelAvailability: [],
-		textEmbeddingModelAvailability: [],
+		imageModelAvailability: ['gpt-image-1'],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
+			},
+		],
 	},
 	{
 		id: 'OpenAi-AU-NewSouthWales',
@@ -32,24 +41,22 @@ export const azureCatalog = [
 		privacyRegion: 'APPs',
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
-				outputTokenCost: 0.0000015,
-			},
-			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
 			},
 		],
 		imageModelAvailability: ['dall-e-3'],
@@ -73,11 +80,6 @@ export const azureCatalog = [
 		privacyRegion: 'LGPD',
 		languageModelAvailability: [
 			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
-			},
-			{
 				name: 'gpt-4o',
 				inputTokenCost: 0.0000025,
 				outputTokenCost: 0.00001,
@@ -87,9 +89,26 @@ export const azureCatalog = [
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
 			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.000015,
+				outputTokenCost: 0.00005999999999999999,
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
+			},
+		],
 	},
 	{
 		id: 'OpenAI-CA-Quebec',
@@ -100,24 +119,27 @@ export const azureCatalog = [
 		privacyRegion: 'PIPEDA',
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
-				outputTokenCost: 0.0000015,
-			},
-			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.000015,
+				outputTokenCost: 0.00005999999999999999,
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
 			},
 		],
 		imageModelAvailability: [],
@@ -163,22 +185,27 @@ export const azureCatalog = [
 		privacyRegion: 'revFADP',
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-			},
-			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.000015,
+				outputTokenCost: 0.00005999999999999999,
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
 			},
 		],
 		imageModelAvailability: [],
@@ -202,21 +229,47 @@ export const azureCatalog = [
 		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
-				name: 'gpt-4-turbo',
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
+				inputTokenCost: 0.00000275,
+				outputTokenCost: 0.000011,
 			},
 			{
 				name: 'gpt-4o-mini',
-				inputTokenCost: 1.5e-7,
-				outputTokenCost: 6e-7,
+				inputTokenCost: 1.65e-7,
+				outputTokenCost: 6.6e-7,
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
+			},
+		],
 	},
 	{
 		id: 'OpenAi-EU-Gavle',
@@ -227,19 +280,20 @@ export const azureCatalog = [
 		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-				inputTokenCost: 0.000001,
-				outputTokenCost: 0.000002,
+				name: 'gpt-4.1',
 			},
 			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1-mini',
+				inputTokenCost: 4e-7,
+				outputTokenCost: 0.0000016,
+			},
+			{
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
+				inputTokenCost: 0.00000275,
+				outputTokenCost: 0.000011,
 			},
 			{
 				name: 'gpt-4o-mini',
@@ -248,13 +302,24 @@ export const azureCatalog = [
 			},
 			{
 				name: 'o1',
-				inputTokenCost: 0.000015,
-				outputTokenCost: 0.00005999999999999999,
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o1-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
-				inputTokenCost: 0.0000011,
-				outputTokenCost: 0.0000044,
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: ['dall-e-3'],
@@ -262,6 +327,10 @@ export const azureCatalog = [
 			{
 				name: 'text-embedding-3-large',
 				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
 			},
 		],
 	},
@@ -274,18 +343,91 @@ export const azureCatalog = [
 		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
+				inputTokenCost: 0.00000275,
+				outputTokenCost: 0.000011,
+			},
+			{
+				name: 'gpt-4o-mini',
+				inputTokenCost: 1.65e-7,
+				outputTokenCost: 6.6e-7,
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
+	},
+	{
+		id: 'OpenAi-EU-Milan',
+		coordinate: {
+			lat: '45.46888',
+			lon: '9.18109',
+		},
+		privacyRegion: 'GDPR',
+		languageModelAvailability: [
+			{
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-nano',
+			},
+			{
+				name: 'gpt-4o',
+			},
+			{
+				name: 'gpt-4o-mini',
+			},
+			{
+				name: 'o1',
+			},
+			{
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
+			},
+			{
+				name: 'o4-mini',
+			},
+		],
+		imageModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
+			},
+		],
 	},
 	{
 		id: 'OpenAi-EU-Netherlands',
@@ -296,23 +438,45 @@ export const azureCatalog = [
 		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
+				inputTokenCost: 0.00000275,
+				outputTokenCost: 0.000011,
 			},
 			{
 				name: 'gpt-4o-mini',
-				inputTokenCost: 1.5e-7,
-				outputTokenCost: 6e-7,
+				inputTokenCost: 1.65e-7,
+				outputTokenCost: 6.6e-7,
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-EU-Paris',
@@ -323,24 +487,34 @@ export const azureCatalog = [
 		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-				inputTokenCost: 0.000001,
-				outputTokenCost: 0.000002,
+				name: 'gpt-4.1',
 			},
 			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
-				inputTokenCost: 1.5e-7,
-				outputTokenCost: 6e-7,
+				inputTokenCost: 1.65e-7,
+				outputTokenCost: 6.6e-7,
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
@@ -348,6 +522,10 @@ export const azureCatalog = [
 			{
 				name: 'text-embedding-3-large',
 				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
 			},
 		],
 	},
@@ -360,23 +538,45 @@ export const azureCatalog = [
 		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
-				name: 'gpt-4-turbo',
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
+				inputTokenCost: 0.00000275,
+				outputTokenCost: 0.000011,
 			},
 			{
 				name: 'gpt-4o-mini',
-				inputTokenCost: 1.5e-7,
-				outputTokenCost: 6e-7,
+				inputTokenCost: 1.65e-7,
+				outputTokenCost: 6.6e-7,
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
 			},
 		],
 	},
@@ -389,28 +589,31 @@ export const azureCatalog = [
 		privacyRegion: 'PDP',
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-			},
-			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
-			},
-			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
 			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.000015,
+				outputTokenCost: 0.00005999999999999999,
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
 		],
 		imageModelAvailability: [],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
 			},
 		],
 	},
@@ -423,30 +626,34 @@ export const azureCatalog = [
 		privacyRegion: 'APPI',
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
-				outputTokenCost: 0.0000015,
-			},
-			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
 			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.000015,
+				outputTokenCost: 0.00005999999999999999,
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
 		],
 		imageModelAvailability: [],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
@@ -463,7 +670,9 @@ export const azureCatalog = [
 		privacyRegion: 'PIPA',
 		languageModelAvailability: [
 			{
-				name: 'gpt-4-turbo',
+				name: 'gpt-4.1',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
@@ -475,9 +684,26 @@ export const azureCatalog = [
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
 			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.000015,
+				outputTokenCost: 0.00005999999999999999,
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
+			},
+		],
 	},
 	{
 		id: 'OpenAi-NO-Oslo',
@@ -488,19 +714,22 @@ export const azureCatalog = [
 		privacyRegion: 'NPDA',
 		languageModelAvailability: [
 			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
-			},
-			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.000015,
+				outputTokenCost: 0.00005999999999999999,
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
 			},
 		],
 		imageModelAvailability: [],
@@ -508,6 +737,10 @@ export const azureCatalog = [
 			{
 				name: 'text-embedding-3-large',
 				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
 			},
 		],
 	},
@@ -517,9 +750,20 @@ export const azureCatalog = [
 			lat: '1.283',
 			lon: '103.833',
 		},
-		languageModelAvailability: [],
+		languageModelAvailability: [
+			{
+				name: 'gpt-4.1-nano',
+			},
+			{
+				name: 'o4-mini',
+			},
+		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+		],
 	},
 	{
 		id: 'OpenAi-UK-London',
@@ -530,24 +774,27 @@ export const azureCatalog = [
 		privacyRegion: 'UK-GDPR',
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
-				outputTokenCost: 0.0000015,
-			},
-			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.000015,
+				outputTokenCost: 0.00005999999999999999,
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
 			},
 		],
 		imageModelAvailability: [],
@@ -555,6 +802,10 @@ export const azureCatalog = [
 			{
 				name: 'text-embedding-3-large',
 				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
 			},
 		],
 	},
@@ -566,26 +817,56 @@ export const azureCatalog = [
 		},
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
+				name: 'gpt-4.1',
 			},
 			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
+				inputTokenCost: 0.00000275,
+				outputTokenCost: 0.000011,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.65e-7,
 				outputTokenCost: 6.6e-7,
 			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o1-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
+			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-US-Illinois',
@@ -595,28 +876,55 @@ export const azureCatalog = [
 		},
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
-				outputTokenCost: 0.0000015,
+				name: 'gpt-4.1',
 			},
 			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.65e-7,
 				outputTokenCost: 6.6e-7,
 			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o1-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
+			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-US-Phoenix',
@@ -626,26 +934,53 @@ export const azureCatalog = [
 		},
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
+				name: 'gpt-4.1',
 			},
 			{
-				name: 'gpt-4-turbo',
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
+				inputTokenCost: 0.00000275,
+				outputTokenCost: 0.000011,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.65e-7,
 				outputTokenCost: 6.6e-7,
 			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o1-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
+			},
 		],
-		imageModelAvailability: [],
+		imageModelAvailability: ['gpt-image-1'],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
 			},
 		],
 	},
@@ -657,28 +992,57 @@ export const azureCatalog = [
 		},
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
-				outputTokenCost: 0.0000015,
+				name: 'gpt-4.1',
 			},
 			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
+				inputTokenCost: 0.00000275,
+				outputTokenCost: 0.000011,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.65e-7,
 				outputTokenCost: 6.6e-7,
 			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o1-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
+			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
 	},
 	{
 		id: 'OpenAi-US-Virginia',
@@ -688,24 +1052,42 @@ export const azureCatalog = [
 		},
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
-				outputTokenCost: 0.0000015,
+				name: 'gpt-4.1',
 			},
 			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00001,
-				outputTokenCost: 0.00003,
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.65e-7,
 				outputTokenCost: 6.6e-7,
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o1-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: ['dall-e-3'],
@@ -728,19 +1110,16 @@ export const azureCatalog = [
 		},
 		languageModelAvailability: [
 			{
-				name: 'gpt-35-turbo',
-				inputTokenCost: 5e-7,
-				outputTokenCost: 0.0000015,
+				name: 'gpt-4.1',
 			},
 			{
-				name: 'gpt-4-turbo',
-				inputTokenCost: 0.00000275,
-				outputTokenCost: 0.000011,
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
@@ -749,13 +1128,24 @@ export const azureCatalog = [
 			},
 			{
 				name: 'o1',
-				inputTokenCost: 0.000015,
-				outputTokenCost: 0.00005999999999999999,
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o1-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
-				inputTokenCost: 0.0000011,
-				outputTokenCost: 0.0000044,
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
@@ -779,9 +1169,6 @@ export const azureCatalog = [
 		privacyRegion: 'PoPIA',
 		languageModelAvailability: [
 			{
-				name: 'gpt-4-turbo',
-			},
-			{
 				name: 'gpt-4o',
 				inputTokenCost: 0.0000025,
 				outputTokenCost: 0.00001,
@@ -791,8 +1178,25 @@ export const azureCatalog = [
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
 			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.000015,
+				outputTokenCost: 0.00005999999999999999,
+			},
+			{
+				name: 'o3-mini',
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
+			},
 		],
 		imageModelAvailability: [],
-		textEmbeddingModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+			},
+			{
+				name: 'text-embedding-3-small',
+			},
+		],
 	},
 ] as const;
