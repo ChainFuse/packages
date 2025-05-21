@@ -232,11 +232,13 @@ const dedupedLanguageModels = new Set(json.map((server) => server.languageModelA
 const everyLanguageModel = json.map((server) => server.languageModelAvailability).flat();
 const pricedLanguageModels = Array.from(dedupedLanguageModels).map((modelName) => {
 	const relevantModels = everyLanguageModel.filter((model) => model.name === modelName);
-	const modelsWithInputPrice = relevantModels.filter((model) => model.inputTokenCost).length;
-	const modelsWithOutputPrice = relevantModels.filter((model) => model.outputTokenCost).length;
+	const modelsWithInputPrice = relevantModels.filter((model) => model.inputTokenCost);
+	const modelsWithOutputPrice = relevantModels.filter((model) => model.outputTokenCost);
 	return {
 		modelName,
-		completeness: `${((modelsWithInputPrice + modelsWithOutputPrice) / (relevantModels.length * 2)) * 100}%`,
+		completeness: `${((modelsWithInputPrice.length + modelsWithOutputPrice.length) / (relevantModels.length * 2)) * 100}%`,
+		averageInputPrice: modelsWithInputPrice.length > 0 ? '$' + (modelsWithInputPrice.reduce((acc, model) => acc + (model.inputTokenCost ?? 0), 0) / modelsWithInputPrice.length).toLocaleString('en', { currency: 'USD', useGrouping: false, maximumFractionDigits: 100 }) : 'N/A',
+		averageOutputPrice: modelsWithOutputPrice.length > 0 ? '$' + (modelsWithOutputPrice.reduce((acc, model) => acc + (model.outputTokenCost ?? 0), 0) / modelsWithOutputPrice.length).toLocaleString('en', { currency: 'USD', useGrouping: false, maximumFractionDigits: 100 }) : 'N/A',
 	};
 });
 summary.addTable(convertObjectsToSummaryTable(pricedLanguageModels));
@@ -247,10 +249,11 @@ const dedupedEmbedModels = new Set(json.map((server) => server.textEmbeddingMode
 const everyEmbedModel = json.map((server) => server.textEmbeddingModelAvailability).flat();
 const pricedEmbedModels = Array.from(dedupedEmbedModels).map((modelName) => {
 	const relevantModels = everyEmbedModel.filter((model) => model.name === modelName);
-	const modelsWithPrice = relevantModels.filter((model) => model.tokenCost).length;
+	const modelsWithPrice = relevantModels.filter((model) => model.tokenCost);
 	return {
 		modelName,
-		completeness: `${(modelsWithPrice / relevantModels.length) * 100}%`,
+		completeness: `${(modelsWithPrice.length / relevantModels.length) * 100}%`,
+		averagePrice: modelsWithPrice.length > 0 ? '$' + (modelsWithPrice.reduce((acc, model) => acc + (model.tokenCost ?? 0), 0) / modelsWithPrice.length).toLocaleString('en', { currency: 'USD', useGrouping: false, maximumFractionDigits: 100 }) : 'N/A',
 	};
 });
 summary.addTable(convertObjectsToSummaryTable(pricedEmbedModels));
