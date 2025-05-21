@@ -174,8 +174,20 @@ const json = (
 					.sort((a, b) => a.name!.localeCompare(b.name!)),
 				imageModelAvailability: deployments
 					.filter((deployment) => deployment.properties?.capabilities?.['imageGenerations'] === 'true')
-					.map((deployment) => deployment.name)
-					.sort((a, b) => a!.localeCompare(b!)),
+					.map((deployment) => {
+						const model = models.find((model) => model.kind === server.kind && model.model?.format === deployment?.properties?.model?.format && model.model?.name === deployment?.properties?.model?.name && model.model?.version === deployment?.properties?.model?.version);
+
+						const skuCost = model?.model?.skus?.find((sku) => sku.name === deployment?.sku?.name)?.costs as BillingMeterInfo[];
+
+						const tokenMeter = skuCost?.find((costItem) => costItem.name === 'TotalToken')?.meterId;
+						const tokenPrice = pricing.find((price) => price.meterId === tokenMeter);
+
+						return {
+							name: deployment.name,
+							tokenCost: tokenPrice?.unitPrice ? parseFloat(tokenPrice?.unitOfMeasure ? (tokenPrice.unitPrice / parseShorthandNumber(tokenPrice.unitOfMeasure)).toFixed(20) : tokenPrice?.unitPrice.toFixed(20)) : undefined,
+						};
+					})
+					.sort((a, b) => a.name!.localeCompare(b.name!)),
 				textEmbeddingModelAvailability: deployments
 					.filter((deployment) => deployment.properties?.capabilities?.['embeddings'] === 'true')
 					.map((deployment) => {
@@ -274,6 +286,28 @@ const pricedEmbedModels = Array.from(dedupedEmbedModels)
 		averagePrice: isNaN(parseFloat(model.averagePrice)) ? model.averagePrice : '$' + model.averagePrice,
 	}));
 summary.addTable(convertObjectsToSummaryTable(pricedEmbedModels));
+await summary.write();
+
+summary.addHeading('Image Model Pricing');
+const dedupedImageModels = new Set(json.map((server) => server.imageModelAvailability.map((model) => model.name!)).flat());
+const everyImageModel = json.map((server) => server.imageModelAvailability).flat();
+const pricedImageModels = Array.from(dedupedImageModels)
+	.map((modelName) => {
+		const relevantModels = everyImageModel.filter((model) => model.name === modelName);
+		const modelsWithPrice = relevantModels.filter((model) => model.tokenCost);
+		return {
+			modelName,
+			completeness: `${(modelsWithPrice.length / relevantModels.length) * 100}%`,
+			averagePrice: modelsWithPrice.length > 0 ? (modelsWithPrice.reduce((acc, model) => acc + (model.tokenCost ?? 0), 0) / modelsWithPrice.length).toLocaleString('en', { currency: 'USD', useGrouping: false, maximumFractionDigits: 100 }) : 'N/A',
+		};
+	})
+	.sort((a, b) => a.modelName.toLowerCase().localeCompare(b.modelName.toLowerCase()))
+	.sort((a, b) => parseFloat(a.averagePrice) - parseFloat(b.averagePrice))
+	.map((model) => ({
+		...model,
+		averagePrice: isNaN(parseFloat(model.averagePrice)) ? model.averagePrice : '$' + model.averagePrice,
+	}));
+summary.addTable(convertObjectsToSummaryTable(pricedImageModels));
 await summary.write();
 
 startGroup('Saving catalog');
