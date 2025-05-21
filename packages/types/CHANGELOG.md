@@ -1,5 +1,15 @@
 # @chainfuse/types
 
+## 2.10.11
+
+### Patch Changes
+
+- [`8065f7a`](https://github.com/ChainFuse/packages/commit/8065f7a8af5602fc9b54f940405224e72aa7c8c0) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Updated model catalog
+
+- [`d911e31`](https://github.com/ChainFuse/packages/commit/d911e31ab355e73d7fad94c76147ec4e7173ec17) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Bring image models in line with other model pricing structure
+
+- [`2320112`](https://github.com/ChainFuse/packages/commit/23201123d3de2c137486c39dafd7cacd9551071e) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Force import from v3
+
 ## 2.10.10
 
 ### Patch Changes

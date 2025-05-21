@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 0.13.15
+
+### Patch Changes
+
+- [`47286cb`](https://github.com/ChainFuse/packages/commit/47286cb0d1faa9e60caf0762f631feca57b6d2e4) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Force import from v3
+
+- Updated dependencies [[`8065f7a`](https://github.com/ChainFuse/packages/commit/8065f7a8af5602fc9b54f940405224e72aa7c8c0), [`ff89407`](https://github.com/ChainFuse/packages/commit/ff8940775dfc06d91ed4cbb9b7236b69748bb643), [`d911e31`](https://github.com/ChainFuse/packages/commit/d911e31ab355e73d7fad94c76147ec4e7173ec17), [`2320112`](https://github.com/ChainFuse/packages/commit/23201123d3de2c137486c39dafd7cacd9551071e)]:
+    - @chainfuse/types@2.10.11
+    - @chainfuse/helpers@3.2.6
+
 ## 0.13.14
 
 ### Patch Changes
