@@ -217,12 +217,14 @@ function convertObjectsToSummaryTable<T extends Record<string, string>>(items: T
 summary.addHeading('Server inventory');
 summary.addTable(
 	convertObjectsToSummaryTable(
-		json.map((server) => ({
-			server: server.id ?? 'N/A',
-			languageModels: server.languageModelAvailability.map((model) => model.name).join(', '),
-			imageModels: server.imageModelAvailability.join(', '),
-			textEmbeddingModels: server.languageModelAvailability.map((model) => model.name).join(', '),
-		})),
+		json
+			.map((server) => ({
+				server: server.id ?? 'N/A',
+				languageModels: server.languageModelAvailability.map((model) => model.name).join(', '),
+				imageModels: server.imageModelAvailability.join(', '),
+				textEmbeddingModels: server.languageModelAvailability.map((model) => model.name).join(', '),
+			}))
+			.sort((a, b) => a.server.toLowerCase().localeCompare(b.server.toLowerCase())),
 	),
 );
 await summary.write({ overwrite: true });
@@ -230,32 +232,47 @@ await summary.write({ overwrite: true });
 summary.addHeading('Language Model Pricing');
 const dedupedLanguageModels = new Set(json.map((server) => server.languageModelAvailability.map((model) => model.name!)).flat());
 const everyLanguageModel = json.map((server) => server.languageModelAvailability).flat();
-const pricedLanguageModels = Array.from(dedupedLanguageModels).map((modelName) => {
-	const relevantModels = everyLanguageModel.filter((model) => model.name === modelName);
-	const modelsWithInputPrice = relevantModels.filter((model) => model.inputTokenCost);
-	const modelsWithOutputPrice = relevantModels.filter((model) => model.outputTokenCost);
-	return {
-		modelName,
-		completeness: `${((modelsWithInputPrice.length + modelsWithOutputPrice.length) / (relevantModels.length * 2)) * 100}%`,
-		averageInputPrice: modelsWithInputPrice.length > 0 ? '$' + (modelsWithInputPrice.reduce((acc, model) => acc + (model.inputTokenCost ?? 0), 0) / modelsWithInputPrice.length).toLocaleString('en', { currency: 'USD', useGrouping: false, maximumFractionDigits: 100 }) : 'N/A',
-		averageOutputPrice: modelsWithOutputPrice.length > 0 ? '$' + (modelsWithOutputPrice.reduce((acc, model) => acc + (model.outputTokenCost ?? 0), 0) / modelsWithOutputPrice.length).toLocaleString('en', { currency: 'USD', useGrouping: false, maximumFractionDigits: 100 }) : 'N/A',
-	};
-});
+const pricedLanguageModels = Array.from(dedupedLanguageModels)
+	.map((modelName) => {
+		const relevantModels = everyLanguageModel.filter((model) => model.name === modelName);
+		const modelsWithInputPrice = relevantModels.filter((model) => model.inputTokenCost);
+		const modelsWithOutputPrice = relevantModels.filter((model) => model.outputTokenCost);
+		return {
+			modelName,
+			completeness: `${((modelsWithInputPrice.length + modelsWithOutputPrice.length) / (relevantModels.length * 2)) * 100}%`,
+			averageInputPrice: modelsWithInputPrice.length > 0 ? (modelsWithInputPrice.reduce((acc, model) => acc + (model.inputTokenCost ?? 0), 0) / modelsWithInputPrice.length).toLocaleString('en', { currency: 'USD', useGrouping: false, maximumFractionDigits: 100 }) : 'N/A',
+			averageOutputPrice: modelsWithOutputPrice.length > 0 ? (modelsWithOutputPrice.reduce((acc, model) => acc + (model.outputTokenCost ?? 0), 0) / modelsWithOutputPrice.length).toLocaleString('en', { currency: 'USD', useGrouping: false, maximumFractionDigits: 100 }) : 'N/A',
+		};
+	})
+	.sort((a, b) => a.modelName.toLowerCase().localeCompare(b.modelName.toLowerCase()))
+	.sort((a, b) => parseFloat(a.averageInputPrice) + parseFloat(a.averageOutputPrice) - (parseFloat(b.averageInputPrice) + parseFloat(b.averageOutputPrice)))
+	.map((model) => ({
+		...model,
+		averageInputPrice: isNaN(parseFloat(model.averageInputPrice)) ? model.averageInputPrice : '$' + model.averageInputPrice,
+		averageOutputPrice: isNaN(parseFloat(model.averageOutputPrice)) ? model.averageOutputPrice : '$' + model.averageOutputPrice,
+	}));
 summary.addTable(convertObjectsToSummaryTable(pricedLanguageModels));
 await summary.write();
 
 summary.addHeading('Embedding Model Pricing');
 const dedupedEmbedModels = new Set(json.map((server) => server.textEmbeddingModelAvailability.map((model) => model.name!)).flat());
 const everyEmbedModel = json.map((server) => server.textEmbeddingModelAvailability).flat();
-const pricedEmbedModels = Array.from(dedupedEmbedModels).map((modelName) => {
-	const relevantModels = everyEmbedModel.filter((model) => model.name === modelName);
-	const modelsWithPrice = relevantModels.filter((model) => model.tokenCost);
-	return {
-		modelName,
-		completeness: `${(modelsWithPrice.length / relevantModels.length) * 100}%`,
-		averagePrice: modelsWithPrice.length > 0 ? '$' + (modelsWithPrice.reduce((acc, model) => acc + (model.tokenCost ?? 0), 0) / modelsWithPrice.length).toLocaleString('en', { currency: 'USD', useGrouping: false, maximumFractionDigits: 100 }) : 'N/A',
-	};
-});
+const pricedEmbedModels = Array.from(dedupedEmbedModels)
+	.map((modelName) => {
+		const relevantModels = everyEmbedModel.filter((model) => model.name === modelName);
+		const modelsWithPrice = relevantModels.filter((model) => model.tokenCost);
+		return {
+			modelName,
+			completeness: `${(modelsWithPrice.length / relevantModels.length) * 100}%`,
+			averagePrice: modelsWithPrice.length > 0 ? (modelsWithPrice.reduce((acc, model) => acc + (model.tokenCost ?? 0), 0) / modelsWithPrice.length).toLocaleString('en', { currency: 'USD', useGrouping: false, maximumFractionDigits: 100 }) : 'N/A',
+		};
+	})
+	.sort((a, b) => a.modelName.toLowerCase().localeCompare(b.modelName.toLowerCase()))
+	.sort((a, b) => parseFloat(a.averagePrice) - parseFloat(b.averagePrice))
+	.map((model) => ({
+		...model,
+		averagePrice: isNaN(parseFloat(model.averagePrice)) ? model.averagePrice : '$' + model.averagePrice,
+	}));
 summary.addTable(convertObjectsToSummaryTable(pricedEmbedModels));
 await summary.write();
 
