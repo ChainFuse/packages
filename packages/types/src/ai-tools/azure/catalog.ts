@@ -22,7 +22,11 @@ export const azureCatalog = [
 				outputTokenCost: 0.0000044,
 			},
 		],
-		imageModelAvailability: ['gpt-image-1'],
+		imageModelAvailability: [
+			{
+				name: 'gpt-image-1',
+			},
+		],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -59,7 +63,11 @@ export const azureCatalog = [
 				outputTokenCost: 0.0000044,
 			},
 		],
-		imageModelAvailability: ['dall-e-3'],
+		imageModelAvailability: [
+			{
+				name: 'dall-e-3',
+			},
+		],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -322,7 +330,11 @@ export const azureCatalog = [
 				name: 'o4-mini',
 			},
 		],
-		imageModelAvailability: ['dall-e-3'],
+		imageModelAvailability: [
+			{
+				name: 'dall-e-3',
+			},
+		],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -974,7 +986,11 @@ export const azureCatalog = [
 				name: 'o4-mini',
 			},
 		],
-		imageModelAvailability: ['gpt-image-1'],
+		imageModelAvailability: [
+			{
+				name: 'gpt-image-1',
+			},
+		],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -1090,7 +1106,11 @@ export const azureCatalog = [
 				name: 'o4-mini',
 			},
 		],
-		imageModelAvailability: ['dall-e-3'],
+		imageModelAvailability: [
+			{
+				name: 'dall-e-3',
+			},
+		],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
