@@ -1,5 +1,21 @@
 # @chainfuse/types
 
+## 2.10.12
+
+### Patch Changes
+
+- [#450](https://github.com/ChainFuse/packages/pull/450) [`5de0aac`](https://github.com/ChainFuse/packages/commit/5de0aace58b482393183a1695295a7758fa90eb9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump microsoft/DevSkim-Action
+
+- [#446](https://github.com/ChainFuse/packages/pull/446) [`4eea5ec`](https://github.com/ChainFuse/packages/commit/4eea5ec42f868f478d5c25c9b34cf6d655934d70) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump workers-ai-provider, openai
+
+- [#451](https://github.com/ChainFuse/packages/pull/451) [`0bcbc99`](https://github.com/ChainFuse/packages/commit/0bcbc99e0c86bf3492064381caa728e598bbe6c7) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump cloudflare
+
+- [#453](https://github.com/ChainFuse/packages/pull/453) [`6ff5f3a`](https://github.com/ChainFuse/packages/commit/6ff5f3a323d911b7af083c63da989761f1d38d25) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types, @builder.io/qwik-city, @types/validator
+
+- [#448](https://github.com/ChainFuse/packages/pull/448) [`66a3aa5`](https://github.com/ChainFuse/packages/commit/66a3aa5ed889183ec2157a41964e265f0bd373bd) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- [`c6c4e51`](https://github.com/ChainFuse/packages/commit/c6c4e5127f3f06706bdcabca073920817e4a84a9) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Export zod3 schemas alongside
+
 ## 2.10.11
 
 ### Patch Changes
