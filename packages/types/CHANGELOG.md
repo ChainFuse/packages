@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.10.13
+
+### Patch Changes
+
+- [`45d7360`](https://github.com/ChainFuse/packages/commit/45d7360c584d1bb3ac3d931f4f68aca89249d187) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Export zod3 schemas alongside
+
 ## 2.10.12
 
 ### Patch Changes
