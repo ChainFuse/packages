@@ -8,7 +8,7 @@ export const ZodUuidExportInput = z.union([
 		.min(38)
 		.max(40)
 		.regex(new RegExp(/^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i)),
-	// utf=8
+	// utf-8
 	z.uuid().trim().toLowerCase(),
 	// hex
 	z
