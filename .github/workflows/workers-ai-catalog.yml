@@ -19,7 +19,7 @@ concurrency:
 jobs:
   workersAi:
     runs-on: ubuntu-latest
-    if: github.actor == 'sushidata-cloudflare[bot]'
+    if: github.actor != 'sushidata-cloudflare[bot]'
     permissions:
       contents: write
     steps:
