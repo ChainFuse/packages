@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.10.14
+
+### Patch Changes
+
+- [#455](https://github.com/ChainFuse/packages/pull/455) [`13cab47`](https://github.com/ChainFuse/packages/commit/13cab4700bd37e036f980578952a1e285a73ceac) Thanks [@georgeportillo](https://github.com/georgeportillo)! - types(fix): Export zod3 and zod4 schemas top level
+
 ## 2.10.13
 
 ### Patch Changes
