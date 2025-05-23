@@ -1,4 +1,5 @@
-import type { z as z4 } from 'zod/v4';
+import { z as z3 } from 'zod/v3';
+import { z as z4 } from 'zod/v4';
 import type { EnumOrEnumLike, ObjectValues } from '../index.js';
 import type { ZodCoordinate } from '../zod/index.js';
 import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmImageProviders, enabledCloudflareLlmProviders, type CloudflareFunctionModelsEnum, type CloudflareModelsEnum } from './workers-ai/index.js';
@@ -94,8 +95,8 @@ const ZodLanguageModelValuesRaw = Object.entries(AiModels.LanguageModels).reduce
 	},
 	[] as EnumOrEnumLike<typeof AiModels.LanguageModels>[],
 );
-export const ZodLanguageModelValues3 = await import('zod/v3').then(({ z }) => z.enum(Object.values(Object.assign({}, ...ZodLanguageModelValuesRaw) as (typeof ZodLanguageModelValuesRaw)[number]) as [ObjectValues<(typeof ZodLanguageModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodLanguageModelValuesRaw)[number]>]));
-export const ZodLanguageModelValues = await import('zod/v4').then(({ z }) => z.enum(Object.values(Object.assign({}, ...ZodLanguageModelValuesRaw) as (typeof ZodLanguageModelValuesRaw)[number]) as [ObjectValues<(typeof ZodLanguageModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodLanguageModelValuesRaw)[number]>]));
+export const ZodLanguageModelValues3 = z3.enum(Object.values(Object.assign({}, ...ZodLanguageModelValuesRaw) as (typeof ZodLanguageModelValuesRaw)[number]) as [ObjectValues<(typeof ZodLanguageModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodLanguageModelValuesRaw)[number]>]);
+export const ZodLanguageModelValues = z4.enum(Object.values(Object.assign({}, ...ZodLanguageModelValuesRaw) as (typeof ZodLanguageModelValuesRaw)[number]) as [ObjectValues<(typeof ZodLanguageModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodLanguageModelValuesRaw)[number]>]);
 export type LanguageModelValues = z4.infer<typeof ZodLanguageModelValues>;
 const ZodImageModelValuesRaw = Object.entries(AiModels.ImageModels).reduce(
 	(acc, [, value]) => {
@@ -104,8 +105,8 @@ const ZodImageModelValuesRaw = Object.entries(AiModels.ImageModels).reduce(
 	},
 	[] as EnumOrEnumLike<typeof AiModels.ImageModels>[],
 );
-export const ZodImageModelValues3 = await import('zod/v3').then(({ z }) => z.enum(Object.values(Object.assign({}, ...ZodImageModelValuesRaw) as (typeof ZodImageModelValuesRaw)[number]) as [ObjectValues<(typeof ZodImageModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodImageModelValuesRaw)[number]>]));
-export const ZodImageModelValues = await import('zod/v4').then(({ z }) => z.enum(Object.values(Object.assign({}, ...ZodImageModelValuesRaw) as (typeof ZodImageModelValuesRaw)[number]) as [ObjectValues<(typeof ZodImageModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodImageModelValuesRaw)[number]>]));
+export const ZodImageModelValues3 = z3.enum(Object.values(Object.assign({}, ...ZodImageModelValuesRaw) as (typeof ZodImageModelValuesRaw)[number]) as [ObjectValues<(typeof ZodImageModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodImageModelValuesRaw)[number]>]);
+export const ZodImageModelValues = z4.enum(Object.values(Object.assign({}, ...ZodImageModelValuesRaw) as (typeof ZodImageModelValuesRaw)[number]) as [ObjectValues<(typeof ZodImageModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodImageModelValuesRaw)[number]>]);
 export type ImageModelValues = z4.infer<typeof ZodImageModelValues>;
 const ZodTextEmbeddingModelValuesRaw = Object.entries(AiModels.TextEmbeddingModels).reduce(
 	(acc, [, value]) => {
@@ -114,8 +115,8 @@ const ZodTextEmbeddingModelValuesRaw = Object.entries(AiModels.TextEmbeddingMode
 	},
 	[] as EnumOrEnumLike<typeof AiModels.TextEmbeddingModels>[],
 );
-export const ZodTextEmbeddingModelValues3 = await import('zod/v3').then(({ z }) => z.enum(Object.values(Object.assign({}, ...ZodTextEmbeddingModelValuesRaw) as (typeof ZodTextEmbeddingModelValuesRaw)[number]) as [ObjectValues<(typeof ZodTextEmbeddingModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodTextEmbeddingModelValuesRaw)[number]>]));
-export const ZodTextEmbeddingModelValues = await import('zod/v4').then(({ z }) => z.enum(Object.values(Object.assign({}, ...ZodTextEmbeddingModelValuesRaw) as (typeof ZodTextEmbeddingModelValuesRaw)[number]) as [ObjectValues<(typeof ZodTextEmbeddingModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodTextEmbeddingModelValuesRaw)[number]>]));
+export const ZodTextEmbeddingModelValues3 = z3.enum(Object.values(Object.assign({}, ...ZodTextEmbeddingModelValuesRaw) as (typeof ZodTextEmbeddingModelValuesRaw)[number]) as [ObjectValues<(typeof ZodTextEmbeddingModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodTextEmbeddingModelValuesRaw)[number]>]);
+export const ZodTextEmbeddingModelValues = z4.enum(Object.values(Object.assign({}, ...ZodTextEmbeddingModelValuesRaw) as (typeof ZodTextEmbeddingModelValuesRaw)[number]) as [ObjectValues<(typeof ZodTextEmbeddingModelValuesRaw)[number]>[number], ...ObjectValues<(typeof ZodTextEmbeddingModelValuesRaw)[number]>]);
 export type TextEmbeddingModelValues = z4.infer<typeof ZodTextEmbeddingModelValues>;
 
 export const default_mc_generic: LanguageModelValues = AiModels.LanguageModels.Azure.gpt4o_mini;
