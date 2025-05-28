@@ -59,7 +59,7 @@
 		"@builder.io/qwik-city": "^1.14.1",
 		"@chainfuse/types": "^2.10.12",
 		"@cloudflare/workers-types": "^4.20250528.0",
-		"@types/node": "^22.15.23",
-		"wrangler": "^4.16.0"
+		"@types/node": "^22.15.24",
+		"wrangler": "^4.17.0"
 	}
 }
