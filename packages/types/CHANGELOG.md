@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.10.15
+
+### Patch Changes
+
+- [`07c20b6`](https://github.com/ChainFuse/packages/commit/07c20b6fd7c86fe752e37eb64afabfc04a918d06) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Base64 is case sensitive
+
 ## 2.10.14
 
 ### Patch Changes
