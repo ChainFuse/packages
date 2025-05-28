@@ -1,5 +1,21 @@
 # @chainfuse/helpers
 
+## 3.2.8
+
+### Patch Changes
+
+- [#458](https://github.com/ChainFuse/packages/pull/458) [`a667696`](https://github.com/ChainFuse/packages/commit/a6676966b4c903884c4f466259d3bb4095631a60) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, workers-ai-provider, openai
+
+- [#461](https://github.com/ChainFuse/packages/pull/461) [`f921a03`](https://github.com/ChainFuse/packages/commit/f921a03a9cceb755965ca07a38c45ee2b74a0397) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#465](https://github.com/ChainFuse/packages/pull/465) [`f3331ae`](https://github.com/ChainFuse/packages/commit/f3331ae259786ce4402558af1a13e463d548a555) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#466](https://github.com/ChainFuse/packages/pull/466) [`f655aec`](https://github.com/ChainFuse/packages/commit/f655aec7a13328c4db1034bfe1541a57a959df53) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, wrangler
+
+- [#463](https://github.com/ChainFuse/packages/pull/463) [`9c6b8ec`](https://github.com/ChainFuse/packages/commit/9c6b8ec5e22025d88b335e26ee11350a5b39d360) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump validator
+
+- [#462](https://github.com/ChainFuse/packages/pull/462) [`2ed80f8`](https://github.com/ChainFuse/packages/commit/2ed80f8bb07249d3d55022ee691e0cad1ab2957d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
 ## 3.2.7
 
 ### Patch Changes
