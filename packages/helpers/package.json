@@ -1,6 +1,6 @@
 {
 	"name": "@chainfuse/helpers",
-	"version": "3.2.7",
+	"version": "3.2.8",
 	"description": "",
 	"author": "ChainFuse",
 	"homepage": "https://github.com/ChainFuse/packages/tree/main/packages/helpers#readme",
@@ -57,7 +57,7 @@
 	},
 	"devDependencies": {
 		"@builder.io/qwik-city": "^1.14.1",
-		"@chainfuse/types": "^2.10.12",
+		"@chainfuse/types": "^2.10.16",
 		"@cloudflare/workers-types": "^4.20250528.0",
 		"@types/node": "^22.15.24",
 		"wrangler": "^4.17.0"
