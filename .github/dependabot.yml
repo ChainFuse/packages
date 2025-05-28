@@ -66,7 +66,6 @@ updates:
         patterns:
           - 'cloudflare'
           - '@cloudflare/*'
-          - 'wrangler'
         exclude-patterns:
           - '@cloudflare/ai*'
           - '@cloudflare/workers-types'
@@ -79,6 +78,7 @@ updates:
           - '@types/*'
           - '@cloudflare/workers-types'
           - '@builder.io/qwik-city'
+          - 'wrangler'
       code-management:
         patterns:
           - 'prettier'
