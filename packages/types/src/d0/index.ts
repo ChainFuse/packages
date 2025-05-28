@@ -74,8 +74,8 @@ export const ZodUuid3 = await import('zod/v3').then(({ z }) =>
 			.toLowerCase()
 			.length(32)
 			.refine((value) => import('validator/es/lib/isHexadecimal').then(({ default: isHexadecimal }) => isHexadecimal(value)).catch(() => import('validator').then(({ default: validator }) => validator.isHexadecimal(value)))),
-		z.string().trim().nonempty().toLowerCase().base64(),
-		z.string().trim().nonempty().toLowerCase().base64url(),
+		z.string().trim().nonempty().base64(),
+		z.string().trim().nonempty().base64url(),
 	]),
 );
 export const ZodUuid = await import('zod/v4').then(({ z }) =>
@@ -90,7 +90,7 @@ export const ZodUuid = await import('zod/v4').then(({ z }) =>
 			.toLowerCase()
 			.length(32)
 			.refine((value) => import('validator/es/lib/isHexadecimal').then(({ default: isHexadecimal }) => isHexadecimal(value)).catch(() => import('validator').then(({ default: validator }) => validator.isHexadecimal(value)))),
-		z.base64().trim().nonempty().toLowerCase(),
-		z.base64url().trim().nonempty().toLowerCase(),
+		z.base64().trim().nonempty(),
+		z.base64url().trim().nonempty(),
 	]),
 );
