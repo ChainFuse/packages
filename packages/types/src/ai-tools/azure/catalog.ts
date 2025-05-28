@@ -300,8 +300,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.00000275,
-				outputTokenCost: 0.000011,
 			},
 			{
 				name: 'gpt-4o-mini',
@@ -839,8 +837,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.00000275,
-				outputTokenCost: 0.000011,
 			},
 			{
 				name: 'gpt-4o-mini',
@@ -956,8 +952,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.00000275,
-				outputTokenCost: 0.000011,
 			},
 			{
 				name: 'gpt-4o-mini',
