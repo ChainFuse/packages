@@ -644,6 +644,7 @@ export const workersAiCatalog = {
 					created_at: '2024-09-25 05:36:04.547',
 					tags: [],
 					properties: {
+						context_window: 128000,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -747,6 +748,7 @@ export const workersAiCatalog = {
 					created_at: '2025-04-05 20:25:56.137',
 					tags: [],
 					properties: {
+						context_window: 131000,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -759,7 +761,6 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-						context_window: 131000,
 						function_calling: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE',
 					},
