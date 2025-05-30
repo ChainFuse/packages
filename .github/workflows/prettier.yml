@@ -82,9 +82,10 @@ jobs:
       - name: Git Setup
         if: steps.changes.outputs.changes == 'true'
         run: |
+          echo "${{ steps.gh_prettier_token.outputs.token }}" | gh auth login --with-token
+          gh auth setup-git --hostname github.com
           git config user.name "${{ steps.gh_prettier_token.outputs.app-slug }}[bot]"
           git config user.email "${{ vars.GH_PRETTIER_USER_ID }}+${{ steps.gh_prettier_token.outputs.app-slug }}[bot]@users.noreply.github.com"
-          git config commit.gpgsign true
       - run: git commit -m "Ran formatter" || echo "No formatting done"
         if: steps.changes.outputs.changes == 'true'
       - run: git push
