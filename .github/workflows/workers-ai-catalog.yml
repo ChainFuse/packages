@@ -147,6 +147,7 @@ jobs:
         run: |
           git config user.name "${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]"
           git config user.email "${{ vars.GH_CLOUDFLARE_USER_ID }}+${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]@users.noreply.github.com"
+          git config commit.gpgsign true
       - run: git add packages/types/src/ai-tools/workers-ai/catalog.ts
       - run: git commit -m "Updated workers-ai model catalog" || echo "model catalog not touched"
       - run: git push
