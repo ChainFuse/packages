@@ -948,11 +948,11 @@ export const workersAiCatalog = {
 			description: 'Object detection models can detect instances of objects like persons, faces, license plates, or others in an image. This task takes an image as input and returns a list of detected objects, each one containing a label, a probability score, and its surrounding box coordinates.',
 			models: [
 				{
-					id: 'cc34ce52-3059-415f-9a48-12aa919d37ee',
+					id: 'd71b454b-1919-4cc7-a615-8827f34f72b3',
 					source: 1,
-					name: '@cf/facebook/detr-resnet-50',
+					name: '@cf/facebook/triton-detr-resnet-50',
 					description: 'DEtection TRansformer (DETR) model trained end-to-end on COCO 2017 object detection (118k annotated images).',
-					created_at: '2024-02-27 17:43:51.922',
+					created_at: '2025-05-29 11:20:49.014',
 					tags: [],
 					properties: {
 						beta: true,
