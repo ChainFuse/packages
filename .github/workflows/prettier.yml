@@ -83,7 +83,7 @@ jobs:
         if: steps.changes.outputs.changes == 'true'
         run: |
           git config user.name "${{ steps.gh_prettier_token.outputs.app-slug }}[bot]"
-          git config user.email "${{ vars.GH_CLOUDFLARE_USER_ID }}+${{ steps.gh_prettier_token.outputs.app-slug }}[bot]@users.noreply.github.com"
+          git config user.email "${{ vars.GH_PRETTIER_USER_ID }}+${{ steps.gh_prettier_token.outputs.app-slug }}[bot]@users.noreply.github.com"
       - run: git commit -m "Ran formatter" || echo "No formatting done"
         if: steps.changes.outputs.changes == 'true'
       - run: git push
