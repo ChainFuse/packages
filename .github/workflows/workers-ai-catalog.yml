@@ -144,8 +144,10 @@ jobs:
       - run: npm ci --include-workspace-root
       - run: npx prettier --write packages/types/src/ai-tools/workers-ai/catalog.ts
       - name: Git Setup
+        env:
+          GH_TOKEN: ${{ steps.gh_cloudflare_token.outputs.token }}
         run: |
-          echo "${{ steps.gh_cloudflare_token.outputs.token }}" | gh auth login --with-token
+          gh auth login
           gh auth setup-git --hostname github.com
           git config user.name "${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]"
           git config user.email "${{ vars.GH_CLOUDFLARE_USER_ID }}+${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]@users.noreply.github.com"

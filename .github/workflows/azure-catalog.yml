@@ -60,8 +60,10 @@ jobs:
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       - run: npx prettier --write packages/types/src/ai-tools/azure/catalog.ts
       - name: Git Setup
+        env:
+          GH_TOKEN: ${{ steps.gh_azure_token.outputs.token }}
         run: |
-          echo "${{ steps.gh_azure_token.outputs.token }}" | gh auth login --with-token
+          gh auth login
           gh auth setup-git --hostname github.com
           git config user.name "${{ steps.gh_azure_token.outputs.app-slug }}[bot]"
           git config user.email "${{ vars.GH_AZURE_USER_ID }}+${{ steps.gh_azure_token.outputs.app-slug }}[bot]@users.noreply.github.com"
