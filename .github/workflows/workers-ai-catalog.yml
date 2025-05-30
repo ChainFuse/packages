@@ -23,7 +23,8 @@ jobs:
     permissions:
       contents: write
     env:
-      CATALOG_FILES: '["packages/types/src/ai-tools/workers-ai/catalog.ts"]'
+      CATALOG_FILES: |
+        packages/types/src/ai-tools/workers-ai/catalog.ts
     steps:
       - uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
         with:
@@ -42,7 +43,7 @@ jobs:
           CATALOG_FILES: ${{ env.CATALOG_FILES }}
         with:
           script: |
-            const catalogFiles = JSON.parse(process.env.CATALOG_FILES);
+            const catalogFiles = process.env.CATALOG_FILES.trim().split('\n').filter(f => f.trim());
             const catalogFile = catalogFiles[0]; // Use the first file in the array
             
             await Promise.all([
@@ -151,15 +152,17 @@ jobs:
       - run: npm ci --include-workspace-root
       - run: |
           # Parse catalog files from environment variable and format them
-          echo '${{ env.CATALOG_FILES }}' | jq -r '.[]' | while read file; do
-            npx prettier --write "$file"
+          echo "${{ env.CATALOG_FILES }}" | while read -r file; do
+            if [ -n "$file" ]; then
+              npx prettier --write "$file"
+            fi
           done
       - name: Commit and Push Changes
         env:
           GH_TOKEN: ${{ steps.gh_cloudflare_token.outputs.token }}
         run: |
           # Parse catalog files from environment variable
-          CATALOG_FILES=($(echo '${{ env.CATALOG_FILES }}' | jq -r '.[]'))
+          readarray -t CATALOG_FILES < <(echo "${{ env.CATALOG_FILES }}" | grep -v '^$')
           
           # Check if any of the catalog files have changes
           HAS_CHANGES=false
