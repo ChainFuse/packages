@@ -143,14 +143,53 @@ jobs:
           cache: 'npm'
       - run: npm ci --include-workspace-root
       - run: npx prettier --write packages/types/src/ai-tools/workers-ai/catalog.ts
-      - name: Git Setup
+      - name: Commit and Push Changes
         env:
           GH_TOKEN: ${{ steps.gh_cloudflare_token.outputs.token }}
         run: |
-          gh auth login
-          gh auth setup-git --hostname github.com
-          git config user.name "${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]"
-          git config user.email "${{ vars.GH_CLOUDFLARE_USER_ID }}+${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]@users.noreply.github.com"
-      - run: git add packages/types/src/ai-tools/workers-ai/catalog.ts
-      - run: git commit -m "Updated workers-ai model catalog" || echo "model catalog not touched"
-      - run: git push
+          # Check if there are changes to commit
+          if ! git diff --quiet packages/types/src/ai-tools/workers-ai/catalog.ts; then
+            # Add the file to staging
+            git add packages/types/src/ai-tools/workers-ai/catalog.ts
+            
+            # Get the current branch and repository info
+            BRANCH_NAME="${{ github.ref_name }}"
+            REPO_OWNER="${{ github.repository_owner }}"
+            REPO_NAME="${{ github.event.repository.name }}"
+            
+            # Get current commit SHA
+            CURRENT_SHA=$(git rev-parse HEAD)
+            
+            # Create blob for the changed file
+            BLOB_SHA=$(gh api "repos/$REPO_OWNER/$REPO_NAME/git/blobs" \
+              --method POST \
+              --field content="$(base64 -w 0 packages/types/src/ai-tools/workers-ai/catalog.ts)" \
+              --field encoding="base64" \
+              --jq '.sha')
+            
+            # Create tree with the blob
+            TREE_SHA=$(gh api "repos/$REPO_OWNER/$REPO_NAME/git/trees" \
+              --method POST \
+              --field base_tree="$CURRENT_SHA" \
+              --raw-field tree="[{\"path\":\"packages/types/src/ai-tools/workers-ai/catalog.ts\",\"mode\":\"100644\",\"type\":\"blob\",\"sha\":\"$BLOB_SHA\"}]" \
+              --jq '.sha')
+            
+            # Create commit
+            COMMIT_SHA=$(gh api "repos/$REPO_OWNER/$REPO_NAME/git/commits" \
+              --method POST \
+              --field message="Updated workers-ai model catalog" \
+              --field tree="$TREE_SHA" \
+              --raw-field parents="[\"$CURRENT_SHA\"]" \
+              --field author.name="${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]" \
+              --field author.email="${{ vars.GH_CLOUDFLARE_USER_ID }}+${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]@users.noreply.github.com" \
+              --field committer.name="${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]" \
+              --field committer.email="${{ vars.GH_CLOUDFLARE_USER_ID }}+${{ steps.gh_cloudflare_token.outputs.app-slug }}[bot]@users.noreply.github.com" \
+              --jq '.sha')
+            
+            # Update branch reference
+            gh api "repos/$REPO_OWNER/$REPO_NAME/git/refs/heads/$BRANCH_NAME" \
+              --method PATCH \
+              --field sha="$COMMIT_SHA"
+          else
+            echo "model catalog not touched"
+          fi
