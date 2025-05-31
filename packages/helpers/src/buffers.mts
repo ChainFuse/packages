@@ -159,7 +159,7 @@ export class BufferHelpers {
 				);
 			} else {
 				return Promise.all([this.bufferToHex(input), this.bufferToBase64(input, false), this.bufferToBase64(input, true)]).then(([hex, base64, base64url]) => ({
-					utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}`,
+					utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}` as const,
 					hex,
 					// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
 					blob: new Uint8Array(input).buffer,
