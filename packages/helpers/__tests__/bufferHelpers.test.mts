@@ -43,13 +43,15 @@ void describe('Buffer Helper Tests', () => {
 			const buffer = await BufferHelpers.bigintToBuffer(input);
 			ok(buffer instanceof ArrayBuffer, 'Result should be an ArrayBuffer');
 			const hex = await BufferHelpers.bufferToHex(buffer);
-			strictEqual(hex, input.toString(16).padStart(input.toString(16).length % 2 === 0 ? 0 : 1, '0'));
+			const expectedHex = input.toString(16).length % 2 === 0 ? input.toString(16) : `0${input.toString(16)}`;
+			strictEqual(hex, expectedHex);
 		});
 
 		void it('Convert from bigint to hex', () => {
 			const input = BigInt(`0x${crypto.getRandomValues(new Uint8Array(16)).reduce((acc, byte) => acc + byte.toString(16).padStart(2, '0'), '')}`);
 			const hex = BufferHelpers.bigintToHex(input);
-			strictEqual(hex, input.toString(16).padStart(input.toString(16).length % 2 === 0 ? 0 : 1, '0'));
+			const expectedHex = input.toString(16).length % 2 === 0 ? input.toString(16) : `0${input.toString(16)}`;
+			strictEqual(hex, expectedHex);
 		});
 
 		void it('Convert from buffer to bigint', async () => {
