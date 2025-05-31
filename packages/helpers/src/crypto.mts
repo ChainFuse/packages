@@ -1,17 +1,9 @@
 import { BufferHelpers } from './buffers.mjs';
+import { CryptoHelpersInternals } from './cryptoInternals.mts';
 
 export class CryptoHelpers {
 	public static secretBytes(byteSize: number) {
-		return import('node:crypto')
-			.then(({ randomBytes }) => {
-				const mainBuffer = randomBytes(byteSize);
-				return new Uint8Array(mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength));
-			})
-			.catch(() => {
-				const randomBytes = new Uint8Array(byteSize);
-				crypto.getRandomValues(randomBytes);
-				return randomBytes;
-			});
+		return CryptoHelpersInternals.node_secretBytes(byteSize).catch(() => CryptoHelpersInternals.browser_secretBytes(byteSize));
 	}
 
 	public static base16secret(secretLength: number) {
@@ -38,22 +30,7 @@ export class CryptoHelpers {
 	}
 
 	public static getHash(algorithm: 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512', input: string | ArrayBufferLike) {
-		return (
-			import('node:crypto')
-				.then(async ({ createHash }) => {
-					const hash = createHash(algorithm.replace('-', '').toLowerCase());
-
-					if (typeof input === 'string') {
-						hash.update(input);
-					} else {
-						await import('node:buffer').then(({ Buffer }) => hash.update(Buffer.from(input)));
-					}
-
-					return hash.digest('hex');
-				})
-				// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
-				.catch(() => crypto.subtle.digest(algorithm, typeof input === 'string' ? new TextEncoder().encode(input) : input).then((hashBuffer) => BufferHelpers.bufferToHex(hashBuffer)))
-		);
+		return CryptoHelpersInternals.node_getHash(algorithm, input).catch(() => CryptoHelpersInternals.browser_getHash(algorithm, input));
 	}
 
 	/**
