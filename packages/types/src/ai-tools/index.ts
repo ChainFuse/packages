@@ -12,15 +12,21 @@ export interface Coordinate {
 export namespace AiModels {
 	export namespace LanguageModels {
 		export enum Azure {
-			gpt3 = 'azure:gpt-35-turbo',
+			gpt41_nano = 'azure:gpt-4.1-nano',
 			gpt4o_mini = 'azure:gpt-4o-mini',
-			gpt4 = 'azure:gpt-4-turbo',
+			gpt41_mini = 'azure:gpt-4.1-mini',
+			o1_mini = 'azure:o1-mini',
+			o3_mini = 'azure:o3-mini',
+			o4_mini = 'azure:o4-mini',
 			gpt4o = 'azure:gpt-4o',
+			gpt41 = 'azure:gpt-4.1',
+			o1 = 'azure:o1',
+			o3 = 'azure:o3',
 		}
 
 		export enum Anthropic {
-			haiku = 'anthropic:claude-3-5-haiku-latest',
-			sonnet = 'anthropic:claude-3-5-sonnet-latest',
+			sonnet = 'anthropic:claude-4-sonnet-latest',
+			haiku = 'anthropic:claude-4-opus-latest',
 		}
 
 		// export const CloudflareSummary = Object.freeze(Object.fromEntries(enabledCloudflareLlmSummaryProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Summarization'>);
@@ -41,19 +47,23 @@ export namespace AiModels {
 		}
 
 		export enum OpenAi {
-			gpt3 = 'openai:gpt-3.5-turbo',
+			gpt41_nano = 'openai:gpt-4.1-nano',
 			gpt4o_mini = 'openai:gpt-4o-mini',
+			gpt41_mini = 'openai:gpt-4.1-mini',
 			o1_mini = 'openai:o1-mini',
-			gpt4 = 'openai:gpt-4-turbo',
+			o3_mini = 'openai:o3-mini',
+			o4_mini = 'openai:o4-mini',
 			gpt4o = 'openai:gpt-4o',
-			o1 = 'openai:o1-preview',
+			gpt41 = 'openai:gpt-4.1',
+			o1 = 'openai:o1',
+			o3 = 'openai:o3',
 		}
 	}
 
 	export namespace ImageModels {
 		export enum Azure {
+			gpt1 = 'azure:gpt-image-1',
 			dalle3 = 'azure:dall-e-3',
-			dalle2 = 'azure:dall-e-2',
 		}
 
 		export const Cloudflare = Object.freeze(Object.fromEntries(enabledCloudflareLlmImageProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text-to-Image'>);
@@ -64,8 +74,8 @@ export namespace AiModels {
 		}
 
 		export enum OpenAi {
+			openai = 'azure:gpt-image-1',
 			dalle3 = 'openai:dall-e-3',
-			dalle2 = 'openai:dall-e-2',
 		}
 	}
 
