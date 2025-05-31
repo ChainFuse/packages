@@ -1,4 +1,4 @@
-import { AiModels, type LanguageModelValues } from '@chainfuse/types';
+import { AiModels, type LanguageModelValues } from '@chainfuse/types/ai-tools';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import { generateObject, generateText, Output, streamObject, streamText, tool } from 'ai';
 import { doesNotReject, strictEqual } from 'node:assert/strict';
