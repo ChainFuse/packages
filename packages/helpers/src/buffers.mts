@@ -3,17 +3,6 @@ import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
 import { CryptoHelpers } from './crypto.mjs';
 
 export class BufferHelpers {
-	public static readonly utf8Regex = new RegExp(/^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i);
-	public static readonly hexRegex = new RegExp(/^[0-9a-f]{32}$/i);
-	/**
-	 * @link https://base64.guru/learn/base64-characters
-	 */
-	public static readonly base64Regex = new RegExp(/^[a-z\d+/]+={0,2}$/i);
-	/**
-	 * @link https://base64.guru/standards/base64url
-	 */
-	public static readonly base64urlRegex = new RegExp(/^[a-z\d_-]+$/i);
-
 	public static bigintToBuffer(number: bigint): Promise<UuidExport['blob']> {
 		const hexString = number.toString(16);
 		return this.hexToBuffer(hexString.length % 2 === 0 ? hexString : `0${hexString}`);
@@ -55,33 +44,46 @@ export class BufferHelpers {
 	}
 
 	public static base64ToBuffer(rawBase64: string): Promise<UuidExport['blob']> {
-		if (this.base64Regex.test(rawBase64)) {
-			return import('node:buffer')
-				.then(({ Buffer }) => {
-					const mainBuffer = Buffer.from(rawBase64, 'base64');
-					return mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength);
-				})
-				.catch(() => {
-					return new TextEncoder().encode(atob(rawBase64)).buffer;
-				});
-		} else if (this.base64urlRegex.test(rawBase64)) {
-			return import('node:buffer')
-				.then(({ Buffer }) => {
-					const mainBuffer = Buffer.from(rawBase64, 'base64url');
-					return mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength);
-				})
-				.catch(() => {
-					let base64 = rawBase64.replaceAll('-', '+').replaceAll('_', '/');
-					// Add padding back to make length a multiple of 4
-					while (base64.length % 4 !== 0) {
-						base64 += '=';
-					}
+		return import('zod/v4').then(({ z }) =>
+			Promise.any([
+				z
+					.base64()
+					.trim()
+					.nonempty()
+					.parseAsync(rawBase64)
+					.then((base64) =>
+						import('node:buffer')
+							.then(({ Buffer }) => {
+								const mainBuffer = Buffer.from(base64, 'base64');
+								return mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength);
+							})
+							.catch(() => {
+								return new TextEncoder().encode(atob(base64)).buffer;
+							}),
+					),
+				z
+					.base64url()
+					.trim()
+					.nonempty()
+					.parseAsync(rawBase64)
+					.then((base64url) =>
+						import('node:buffer')
+							.then(({ Buffer }) => {
+								const mainBuffer = Buffer.from(base64url, 'base64url');
+								return mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength);
+							})
+							.catch(() => {
+								let base64 = base64url.replaceAll('-', '+').replaceAll('_', '/');
+								// Add padding back to make length a multiple of 4
+								while (base64.length % 4 !== 0) {
+									base64 += '=';
+								}
 
-					return new TextEncoder().encode(atob(base64)).buffer;
-				});
-		} else {
-			throw new Error('Invalid base64 or base64url string');
-		}
+								return new TextEncoder().encode(atob(base64)).buffer;
+							}),
+					),
+			]),
+		);
 	}
 
 	public static bufferToBase64(buffer: UuidExport['blob'], urlSafe: boolean): Promise<string> {
@@ -129,60 +131,87 @@ export class BufferHelpers {
 	public static uuidConvert(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExport['blob']): Promise<UuidExport | UndefinedProperties<UuidExport>> {
 		if (input) {
 			if (typeof input === 'string') {
-				if (this.utf8Regex.test(input)) {
-					let hex = input.replaceAll('-', '');
+				return import('zod/v4').then(({ z }) =>
+					Promise.any([
+						//
+						import('@chainfuse/types/d0').then(({ PrefixedUuidRaw }) =>
+							z
+								.union([
+									//
+									PrefixedUuidRaw.transform((prefixedUtf8) => prefixedUtf8.split('_')[1]!),
+									z.uuid().trim().nonempty().toLowerCase(),
+								])
+								.transform((value) => value as UuidExport['utf8'])
+								.parseAsync(input)
+								.then((utf8) => {
+									const hex = utf8.replaceAll('-', '');
 
-					if (input.includes('_')) {
-						input = input.split('_')[1]!;
-						hex = hex.split('_')[1]!;
-					}
-
-					return this.hexToBuffer(hex).then((blob) =>
-						Promise.all([this.bufferToBase64(blob, false), this.bufferToBase64(blob, true)]).then(([base64, base64url]) => ({
-							utf8: input as UuidExport['utf8'],
-							hex,
-							blob,
-							base64,
-							base64url,
-						})),
-					);
-				} else if (this.hexRegex.test(input)) {
-					const hex: UuidExport['hex'] = input;
-
-					return this.hexToBuffer(hex).then((blob) =>
-						Promise.all([this.bufferToBase64(blob, false), this.bufferToBase64(blob, true)]).then(([base64, base64url]) => ({
-							utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}`,
-							hex,
-							blob,
-							base64,
-							base64url,
-						})),
-					);
-				} else if (this.base64Regex.test(input) && input.length % 4 === 0) {
-					const base64: UuidExport['base64'] = input;
-
-					return this.base64ToBuffer(base64).then((blob) =>
-						Promise.all([this.bufferToHex(blob), this.bufferToBase64(blob, true)]).then(([hex, base64url]) => ({
-							utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}`,
-							hex,
-							blob,
-							base64,
-							base64url,
-						})),
-					);
-				} else if (this.base64urlRegex.test(input)) {
-					const base64url: UuidExport['base64url'] = input;
-
-					return this.base64ToBuffer(base64url).then((blob) =>
-						Promise.all([this.bufferToHex(blob), this.bufferToBase64(blob, false)]).then(([hex, base64]) => ({
-							utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}`,
-							hex,
-							blob,
-							base64,
-							base64url,
-						})),
-					);
-				}
+									return this.hexToBuffer(hex).then((blob) =>
+										Promise.all([this.bufferToBase64(blob, false), this.bufferToBase64(blob, true)]).then(([base64, base64url]) => ({
+											utf8,
+											hex,
+											blob,
+											base64,
+											base64url,
+										})),
+									);
+								}),
+						),
+						z
+							.string()
+							.trim()
+							.toLowerCase()
+							.length(32)
+							.refine((value) => import('validator/es/lib/isHexadecimal').then(({ default: isHexadecimal }) => isHexadecimal(value)).catch(() => import('validator').then(({ default: validator }) => validator.isHexadecimal(value))))
+							.parseAsync(input)
+							.then((hex) =>
+								this.hexToBuffer(hex).then((blob) =>
+									Promise.all([this.bufferToBase64(blob, false), this.bufferToBase64(blob, true)]).then(([base64, base64url]) => ({
+										utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}` as const,
+										hex,
+										blob,
+										base64,
+										base64url,
+									})),
+								),
+							),
+					]).catch(() =>
+						Promise.any([
+							z
+								.base64()
+								.trim()
+								.nonempty()
+								.parseAsync(input)
+								.then((base64) =>
+									this.base64ToBuffer(base64).then((blob) =>
+										Promise.all([this.bufferToHex(blob), this.bufferToBase64(blob, true)]).then(([hex, base64url]) => ({
+											utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}` as const,
+											hex,
+											blob,
+											base64,
+											base64url,
+										})),
+									),
+								),
+							z
+								.base64url()
+								.trim()
+								.nonempty()
+								.parseAsync(input)
+								.then((base64url) =>
+									this.base64ToBuffer(base64url).then((blob) =>
+										Promise.all([this.bufferToHex(blob), this.bufferToBase64(blob, false)]).then(([hex, base64]) => ({
+											utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}` as const,
+											hex,
+											blob,
+											base64,
+											base64url,
+										})),
+									),
+								),
+						]),
+					),
+				);
 			} else {
 				return Promise.all([this.bufferToHex(input), this.bufferToBase64(input, false), this.bufferToBase64(input, true)]).then(([hex, base64, base64url]) => ({
 					utf8: `${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}`,
