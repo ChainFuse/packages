@@ -3,29 +3,31 @@ import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
 import { BufferHelpersInternals } from './bufferInternals.mts';
 import { CryptoHelpers } from './crypto.mjs';
 
+export type UuidExportBlobInput = Buffer | UuidExport['blob'];
+
 export class BufferHelpers {
-	public static bigintToBuffer(number: bigint): Promise<UuidExport['blob']> {
+	public static bigintToBuffer(number: bigint) {
 		const hexString = number.toString(16);
 		return this.hexToBuffer(hexString.length % 2 === 0 ? hexString : `0${hexString}`);
 	}
 
-	public static bigintToHex(number: bigint): UuidExport['hex'] {
+	public static bigintToHex(number: bigint) {
 		return number.toString(16).length % 2 === 0 ? number.toString(16) : `0${number.toString(16)}`;
 	}
 
-	public static bufferToBigint(buffer: UuidExport['blob']) {
+	public static bufferToBigint(buffer: UuidExportBlobInput) {
 		return this.bufferToHex(buffer).then((hex) => BigInt(`0x${hex}`));
 	}
 
-	public static hexToBuffer(hex: UuidExport['hex']): Promise<UuidExport['blob']> {
+	public static hexToBuffer(hex: UuidExport['hex']) {
 		return BufferHelpersInternals.node_hexToBuffer(hex).catch(() => BufferHelpersInternals.browser_hexToBuffer(hex));
 	}
 
-	public static bufferToHex(buffer: UuidExport['blob']): Promise<UuidExport['hex']> {
+	public static bufferToHex(buffer: UuidExportBlobInput) {
 		return BufferHelpersInternals.node_bufferToHex(buffer).catch(() => BufferHelpersInternals.browser_bufferToHex(buffer));
 	}
 
-	public static base64ToBuffer(rawBase64: string): Promise<UuidExport['blob']> {
+	public static base64ToBuffer(rawBase64: string) {
 		return import('zod/v4').then(({ z }) =>
 			Promise.any([
 				z
@@ -44,7 +46,7 @@ export class BufferHelpers {
 		);
 	}
 
-	public static bufferToBase64(buffer: UuidExport['blob'], urlSafe: boolean): Promise<string> {
+	public static bufferToBase64(buffer: UuidExportBlobInput, urlSafe: boolean): Promise<string> {
 		return BufferHelpersInternals.node_bufferToBase64(buffer, urlSafe).catch(() => BufferHelpersInternals.browser_bufferToBase64(buffer, urlSafe));
 	}
 
@@ -69,11 +71,11 @@ export class BufferHelpers {
 	public static uuidConvert(prefixedUtf: PrefixedUuid): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['utf8']): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['hex']): Promise<UuidExport>;
-	public static uuidConvert(input: UuidExport['blob']): Promise<UuidExport>;
+	public static uuidConvert(input: UuidExportBlobInput): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['base64']): Promise<UuidExport>;
 	public static uuidConvert(input: UuidExport['base64url']): Promise<UuidExport>;
 	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-	public static uuidConvert(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExport['blob']): Promise<UuidExport | UndefinedProperties<UuidExport>> {
+	public static uuidConvert(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExportBlobInput): Promise<UuidExport | UndefinedProperties<UuidExport>> {
 		if (input) {
 			if (typeof input === 'string') {
 				return import('zod/v4').then(({ z }) =>
