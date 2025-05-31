@@ -1,5 +1,17 @@
 # @chainfuse/types
 
+## 2.10.17
+
+### Patch Changes
+
+- [#470](https://github.com/ChainFuse/packages/pull/470) [`8edb175`](https://github.com/ChainFuse/packages/commit/8edb1751b5f276adf85b9ae16fbf4822b954990c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types, wrangler
+
+- [#468](https://github.com/ChainFuse/packages/pull/468) [`2ff7159`](https://github.com/ChainFuse/packages/commit/2ff71593e2a22644ee7f9f53dbb6e41404ff860e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- [`9805f68`](https://github.com/ChainFuse/packages/commit/9805f68e4d7cf3d3593d8824b6a7f942dcb5f626) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Export `PrefixedUuidRaw` for use
+
+- [`baea3ad`](https://github.com/ChainFuse/packages/commit/baea3ad452c4d03078c4953fef0965303616b934) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Update model enums
+
 ## 2.10.16
 
 ### Patch Changes
