@@ -12,7 +12,7 @@ const PrefixedUuidRaw3 = await import('zod/v3').then(({ z }) =>
 		.max(40)
 		.regex(new RegExp(/^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i)),
 );
-const PrefixedUuidRaw = await import('zod/v4').then(({ z }) =>
+export const PrefixedUuidRaw = await import('zod/v4').then(({ z }) =>
 	z
 		.string()
 		.trim()
