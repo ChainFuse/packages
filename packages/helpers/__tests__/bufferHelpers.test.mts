@@ -59,4 +59,45 @@ void describe('Buffer Helper Tests', () => {
 			strictEqual(output, input);
 		});
 	});
+
+	void describe('Hex Conversion Tests', () => {
+		void it('Convert from hex to buffer', async () => {
+			const originalData = crypto.getRandomValues(new Uint8Array(16));
+			const originalBuffer = originalData.buffer;
+			const hex = await BufferHelpers.bufferToHex(originalBuffer);
+			const convertedBuffer = await BufferHelpers.hexToBuffer(hex);
+
+			ok(convertedBuffer instanceof ArrayBuffer, 'Result should be an ArrayBuffer');
+			const originalView = new Uint8Array(originalBuffer);
+			const convertedView = new Uint8Array(convertedBuffer);
+			strictEqual(convertedView.length, originalView.length);
+			for (let i = 0; i < originalView.length; i++) {
+				strictEqual(convertedView[i], originalView[i], `Byte at index ${i} should match`);
+			}
+		});
+
+		void it('Convert from buffer to hex', async () => {
+			const originalData = crypto.getRandomValues(new Uint8Array(20));
+			const buffer = originalData.buffer;
+			const hex = await BufferHelpers.bufferToHex(buffer);
+
+			ok(typeof hex === 'string', 'Result should be a string');
+			strictEqual(hex.length, buffer.byteLength * 2, 'Hex length should be double buffer length');
+			ok(/^[0-9a-f]+$/i.test(hex), 'Hex should contain only hex characters');
+		});
+
+		void it('Round-trip conversion hex', async () => {
+			const originalData = crypto.getRandomValues(new Uint8Array(16));
+			const originalBuffer = originalData.buffer;
+
+			const hex = await BufferHelpers.bufferToHex(originalBuffer);
+			const convertedBuffer = await BufferHelpers.hexToBuffer(hex);
+
+			strictEqual(convertedBuffer.byteLength, originalBuffer.byteLength);
+			const convertedView = new Uint8Array(convertedBuffer as ArrayBuffer);
+			for (let i = 0; i < originalData.length; i++) {
+				strictEqual(convertedView[i], originalData[i], `Byte at index ${i} should match`);
+			}
+		});
+	});
 });
