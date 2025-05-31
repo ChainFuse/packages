@@ -58,16 +58,7 @@ jobs:
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      - run: |
-          # Parse catalog files from environment variable and format them
-          echo "$CATALOG_FILES" | while read -r file; do
-            if [ -n "$file" ]; then
-              npx prettier --write "$file"
-            fi
-          done
-        env:
-          CATALOG_FILES: |
-            packages/types/src/ai-tools/azure/catalog.ts
+      - run: npx prettier --write packages/types/src/ai-tools/azure/catalog.ts
       - name: Commit and Push Changes
         env:
           GH_TOKEN: ${{ steps.gh_azure_token.outputs.token }}
