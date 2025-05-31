@@ -1,5 +1,6 @@
 import type { UndefinedProperties } from '@chainfuse/types';
 import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
+import { BufferHelpersInternals } from './bufferInternals.mts';
 import { CryptoHelpers } from './crypto.mjs';
 
 export class BufferHelpers {
@@ -17,30 +18,11 @@ export class BufferHelpers {
 	}
 
 	public static hexToBuffer(hex: UuidExport['hex']): Promise<UuidExport['blob']> {
-		return (
-			import('node:buffer')
-				.then(({ Buffer }) => {
-					const mainBuffer = Buffer.from(hex, 'hex');
-					return mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength);
-				})
-				/**
-				 * @link https://jsbm.dev/NHJHj31Zwm3OP
-				 */
-				.catch(() => new Uint8Array(hex.length / 2).map((_, index) => parseInt(hex.slice(index * 2, index * 2 + 2), 16)).buffer)
-		);
+		return BufferHelpersInternals.node_hexToBuffer(hex).catch(() => BufferHelpersInternals.browser_hexToBuffer(hex));
 	}
 
 	public static bufferToHex(buffer: UuidExport['blob']): Promise<UuidExport['hex']> {
-		return (
-			import('node:buffer')
-				// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
-				.then(({ Buffer }) => Buffer.from(buffer).toString('hex'))
-				/**
-				 * @link https://jsbm.dev/AoXo8dEke1GUg
-				 */
-				// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
-				.catch(() => new Uint8Array(buffer).reduce((output, elem) => output + ('0' + elem.toString(16)).slice(-2), ''))
-		);
+		return BufferHelpersInternals.node_bufferToHex(buffer).catch(() => BufferHelpersInternals.browser_bufferToHex(buffer));
 	}
 
 	public static base64ToBuffer(rawBase64: string): Promise<UuidExport['blob']> {
@@ -51,56 +33,19 @@ export class BufferHelpers {
 					.trim()
 					.nonempty()
 					.parseAsync(rawBase64)
-					.then((base64) =>
-						import('node:buffer')
-							.then(({ Buffer }) => {
-								const mainBuffer = Buffer.from(base64, 'base64');
-								return mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength);
-							})
-							.catch(() => {
-								return new TextEncoder().encode(atob(base64)).buffer;
-							}),
-					),
+					.then((base64) => BufferHelpersInternals.node_base64ToBuffer(base64, false).catch(() => BufferHelpersInternals.browser_base64ToBuffer(base64))),
 				z
 					.base64url()
 					.trim()
 					.nonempty()
 					.parseAsync(rawBase64)
-					.then((base64url) =>
-						import('node:buffer')
-							.then(({ Buffer }) => {
-								const mainBuffer = Buffer.from(base64url, 'base64url');
-								return mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength);
-							})
-							.catch(() => {
-								let base64 = base64url.replaceAll('-', '+').replaceAll('_', '/');
-								// Add padding back to make length a multiple of 4
-								while (base64.length % 4 !== 0) {
-									base64 += '=';
-								}
-
-								return new TextEncoder().encode(atob(base64)).buffer;
-							}),
-					),
+					.then((base64url) => BufferHelpersInternals.node_base64ToBuffer(base64url, true).catch(() => BufferHelpersInternals.browser_base64UrlToBuffer(base64url))),
 			]),
 		);
 	}
 
 	public static bufferToBase64(buffer: UuidExport['blob'], urlSafe: boolean): Promise<string> {
-		return (
-			import('node:buffer')
-				// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
-				.then(({ Buffer }) => Buffer.from(buffer).toString(urlSafe ? 'base64url' : 'base64'))
-				.catch(() => {
-					// @ts-expect-error `ArrayBufferLike` is actually accepted and fine
-					const raw = btoa(new Uint8Array(buffer).reduce((acc, byte) => acc + String.fromCharCode(byte), ''));
-					if (urlSafe) {
-						return raw.replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
-					} else {
-						return raw;
-					}
-				})
-		);
+		return BufferHelpersInternals.node_bufferToBase64(buffer, urlSafe).catch(() => BufferHelpersInternals.browser_bufferToBase64(buffer, urlSafe));
 	}
 
 	public static get generateUuid(): Promise<UuidExport> {
