@@ -1,5 +1,14 @@
 # @chainfuse/helpers
 
+## 3.2.10
+
+### Patch Changes
+
+- [`a1d883f`](https://github.com/ChainFuse/packages/commit/a1d883f5cded42038871dedfadd41d203cd3d2b9) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Make `UuidExport` type more accurate
+
+- Updated dependencies [[`2857e66`](https://github.com/ChainFuse/packages/commit/2857e66ae64ef203652f3285c387fb1baffcf71c)]:
+    - @chainfuse/types@2.10.18
+
 ## 3.2.9
 
 ### Patch Changes

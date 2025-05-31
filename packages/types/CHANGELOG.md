@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.10.18
+
+### Patch Changes
+
+- [`2857e66`](https://github.com/ChainFuse/packages/commit/2857e66ae64ef203652f3285c387fb1baffcf71c) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Make `UuidExport` type more accurate
+
 ## 2.10.17
 
 ### Patch Changes
