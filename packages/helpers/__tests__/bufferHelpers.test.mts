@@ -100,4 +100,101 @@ void describe('Buffer Helper Tests', () => {
 			}
 		});
 	});
+
+	void describe('Base64 Conversion Tests', () => {
+		void it('Convert from base64 to buffer', async () => {
+			const originalData = crypto.getRandomValues(new Uint8Array(24));
+			const originalBuffer = originalData.buffer;
+			const base64 = await BufferHelpers.bufferToBase64(originalBuffer, false);
+			const convertedBuffer = await BufferHelpers.base64ToBuffer(base64);
+
+			ok(convertedBuffer instanceof ArrayBuffer, 'Result should be an ArrayBuffer');
+			strictEqual(convertedBuffer.byteLength, originalBuffer.byteLength);
+
+			const originalView = new Uint8Array(originalBuffer);
+			const convertedView = new Uint8Array(convertedBuffer);
+			for (let i = 0; i < originalView.length; i++) {
+				strictEqual(originalView[i], convertedView[i], `Byte at index ${i} should match`);
+			}
+		});
+
+		void it('Convert from base64url to buffer', async () => {
+			const originalData = crypto.getRandomValues(new Uint8Array(48));
+			const originalBuffer = originalData.buffer;
+			const base64url = await BufferHelpers.bufferToBase64(originalBuffer, true);
+			const convertedBuffer = await BufferHelpers.base64ToBuffer(base64url);
+
+			ok(convertedBuffer instanceof ArrayBuffer, 'Result should be an ArrayBuffer');
+			strictEqual(convertedBuffer.byteLength, originalBuffer.byteLength);
+
+			const originalView = new Uint8Array(originalBuffer);
+			const convertedView = new Uint8Array(convertedBuffer);
+			for (let i = 0; i < originalView.length; i++) {
+				strictEqual(originalView[i], convertedView[i], `Byte at index ${i} should match`);
+			}
+		});
+
+		void it('Convert from buffer to base64', async () => {
+			const originalData = crypto.getRandomValues(new Uint8Array(32));
+			const buffer = originalData.buffer;
+			const base64 = await BufferHelpers.bufferToBase64(buffer, false);
+
+			ok(typeof base64 === 'string', 'Result should be a string');
+			ok(base64.length > 0, 'Base64 string should not be empty');
+			ok(!base64.includes('-') && !base64.includes('_'), 'Standard base64 should not contain URL-safe characters');
+		});
+
+		void it('Convert from buffer to base64url', async () => {
+			const originalData = crypto.getRandomValues(new Uint8Array(40));
+			const buffer = originalData.buffer;
+			const base64url = await BufferHelpers.bufferToBase64(buffer, true);
+
+			ok(typeof base64url === 'string', 'Result should be a string');
+			ok(base64url.length > 0, 'Base64url string should not be empty');
+			ok(!base64url.includes('+') && !base64url.includes('/') && !base64url.includes('='), 'Base64url should not contain standard base64 characters');
+		});
+
+		void it('Handle base64url with padding requirements', async () => {
+			// Test base64url strings that need padding when converted back to standard base64
+			const testCases = [
+				'SGVsbG8', // Length % 4 === 3, needs 1 padding char
+				'SGVsbG9X', // Length % 4 === 0, needs no padding
+				'SGVsbG9Xb3JsZA', // Length % 4 === 2, needs 2 padding chars
+			];
+
+			for (const base64url of testCases) {
+				const buffer = await BufferHelpers.base64ToBuffer(base64url);
+				ok(buffer instanceof ArrayBuffer, `Result should be an ArrayBuffer for input: ${base64url}`);
+				ok(buffer.byteLength > 0, `Buffer should not be empty for input: ${base64url}`);
+			}
+		});
+
+		void it('Round-trip conversion base64', async () => {
+			const originalData = crypto.getRandomValues(new Uint8Array(32));
+			const originalBuffer = originalData.buffer;
+
+			const base64 = await BufferHelpers.bufferToBase64(originalBuffer, false);
+			const convertedBuffer = await BufferHelpers.base64ToBuffer(base64);
+
+			strictEqual(convertedBuffer.byteLength, originalBuffer.byteLength);
+			const convertedView = new Uint8Array(convertedBuffer as ArrayBuffer);
+			for (let i = 0; i < originalData.length; i++) {
+				strictEqual(convertedView[i], originalData[i], `Byte at index ${i} should match`);
+			}
+		});
+
+		void it('Round-trip conversion base64url', async () => {
+			const originalData = crypto.getRandomValues(new Uint8Array(32));
+			const originalBuffer = originalData.buffer;
+
+			const base64url = await BufferHelpers.bufferToBase64(originalBuffer, true);
+			const convertedBuffer = await BufferHelpers.base64ToBuffer(base64url);
+
+			strictEqual(convertedBuffer.byteLength, originalBuffer.byteLength);
+			const convertedView = new Uint8Array(convertedBuffer as ArrayBuffer);
+			for (let i = 0; i < originalData.length; i++) {
+				strictEqual(convertedView[i], originalData[i], `Byte at index ${i} should match`);
+			}
+		});
+	});
 });
