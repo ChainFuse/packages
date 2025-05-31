@@ -1,5 +1,19 @@
 # @chainfuse/ai-tools
 
+## 0.13.18
+
+### Patch Changes
+
+- [#470](https://github.com/ChainFuse/packages/pull/470) [`8edb175`](https://github.com/ChainFuse/packages/commit/8edb1751b5f276adf85b9ae16fbf4822b954990c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types, wrangler
+
+- [#468](https://github.com/ChainFuse/packages/pull/468) [`2ff7159`](https://github.com/ChainFuse/packages/commit/2ff71593e2a22644ee7f9f53dbb6e41404ff860e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- [`4e21a07`](https://github.com/ChainFuse/packages/commit/4e21a077f8bc54e96d0cc5ddb53eaa84504a2159) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix image model type
+
+- Updated dependencies [[`8edb175`](https://github.com/ChainFuse/packages/commit/8edb1751b5f276adf85b9ae16fbf4822b954990c), [`2ff7159`](https://github.com/ChainFuse/packages/commit/2ff71593e2a22644ee7f9f53dbb6e41404ff860e), [`35f30f6`](https://github.com/ChainFuse/packages/commit/35f30f6f2bdbcb504d151d7cabdf903e49af55f1), [`9805f68`](https://github.com/ChainFuse/packages/commit/9805f68e4d7cf3d3593d8824b6a7f942dcb5f626), [`baea3ad`](https://github.com/ChainFuse/packages/commit/baea3ad452c4d03078c4953fef0965303616b934)]:
+    - @chainfuse/helpers@3.2.9
+    - @chainfuse/types@2.10.17
+
 ## 0.13.17
 
 ### Patch Changes
