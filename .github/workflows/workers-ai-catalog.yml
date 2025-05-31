@@ -22,9 +22,6 @@ jobs:
     if: github.actor != 'sushidata-cloudflare[bot]'
     permissions:
       contents: write
-    env:
-      CATALOG_FILES: |
-        packages/types/src/ai-tools/workers-ai/catalog.ts
     steps:
       - uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
         with:
@@ -39,13 +36,8 @@ jobs:
         with:
           token: ${{ steps.gh_cloudflare_token.outputs.token }}
       - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
-        env:
-          CATALOG_FILES: ${{ env.CATALOG_FILES }}
         with:
           script: |
-            const catalogFiles = process.env.CATALOG_FILES.trim().split('\n').filter(f => f.trim());
-            const catalogFile = catalogFiles[0]; // Use the first file in the array
-            
             await Promise.all([
                 fetch(new URL(`client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/models/search`, 'https://api.cloudflare.com'), {
                     headers: {
@@ -112,7 +104,7 @@ jobs:
                 });
 
                 await import('node:fs').then(({ createWriteStream }) => {
-                    const writeStream = createWriteStream(catalogFile, { encoding: 'utf8' });
+                    const writeStream = createWriteStream('packages/types/src/ai-tools/workers-ai/catalog.ts', { encoding: 'utf8' });
                     writeStream.write(
                         `export const workersAiCatalog = ${JSON.stringify(
                             {
@@ -150,36 +142,15 @@ jobs:
           check-latest: true
           cache: 'npm'
       - run: npm ci --include-workspace-root
-      - run: |
-          # Parse catalog files from environment variable and format them
-          echo "${{ env.CATALOG_FILES }}" | while read -r file; do
-            if [ -n "$file" ]; then
-              npx prettier --write "$file"
-            fi
-          done
+      - run: npx prettier --write packages/types/src/ai-tools/workers-ai/catalog.ts
       - name: Commit and Push Changes
         env:
           GH_TOKEN: ${{ steps.gh_cloudflare_token.outputs.token }}
         run: |
-          # Parse catalog files from environment variable
-          readarray -t CATALOG_FILES < <(echo "${{ env.CATALOG_FILES }}" | grep -v '^$')
-          
-          # Check if any of the catalog files have changes
-          HAS_CHANGES=false
-          for file in "${CATALOG_FILES[@]}"; do
-            if ! git diff --quiet "$file"; then
-              HAS_CHANGES=true
-              break
-            fi
-          done
-          
-          if [ "$HAS_CHANGES" = true ]; then
-            # Add the files to staging
-            for file in "${CATALOG_FILES[@]}"; do
-              if ! git diff --quiet "$file"; then
-                git add "$file"
-              fi
-            done
+          # Check if there are changes to commit
+          if ! git diff --quiet packages/types/src/ai-tools/workers-ai/catalog.ts; then
+            # Add the file to staging
+            git add packages/types/src/ai-tools/workers-ai/catalog.ts
             
             # Get the current branch and repository info
             BRANCH_NAME="${{ github.ref_name }}"
@@ -189,28 +160,18 @@ jobs:
             # Get current commit SHA
             CURRENT_SHA=$(git rev-parse HEAD)
             
-            # Create blob objects and tree entries for changed files
-            declare -a TREE_ENTRIES
-            for file in "${CATALOG_FILES[@]}"; do
-              if ! git diff --quiet HEAD "$file"; then
-                # Create blob for the changed file
-                BLOB_SHA=$(gh api "repos/$REPO_OWNER/$REPO_NAME/git/blobs" \
-                  --method POST \
-                  --field content="$(base64 -w 0 "$file")" \
-                  --field encoding="base64" \
-                  --jq '.sha')
-                
-                # Add to tree entries
-                TREE_ENTRIES+=("{\"path\":\"$file\",\"mode\":\"100644\",\"type\":\"blob\",\"sha\":\"$BLOB_SHA\"}")
-              fi
-            done
+            # Create blob for the changed file
+            BLOB_SHA=$(gh api "repos/$REPO_OWNER/$REPO_NAME/git/blobs" \
+              --method POST \
+              --field content="$(base64 -w 0 packages/types/src/ai-tools/workers-ai/catalog.ts)" \
+              --field encoding="base64" \
+              --jq '.sha')
             
-            # Create tree with the blobs
-            TREE_JSON="[$(IFS=,; echo "${TREE_ENTRIES[*]}")]"
+            # Create tree with the blob
             TREE_SHA=$(gh api "repos/$REPO_OWNER/$REPO_NAME/git/trees" \
               --method POST \
               --field base_tree="$CURRENT_SHA" \
-              --raw-field tree="$TREE_JSON" \
+              --raw-field tree="[{\"path\":\"packages/types/src/ai-tools/workers-ai/catalog.ts\",\"mode\":\"100644\",\"type\":\"blob\",\"sha\":\"$BLOB_SHA\"}]" \
               --jq '.sha')
             
             # Create commit
