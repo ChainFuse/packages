@@ -1,4 +1,5 @@
 import type { z as z3 } from 'zod/v3';
+import type { z as z4 } from 'zod/v4';
 
 export type LoggingFetchInitType<RI extends RequestInit = RequestInit> = RI & z3.input<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>;
 
@@ -550,5 +551,77 @@ export class NetHelpers {
 		}
 
 		return result;
+	}
+
+	public static withRetryInit() {
+		return import('zod/v4').then(({ z: z4 }) =>
+			z4
+				.object({
+					maxRetries: z4.int().nonnegative().default(3),
+					initialDelay: z4.int().nonnegative().default(100),
+					maxDelay: z4.int().nonnegative().default(1000),
+					backoffFactor: z4.int().nonnegative().default(2),
+				})
+				.default({
+					maxRetries: 3,
+					initialDelay: 100,
+					maxDelay: 1000,
+					backoffFactor: 2,
+				}),
+		);
+	}
+
+	/**
+	 * Executes an asynchronous operation with configurable retry logic.
+	 *
+	 * The operation function can be a simple parameterless function or a function that has been bound with arguments (using .bind(), arrow functions, or closures).
+	 *
+	 * @param operation - A function that returns a Promise. Arguments should be bound/captured beforehand.
+	 * @param config - Optional retry configuration
+	 * @returns Promise that resolves to the result of the operation
+	 *
+	 * @example
+	 * // Simple function with no arguments
+	 * await NetHelpers.withRetry(() => fetch('/api/data'))
+	 *
+	 * @example
+	 * // Function with arguments using arrow function closure
+	 * await NetHelpers.withRetry(() => fetch(url, options))
+	 *
+	 * @example
+	 * // Function with arguments using .bind()
+	 * await NetHelpers.withRetry(fetch.bind(null, url, options))
+	 *
+	 * @example
+	 * // With custom retry configuration
+	 * await NetHelpers.withRetry(() => apiCall(), { maxRetries: 5, initialDelay: 200 })
+	 */
+	public static withRetry<T>(operation: () => Promise<T>, config?: z4.input<Awaited<ReturnType<typeof NetHelpers.withRetryInit>>>): Promise<T> {
+		return Promise.all([NetHelpers.withRetryInit().then((parser) => parser.parseAsync(config)), import('./common.mjs')]).then(async ([config, { Helpers }]) => {
+			let lastError: unknown;
+			let delay = config.initialDelay;
+
+			for (let attempt = 0; attempt <= config.maxRetries; attempt++) {
+				try {
+					const result = await operation();
+					return result;
+				} catch (error) {
+					lastError = error;
+
+					if (attempt === config.maxRetries) {
+						throw error;
+					}
+
+					// Add randomness to avoid synchronizing retries
+					// Wait for a random delay between delay and delay*2
+					await Helpers.sleep(delay * (1 + Math.random()));
+
+					// Calculate next delay with exponential backoff
+					delay = Math.min(delay * config.backoffFactor, config.maxDelay);
+				}
+			}
+
+			throw lastError;
+		});
 	}
 }
