@@ -965,6 +965,17 @@ export const workersAiCatalog = {
 						],
 					},
 				},
+				{
+					id: '88c5e2c0-100c-40f9-86a1-ae68ff22ffa7',
+					source: 1,
+					name: '@cf/facebook/omni-detr-resnet-50',
+					description: 'DEtection TRansformer (DETR) model trained end-to-end on COCO 2017 object detection (118k annotated images).',
+					created_at: '2025-05-26 22:05:25.581',
+					tags: [],
+					properties: {
+						beta: true,
+					},
+				},
 			],
 		},
 		'Text-to-Speech': {
