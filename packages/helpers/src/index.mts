@@ -1,7 +1,5 @@
-import type { PlatformCloudflarePages } from '@builder.io/qwik-city/middleware/cloudflare-pages';
-import type { Request as CfRequest, ExecutionContext, WorkerVersionMetadata } from '@cloudflare/workers-types/experimental';
+import type { Request as CfRequest, WorkerVersionMetadata } from '@cloudflare/workers-types/experimental';
 import type { Chalk } from 'chalk';
-import type { PlatformProxy } from 'wrangler';
 
 export * from './buffers.mjs';
 export * from './crypto.mjs';
@@ -9,17 +7,9 @@ export * from './discord.mjs';
 export * from './dns.mjs';
 export * from './net.mjs';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface QwikCityPlatformLive<E extends Record<string, any> = Record<string, any>> extends Omit<PlatformCloudflarePages, 'request'> {
-	request: CfRequest;
-	env: E;
-	ctx: ExecutionContext;
-	cf: never;
+interface QwikCityPlatform {
+	request?: CfRequest;
 }
-interface QwikCityPlatformLocal<E extends Record<string, any> = Record<string, any>> extends PlatformProxy<E> {
-	request?: never;
-}
-type QwikCityPlatform = QwikCityPlatformLive | QwikCityPlatformLocal;
 
 export class Helpers {
 	/**
