@@ -104,4 +104,14 @@ export class Helpers {
 			return !('request' in metadataOrPlatform);
 		}
 	}
+
+	/**
+	 * Pauses execution for a specified number of milliseconds.
+	 *
+	 * @param ms - The number of milliseconds to sleep.
+	 * @returns A promise that resolves after the specified delay.
+	 */
+	public static sleep(ms: number) {
+		return new Promise<void>((resolve) => setTimeout(resolve, ms));
+	}
 }
