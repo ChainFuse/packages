@@ -44,6 +44,30 @@
 		".": {
 			"import": "./dist/index.mjs",
 			"types": "./dist/index.d.mts"
+		},
+		"./buffers": {
+			"import": "./dist/buffers.js",
+			"types": "./dist/buffers.d.ts"
+		},
+		"./common": {
+			"import": "./dist/common.js",
+			"types": "./dist/common.d.ts"
+		},
+		"./crypto": {
+			"import": "./dist/crypto.js",
+			"types": "./dist/crypto.d.ts"
+		},
+		"./discord": {
+			"import": "./dist/discord.js",
+			"types": "./dist/discord.d.ts"
+		},
+		"./dns": {
+			"import": "./dist/dns.js",
+			"types": "./dist/dns.d.ts"
+		},
+		"./net": {
+			"import": "./dist/net.js",
+			"types": "./dist/net.d.ts"
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",
