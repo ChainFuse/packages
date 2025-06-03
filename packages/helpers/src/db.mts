@@ -106,7 +106,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	 * This function accepts query and parameters that cached into key param, allowing you to retrieve response values for this query from the cache.
 	 * @param key - A hashed query and parameters.
 	 */
-	override async get(key: string, tables: string[], isTag: boolean): Promise<any[] | undefined> {
+	override async get(key: string, _tables: string[], isTag: boolean): Promise<any[] | undefined> {
 		const response = await this.cache.then(async (cache) => cache.match(this.getCacheKey(isTag ? { tag: key } : { key })));
 
 		console.debug('SQLCache.get', isTag ? 'tag' : 'key', key, response?.ok ? 'HIT' : 'MISS');
