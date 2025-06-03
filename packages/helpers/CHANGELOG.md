@@ -1,5 +1,13 @@
 # @chainfuse/helpers
 
+## 3.2.11
+
+### Patch Changes
+
+- [`dd4955b`](https://github.com/ChainFuse/packages/commit/dd4955bc65650f0f2f744f3be442a957c62173b3) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add tree shake imports
+
+- [`9c7c00e`](https://github.com/ChainFuse/packages/commit/9c7c00e1a5bd854a1984306056ceb50445ce4e72) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Simplify `QwikCityPlatform`
+
 ## 3.2.10
 
 ### Patch Changes
