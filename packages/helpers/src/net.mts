@@ -1,6 +1,6 @@
-import type { z } from 'zod/v3';
+import type { z as z3 } from 'zod/v3';
 
-export type LoggingFetchInitType<RI extends RequestInit = RequestInit> = RI & z.input<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>;
+export type LoggingFetchInitType<RI extends RequestInit = RequestInit> = RI & z3.input<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>;
 
 /**
  * Enum representing HTTP request methods.
@@ -21,16 +21,16 @@ export enum Methods {
 
 export class NetHelpers {
 	public static cfApiLogging() {
-		return import('zod').then(({ z }) =>
-			z
+		return import('zod/v3').then(({ z: z3 }) =>
+			z3
 				.object({
-					level: z.coerce.number().int().min(0).max(3).default(0),
-					error: z.coerce.number().int().min(0).max(3).default(1),
-					color: z.boolean().default(true),
-					custom: z
+					level: z3.coerce.number().int().min(0).max(3).default(0),
+					error: z3.coerce.number().int().min(0).max(3).default(1),
+					color: z3.boolean().default(true),
+					custom: z3
 						.function()
 						.args()
-						.returns(z.union([z.void(), z.promise(z.void())]))
+						.returns(z3.union([z3.void(), z3.promise(z3.void())]))
 						.optional(),
 				})
 				.default({}),
@@ -54,7 +54,7 @@ export class NetHelpers {
 	 * - Formatting and coloring log output for better readability.
 	 * - Stripping redundant parts of URLs and wrapping unique IDs in brackets with color coding.
 	 */
-	public static cfApi(apiKey: string, logging?: z.input<Awaited<ReturnType<typeof NetHelpers.cfApiLogging>>>) {
+	public static cfApi(apiKey: string, logging?: z3.input<Awaited<ReturnType<typeof NetHelpers.cfApiLogging>>>) {
 		return Promise.all([
 			//
 			import('cloudflare'),
@@ -180,22 +180,22 @@ export class NetHelpers {
 	}
 
 	public static loggingFetchInit() {
-		return Promise.all([import('zod'), this.loggingFetchInitLogging()]).then(([{ z }, logging]) =>
-			z.object({
+		return Promise.all([import('zod/v3'), this.loggingFetchInitLogging()]).then(([{ z: z3 }, logging]) =>
+			z3.object({
 				logging,
 			}),
 		);
 	}
 	public static loggingFetchInitLogging() {
-		return import('zod').then(({ z }) =>
-			z
+		return import('zod/v3').then(({ z: z3 }) =>
+			z3
 				.object({
-					level: z.coerce.number().int().min(0).max(3).default(0),
-					error: z.coerce.number().int().min(0).max(3).default(1),
-					color: z.boolean().default(true),
-					custom: z
+					level: z3.coerce.number().int().min(0).max(3).default(0),
+					error: z3.coerce.number().int().min(0).max(3).default(1),
+					color: z3.boolean().default(true),
+					custom: z3
 						.function()
-						.returns(z.union([z.void(), z.promise(z.void())]))
+						.returns(z3.union([z3.void(), z3.promise(z3.void())]))
 						.optional(),
 				})
 				.default({}),
@@ -239,7 +239,7 @@ export class NetHelpers {
 		return Promise.all([
 			NetHelpers.loggingFetchInit()
 				.then((parser) => parser.passthrough().parseAsync(init))
-				.then((parsed) => parsed as unknown as RI & z.output<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>),
+				.then((parsed) => parsed as unknown as RI & z3.output<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>),
 			import('./crypto.mts').then(({ CryptoHelpers }) => CryptoHelpers.base62secret(8)),
 		]).then(async ([init, id]) => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
