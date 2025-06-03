@@ -1,5 +1,15 @@
 # @chainfuse/helpers
 
+## 3.3.0
+
+### Minor Changes
+
+- [`804d3d2`](https://github.com/ChainFuse/packages/commit/804d3d21aa32b08246051bc7efbf986b1c1659c9) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add db helpers
+
+- [`19becc3`](https://github.com/ChainFuse/packages/commit/19becc3aaba7c8b4539b609771adc8a1d58e5357) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add sleep promise
+
+- [`dba2b1a`](https://github.com/ChainFuse/packages/commit/dba2b1aa4284a4e978d2694bdcc69eeac68fa420) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add function retry helper
+
 ## 3.2.12
 
 ### Patch Changes
