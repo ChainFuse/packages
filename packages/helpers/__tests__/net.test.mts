@@ -9,6 +9,7 @@ void describe('Logging fetch', () => {
 		});
 		ok(response.ok);
 
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const json = await response.json();
 		strictEqual(typeof json, 'object');
 	});
