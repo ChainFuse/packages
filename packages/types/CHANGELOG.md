@@ -1,5 +1,19 @@
 # @chainfuse/types
 
+## 2.10.20
+
+### Patch Changes
+
+- [#479](https://github.com/ChainFuse/packages/pull/479) [`eef0e80`](https://github.com/ChainFuse/packages/commit/eef0e800d029da0152159d261eac005f3fb3e656) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/google, openai
+
+- [#482](https://github.com/ChainFuse/packages/pull/482) [`15df591`](https://github.com/ChainFuse/packages/commit/15df591c018b73b3f5ecd5a055baa5b55c75f72f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+- [#480](https://github.com/ChainFuse/packages/pull/480) [`90f1a08`](https://github.com/ChainFuse/packages/commit/90f1a0869df64a66df1ce6cd10803e1d1a78196f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#483](https://github.com/ChainFuse/packages/pull/483) [`9686abc`](https://github.com/ChainFuse/packages/commit/9686abc61af7057e48e873eedd1d4e92c16eb44f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- [`851d225`](https://github.com/ChainFuse/packages/commit/851d225ec170c4e1eb1c6161f7cc08266f633569) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Update models
+
 ## 2.10.19
 
 ### Patch Changes
