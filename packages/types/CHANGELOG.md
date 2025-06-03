@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.10.19
+
+### Patch Changes
+
+- [#477](https://github.com/ChainFuse/packages/pull/477) [`c0ccafe`](https://github.com/ChainFuse/packages/commit/c0ccafec0a1eb0e72bbc67edbf313af870d37c22) Thanks [@georgeportillo](https://github.com/georgeportillo)! - helpers(feat): Change to top level imports
+
 ## 2.10.18
 
 ### Patch Changes
