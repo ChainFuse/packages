@@ -3,23 +3,13 @@ import { z as z4 } from 'zod/v4';
 
 export type D0Blob = [number, ...number[]];
 
+const prefixedUuidRegex = /^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i;
+
 /**
  * @deprecated
  */
-const PrefixedUuidRaw3 = z3
-	.string()
-	.trim()
-	.toLowerCase()
-	.min(38)
-	.max(40)
-	.regex(new RegExp(/^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i));
-export const PrefixedUuidRaw = z4
-	.string()
-	.trim()
-	.toLowerCase()
-	.min(38)
-	.max(40)
-	.regex(new RegExp(/^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i));
+const PrefixedUuidRaw3 = z3.string().trim().toLowerCase().min(38).max(40).regex(prefixedUuidRegex);
+export const PrefixedUuidRaw = z4.string().trim().toLowerCase().min(38).max(40).regex(prefixedUuidRegex);
 
 /**
  * @deprecated
