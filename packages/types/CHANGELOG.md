@@ -1,5 +1,19 @@
 # @chainfuse/types
 
+## 2.10.21
+
+### Patch Changes
+
+- [`83afbcf`](https://github.com/ChainFuse/packages/commit/83afbcfafb5a7226185d0a66bdea75dfddc5c8c5) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Base64 is case sensitive
+
+- [#488](https://github.com/ChainFuse/packages/pull/488) [`a848c0e`](https://github.com/ChainFuse/packages/commit/a848c0e794aaa1e8f954cf3d966aaeaed4724243) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump drizzle-orm
+
+- [#486](https://github.com/ChainFuse/packages/pull/486) [`9447335`](https://github.com/ChainFuse/packages/commit/94473350a7fc985d821da2f21bf59e450eec6717) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#487](https://github.com/ChainFuse/packages/pull/487) [`1f7c2c9`](https://github.com/ChainFuse/packages/commit/1f7c2c93bb7a4ee33ba9ea075465d2b2e382d126) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- [`ecd1ec0`](https://github.com/ChainFuse/packages/commit/ecd1ec0bcead62aeb4c23e073badda532126e7a1) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add ZodUUID with z3
+
 ## 2.10.20
 
 ### Patch Changes
