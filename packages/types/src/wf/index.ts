@@ -42,6 +42,6 @@ export const ZodUuidExportInput = z4.union([
 		.toLowerCase()
 		.length(32)
 		.refine((value) => import('validator/es/lib/isHexadecimal').then(({ default: isHexadecimal }) => isHexadecimal(value)).catch(() => import('validator').then(({ default: validator }) => validator.isHexadecimal(value)))),
-	z4.base64().trim().nonempty().toLowerCase(),
-	z4.base64url().trim().nonempty().toLowerCase(),
+	z4.base64().trim().nonempty(),
+	z4.base64url().trim().nonempty(),
 ]);
