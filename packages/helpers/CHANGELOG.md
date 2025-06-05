@@ -1,5 +1,13 @@
 # @chainfuse/helpers
 
+## 3.3.2
+
+### Patch Changes
+
+- [`52396d1`](https://github.com/ChainFuse/packages/commit/52396d1b451a750d595a8c99a4b35e6202ecf872) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Fix constructor arguments type
+
+- [`be5d8f7`](https://github.com/ChainFuse/packages/commit/be5d8f79a85268cbe067d6ba4aaea883ab9b44d3) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Fix dynamic imports
+
 ## 3.3.1
 
 ### Patch Changes
