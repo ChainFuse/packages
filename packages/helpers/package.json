@@ -46,32 +46,32 @@
 			"types": "./dist/index.d.mts"
 		},
 		"./buffers": {
-			"import": "./dist/buffers.js",
-			"types": "./dist/buffers.d.ts"
+			"import": "./dist/buffers.mjs",
+			"types": "./dist/buffers.d.mts"
 		},
 		"./common": {
-			"import": "./dist/common.js",
-			"types": "./dist/common.d.ts"
+			"import": "./dist/common.mjs",
+			"types": "./dist/common.d.mts"
 		},
 		"./crypto": {
-			"import": "./dist/crypto.js",
-			"types": "./dist/crypto.d.ts"
+			"import": "./dist/crypto.mjs",
+			"types": "./dist/crypto.d.mts"
 		},
 		"./db": {
-			"import": "./dist/db.js",
-			"types": "./dist/db.d.ts"
+			"import": "./dist/db.mjs",
+			"types": "./dist/db.d.mts"
 		},
 		"./discord": {
-			"import": "./dist/discord.js",
-			"types": "./dist/discord.d.ts"
+			"import": "./dist/discord.mjs",
+			"types": "./dist/discord.d.mts"
 		},
 		"./dns": {
-			"import": "./dist/dns.js",
-			"types": "./dist/dns.d.ts"
+			"import": "./dist/dns.mjs",
+			"types": "./dist/dns.d.mts"
 		},
 		"./net": {
-			"import": "./dist/net.js",
-			"types": "./dist/net.d.ts"
+			"import": "./dist/net.mjs",
+			"types": "./dist/net.d.mts"
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",
