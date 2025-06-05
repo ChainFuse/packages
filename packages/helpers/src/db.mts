@@ -35,7 +35,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	// for a specific table, so we can later use it for invalidation.
 	private usedTablesPerKey: Record<string, string[]> = {};
 
-	private static constructorArgs() {
+	public static constructorArgs() {
 		return z.object({
 			dbName: z
 				.string()
