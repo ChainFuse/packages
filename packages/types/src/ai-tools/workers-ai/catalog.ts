@@ -943,41 +943,6 @@ export const workersAiCatalog = {
 				},
 			],
 		},
-		'Object Detection': {
-			id: '9c178979-90d9-49d8-9e2c-0f1cf01815d4',
-			description: 'Object detection models can detect instances of objects like persons, faces, license plates, or others in an image. This task takes an image as input and returns a list of detected objects, each one containing a label, a probability score, and its surrounding box coordinates.',
-			models: [
-				{
-					id: 'd71b454b-1919-4cc7-a615-8827f34f72b3',
-					source: 1,
-					name: '@cf/facebook/triton-detr-resnet-50',
-					description: 'DEtection TRansformer (DETR) model trained end-to-end on COCO 2017 object detection (118k annotated images).',
-					created_at: '2025-05-29 11:20:49.014',
-					tags: [],
-					properties: {
-						beta: true,
-						price: [
-							{
-								unit: 'per inference request',
-								price: 0.0000075,
-								currency: 'USD',
-							},
-						],
-					},
-				},
-				{
-					id: '88c5e2c0-100c-40f9-86a1-ae68ff22ffa7',
-					source: 1,
-					name: '@cf/facebook/omni-detr-resnet-50',
-					description: 'DEtection TRansformer (DETR) model trained end-to-end on COCO 2017 object detection (118k annotated images).',
-					created_at: '2025-05-26 22:05:25.581',
-					tags: [],
-					properties: {
-						beta: true,
-					},
-				},
-			],
-		},
 		'Text-to-Speech': {
 			id: 'b52660a1-9a95-4ab2-8b1d-f232be34604a',
 			description: 'Text-to-Speech (TTS) is the task of generating natural sounding speech given text input. TTS models can be extended to have a single model that generates speech for multiple speakers and multiple languages.',
