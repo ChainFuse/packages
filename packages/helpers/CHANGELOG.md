@@ -1,5 +1,24 @@
 # @chainfuse/helpers
 
+## 3.4.0
+
+### Minor Changes
+
+- [`2ffe943`](https://github.com/ChainFuse/packages/commit/2ffe943fc69fa8a6893b60b95f49fcd626433ac7) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add cache purging to db cache
+
+### Patch Changes
+
+- [#491](https://github.com/ChainFuse/packages/pull/491) [`c7bf69d`](https://github.com/ChainFuse/packages/commit/c7bf69d3d57e26dc2fc20e9a45ffb36483154922) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump openai
+
+- [#493](https://github.com/ChainFuse/packages/pull/493) [`cbbf5c5`](https://github.com/ChainFuse/packages/commit/cbbf5c5d2f9466abaedfe7679a5ab28411ca2321) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#492](https://github.com/ChainFuse/packages/pull/492) [`32e908b`](https://github.com/ChainFuse/packages/commit/32e908b59aa82c32be8d6918faa453d43c1af1d9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#494](https://github.com/ChainFuse/packages/pull/494) [`1a292a9`](https://github.com/ChainFuse/packages/commit/1a292a9219101e8144ef2a638be7940dff223cf9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- Updated dependencies [[`c7bf69d`](https://github.com/ChainFuse/packages/commit/c7bf69d3d57e26dc2fc20e9a45ffb36483154922), [`cbbf5c5`](https://github.com/ChainFuse/packages/commit/cbbf5c5d2f9466abaedfe7679a5ab28411ca2321), [`32e908b`](https://github.com/ChainFuse/packages/commit/32e908b59aa82c32be8d6918faa453d43c1af1d9), [`1a292a9`](https://github.com/ChainFuse/packages/commit/1a292a9219101e8144ef2a638be7940dff223cf9)]:
+    - @chainfuse/types@2.10.22
+
 ## 3.3.2
 
 ### Patch Changes
