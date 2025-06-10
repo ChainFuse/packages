@@ -49,7 +49,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 				.int()
 				.nonnegative()
 				.default(5 * 60),
-			cachePurge: z.union([z.boolean(), z.date()]),
+			cachePurge: z.union([z.boolean(), z.date()]).default(false),
 			strategy: z.enum(['explicit', 'all']).default('explicit'),
 		});
 	}
