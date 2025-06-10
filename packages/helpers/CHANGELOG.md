@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 3.4.1
+
+### Patch Changes
+
+- [`91af7cb`](https://github.com/ChainFuse/packages/commit/91af7cbb4b14a6b3ab5ac3782822f6f048ba1929) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Make `cachePurge` `false` by default
+
 ## 3.4.0
 
 ### Minor Changes
