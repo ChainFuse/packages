@@ -32,8 +32,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	private globalTtl: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['cacheTTL'];
 	private ttlCutoff: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['cachePurge'];
 	private _strategy: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['strategy'];
-	// This object will be used to store which query keys were used
-	// for a specific table, so we can later use it for invalidation.
+	// This object will be used to store which query keys were used for a specific table, so we can later use it for invalidation.
 	private usedTablesPerKey: Record<string, string[]> = {};
 
 	public static constructorArgs() {
