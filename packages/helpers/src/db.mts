@@ -126,10 +126,10 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 				const responseDate = response.headers.get('Date');
 
 				if (responseDate) {
-					const cacheDate = new Date(responseDate);
+					const cachedDate = new Date(responseDate);
 
-					if (cacheDate < this.ttlCutoff) {
-						console.debug('SQLCache.get', 'cache purged due to ttlCutoff date check', { cacheDate, ttlCutoff: this.ttlCutoff });
+					if (cachedDate < this.ttlCutoff) {
+						console.debug('SQLCache.get', 'cache purged', { cachedDate, cutoff: this.ttlCutoff });
 						await this.cache.then((cache) => cache.delete(cacheKey));
 						return undefined;
 					}
