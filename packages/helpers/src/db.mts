@@ -30,6 +30,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	private dbType: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['dbType'];
 	private cache: Promise<Cache>;
 	private globalTtl: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['cacheTTL'];
+	private ttlCutoff: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['cachePurge'];
 	private _strategy: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['strategy'];
 	// This object will be used to store which query keys were used
 	// for a specific table, so we can later use it for invalidation.
@@ -49,6 +50,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 				.int()
 				.nonnegative()
 				.default(5 * 60),
+			cachePurge: z.union([z.boolean(), z.date()]),
 			strategy: z.enum(['explicit', 'all']).default('explicit'),
 		});
 	}
@@ -66,7 +68,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	 */
 	constructor(args: z.input<ReturnType<(typeof SQLCache)['constructorArgs']>>, cacheStore?: C) {
 		super();
-		const { dbName, dbType, cacheTTL, strategy } = SQLCache.constructorArgs().parse(args);
+		const { dbName, dbType, cacheTTL, cachePurge, strategy } = SQLCache.constructorArgs().parse(args);
 
 		this.dbName = dbName;
 		this.dbType = dbType;
@@ -78,6 +80,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 			throw new Error('Cache store must be a CacheStorage (or subclass/instance of)');
 		}
 		this.globalTtl = cacheTTL;
+		this.ttlCutoff = cachePurge;
 		this._strategy = strategy;
 	}
 
@@ -107,15 +110,39 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	 * @param key - A hashed query and parameters.
 	 */
 	override async get(key: string, _tables: string[], isTag: boolean): Promise<any[] | undefined> {
-		const response = await this.cache.then(async (cache) => cache.match(this.getCacheKey(isTag ? { tag: key } : { key })));
+		const cacheKey = this.getCacheKey(isTag ? { tag: key } : { key });
+		const response = await this.cache.then(async (cache) => cache.match(cacheKey));
 
 		console.debug('SQLCache.get', isTag ? 'tag' : 'key', key, response?.ok ? 'HIT' : 'MISS');
 
 		if (response) {
+			// Check if cache should be purged
+			if (this.ttlCutoff === true) {
+				console.debug('SQLCache.get', 'cache purged', this.ttlCutoff);
+				await this.cache.then((cache) => cache.delete(cacheKey));
+				return undefined;
+			}
+
+			if (this.ttlCutoff instanceof Date) {
+				const responseDate = response.headers.get('Date');
+
+				if (responseDate) {
+					const cacheDate = new Date(responseDate);
+
+					if (cacheDate < this.ttlCutoff) {
+						console.debug('SQLCache.get', 'cache purged due to ttlCutoff date check', { cacheDate, ttlCutoff: this.ttlCutoff });
+						await this.cache.then((cache) => cache.delete(cacheKey));
+						return undefined;
+					}
+				} else {
+					console.error('SQLCache.get', 'response does not have a Date header, cannot check against ttlCutoff date');
+				}
+			}
+
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			return response.json();
 		} else {
-			return response;
+			return undefined;
 		}
 	}
 
