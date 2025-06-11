@@ -1,5 +1,20 @@
 # @chainfuse/helpers
 
+## 3.4.2
+
+### Patch Changes
+
+- [#497](https://github.com/ChainFuse/packages/pull/497) [`efab64d`](https://github.com/ChainFuse/packages/commit/efab64db141a4704c5079786e22263e3a0705e70) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump workers-ai-provider
+
+- [#498](https://github.com/ChainFuse/packages/pull/498) [`2be158e`](https://github.com/ChainFuse/packages/commit/2be158e1e3aff429d0bbe265f13b659abb1b8998) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump tsx
+
+- [#499](https://github.com/ChainFuse/packages/pull/499) [`68384be`](https://github.com/ChainFuse/packages/commit/68384becfa05dbb3a2b6c0a779361e11e06a7592) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- [`33176c5`](https://github.com/ChainFuse/packages/commit/33176c57fb4a1362929f47c1680c7ced272e2bf8) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Fix cache dates
+
+- Updated dependencies [[`efab64d`](https://github.com/ChainFuse/packages/commit/efab64db141a4704c5079786e22263e3a0705e70), [`2be158e`](https://github.com/ChainFuse/packages/commit/2be158e1e3aff429d0bbe265f13b659abb1b8998), [`68384be`](https://github.com/ChainFuse/packages/commit/68384becfa05dbb3a2b6c0a779361e11e06a7592)]:
+    - @chainfuse/types@2.10.23
+
 ## 3.4.1
 
 ### Patch Changes
