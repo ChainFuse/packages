@@ -83,7 +83,7 @@
 		"drizzle-orm": "^0.44.2",
 		"strip-ansi": "^7.1.0",
 		"uuid": "^11.1.0",
-		"zod": "^3.25.57"
+		"zod": "^3.25.61"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20250610.0",

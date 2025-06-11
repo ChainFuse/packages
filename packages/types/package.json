@@ -99,7 +99,7 @@
 	"prettier": "@demosjarco/prettier-config",
 	"dependencies": {
 		"validator": "^13.15.15",
-		"zod": "^3.25.57"
+		"zod": "^3.25.61"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20250610.0",
