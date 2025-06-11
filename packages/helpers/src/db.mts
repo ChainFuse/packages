@@ -134,7 +134,9 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 						return undefined;
 					}
 				} else {
-					console.error('SQLCache.get', 'response does not have a Date header, cannot check against ttlCutoff date');
+					console.debug('SQLCache.get', 'cache purged', { responseDate });
+					await this.cache.then((cache) => cache.delete(cacheKey));
+					return undefined;
 				}
 			}
 
