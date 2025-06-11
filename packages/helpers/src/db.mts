@@ -101,7 +101,10 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	 * @returns A `Request` object representing the cache key, constructed with a URL based on the tag or key and the database configuration.
 	 */
 	private getCacheKey(tagOrKey: { tag: string } | { key: string }, init?: ConstructorParameters<typeof Request>[1]) {
-		return new Request(new URL(('tag' in tagOrKey ? ['tag', tagOrKey.tag] : ['key', tagOrKey.key]).join('/'), `https://${this.dbName}.${this.dbType}`), init);
+		const headers = new Headers(init?.headers);
+		if (!headers.get('Date')) headers.set('Date', new Date().toUTCString());
+
+		return new Request(new URL(('tag' in tagOrKey ? ['tag', tagOrKey.tag] : ['key', tagOrKey.key]).join('/'), `https://${this.dbName}.${this.dbType}`), { ...init, headers });
 	}
 
 	/**
