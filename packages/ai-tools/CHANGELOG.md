@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 0.13.23
+
+### Patch Changes
+
+- [#502](https://github.com/ChainFuse/packages/pull/502) [`622a443`](https://github.com/ChainFuse/packages/commit/622a4438798fd8de48a20991d7bcba7abe693b25) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- Updated dependencies [[`622a443`](https://github.com/ChainFuse/packages/commit/622a4438798fd8de48a20991d7bcba7abe693b25), [`34adf50`](https://github.com/ChainFuse/packages/commit/34adf502bdb14480bdfd036ef5791ff320a3ad99)]:
+    - @chainfuse/helpers@3.4.3
+    - @chainfuse/types@2.10.24
+
 ## 0.13.22
 
 ### Patch Changes
