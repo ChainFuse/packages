@@ -117,8 +117,20 @@ export class NetHelpers {
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 															// Wrap id in brackets
-															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value))
+															.map((value) => {
+																if (value === id) {
+																	const wrappedString = `[${stripAnsi(id)}]`;
+
+																	if (logging.color) {
+																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
+																	} else {
+																		return wrappedString;
+																	}
+																} else {
+																	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+																	return value;
+																}
+															})
 															// Strip out redundant parts of url
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
@@ -133,8 +145,20 @@ export class NetHelpers {
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 															// Wrap id in brackets
-															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value))
+															.map((value) => {
+																if (value === id) {
+																	const wrappedString = `[${stripAnsi(id)}]`;
+
+																	if (logging.color) {
+																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
+																	} else {
+																		return wrappedString;
+																	}
+																} else {
+																	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+																	return value;
+																}
+															})
 															// Strip out redundant parts of url
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
@@ -148,8 +172,20 @@ export class NetHelpers {
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 															// Wrap id in brackets
-															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value))
+															.map((value) => {
+																if (value === id) {
+																	const wrappedString = `[${stripAnsi(id)}]`;
+
+																	if (logging.color) {
+																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
+																	} else {
+																		return wrappedString;
+																	}
+																} else {
+																	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+																	return value;
+																}
+															})
 															// Strip out redundant parts of url
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
@@ -163,8 +199,20 @@ export class NetHelpers {
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value instanceof Date && !isNaN(value.getTime()) ? value.toISOString() : value))
 															// Wrap id in brackets
-															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-															.map((value) => (value === id ? chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(`[${stripAnsi(id)}]`) : value))
+															.map((value) => {
+																if (value === id) {
+																	const wrappedString = `[${stripAnsi(id)}]`;
+
+																	if (logging.color) {
+																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
+																	} else {
+																		return wrappedString;
+																	}
+																} else {
+																	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+																	return value;
+																}
+															})
 															// Strip out redundant parts of url
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
