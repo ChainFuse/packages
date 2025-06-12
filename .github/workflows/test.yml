@@ -10,15 +10,6 @@ on:
       - 'packages/*/package*.json'
       - 'tsconfig.json'
       - 'packages/*/tsconfig*.json'
-  pull_request:
-    paths:
-      - '.github/workflows/test.yml'
-      - 'packages/*/src/**'
-      - 'packages/*/__tests__/**'
-      - 'package*.json'
-      - 'packages/*/package*.json'
-      - 'tsconfig.json'
-      - 'packages/*/tsconfig*.json'
   pull_request_target:
     types:
       - opened
