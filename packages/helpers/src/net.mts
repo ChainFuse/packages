@@ -80,19 +80,15 @@ export class NetHelpers {
 
 										if (customHeaders.has('cf-ray')) {
 											args.splice(3, 0, customHeaders.get('cf-ray'));
-										}
 
-										if ('color' in logging && logging.color) {
-											await import('chalk')
-												.then(({ Chalk }) => {
-													const chalk = new Chalk({ level: 2 });
-
-													if (customHeaders.has('cf-ray')) {
-														args.splice(3, 1, chalk.rgb(255, 102, 51)(customHeaders.get('cf-ray')));
-													}
-												})
-												// eslint-disable-next-line @typescript-eslint/no-empty-function
-												.catch(() => {});
+											if ('color' in logging && logging.color) {
+												await import('chalk')
+													.then(({ Chalk }) => new Chalk({ level: 2 }))
+													// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+													.then((chalk) => args.splice(3, 1, chalk.rgb(255, 102, 51)(customHeaders.get('cf-ray'))))
+													// eslint-disable-next-line @typescript-eslint/no-empty-function
+													.catch(() => {});
+											}
 										}
 
 										if ('custom' in logging && logging.custom) {
