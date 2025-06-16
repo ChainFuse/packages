@@ -22,11 +22,7 @@ export const azureCatalog = [
 				outputTokenCost: 0.0000044,
 			},
 		],
-		imageModelAvailability: [
-			{
-				name: 'gpt-image-1',
-			},
-		],
+		imageModelAvailability: [],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -258,9 +254,6 @@ export const azureCatalog = [
 				outputTokenCost: 0.000066,
 			},
 			{
-				name: 'o3',
-			},
-			{
 				name: 'o3-mini',
 				inputTokenCost: 0.00000121,
 				outputTokenCost: 0.00000484,
@@ -317,9 +310,6 @@ export const azureCatalog = [
 				outputTokenCost: 0.0000044,
 			},
 			{
-				name: 'o3',
-			},
-			{
 				name: 'o3-mini',
 				inputTokenCost: 0.00000121,
 				outputTokenCost: 0.00000484,
@@ -374,9 +364,6 @@ export const azureCatalog = [
 				outputTokenCost: 0.000066,
 			},
 			{
-				name: 'o3',
-			},
-			{
 				name: 'o3-mini',
 				inputTokenCost: 0.00000121,
 				outputTokenCost: 0.00000484,
@@ -418,9 +405,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'o1',
-			},
-			{
-				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -469,9 +453,6 @@ export const azureCatalog = [
 				outputTokenCost: 0.000066,
 			},
 			{
-				name: 'o3',
-			},
-			{
 				name: 'o3-mini',
 				inputTokenCost: 0.00000121,
 				outputTokenCost: 0.00000484,
@@ -514,9 +495,6 @@ export const azureCatalog = [
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
-			},
-			{
-				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -567,9 +545,6 @@ export const azureCatalog = [
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
-			},
-			{
-				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -854,9 +829,6 @@ export const azureCatalog = [
 				outputTokenCost: 0.0000044,
 			},
 			{
-				name: 'o3',
-			},
-			{
 				name: 'o3-mini',
 				inputTokenCost: 0.00000121,
 				outputTokenCost: 0.00000484,
@@ -909,9 +881,6 @@ export const azureCatalog = [
 				name: 'o1-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
-			},
-			{
-				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -969,9 +938,6 @@ export const azureCatalog = [
 				outputTokenCost: 0.0000044,
 			},
 			{
-				name: 'o3',
-			},
-			{
 				name: 'o3-mini',
 				inputTokenCost: 0.00000121,
 				outputTokenCost: 0.00000484,
@@ -980,11 +946,7 @@ export const azureCatalog = [
 				name: 'o4-mini',
 			},
 		],
-		imageModelAvailability: [
-			{
-				name: 'gpt-image-1',
-			},
-		],
+		imageModelAvailability: [],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -1027,9 +989,6 @@ export const azureCatalog = [
 				name: 'o1-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
-			},
-			{
-				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -1085,9 +1044,6 @@ export const azureCatalog = [
 				name: 'o1-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
-			},
-			{
-				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -1147,9 +1103,6 @@ export const azureCatalog = [
 				name: 'o1-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
-			},
-			{
-				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
