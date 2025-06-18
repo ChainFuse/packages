@@ -925,17 +925,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '6706f19f-db63-4707-89b6-7bd2da607559',
-					source: 1,
-					name: '@cf/huggingface/omni-distilbert-sst-2-int8',
-					description: 'Distilled BERT model that was finetuned on SST-2 for sentiment classification.',
-					created_at: '2025-06-11 12:59:07.607',
-					tags: [],
-					properties: {
-						info: 'https://huggingface.co/Intel/distilbert-base-uncased-finetuned-sst-2-english-int8-static',
-					},
-				},
-				{
 					id: '145337e7-cec3-4ebb-8e78-16ddfc75e580',
 					source: 1,
 					name: '@cf/baai/bge-reranker-base',
