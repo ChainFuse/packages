@@ -748,6 +748,7 @@ export const workersAiCatalog = {
 					created_at: '2025-04-05 20:25:56.137',
 					tags: [],
 					properties: {
+						async_queue: true,
 						context_window: 131000,
 						price: [
 							{
