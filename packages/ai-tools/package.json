@@ -58,10 +58,10 @@
 		"ai": "^4.3.16",
 		"chalk": "^5.4.1",
 		"haversine-distance": "^1.2.3",
-		"workers-ai-provider": "^0.6.1"
+		"workers-ai-provider": "^0.7.0"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20250610.0",
-		"openai": "^5.3.0"
+		"openai": "^5.7.0"
 	}
 }
