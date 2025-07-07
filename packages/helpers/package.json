@@ -79,7 +79,7 @@
 		"@chainfuse/types": "^2.10.24",
 		"@discordjs/rest": "^2.5.1",
 		"chalk": "^5.4.1",
-		"cloudflare": "^4.3.0",
+		"cloudflare": "^4.4.1",
 		"drizzle-orm": "^0.44.2",
 		"strip-ansi": "^7.1.0",
 		"uuid": "^11.1.0",
