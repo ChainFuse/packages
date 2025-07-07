@@ -656,28 +656,18 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4.1',
-				inputTokenCost: 0.000002,
-				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.0000025,
-				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
-				inputTokenCost: 1.5e-7,
-				outputTokenCost: 6e-7,
 			},
 			{
 				name: 'o1',
-				inputTokenCost: 0.000015,
-				outputTokenCost: 0.00005999999999999999,
 			},
 			{
 				name: 'o3-mini',
-				inputTokenCost: 0.0000011,
-				outputTokenCost: 0.0000044,
 			},
 		],
 		imageModelAvailability: [],
