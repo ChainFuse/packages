@@ -77,7 +77,7 @@
 	"prettier": "@demosjarco/prettier-config",
 	"dependencies": {
 		"@chainfuse/types": "^2.10.24",
-		"@discordjs/rest": "^2.5.0",
+		"@discordjs/rest": "^2.5.1",
 		"chalk": "^5.4.1",
 		"cloudflare": "^4.3.0",
 		"drizzle-orm": "^0.44.2",
