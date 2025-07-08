@@ -1,5 +1,31 @@
 # @chainfuse/types
 
+## 2.10.25
+
+### Patch Changes
+
+- [#521](https://github.com/ChainFuse/packages/pull/521) [`a0dd0df`](https://github.com/ChainFuse/packages/commit/a0dd0df7c8ddabc3c58f9f3cb8e67c9a4121a193) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @azure/identity, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, workers-ai-provider, openai
+
+- [#506](https://github.com/ChainFuse/packages/pull/506) [`8b621e0`](https://github.com/ChainFuse/packages/commit/8b621e0ef4f4cea7fdda0faffe430f11c6077626) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump cloudflare
+
+- [#514](https://github.com/ChainFuse/packages/pull/514) [`3080e82`](https://github.com/ChainFuse/packages/commit/3080e826b1e7b4ddff32a75e611d3fcacd692f8e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, prettier, typescript-eslint
+
+- [#511](https://github.com/ChainFuse/packages/pull/511) [`d021b7a`](https://github.com/ChainFuse/packages/commit/d021b7af25bd2db2e8ca91e1e68b9eb769060e6f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @discordjs/rest
+
+- [`dd9684f`](https://github.com/ChainFuse/packages/commit/dd9684fa23af1f37059c75cf16d1dfbf6c8b0faf) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump haversine-distance
+
+- [`aa0e94d`](https://github.com/ChainFuse/packages/commit/aa0e94d9745ac247852f05d27f49aa6027852da9) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump @changesets/cli, lerna
+
+- [#507](https://github.com/ChainFuse/packages/pull/507) [`00a5667`](https://github.com/ChainFuse/packages/commit/00a5667f23aae78d420a70eec4be9fabc0cc4188) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump tsx
+
+- [#508](https://github.com/ChainFuse/packages/pull/508) [`a46798c`](https://github.com/ChainFuse/packages/commit/a46798c5f1cdcdb4e829c84b0ff0f03c7f756822) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types, @types/validator
+
+- [#522](https://github.com/ChainFuse/packages/pull/522) [`afca1a5`](https://github.com/ChainFuse/packages/commit/afca1a50a881814a6653b96a0267e6c76a9c0198) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#510](https://github.com/ChainFuse/packages/pull/510) [`cfd4fcc`](https://github.com/ChainFuse/packages/commit/cfd4fcc268da9c98348e5d1306909f3332767f15) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- [#520](https://github.com/ChainFuse/packages/pull/520) [`74256b9`](https://github.com/ChainFuse/packages/commit/74256b9033c7f4e7a90ed7b5a2d9de1de5c87337) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
 ## 2.10.24
 
 ### Patch Changes
