@@ -36,16 +36,16 @@ export class DiscordHelpers {
 	}
 
 	public static disordRestLogging() {
-		return import('zod').then(({ z }) =>
-			z
+		return import('zod/v3').then(({ z: z3 }) =>
+			z3
 				.object({
-					level: z.coerce.number().int().min(0).max(4).default(0),
-					error: z.coerce.number().int().min(0).max(4).default(1),
-					color: z.boolean().default(true),
-					custom: z
+					level: z3.coerce.number().int().min(0).max(4).default(0),
+					error: z3.coerce.number().int().min(0).max(4).default(1),
+					color: z3.boolean().default(true),
+					custom: z3
 						.function()
 						.args()
-						.returns(z.union([z.void(), z.promise(z.void())]))
+						.returns(z3.union([z3.void(), z3.promise(z3.void())]))
 						.optional(),
 				})
 				.default({}),
