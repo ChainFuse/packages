@@ -86,7 +86,7 @@
 		"zod": "^3.25.76"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20250708.0",
-		"@types/node": "^22.16.0"
+		"@cloudflare/workers-types": "^4.20250715.0",
+		"@types/node": "^22.16.4"
 	}
 }
