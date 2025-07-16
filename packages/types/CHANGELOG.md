@@ -1,5 +1,19 @@
 # @chainfuse/types
 
+## 2.10.26
+
+### Patch Changes
+
+- [#525](https://github.com/ChainFuse/packages/pull/525) [`06ac0e6`](https://github.com/ChainFuse/packages/commit/06ac0e6977a9731f2207354a786baf9bcfabbee5) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/openai-compatible, ai, openai
+
+- [#527](https://github.com/ChainFuse/packages/pull/527) [`ce2e0e3`](https://github.com/ChainFuse/packages/commit/ce2e0e39748c0489648c994fc791bcf87ce8b38d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+- [#528](https://github.com/ChainFuse/packages/pull/528) [`394d4b7`](https://github.com/ChainFuse/packages/commit/394d4b7f048efb92903cb381c709d760bd4da8ce) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump drizzle-orm
+
+- [#523](https://github.com/ChainFuse/packages/pull/523) [`054cc6c`](https://github.com/ChainFuse/packages/commit/054cc6caff59f4c2952383174fd9fcdab30e2268) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#524](https://github.com/ChainFuse/packages/pull/524) [`88bd33b`](https://github.com/ChainFuse/packages/commit/88bd33b826a4802ce5d82547c5a0123ecb77954a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump zod
+
 ## 2.10.25
 
 ### Patch Changes
