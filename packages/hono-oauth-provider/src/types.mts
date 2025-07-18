@@ -2,63 +2,69 @@ import type { Context, Env } from 'hono';
 import { z } from 'zod';
 
 /**
- * OAuth 2.1 Provider Configuration Options
+ * Zod schema for OAuth 2.1 Provider Options validation
+ * Note: Function validation is simplified to avoid Zod v4 function API complexities
  */
-export interface OAuth21ProviderOptions {
+export const oauth21ProviderOptionsSchema = z.object({
 	/**
 	 * URL of the OAuth authorization endpoint where users can grant permissions.
 	 * This URL is used in OAuth metadata and is not handled by the provider itself.
 	 */
-	authorizeEndpoint: string;
+	authorizeEndpoint: z.string().url('Authorize endpoint must be a valid URL'),
 
 	/**
 	 * URL of the token endpoint which the provider will implement.
 	 * This endpoint handles token issuance, refresh, and revocation.
 	 */
-	tokenEndpoint: string;
+	tokenEndpoint: z.string().url('Token endpoint must be a valid URL'),
 
 	/**
 	 * Optional URL for the client registration endpoint.
 	 * If provided, the provider will implement dynamic client registration.
 	 */
-	clientRegistrationEndpoint?: string;
+	clientRegistrationEndpoint: z.string().url('Client registration endpoint must be a valid URL').optional(),
 
 	/**
 	 * Time-to-live for access tokens in seconds.
 	 * Defaults to 1 hour (3600 seconds) if not specified.
 	 */
-	accessTokenTTL?: number;
+	accessTokenTTL: z.number().int().positive('Access token TTL must be a positive integer').max(86400, 'Access token TTL cannot exceed 24 hours').optional(),
 
 	/**
 	 * List of scopes supported by this OAuth provider.
 	 * If not provided, the 'scopes_supported' field will be omitted from the OAuth metadata.
 	 */
-	scopesSupported?: string[];
+	scopesSupported: z.array(z.string()).optional(),
 
 	/**
 	 * Controls whether the OAuth implicit flow is allowed.
 	 * This flow is discouraged in OAuth 2.1 due to security concerns.
 	 * Defaults to false.
 	 */
-	allowImplicitFlow?: boolean;
+	allowImplicitFlow: z.boolean().optional(),
 
 	/**
 	 * Controls whether public clients (clients without a secret, like SPAs)
 	 * can register via the dynamic client registration endpoint.
 	 * Defaults to false.
 	 */
-	disallowPublicClientRegistration?: boolean;
+	disallowPublicClientRegistration: z.boolean().optional(),
 
 	/**
 	 * Storage callbacks for OAuth data persistence
 	 */
-	storage: OAuthStorageCallbacks;
+	storage: z.object({
+		get: z.any(), // Function validation simplified for Zod v4 compatibility
+		put: z.any(), // Function validation simplified for Zod v4 compatibility
+		delete: z.any(), // Function validation simplified for Zod v4 compatibility
+		list: z.any(), // Function validation simplified for Zod v4 compatibility
+	}),
 
 	/**
 	 * Optional callback function that is called during token exchange.
 	 * This allows updating the props stored in both the access token and the grant.
 	 */
-	tokenExchangeCallback?: (options: TokenExchangeCallbackOptions) => Promise<TokenExchangeCallbackResult | void> | TokenExchangeCallbackResult | void;
+	tokenExchangeCallback: z.any().optional(), // Function validation simplified for Zod v4 compatibility
 
 	/**
 	 * Optional callback function that is called whenever the OAuthProvider returns an error response
@@ -66,30 +72,20 @@ export interface OAuth21ProviderOptions {
 	 *
 	 * If the function returns a Response, that will be used in place of the OAuthProvider's default one.
 	 */
-	onError?: (error: { code: string; description: string; status: number; headers: Record<string, string> }) => Response | void;
-}
+	onError: z.any().optional(), // Function validation simplified for Zod v4 compatibility
+});
 
 /**
- * Zod schema for OAuth 2.1 Provider Options validation
- * Note: Function validation is simplified to avoid Zod v4 function API complexities
+ * OAuth 2.1 Provider Configuration Options (input type)
+ * Dynamically derived from the Zod schema
  */
-export const oauth21ProviderOptionsSchema = z.object({
-	authorizeEndpoint: z.string().url('Authorize endpoint must be a valid URL'),
-	tokenEndpoint: z.string().url('Token endpoint must be a valid URL'),
-	clientRegistrationEndpoint: z.string().url('Client registration endpoint must be a valid URL').optional(),
-	accessTokenTTL: z.number().int().positive('Access token TTL must be a positive integer').max(86400, 'Access token TTL cannot exceed 24 hours').optional(),
-	scopesSupported: z.array(z.string()).optional(),
-	allowImplicitFlow: z.boolean().optional(),
-	disallowPublicClientRegistration: z.boolean().optional(),
-	storage: z.object({
-		get: z.any(), // Function validation simplified
-		put: z.any(), // Function validation simplified
-		delete: z.any(), // Function validation simplified
-		list: z.any(), // Function validation simplified
-	}),
-	tokenExchangeCallback: z.any().optional(), // Function validation simplified
-	onError: z.any().optional(), // Function validation simplified
-});
+export type OAuth21ProviderOptions = z.input<typeof oauth21ProviderOptionsSchema>;
+
+/**
+ * OAuth 2.1 Provider Configuration Options (output type)
+ * Dynamically derived from the Zod schema after validation
+ */
+export type OAuth21ProviderOptionsOutput = z.output<typeof oauth21ProviderOptionsSchema>;
 
 /**
  * Storage callback functions for OAuth data persistence
@@ -130,6 +126,77 @@ export interface OAuthStorageCallbacks {
 		cursor?: string;
 	}>;
 }
+
+/**
+ * Options for token exchange callback functions
+ */
+export interface TokenExchangeCallbackOptions {
+	/**
+	 * The type of grant being processed.
+	 * 'authorization_code' for initial code exchange,
+	 * 'refresh_token' for refresh token exchange.
+	 */
+	grantType: 'authorization_code' | 'refresh_token';
+
+	/**
+	 * Client that received this grant
+	 */
+	clientId: string;
+
+	/**
+	 * User who authorized this grant
+	 */
+	userId: string;
+
+	/**
+	 * List of scopes that were granted
+	 */
+	scope: string[];
+
+	/**
+	 * Application-specific properties currently associated with this grant
+	 */
+	props: Record<string, unknown>;
+}
+
+/**
+ * Result of a token exchange callback function.
+ * Allows updating the props stored in both the access token and the grant.
+ */
+export interface TokenExchangeCallbackResult {
+	/**
+	 * New props to be stored specifically with the access token.
+	 * If not provided but newProps is, the access token will use newProps.
+	 * If neither is provided, the original props will be used.
+	 */
+	accessTokenProps?: Record<string, unknown>;
+
+	/**
+	 * New props to replace the props stored in the grant itself.
+	 * These props will be used for all future token refreshes.
+	 * If accessTokenProps is not provided, these props will also be used for the current access token.
+	 * If not provided, the original props will be used.
+	 */
+	newProps?: Record<string, unknown>;
+
+	/**
+	 * Override the default access token TTL (time-to-live) for this specific token.
+	 * This is especially useful when the application is also an OAuth client to another service
+	 * and wants to match its access token TTL to the upstream access token TTL.
+	 * Value should be in seconds.
+	 */
+	accessTokenTTL?: number;
+}
+
+/**
+ * Error callback function type
+ */
+export type OAuthErrorCallback = (error: { code: string; description: string; status: number; headers: Record<string, string> }) => Response | void;
+
+/**
+ * Token exchange callback function type
+ */
+export type TokenExchangeCallback = (options: TokenExchangeCallbackOptions) => Promise<TokenExchangeCallbackResult | void> | TokenExchangeCallbackResult | void;
 
 /**
  * OAuth client registration information
@@ -486,67 +553,6 @@ export interface GrantSummary {
 	 * Unix timestamp when the grant was created
 	 */
 	createdAt: number;
-}
-
-/**
- * Options for token exchange callback functions
- */
-export interface TokenExchangeCallbackOptions {
-	/**
-	 * The type of grant being processed.
-	 * 'authorization_code' for initial code exchange,
-	 * 'refresh_token' for refresh token exchange.
-	 */
-	grantType: 'authorization_code' | 'refresh_token';
-
-	/**
-	 * Client that received this grant
-	 */
-	clientId: string;
-
-	/**
-	 * User who authorized this grant
-	 */
-	userId: string;
-
-	/**
-	 * List of scopes that were granted
-	 */
-	scope: string[];
-
-	/**
-	 * Application-specific properties currently associated with this grant
-	 */
-	props: Record<string, unknown>;
-}
-
-/**
- * Result of a token exchange callback function.
- * Allows updating the props stored in both the access token and the grant.
- */
-export interface TokenExchangeCallbackResult {
-	/**
-	 * New props to be stored specifically with the access token.
-	 * If not provided but newProps is, the access token will use newProps.
-	 * If neither is provided, the original props will be used.
-	 */
-	accessTokenProps?: Record<string, unknown>;
-
-	/**
-	 * New props to replace the props stored in the grant itself.
-	 * These props will be used for all future token refreshes.
-	 * If accessTokenProps is not provided, these props will also be used for the current access token.
-	 * If not provided, the original props will be used.
-	 */
-	newProps?: Record<string, unknown>;
-
-	/**
-	 * Override the default access token TTL (time-to-live) for this specific token.
-	 * This is especially useful when the application is also an OAuth client to another service
-	 * and wants to match its access token TTL to the upstream access token TTL.
-	 * Value should be in seconds.
-	 */
-	accessTokenTTL?: number;
 }
 
 /**
