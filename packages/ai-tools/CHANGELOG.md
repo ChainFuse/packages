@@ -1,5 +1,19 @@
 # @chainfuse/ai-tools
 
+## 0.13.26
+
+### Patch Changes
+
+- [#530](https://github.com/ChainFuse/packages/pull/530) [`5e7ecde`](https://github.com/ChainFuse/packages/commit/5e7ecde7e0255c13e9ddfdbfcca827aa93051089) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump openai
+
+- [#531](https://github.com/ChainFuse/packages/pull/531) [`c98376e`](https://github.com/ChainFuse/packages/commit/c98376ef6d406fb53c7c8ebd75ffb7c719dc5e78) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump cloudflare
+
+- [#532](https://github.com/ChainFuse/packages/pull/532) [`519e852`](https://github.com/ChainFuse/packages/commit/519e8526537e50addffe9416faec02ad97b53354) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- Updated dependencies [[`5e7ecde`](https://github.com/ChainFuse/packages/commit/5e7ecde7e0255c13e9ddfdbfcca827aa93051089), [`c98376e`](https://github.com/ChainFuse/packages/commit/c98376ef6d406fb53c7c8ebd75ffb7c719dc5e78), [`519e852`](https://github.com/ChainFuse/packages/commit/519e8526537e50addffe9416faec02ad97b53354)]:
+    - @chainfuse/helpers@3.4.6
+    - @chainfuse/types@2.10.27
+
 ## 0.13.25
 
 ### Patch Changes
