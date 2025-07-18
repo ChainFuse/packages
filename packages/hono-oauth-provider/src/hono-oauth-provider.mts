@@ -2,6 +2,7 @@ import type { Context, MiddlewareHandler } from 'hono';
 import { Hono } from 'hono';
 import { createMiddleware } from 'hono/factory';
 import type { AuthRequest, ClientInfo, CompleteAuthorizationOptions, Grant, GrantSummary, ListOptions, ListResult, OAuth21Context, OAuth21ProviderOptions, OAuthHelpers, OAuthStorageCallbacks, Token, TokenExchangeCallbackOptions } from './types.mjs';
+import { oauth21ProviderOptionsSchema } from './types.mjs';
 
 // Constants
 const DEFAULT_ACCESS_TOKEN_TTL = 60 * 60; // 1 hour
@@ -19,6 +20,13 @@ export class OAuth21Provider {
 	private app: Hono;
 
 	constructor(options: OAuth21ProviderOptions) {
+		// Validate options using Zod schema
+		const validationResult = oauth21ProviderOptionsSchema.safeParse(options);
+		if (!validationResult.success) {
+			const errorMessages = validationResult.error.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`).join(', ');
+			throw new Error(`Invalid OAuth provider options: ${errorMessages}`);
+		}
+
 		this.options = {
 			accessTokenTTL: DEFAULT_ACCESS_TOKEN_TTL,
 			allowImplicitFlow: false,
