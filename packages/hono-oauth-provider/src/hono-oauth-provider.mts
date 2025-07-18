@@ -1,0 +1,1260 @@
+import type { Context, MiddlewareHandler } from 'hono';
+import { Hono } from 'hono';
+import { createMiddleware } from 'hono/factory';
+import type { AuthRequest, ClientInfo, CompleteAuthorizationOptions, Grant, GrantSummary, ListOptions, ListResult, OAuth21Context, OAuth21ProviderOptions, OAuthHelpers, OAuthStorageCallbacks, Token, TokenExchangeCallbackOptions } from './types.mjs';
+
+// Constants
+const DEFAULT_ACCESS_TOKEN_TTL = 60 * 60; // 1 hour
+const TOKEN_LENGTH = 32;
+
+// Static HMAC key for wrapping key derivation
+const WRAPPING_KEY_HMAC_KEY = new Uint8Array([0x22, 0x7e, 0x26, 0x86, 0x8d, 0xf1, 0xe1, 0x6d, 0x80, 0x70, 0xea, 0x17, 0x97, 0x5b, 0x47, 0xa6, 0x82, 0x18, 0xfa, 0x87, 0x28, 0xae, 0xde, 0x85, 0xb5, 0x1d, 0x4a, 0xd9, 0x96, 0xca, 0xca, 0x43]);
+
+/**
+ * OAuth 2.1 Provider for Hono
+ * Creates a mini Hono app that can be mounted with `.route()` to handle OAuth endpoints
+ */
+export class OAuth21Provider {
+	private options: Required<OAuth21ProviderOptions>;
+	private app: Hono;
+
+	constructor(options: OAuth21ProviderOptions) {
+		this.options = {
+			accessTokenTTL: DEFAULT_ACCESS_TOKEN_TTL,
+			allowImplicitFlow: false,
+			disallowPublicClientRegistration: false,
+			onError: ({ status, code, description }) => console.warn(`OAuth error response: ${status} ${code} - ${description}`),
+			...options,
+		} as Required<OAuth21ProviderOptions>;
+
+		this.app = new Hono();
+		this.setupRoutes();
+	}
+
+	/**
+	 * Get the Hono app instance for mounting with `.route()`
+	 */
+	getApp(): Hono {
+		return this.app;
+	}
+
+	/**
+	 * Create middleware that validates OAuth tokens and adds user context
+	 */
+	createAuthMiddleware(): MiddlewareHandler {
+		return createMiddleware(async (c: Context, next): Promise<Response | void> => {
+			const authHeader = c.req.header('Authorization');
+
+			if (!authHeader?.startsWith('Bearer ')) {
+				return this.createErrorResponse('invalid_token', 'Missing or invalid access token', 401, {
+					'WWW-Authenticate': 'Bearer realm="OAuth", error="invalid_token", error_description="Missing or invalid access token"',
+				});
+			}
+
+			const accessToken = authHeader.substring(7);
+			const tokenParts = accessToken.split(':');
+
+			if (tokenParts.length !== 3) {
+				return this.createErrorResponse('invalid_token', 'Invalid token format', 401, {
+					'WWW-Authenticate': 'Bearer realm="OAuth", error="invalid_token"',
+				});
+			}
+
+			const [userId, grantId] = tokenParts;
+			const accessTokenId = await this.generateTokenId(accessToken);
+			const tokenKey = `token:${userId}:${grantId}:${accessTokenId}`;
+
+			const tokenData = await this.options.storage.get<Token>(tokenKey);
+
+			if (!tokenData) {
+				return this.createErrorResponse('invalid_token', 'Invalid access token', 401, {
+					'WWW-Authenticate': 'Bearer realm="OAuth", error="invalid_token"',
+				});
+			}
+
+			const now = Math.floor(Date.now() / 1000);
+			if (tokenData.expiresAt < now) {
+				return this.createErrorResponse('invalid_token', 'Access token expired', 401, {
+					'WWW-Authenticate': 'Bearer realm="OAuth", error="invalid_token"',
+				});
+			} // Unwrap the encryption key and decrypt props
+			const encryptionKey = await this.unwrapKeyWithToken(accessToken, tokenData.wrappedEncryptionKey);
+			const decryptedProps = await this.decryptProps(encryptionKey, tokenData.grant.encryptedProps);
+
+			// Add user context to the request
+			const oauthContext = c as OAuth21Context;
+			oauthContext.user = {
+				userId: tokenData.userId,
+				clientId: tokenData.grant.clientId,
+				scope: tokenData.grant.scope,
+				props: decryptedProps,
+			};
+
+			await next();
+		});
+	}
+
+	/**
+	 * Create middleware that adds OAuth helpers to the context
+	 */
+	createHelpersMiddleware(): MiddlewareHandler {
+		return createMiddleware(async (c: Context, next) => {
+			const oauthContext = c as OAuth21Context;
+			oauthContext.oauth = new OAuthHelpersImpl(this.options.storage, this);
+			await next();
+		});
+	}
+
+	private setupRoutes(): void {
+		// Add CORS middleware
+		this.app.use('*', async (c, next): Promise<Response | void> => {
+			if (c.req.method === 'OPTIONS') {
+				const origin = c.req.header('Origin');
+				if (origin) {
+					c.header('Access-Control-Allow-Origin', origin);
+					c.header('Access-Control-Allow-Methods', '*');
+					c.header('Access-Control-Allow-Headers', 'Authorization, *');
+					c.header('Access-Control-Max-Age', '86400');
+				}
+				return new Response('', { status: 204 });
+			}
+			await next();
+			const origin = c.req.header('Origin');
+			if (origin) {
+				c.header('Access-Control-Allow-Origin', origin);
+				c.header('Access-Control-Allow-Methods', '*');
+				c.header('Access-Control-Allow-Headers', 'Authorization, *');
+				c.header('Access-Control-Max-Age', '86400');
+			}
+		});
+
+		// Add OAuth helpers middleware
+		this.app.use('*', this.createHelpersMiddleware());
+
+		// OAuth metadata discovery endpoint
+		this.app.get('/.well-known/oauth-authorization-server', async (c) => {
+			return this.handleMetadataDiscovery(c);
+		});
+
+		// Token endpoint
+		this.app.post('/token', async (c) => {
+			return this.handleTokenRequest(c);
+		});
+
+		// Client registration endpoint
+		if (this.options.clientRegistrationEndpoint) {
+			this.app.post('/register', async (c) => {
+				return this.handleClientRegistration(c);
+			});
+		}
+	}
+
+	private async handleMetadataDiscovery(c: Context): Promise<Response> {
+		const url = new URL(c.req.url);
+		const baseUrl = `${url.protocol}//${url.host}`;
+
+		const responseTypesSupported = ['code'];
+		if (this.options.allowImplicitFlow) {
+			responseTypesSupported.push('token');
+		}
+
+		const metadata = {
+			issuer: baseUrl,
+			authorization_endpoint: this.getFullEndpointUrl(this.options.authorizeEndpoint, url),
+			token_endpoint: this.getFullEndpointUrl(this.options.tokenEndpoint, url),
+			registration_endpoint: this.options.clientRegistrationEndpoint ? this.getFullEndpointUrl(this.options.clientRegistrationEndpoint, url) : undefined,
+			scopes_supported: this.options.scopesSupported,
+			response_types_supported: responseTypesSupported,
+			response_modes_supported: ['query'],
+			grant_types_supported: ['authorization_code', 'refresh_token'],
+			token_endpoint_auth_methods_supported: ['client_secret_basic', 'client_secret_post', 'none'],
+			revocation_endpoint: this.getFullEndpointUrl(this.options.tokenEndpoint, url),
+			code_challenge_methods_supported: ['plain', 'S256'],
+		};
+
+		return c.json(metadata);
+	}
+
+	private async handleTokenRequest(c: Context): Promise<Response> {
+		const contentType = c.req.header('Content-Type') ?? '';
+		if (!contentType.includes('application/x-www-form-urlencoded')) {
+			return this.createErrorResponse('invalid_request', 'Content-Type must be application/x-www-form-urlencoded', 400);
+		}
+
+		const body = await c.req.parseBody();
+		const authHeader = c.req.header('Authorization');
+
+		let clientId = '';
+		let clientSecret = '';
+
+		if (authHeader?.startsWith('Basic ')) {
+			const credentials = atob(authHeader.substring(6));
+			const [id, secret] = credentials.split(':', 2);
+			clientId = decodeURIComponent(id ?? '');
+			clientSecret = decodeURIComponent(secret ?? '');
+		} else {
+			clientId = (body['client_id'] as string) || '';
+			clientSecret = (body['client_secret'] as string) || '';
+		}
+
+		if (!clientId) {
+			return this.createErrorResponse('invalid_client', 'Client ID is required', 401);
+		}
+
+		const clientInfo = await this.getClient(clientId);
+		if (!clientInfo) {
+			return this.createErrorResponse('invalid_client', 'Client not found', 401);
+		}
+
+		const isPublicClient = clientInfo.tokenEndpointAuthMethod === 'none';
+
+		if (!isPublicClient) {
+			if (!clientSecret) {
+				return this.createErrorResponse('invalid_client', 'Client authentication failed: missing client_secret', 401);
+			}
+
+			if (!clientInfo.clientSecret) {
+				return this.createErrorResponse('invalid_client', 'Client authentication failed: client has no registered secret', 401);
+			}
+
+			const providedSecretHash = await this.hashSecret(clientSecret);
+			if (providedSecretHash !== clientInfo.clientSecret) {
+				return this.createErrorResponse('invalid_client', 'Client authentication failed: invalid client_secret', 401);
+			}
+		}
+
+		const grantType = body['grant_type'] as string;
+
+		if (grantType === 'authorization_code') {
+			return this.handleAuthorizationCodeGrant(c, body, clientInfo);
+		} else if (grantType === 'refresh_token') {
+			return this.handleRefreshTokenGrant(c, body, clientInfo);
+		} else {
+			return this.createErrorResponse('unsupported_grant_type', 'Grant type not supported');
+		}
+	}
+
+	private async handleAuthorizationCodeGrant(c: Context, body: Record<string, unknown>, clientInfo: ClientInfo): Promise<Response> {
+		const code = body['code'] as string;
+		const redirectUri = body['redirect_uri'] as string;
+		const codeVerifier = body['code_verifier'] as string;
+
+		if (!code) {
+			return this.createErrorResponse('invalid_request', 'Authorization code is required');
+		}
+
+		const codeParts = code.split(':');
+		if (codeParts.length !== 3) {
+			return this.createErrorResponse('invalid_grant', 'Invalid authorization code format');
+		}
+
+		const [userId, grantId] = codeParts;
+		if (!userId || !grantId) {
+			return this.createErrorResponse('invalid_grant', 'Invalid authorization code format');
+		}
+		const grantKey = `grant:${userId}:${grantId}`;
+		const grantData = await this.options.storage.get<Grant>(grantKey);
+
+		if (!grantData) {
+			return this.createErrorResponse('invalid_grant', 'Grant not found or authorization code expired');
+		}
+
+		if (!grantData.authCodeId) {
+			return this.createErrorResponse('invalid_grant', 'Authorization code already used');
+		}
+
+		const codeHash = await this.hashSecret(code);
+		if (codeHash !== grantData.authCodeId) {
+			return this.createErrorResponse('invalid_grant', 'Invalid authorization code');
+		}
+
+		if (grantData.clientId !== clientInfo.clientId) {
+			return this.createErrorResponse('invalid_grant', 'Client ID mismatch');
+		}
+
+		const isPkceEnabled = Boolean(grantData.codeChallenge);
+
+		if (!redirectUri && !isPkceEnabled) {
+			return this.createErrorResponse('invalid_request', 'redirect_uri is required when not using PKCE');
+		}
+
+		if (redirectUri && !clientInfo.redirectUris.includes(redirectUri)) {
+			return this.createErrorResponse('invalid_grant', 'Invalid redirect URI');
+		}
+
+		if (!isPkceEnabled && codeVerifier) {
+			return this.createErrorResponse('invalid_request', 'code_verifier provided for a flow that did not use PKCE');
+		}
+
+		if (isPkceEnabled) {
+			if (!codeVerifier) {
+				return this.createErrorResponse('invalid_request', 'code_verifier is required for PKCE');
+			}
+
+			let calculatedChallenge: string;
+			if (grantData.codeChallengeMethod === 'S256') {
+				const encoder = new TextEncoder();
+				const data = encoder.encode(codeVerifier);
+				const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+				const hashArray = Array.from(new Uint8Array(hashBuffer));
+				calculatedChallenge = this.base64UrlEncode(String.fromCharCode(...hashArray));
+			} else {
+				calculatedChallenge = codeVerifier;
+			}
+
+			if (calculatedChallenge !== grantData.codeChallenge) {
+				return this.createErrorResponse('invalid_grant', 'Invalid PKCE code_verifier');
+			}
+		}
+
+		// Generate tokens
+		const accessTokenSecret = this.generateRandomString(TOKEN_LENGTH);
+		const refreshTokenSecret = this.generateRandomString(TOKEN_LENGTH);
+
+		const accessToken = `${userId}:${grantId}:${accessTokenSecret}`;
+		const refreshToken = `${userId}:${grantId}:${refreshTokenSecret}`;
+
+		const accessTokenId = await this.generateTokenId(accessToken);
+		const refreshTokenId = await this.generateTokenId(refreshToken);
+
+		let accessTokenTTL = this.options.accessTokenTTL;
+
+		// Get encryption key
+		const encryptionKey = await this.unwrapKeyWithToken(code, grantData.authCodeWrappedKey!);
+
+		let grantEncryptionKey = encryptionKey;
+		let accessTokenEncryptionKey = encryptionKey;
+		let encryptedAccessTokenProps = grantData.encryptedProps;
+
+		// Process token exchange callback if provided
+		if (this.options.tokenExchangeCallback) {
+			const decryptedProps = await this.decryptProps(encryptionKey, grantData.encryptedProps);
+			let grantProps = decryptedProps;
+			let accessTokenProps = decryptedProps;
+
+			const callbackOptions: TokenExchangeCallbackOptions = {
+				grantType: 'authorization_code',
+				clientId: clientInfo.clientId,
+				userId: userId,
+				scope: grantData.scope,
+				props: decryptedProps,
+			};
+
+			const callbackResult = await Promise.resolve(this.options.tokenExchangeCallback(callbackOptions));
+
+			if (callbackResult) {
+				if (callbackResult.newProps) {
+					grantProps = callbackResult.newProps;
+					if (!callbackResult.accessTokenProps) {
+						accessTokenProps = callbackResult.newProps;
+					}
+				}
+
+				if (callbackResult.accessTokenProps) {
+					accessTokenProps = callbackResult.accessTokenProps;
+				}
+
+				if (callbackResult.accessTokenTTL !== undefined) {
+					accessTokenTTL = callbackResult.accessTokenTTL;
+				}
+			}
+
+			// Re-encrypt props
+			const grantResult = await this.encryptProps(grantProps);
+			grantData.encryptedProps = grantResult.encryptedData;
+			grantEncryptionKey = grantResult.key;
+
+			if (accessTokenProps !== grantProps) {
+				const tokenResult = await this.encryptProps(accessTokenProps);
+				encryptedAccessTokenProps = tokenResult.encryptedData;
+				accessTokenEncryptionKey = tokenResult.key;
+			} else {
+				encryptedAccessTokenProps = grantData.encryptedProps;
+				accessTokenEncryptionKey = grantEncryptionKey;
+			}
+		}
+
+		const now = Math.floor(Date.now() / 1000);
+		const accessTokenExpiresAt = now + accessTokenTTL;
+
+		// Wrap keys
+		const accessTokenWrappedKey = await this.wrapKeyWithToken(accessToken, accessTokenEncryptionKey);
+		const refreshTokenWrappedKey = await this.wrapKeyWithToken(refreshToken, grantEncryptionKey);
+
+		// Update grant
+		delete grantData.authCodeId;
+		delete grantData.codeChallenge;
+		delete grantData.codeChallengeMethod;
+		delete grantData.authCodeWrappedKey;
+		grantData.refreshTokenId = refreshTokenId;
+		grantData.refreshTokenWrappedKey = refreshTokenWrappedKey;
+		grantData.previousRefreshTokenId = undefined;
+		grantData.previousRefreshTokenWrappedKey = undefined;
+
+		await this.options.storage.put(grantKey, grantData);
+
+		// Store access token
+		const accessTokenData: Token = {
+			id: accessTokenId,
+			grantId: grantId,
+			userId: userId,
+			createdAt: now,
+			expiresAt: accessTokenExpiresAt,
+			wrappedEncryptionKey: accessTokenWrappedKey,
+			grant: {
+				clientId: grantData.clientId,
+				scope: grantData.scope,
+				encryptedProps: encryptedAccessTokenProps,
+			},
+		};
+
+		await this.options.storage.put(`token:${userId}:${grantId}:${accessTokenId}`, accessTokenData, {
+			expirationTtl: accessTokenTTL,
+		});
+
+		return c.json({
+			access_token: accessToken,
+			token_type: 'bearer',
+			expires_in: accessTokenTTL,
+			refresh_token: refreshToken,
+			scope: grantData.scope.join(' '),
+		});
+	}
+
+	private async handleRefreshTokenGrant(c: Context, body: Record<string, unknown>, clientInfo: ClientInfo): Promise<Response> {
+		const refreshToken = body['refresh_token'] as string;
+
+		if (!refreshToken) {
+			return this.createErrorResponse('invalid_request', 'Refresh token is required');
+		}
+
+		const tokenParts = refreshToken.split(':');
+		if (tokenParts.length !== 3) {
+			return this.createErrorResponse('invalid_grant', 'Invalid token format');
+		}
+
+		const [userId, grantId] = tokenParts;
+		if (!userId || !grantId) {
+			return this.createErrorResponse('invalid_grant', 'Invalid token format');
+		}
+		const providedTokenHash = await this.generateTokenId(refreshToken);
+
+		const grantKey = `grant:${userId}:${grantId}`;
+		const grantData = await this.options.storage.get<Grant>(grantKey);
+
+		if (!grantData) {
+			return this.createErrorResponse('invalid_grant', 'Grant not found');
+		}
+
+		const isCurrentToken = grantData.refreshTokenId === providedTokenHash;
+		const isPreviousToken = grantData.previousRefreshTokenId === providedTokenHash;
+
+		if (!isCurrentToken && !isPreviousToken) {
+			return this.createErrorResponse('invalid_grant', 'Invalid refresh token');
+		}
+
+		if (grantData.clientId !== clientInfo.clientId) {
+			return this.createErrorResponse('invalid_grant', 'Client ID mismatch');
+		}
+
+		// Generate new tokens
+		const accessTokenSecret = this.generateRandomString(TOKEN_LENGTH);
+		const newAccessToken = `${userId}:${grantId}:${accessTokenSecret}`;
+		const accessTokenId = await this.generateTokenId(newAccessToken);
+
+		const refreshTokenSecret = this.generateRandomString(TOKEN_LENGTH);
+		const newRefreshToken = `${userId}:${grantId}:${refreshTokenSecret}`;
+		const newRefreshTokenId = await this.generateTokenId(newRefreshToken);
+
+		let accessTokenTTL = this.options.accessTokenTTL;
+
+		// Determine which wrapped key to use
+		let wrappedKeyToUse: string;
+		if (isCurrentToken) {
+			wrappedKeyToUse = grantData.refreshTokenWrappedKey!;
+		} else {
+			wrappedKeyToUse = grantData.previousRefreshTokenWrappedKey!;
+		}
+
+		const encryptionKey = await this.unwrapKeyWithToken(refreshToken, wrappedKeyToUse);
+
+		let grantEncryptionKey = encryptionKey;
+		let accessTokenEncryptionKey = encryptionKey;
+		let encryptedAccessTokenProps = grantData.encryptedProps;
+
+		// Process token exchange callback if provided
+		if (this.options.tokenExchangeCallback) {
+			const decryptedProps = await this.decryptProps(encryptionKey, grantData.encryptedProps);
+			let grantProps = decryptedProps;
+			let accessTokenProps = decryptedProps;
+
+			const callbackOptions: TokenExchangeCallbackOptions = {
+				grantType: 'refresh_token',
+				clientId: clientInfo.clientId,
+				userId: userId,
+				scope: grantData.scope,
+				props: decryptedProps,
+			};
+
+			const callbackResult = await Promise.resolve(this.options.tokenExchangeCallback(callbackOptions));
+
+			let grantPropsChanged = false;
+			if (callbackResult) {
+				if (callbackResult.newProps) {
+					grantProps = callbackResult.newProps;
+					grantPropsChanged = true;
+					if (!callbackResult.accessTokenProps) {
+						accessTokenProps = callbackResult.newProps;
+					}
+				}
+
+				if (callbackResult.accessTokenProps) {
+					accessTokenProps = callbackResult.accessTokenProps;
+				}
+
+				if (callbackResult.accessTokenTTL !== undefined) {
+					accessTokenTTL = callbackResult.accessTokenTTL;
+				}
+			}
+
+			// Re-encrypt props if changed
+			if (grantPropsChanged) {
+				const grantResult = await this.encryptProps(grantProps);
+				grantData.encryptedProps = grantResult.encryptedData;
+
+				if (grantResult.key !== encryptionKey) {
+					grantEncryptionKey = grantResult.key;
+					wrappedKeyToUse = await this.wrapKeyWithToken(refreshToken, grantEncryptionKey);
+				} else {
+					grantEncryptionKey = grantResult.key;
+				}
+			}
+
+			if (accessTokenProps !== grantProps) {
+				const tokenResult = await this.encryptProps(accessTokenProps);
+				encryptedAccessTokenProps = tokenResult.encryptedData;
+				accessTokenEncryptionKey = tokenResult.key;
+			} else {
+				encryptedAccessTokenProps = grantData.encryptedProps;
+				accessTokenEncryptionKey = grantEncryptionKey;
+			}
+		}
+
+		const now = Math.floor(Date.now() / 1000);
+		const accessTokenExpiresAt = now + accessTokenTTL;
+
+		// Wrap keys
+		const accessTokenWrappedKey = await this.wrapKeyWithToken(newAccessToken, accessTokenEncryptionKey);
+		const newRefreshTokenWrappedKey = await this.wrapKeyWithToken(newRefreshToken, grantEncryptionKey);
+
+		// Update grant with token rotation
+		grantData.previousRefreshTokenId = providedTokenHash;
+		grantData.previousRefreshTokenWrappedKey = wrappedKeyToUse;
+		grantData.refreshTokenId = newRefreshTokenId;
+		grantData.refreshTokenWrappedKey = newRefreshTokenWrappedKey;
+
+		await this.options.storage.put(grantKey, grantData);
+
+		// Store new access token
+		const accessTokenData: Token = {
+			id: accessTokenId,
+			grantId: grantId,
+			userId: userId,
+			createdAt: now,
+			expiresAt: accessTokenExpiresAt,
+			wrappedEncryptionKey: accessTokenWrappedKey,
+			grant: {
+				clientId: grantData.clientId,
+				scope: grantData.scope,
+				encryptedProps: encryptedAccessTokenProps,
+			},
+		};
+
+		await this.options.storage.put(`token:${userId}:${grantId}:${accessTokenId}`, accessTokenData, {
+			expirationTtl: accessTokenTTL,
+		});
+
+		return c.json({
+			access_token: newAccessToken,
+			token_type: 'bearer',
+			expires_in: accessTokenTTL,
+			refresh_token: newRefreshToken,
+			scope: grantData.scope.join(' '),
+		});
+	}
+
+	private async handleClientRegistration(c: Context): Promise<Response> {
+		if (!this.options.clientRegistrationEndpoint) {
+			return this.createErrorResponse('not_implemented', 'Client registration is not enabled', 501);
+		}
+
+		const contentLength = parseInt(c.req.header('Content-Length') ?? '0', 10);
+		if (contentLength > 1048576) {
+			return this.createErrorResponse('invalid_request', 'Request payload too large, must be under 1 MiB', 413);
+		}
+
+		let clientMetadata: Record<string, unknown>;
+		try {
+			const text = await c.req.text();
+			if (text.length > 1048576) {
+				return this.createErrorResponse('invalid_request', 'Request payload too large, must be under 1 MiB', 413);
+			}
+			clientMetadata = JSON.parse(text) as Record<string, unknown>;
+		} catch {
+			return this.createErrorResponse('invalid_request', 'Invalid JSON payload', 400);
+		}
+
+		const validateStringField = (field: unknown): string | undefined => {
+			if (field === undefined) {
+				return undefined;
+			}
+			if (typeof field !== 'string') {
+				throw new Error('Field must be a string');
+			}
+			return field;
+		};
+
+		const validateStringArray = (arr: unknown): string[] | undefined => {
+			if (arr === undefined) {
+				return undefined;
+			}
+			if (!Array.isArray(arr)) {
+				throw new Error('Field must be an array');
+			}
+
+			for (const item of arr) {
+				if (typeof item !== 'string') {
+					throw new Error('All array elements must be strings');
+				}
+			}
+
+			return arr as string[];
+		};
+
+		const authMethod = validateStringField(clientMetadata['token_endpoint_auth_method']) ?? 'client_secret_basic';
+		const isPublicClient = authMethod === 'none';
+
+		if (isPublicClient && this.options.disallowPublicClientRegistration) {
+			return this.createErrorResponse('invalid_client_metadata', 'Public client registration is not allowed');
+		}
+
+		const clientId = this.generateRandomString(16);
+
+		let clientSecret: string | undefined;
+		let hashedSecret: string | undefined;
+
+		if (!isPublicClient) {
+			clientSecret = this.generateRandomString(32);
+			hashedSecret = await this.hashSecret(clientSecret);
+		}
+
+		let clientInfo: ClientInfo;
+		try {
+			const redirectUris = validateStringArray(clientMetadata['redirect_uris']);
+			if (!redirectUris || redirectUris.length === 0) {
+				throw new Error('At least one redirect URI is required');
+			}
+
+			clientInfo = {
+				clientId,
+				redirectUris,
+				clientName: validateStringField(clientMetadata['client_name']),
+				logoUri: validateStringField(clientMetadata['logo_uri']),
+				clientUri: validateStringField(clientMetadata['client_uri']),
+				policyUri: validateStringField(clientMetadata['policy_uri']),
+				tosUri: validateStringField(clientMetadata['tos_uri']),
+				jwksUri: validateStringField(clientMetadata['jwks_uri']),
+				contacts: validateStringArray(clientMetadata['contacts']),
+				grantTypes: validateStringArray(clientMetadata['grant_types']) ?? ['authorization_code', 'refresh_token'],
+				responseTypes: validateStringArray(clientMetadata['response_types']) ?? ['code'],
+				registrationDate: Math.floor(Date.now() / 1000),
+				tokenEndpointAuthMethod: authMethod,
+			};
+
+			if (!isPublicClient && hashedSecret) {
+				clientInfo.clientSecret = hashedSecret;
+			}
+		} catch (error) {
+			return this.createErrorResponse('invalid_client_metadata', error instanceof Error ? error.message : 'Invalid client metadata');
+		}
+
+		await this.options.storage.put(`client:${clientId}`, clientInfo);
+
+		const response: Record<string, unknown> = {
+			client_id: clientInfo.clientId,
+			redirect_uris: clientInfo.redirectUris,
+			client_name: clientInfo.clientName,
+			logo_uri: clientInfo.logoUri,
+			client_uri: clientInfo.clientUri,
+			policy_uri: clientInfo.policyUri,
+			tos_uri: clientInfo.tosUri,
+			jwks_uri: clientInfo.jwksUri,
+			contacts: clientInfo.contacts,
+			grant_types: clientInfo.grantTypes,
+			response_types: clientInfo.responseTypes,
+			token_endpoint_auth_method: clientInfo.tokenEndpointAuthMethod,
+			registration_client_uri: `${this.options.clientRegistrationEndpoint}/${clientId}`,
+			client_id_issued_at: clientInfo.registrationDate,
+		};
+
+		if (clientSecret) {
+			response['client_secret'] = clientSecret;
+		}
+
+		return c.json(response, 201);
+	}
+
+	private createErrorResponse(code: string, description: string, status = 400, headers: Record<string, string> = {}): Response {
+		const customErrorResponse = this.options.onError?.({ code, description, status, headers });
+		if (customErrorResponse) return customErrorResponse;
+
+		const responseHeaders = new Headers();
+		responseHeaders.set('Content-Type', 'application/json');
+
+		// Add custom headers
+		if (headers) {
+			for (const [key, value] of Object.entries(headers)) {
+				responseHeaders.set(key, value);
+			}
+		}
+
+		return new Response(
+			JSON.stringify({
+				error: code,
+				error_description: description,
+			}),
+			{
+				status,
+				headers: responseHeaders,
+			},
+		);
+	}
+
+	private getFullEndpointUrl(endpoint: string, requestUrl: URL): string {
+		if (endpoint.startsWith('/')) {
+			return `${requestUrl.origin}${endpoint}`;
+		} else {
+			return endpoint;
+		}
+	}
+
+	async getClient(clientId: string): Promise<ClientInfo | null> {
+		const clientKey = `client:${clientId}`;
+		return this.options.storage.get<ClientInfo>(clientKey);
+	}
+
+	// Utility methods
+	private generateRandomString(length: number): string {
+		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		let result = '';
+		const values = new Uint8Array(length);
+		crypto.getRandomValues(values);
+
+		for (let i = 0; i < length; i++) {
+			result += characters.charAt(values[i]! % characters.length);
+		}
+		return result;
+	}
+
+	private async generateTokenId(token: string): Promise<string> {
+		const encoder = new TextEncoder();
+		const data = encoder.encode(token);
+		const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+		const hashArray = Array.from(new Uint8Array(hashBuffer));
+		const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+		return hashHex;
+	}
+
+	private async hashSecret(secret: string): Promise<string> {
+		return this.generateTokenId(secret);
+	}
+
+	private base64UrlEncode(str: string): string {
+		return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+	}
+
+	private arrayBufferToBase64(buffer: ArrayBuffer): string {
+		return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+	}
+
+	private base64ToArrayBuffer(base64: string): ArrayBuffer {
+		const binaryString = atob(base64);
+		const bytes = new Uint8Array(binaryString.length);
+		for (let i = 0; i < binaryString.length; i++) {
+			bytes[i] = binaryString.charCodeAt(i);
+		}
+		return bytes.buffer;
+	}
+
+	private async encryptProps(data: Record<string, unknown>): Promise<{ encryptedData: string; key: CryptoKey }> {
+		const key: CryptoKey = await crypto.subtle.generateKey(
+			{
+				name: 'AES-GCM',
+				length: 256,
+			},
+			true,
+			['encrypt', 'decrypt'],
+		);
+
+		const iv = new Uint8Array(12);
+		const jsonData = JSON.stringify(data);
+		const encoder = new TextEncoder();
+		const encodedData = encoder.encode(jsonData);
+
+		const encryptedBuffer = await crypto.subtle.encrypt(
+			{
+				name: 'AES-GCM',
+				iv,
+			},
+			key,
+			encodedData,
+		);
+
+		return {
+			encryptedData: this.arrayBufferToBase64(encryptedBuffer),
+			key,
+		};
+	}
+
+	private async decryptProps(key: CryptoKey, encryptedData: string): Promise<Record<string, unknown>> {
+		const encryptedBuffer = this.base64ToArrayBuffer(encryptedData);
+		const iv = new Uint8Array(12);
+
+		const decryptedBuffer = await crypto.subtle.decrypt(
+			{
+				name: 'AES-GCM',
+				iv,
+			},
+			key,
+			encryptedBuffer,
+		);
+
+		const decoder = new TextDecoder();
+		const jsonData = decoder.decode(decryptedBuffer);
+		return JSON.parse(jsonData) as Record<string, unknown>;
+	}
+
+	private async deriveKeyFromToken(tokenStr: string): Promise<CryptoKey> {
+		const encoder = new TextEncoder();
+
+		const hmacKey = await crypto.subtle.importKey('raw', WRAPPING_KEY_HMAC_KEY, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+
+		const hmacResult = await crypto.subtle.sign('HMAC', hmacKey, encoder.encode(tokenStr));
+
+		return await crypto.subtle.importKey('raw', hmacResult, { name: 'AES-KW' }, false, ['wrapKey', 'unwrapKey']);
+	}
+
+	private async wrapKeyWithToken(tokenStr: string, keyToWrap: CryptoKey): Promise<string> {
+		const wrappingKey = await this.deriveKeyFromToken(tokenStr);
+		const wrappedKeyBuffer = await crypto.subtle.wrapKey('raw', keyToWrap, wrappingKey, { name: 'AES-KW' });
+		return this.arrayBufferToBase64(wrappedKeyBuffer);
+	}
+
+	private async unwrapKeyWithToken(tokenStr: string, wrappedKeyBase64: string): Promise<CryptoKey> {
+		const wrappingKey = await this.deriveKeyFromToken(tokenStr);
+		const wrappedKeyBuffer = this.base64ToArrayBuffer(wrappedKeyBase64);
+
+		return await crypto.subtle.unwrapKey('raw', wrappedKeyBuffer, wrappingKey, { name: 'AES-KW' }, { name: 'AES-GCM' }, true, ['encrypt', 'decrypt']);
+	}
+}
+
+/**
+ * Implementation of OAuth helpers
+ */
+class OAuthHelpersImpl implements OAuthHelpers {
+	constructor(
+		private storage: OAuthStorageCallbacks,
+		private provider: OAuth21Provider,
+	) {}
+
+	async parseAuthRequest(request: Request): Promise<AuthRequest> {
+		const url = new URL(request.url);
+		const responseType = url.searchParams.get('response_type') || '';
+		const clientId = url.searchParams.get('client_id') || '';
+		const redirectUri = url.searchParams.get('redirect_uri') || '';
+		const scope = (url.searchParams.get('scope') || '').split(' ').filter(Boolean);
+		const state = url.searchParams.get('state') || '';
+		const codeChallenge = url.searchParams.get('code_challenge') || undefined;
+		const codeChallengeMethod = url.searchParams.get('code_challenge_method') || 'plain';
+
+		// Validate client and redirect URI
+		if (clientId) {
+			const clientInfo = await this.lookupClient(clientId);
+			if (clientInfo && redirectUri) {
+				if (!clientInfo.redirectUris.includes(redirectUri)) {
+					throw new Error(`Invalid redirect URI. The redirect URI provided does not match any registered URI for this client.`);
+				}
+			}
+		}
+
+		return {
+			responseType,
+			clientId,
+			redirectUri,
+			scope,
+			state,
+			codeChallenge,
+			codeChallengeMethod,
+		};
+	}
+
+	async lookupClient(clientId: string): Promise<ClientInfo | null> {
+		return await this.provider.getClient(clientId);
+	}
+
+	async completeAuthorization(options: CompleteAuthorizationOptions): Promise<{ redirectTo: string }> {
+		const grantId = this.generateRandomString(16);
+		const { encryptedData, key: encryptionKey } = await this.encryptProps(options.props);
+		const now = Math.floor(Date.now() / 1000);
+
+		if (options.request.responseType === 'token') {
+			// Implicit flow
+			const accessTokenSecret = this.generateRandomString(TOKEN_LENGTH);
+			const accessToken = `${options.userId}:${grantId}:${accessTokenSecret}`;
+			const accessTokenId = await this.generateTokenId(accessToken);
+			const accessTokenTTL = DEFAULT_ACCESS_TOKEN_TTL;
+			const accessTokenExpiresAt = now + accessTokenTTL;
+
+			const accessTokenWrappedKey = await this.wrapKeyWithToken(accessToken, encryptionKey);
+
+			const grant: Grant = {
+				id: grantId,
+				clientId: options.request.clientId,
+				userId: options.userId,
+				scope: options.scope,
+				metadata: options.metadata,
+				encryptedProps: encryptedData,
+				createdAt: now,
+			};
+
+			const grantKey = `grant:${options.userId}:${grantId}`;
+			await this.storage.put(grantKey, grant);
+
+			const accessTokenData: Token = {
+				id: accessTokenId,
+				grantId: grantId,
+				userId: options.userId,
+				createdAt: now,
+				expiresAt: accessTokenExpiresAt,
+				wrappedEncryptionKey: accessTokenWrappedKey,
+				grant: {
+					clientId: options.request.clientId,
+					scope: options.scope,
+					encryptedProps: encryptedData,
+				},
+			};
+
+			await this.storage.put(`token:${options.userId}:${grantId}:${accessTokenId}`, accessTokenData, {
+				expirationTtl: accessTokenTTL,
+			});
+
+			const redirectUrl = new URL(options.request.redirectUri);
+			const fragment = new URLSearchParams();
+			fragment.set('access_token', accessToken);
+			fragment.set('token_type', 'bearer');
+			fragment.set('expires_in', accessTokenTTL.toString());
+			fragment.set('scope', options.scope.join(' '));
+
+			if (options.request.state) {
+				fragment.set('state', options.request.state);
+			}
+
+			redirectUrl.hash = fragment.toString();
+			return { redirectTo: redirectUrl.toString() };
+		} else {
+			// Authorization code flow
+			const authCodeSecret = this.generateRandomString(32);
+			const authCode = `${options.userId}:${grantId}:${authCodeSecret}`;
+			const authCodeId = await this.hashSecret(authCode);
+			const authCodeWrappedKey = await this.wrapKeyWithToken(authCode, encryptionKey);
+
+			const grant: Grant = {
+				id: grantId,
+				clientId: options.request.clientId,
+				userId: options.userId,
+				scope: options.scope,
+				metadata: options.metadata,
+				encryptedProps: encryptedData,
+				createdAt: now,
+				authCodeId: authCodeId,
+				authCodeWrappedKey: authCodeWrappedKey,
+				codeChallenge: options.request.codeChallenge,
+				codeChallengeMethod: options.request.codeChallengeMethod,
+			};
+
+			const grantKey = `grant:${options.userId}:${grantId}`;
+			const codeExpiresIn = 600; // 10 minutes
+			await this.storage.put(grantKey, grant, { expirationTtl: codeExpiresIn });
+
+			const redirectUrl = new URL(options.request.redirectUri);
+			redirectUrl.searchParams.set('code', authCode);
+			if (options.request.state) {
+				redirectUrl.searchParams.set('state', options.request.state);
+			}
+
+			return { redirectTo: redirectUrl.toString() };
+		}
+	}
+
+	async createClient(clientInfo: Partial<ClientInfo>): Promise<ClientInfo> {
+		const clientId = this.generateRandomString(16);
+		const tokenEndpointAuthMethod = clientInfo.tokenEndpointAuthMethod || 'client_secret_basic';
+		const isPublicClient = tokenEndpointAuthMethod === 'none';
+
+		const newClient: ClientInfo = {
+			clientId,
+			redirectUris: clientInfo.redirectUris || [],
+			clientName: clientInfo.clientName,
+			logoUri: clientInfo.logoUri,
+			clientUri: clientInfo.clientUri,
+			policyUri: clientInfo.policyUri,
+			tosUri: clientInfo.tosUri,
+			jwksUri: clientInfo.jwksUri,
+			contacts: clientInfo.contacts,
+			grantTypes: clientInfo.grantTypes || ['authorization_code', 'refresh_token'],
+			responseTypes: clientInfo.responseTypes || ['code'],
+			registrationDate: Math.floor(Date.now() / 1000),
+			tokenEndpointAuthMethod,
+		};
+
+		let clientSecret: string | undefined;
+		if (!isPublicClient) {
+			clientSecret = this.generateRandomString(32);
+			newClient.clientSecret = await this.hashSecret(clientSecret);
+		}
+
+		await this.storage.put(`client:${clientId}`, newClient);
+
+		const clientResponse = { ...newClient };
+		if (!isPublicClient && clientSecret) {
+			clientResponse.clientSecret = clientSecret;
+		}
+
+		return clientResponse;
+	}
+
+	async listClients(options?: ListOptions): Promise<ListResult<ClientInfo>> {
+		const listOptions: { limit?: number; cursor?: string; prefix: string } = {
+			prefix: 'client:',
+		};
+
+		if (options?.limit !== undefined) {
+			listOptions.limit = options.limit;
+		}
+
+		if (options?.cursor !== undefined) {
+			listOptions.cursor = options.cursor;
+		}
+
+		const response = await this.storage.list(listOptions);
+		const clients: ClientInfo[] = [];
+
+		const promises = response.keys.map(async (key: { name: string }) => {
+			const clientId = key.name.substring('client:'.length);
+			const client = await this.provider.getClient(clientId);
+			if (client) {
+				clients.push(client);
+			}
+		});
+
+		await Promise.all(promises);
+
+		return {
+			items: clients,
+			cursor: response.list_complete ? undefined : response.cursor,
+		};
+	}
+
+	async updateClient(clientId: string, updates: Partial<ClientInfo>): Promise<ClientInfo | null> {
+		const client = await this.provider.getClient(clientId);
+		if (!client) {
+			return null;
+		}
+
+		const authMethod = updates.tokenEndpointAuthMethod || client.tokenEndpointAuthMethod || 'client_secret_basic';
+		const isPublicClient = authMethod === 'none';
+
+		let secretToStore = client.clientSecret;
+		let originalSecret: string | undefined = undefined;
+
+		if (isPublicClient) {
+			secretToStore = undefined;
+		} else if (updates.clientSecret) {
+			originalSecret = updates.clientSecret;
+			secretToStore = await this.hashSecret(updates.clientSecret);
+		}
+
+		const updatedClient: ClientInfo = {
+			...client,
+			...updates,
+			clientId: client.clientId,
+			tokenEndpointAuthMethod: authMethod,
+		};
+
+		if (!isPublicClient && secretToStore) {
+			updatedClient.clientSecret = secretToStore;
+		} else {
+			delete updatedClient.clientSecret;
+		}
+
+		await this.storage.put(`client:${clientId}`, updatedClient);
+
+		const response = { ...updatedClient };
+		if (!isPublicClient && originalSecret) {
+			response.clientSecret = originalSecret;
+		}
+
+		return response;
+	}
+
+	async deleteClient(clientId: string): Promise<void> {
+		await this.storage.delete(`client:${clientId}`);
+	}
+
+	async listUserGrants(userId: string, options?: ListOptions): Promise<ListResult<GrantSummary>> {
+		const listOptions: { limit?: number; cursor?: string; prefix: string } = {
+			prefix: `grant:${userId}:`,
+		};
+
+		if (options?.limit !== undefined) {
+			listOptions.limit = options.limit;
+		}
+
+		if (options?.cursor !== undefined) {
+			listOptions.cursor = options.cursor;
+		}
+
+		const response = await this.storage.list(listOptions);
+		const grantSummaries: GrantSummary[] = [];
+
+		const promises = response.keys.map(async (key: { name: string }) => {
+			const grantData = await this.storage.get<Grant>(key.name);
+			if (grantData) {
+				const summary: GrantSummary = {
+					id: grantData.id,
+					clientId: grantData.clientId,
+					userId: grantData.userId,
+					scope: grantData.scope,
+					metadata: grantData.metadata,
+					createdAt: grantData.createdAt,
+				};
+				grantSummaries.push(summary);
+			}
+		});
+
+		await Promise.all(promises);
+
+		return {
+			items: grantSummaries,
+			cursor: response.list_complete ? undefined : response.cursor,
+		};
+	}
+
+	async revokeGrant(grantId: string, userId: string): Promise<void> {
+		const grantKey = `grant:${userId}:${grantId}`;
+		const tokenPrefix = `token:${userId}:${grantId}:`;
+
+		let cursor: string | undefined;
+		let allTokensDeleted = false;
+
+		while (!allTokensDeleted) {
+			const listOptions: { prefix: string; cursor?: string } = {
+				prefix: tokenPrefix,
+			};
+
+			if (cursor) {
+				listOptions.cursor = cursor;
+			}
+
+			const result = await this.storage.list(listOptions);
+
+			if (result.keys.length > 0) {
+				await Promise.all(result.keys.map((key: { name: string }) => this.storage.delete(key.name)));
+			}
+
+			if (result.list_complete) {
+				allTokensDeleted = true;
+			} else {
+				cursor = result.cursor;
+			}
+		}
+
+		await this.storage.delete(grantKey);
+	}
+
+	// Helper methods
+	private generateRandomString(length: number): string {
+		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		let result = '';
+		const values = new Uint8Array(length);
+		crypto.getRandomValues(values);
+
+		for (let i = 0; i < length; i++) {
+			result += characters.charAt(values[i]! % characters.length);
+		}
+		return result;
+	}
+
+	private async generateTokenId(token: string): Promise<string> {
+		const encoder = new TextEncoder();
+		const data = encoder.encode(token);
+		const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+		const hashArray = Array.from(new Uint8Array(hashBuffer));
+		const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+		return hashHex;
+	}
+
+	private async hashSecret(secret: string): Promise<string> {
+		return this.generateTokenId(secret);
+	}
+
+	private async encryptProps(data: Record<string, unknown>): Promise<{ encryptedData: string; key: CryptoKey }> {
+		const key: CryptoKey = await crypto.subtle.generateKey(
+			{
+				name: 'AES-GCM',
+				length: 256,
+			},
+			true,
+			['encrypt', 'decrypt'],
+		);
+
+		const iv = new Uint8Array(12);
+		const jsonData = JSON.stringify(data);
+		const encoder = new TextEncoder();
+		const encodedData = encoder.encode(jsonData);
+
+		const encryptedBuffer = await crypto.subtle.encrypt(
+			{
+				name: 'AES-GCM',
+				iv,
+			},
+			key,
+			encodedData,
+		);
+
+		return {
+			encryptedData: this.arrayBufferToBase64(encryptedBuffer),
+			key,
+		};
+	}
+
+	private arrayBufferToBase64(buffer: ArrayBuffer): string {
+		return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+	}
+
+	private async wrapKeyWithToken(tokenStr: string, keyToWrap: CryptoKey): Promise<string> {
+		const wrappingKey = await this.deriveKeyFromToken(tokenStr);
+		const wrappedKeyBuffer = await crypto.subtle.wrapKey('raw', keyToWrap, wrappingKey, { name: 'AES-KW' });
+		return this.arrayBufferToBase64(wrappedKeyBuffer);
+	}
+
+	private async deriveKeyFromToken(tokenStr: string): Promise<CryptoKey> {
+		const encoder = new TextEncoder();
+
+		const hmacKey = await crypto.subtle.importKey('raw', WRAPPING_KEY_HMAC_KEY, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+
+		const hmacResult = await crypto.subtle.sign('HMAC', hmacKey, encoder.encode(tokenStr));
+
+		return await crypto.subtle.importKey('raw', hmacResult, { name: 'AES-KW' }, false, ['wrapKey', 'unwrapKey']);
+	}
+}
