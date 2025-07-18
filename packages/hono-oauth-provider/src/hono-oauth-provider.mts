@@ -328,7 +328,7 @@ export class OAuth21Provider {
 		let accessTokenTTL = this.options.accessTokenTTL;
 
 		// Get encryption key
-		const encryptionKey = await this.unwrapKeyWithToken(code, grantData.authCodeWrappedKey!);
+		const encryptionKey = await this.unwrapKeyWithToken(code, grantData.authCodeWrappedKey);
 
 		let grantEncryptionKey = encryptionKey;
 		let accessTokenEncryptionKey = encryptionKey;
