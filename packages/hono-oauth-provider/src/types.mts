@@ -1,4 +1,5 @@
 import type { Context, Env } from 'hono';
+import { z } from 'zod';
 
 /**
  * OAuth 2.1 Provider Configuration Options
@@ -67,6 +68,28 @@ export interface OAuth21ProviderOptions {
 	 */
 	onError?: (error: { code: string; description: string; status: number; headers: Record<string, string> }) => Response | void;
 }
+
+/**
+ * Zod schema for OAuth 2.1 Provider Options validation
+ * Note: Function validation is simplified to avoid Zod v4 function API complexities
+ */
+export const oauth21ProviderOptionsSchema = z.object({
+	authorizeEndpoint: z.string().url('Authorize endpoint must be a valid URL'),
+	tokenEndpoint: z.string().url('Token endpoint must be a valid URL'),
+	clientRegistrationEndpoint: z.string().url('Client registration endpoint must be a valid URL').optional(),
+	accessTokenTTL: z.number().int().positive('Access token TTL must be a positive integer').max(86400, 'Access token TTL cannot exceed 24 hours').optional(),
+	scopesSupported: z.array(z.string()).optional(),
+	allowImplicitFlow: z.boolean().optional(),
+	disallowPublicClientRegistration: z.boolean().optional(),
+	storage: z.object({
+		get: z.any(), // Function validation simplified
+		put: z.any(), // Function validation simplified
+		delete: z.any(), // Function validation simplified
+		list: z.any(), // Function validation simplified
+	}),
+	tokenExchangeCallback: z.any().optional(), // Function validation simplified
+	onError: z.any().optional(), // Function validation simplified
+});
 
 /**
  * Storage callback functions for OAuth data persistence
