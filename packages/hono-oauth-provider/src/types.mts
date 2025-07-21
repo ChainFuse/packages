@@ -25,7 +25,8 @@ export const oauth21ProviderOptionsSchema = z4.object({
 	 * Time-to-live for access tokens in seconds.
 	 * @default 1 hour (3600 seconds)
 	 */
-	accessTokenTTL: z4
+	accessTokenTTL: z4.coerce
+		.number()
 		.int()
 		.positive()
 		.max(86400, 'Access token TTL cannot exceed 24 hours')
