@@ -86,7 +86,7 @@ const oauth = new OAuth21Provider({
 });
 
 // Mount OAuth routes
-app.route('/oauth', oauth.getApp());
+app.route('/oauth', oauth.app);
 
 // Protected route using OAuth middleware
 app.get('/api/*', oauth.createAuthMiddleware(), async (c) => {
@@ -309,7 +309,7 @@ const oauth = new OAuth21Provider({
 });
 
 // Mount OAuth endpoints
-app.route('/oauth', oauth.getApp());
+app.route('/oauth', oauth.app);
 
 // Authorization endpoint with custom UI
 app.get('/oauth/authorize', oauth.createHelpersMiddleware(), async (c) => {
@@ -392,7 +392,6 @@ interface OAuthStorageCallbacks {
 
 ### Methods
 
-- `getApp()` - Returns the Hono app instance to mount with `.route()`
 - `createAuthMiddleware()` - Creates middleware for protecting routes
 - `createHelpersMiddleware()` - Adds OAuth helper functions to context
 

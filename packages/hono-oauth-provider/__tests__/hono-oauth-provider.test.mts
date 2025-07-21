@@ -108,7 +108,7 @@ await describe('OAuth21Provider', () => {
 		});
 
 		app = new Hono();
-		app.route('/oauth', provider.getApp());
+		app.route('/oauth', provider.app);
 	});
 
 	it('should create provider instance', () => {
