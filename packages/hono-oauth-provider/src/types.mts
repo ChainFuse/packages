@@ -1,91 +1,74 @@
 import type { Context, Env } from 'hono';
-import { z } from 'zod';
+import { z as z4 } from 'zod/v4';
 
 /**
  * Zod schema for OAuth 2.1 Provider Options validation
  * Note: Function validation is simplified to avoid Zod v4 function API complexities
  */
-export const oauth21ProviderOptionsSchema = z.object({
+export const oauth21ProviderOptionsSchema = z4.object({
 	/**
 	 * URL of the OAuth authorization endpoint where users can grant permissions.
 	 * This URL is used in OAuth metadata and is not handled by the provider itself.
 	 */
-	authorizeEndpoint: z.string().url('Authorize endpoint must be a valid URL'),
-
+	authorizeEndpoint: z4.url(),
 	/**
 	 * URL of the token endpoint which the provider will implement.
 	 * This endpoint handles token issuance, refresh, and revocation.
 	 */
-	tokenEndpoint: z.string().url('Token endpoint must be a valid URL'),
-
+	tokenEndpoint: z4.url(),
 	/**
 	 * Optional URL for the client registration endpoint.
 	 * If provided, the provider will implement dynamic client registration.
 	 */
-	clientRegistrationEndpoint: z.string().url('Client registration endpoint must be a valid URL').optional(),
-
+	clientRegistrationEndpoint: z4.url().optional(),
 	/**
 	 * Time-to-live for access tokens in seconds.
-	 * Defaults to 1 hour (3600 seconds) if not specified.
+	 * @default 1 hour (3600 seconds)
 	 */
-	accessTokenTTL: z.number().int().positive('Access token TTL must be a positive integer').max(86400, 'Access token TTL cannot exceed 24 hours').optional(),
-
+	accessTokenTTL: z4
+		.int()
+		.positive()
+		.max(86400, 'Access token TTL cannot exceed 24 hours')
+		.default(60 * 60),
 	/**
 	 * List of scopes supported by this OAuth provider.
 	 * If not provided, the 'scopes_supported' field will be omitted from the OAuth metadata.
 	 */
-	scopesSupported: z.array(z.string()).optional(),
-
+	scopesSupported: z4.array(z4.string().nonempty()).nonempty().optional(),
 	/**
 	 * Controls whether the OAuth implicit flow is allowed.
 	 * This flow is discouraged in OAuth 2.1 due to security concerns.
-	 * Defaults to false.
+	 * @default false
 	 */
-	allowImplicitFlow: z.boolean().optional(),
-
+	allowImplicitFlow: z4.boolean().default(false),
 	/**
 	 * Controls whether public clients (clients without a secret, like SPAs)
 	 * can register via the dynamic client registration endpoint.
-	 * Defaults to false.
+	 * @default false
 	 */
-	disallowPublicClientRegistration: z.boolean().optional(),
-
+	disallowPublicClientRegistration: z4.boolean().default(false),
 	/**
 	 * Storage callbacks for OAuth data persistence
 	 */
-	storage: z.object({
-		get: z.any(), // Function validation simplified for Zod v4 compatibility
-		put: z.any(), // Function validation simplified for Zod v4 compatibility
-		delete: z.any(), // Function validation simplified for Zod v4 compatibility
-		list: z.any(), // Function validation simplified for Zod v4 compatibility
+	storage: z4.object({
+		get: z4.any(),
+		put: z4.any(),
+		delete: z4.any(),
+		list: z4.any(),
 	}),
-
 	/**
 	 * Optional callback function that is called during token exchange.
 	 * This allows updating the props stored in both the access token and the grant.
 	 */
-	tokenExchangeCallback: z.any().optional(), // Function validation simplified for Zod v4 compatibility
-
+	tokenExchangeCallback: z4.any().optional(),
 	/**
 	 * Optional callback function that is called whenever the OAuthProvider returns an error response
 	 * This allows the client to emit notifications or perform other actions when an error occurs.
 	 *
 	 * If the function returns a Response, that will be used in place of the OAuthProvider's default one.
 	 */
-	onError: z.any().optional(), // Function validation simplified for Zod v4 compatibility
+	onError: z4.any().default(({ status, code, description }: Parameters<OAuthErrorCallback>[0]) => console.warn(`OAuth error response: ${status} ${code} - ${description}`)),
 });
-
-/**
- * OAuth 2.1 Provider Configuration Options (input type)
- * Dynamically derived from the Zod schema
- */
-export type OAuth21ProviderOptions = z.input<typeof oauth21ProviderOptionsSchema>;
-
-/**
- * OAuth 2.1 Provider Configuration Options (output type)
- * Dynamically derived from the Zod schema after validation
- */
-export type OAuth21ProviderOptionsOutput = z.output<typeof oauth21ProviderOptionsSchema>;
 
 /**
  * Storage callback functions for OAuth data persistence

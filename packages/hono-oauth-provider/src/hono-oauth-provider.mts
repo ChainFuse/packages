@@ -1,7 +1,8 @@
 import type { Context, MiddlewareHandler } from 'hono';
 import { Hono } from 'hono';
 import { createMiddleware } from 'hono/factory';
-import type { AuthRequest, ClientInfo, CompleteAuthorizationOptions, Grant, GrantSummary, ListOptions, ListResult, OAuth21Context, OAuth21ProviderOptions, OAuthHelpers, OAuthStorageCallbacks, Token, TokenExchangeCallbackOptions } from './types.mjs';
+import type { z as z4 } from 'zod/v4';
+import type { AuthRequest, ClientInfo, CompleteAuthorizationOptions, Grant, GrantSummary, ListOptions, ListResult, OAuth21Context, OAuthHelpers, OAuthStorageCallbacks, Token, TokenExchangeCallbackOptions } from './types.mjs';
 import { oauth21ProviderOptionsSchema } from './types.mjs';
 
 // Constants
@@ -16,24 +17,12 @@ const WRAPPING_KEY_HMAC_KEY = new Uint8Array([0x22, 0x7e, 0x26, 0x86, 0x8d, 0xf1
  * Creates a mini Hono app that can be mounted with `.route()` to handle OAuth endpoints
  */
 export class OAuth21Provider {
-	private options: Required<OAuth21ProviderOptions>;
+	private options: z4.output<typeof oauth21ProviderOptionsSchema>;
 	private app: Hono;
 
-	constructor(options: OAuth21ProviderOptions) {
+	constructor(options: z4.input<typeof oauth21ProviderOptionsSchema>) {
 		// Validate options using Zod schema
-		const validationResult = oauth21ProviderOptionsSchema.safeParse(options);
-		if (!validationResult.success) {
-			const errorMessages = validationResult.error.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`).join(', ');
-			throw new Error(`Invalid OAuth provider options: ${errorMessages}`);
-		}
-
-		this.options = {
-			accessTokenTTL: DEFAULT_ACCESS_TOKEN_TTL,
-			allowImplicitFlow: false,
-			disallowPublicClientRegistration: false,
-			onError: ({ status, code, description }) => console.warn(`OAuth error response: ${status} ${code} - ${description}`),
-			...options,
-		} as Required<OAuth21ProviderOptions>;
+		this.options = oauth21ProviderOptionsSchema.parse(options);
 
 		this.app = new Hono();
 		this.setupRoutes();
