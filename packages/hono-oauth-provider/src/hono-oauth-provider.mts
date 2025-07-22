@@ -1,8 +1,8 @@
-import type { Context, MiddlewareHandler } from 'hono';
+import type { Context } from 'hono';
 import { Hono } from 'hono';
 import { createMiddleware } from 'hono/factory';
 import type { z as z4 } from 'zod/v4';
-import type { AuthRequest, ClientInfo, CompleteAuthorizationOptions, Grant, GrantSummary, ListOptions, ListResult, OAuth21Context, OAuthHelpers, OAuthStorageCallbacks, TokenExchangeCallbackOptions } from './types.mjs';
+import type { AuthRequest, ClientInfo, CompleteAuthorizationOptions, Grant, GrantSummary, ListOptions, ListResult, OAuthContext, OAuthHelpers, OAuthStorageCallbacks, TokenExchangeCallbackOptions } from './types.mjs';
 import { oauth21ProviderOptions, token } from './types.mjs';
 
 // Constants
@@ -31,67 +31,58 @@ export class OAuth21Provider {
 	/**
 	 * Create middleware that validates OAuth tokens and adds user context
 	 */
-	createAuthMiddleware(): MiddlewareHandler {
-		return createMiddleware(async (c: Context, next): Promise<Response | void> => {
-			const authHeader = c.req.header('Authorization');
+	createAuthMiddleware() {
+		return createMiddleware<{ Variables: OAuthContext }>(async (c, next): Promise<Response | void> => {
+			void import('hono/bearer-auth').then(({ bearerAuth }) =>
+				bearerAuth({
+					realm: 'OAuth',
+					headerName: 'Authorization',
+					verifyToken: async (accessToken) => {
+						// Parse the token to extract user ID and grant ID for parallel lookups
+						const tokenParts = accessToken.split(':');
+						if (tokenParts.length !== 3) return false;
 
-			if (!authHeader?.startsWith('Bearer ')) {
-				return this.createErrorResponse('invalid_token', 'Missing or invalid access token', 401, {
-					'WWW-Authenticate': 'Bearer realm="OAuth", error="invalid_token", error_description="Missing or invalid access token"',
-				});
-			}
+						const [userId, grantId, _] = tokenParts;
 
-			const accessToken = authHeader.substring(7);
-			const tokenParts = accessToken.split(':');
+						// Generate token ID from the full token
+						const accessTokenId = await import('@chainfuse/helpers').then(({ CryptoHelpers }) => CryptoHelpers.getHash('SHA-256', accessToken));
 
-			if (tokenParts.length !== 3) {
-				return this.createErrorResponse('invalid_token', 'Invalid token format', 401, {
-					'WWW-Authenticate': 'Bearer realm="OAuth", error="invalid_token"',
-				});
-			}
+						// Look up the token record, which now contains the denormalized grant information
+						const tokenKey = `token:${userId}:${grantId}:${accessTokenId}`;
+						const tokenDataRaw = await this.options.storage.get(tokenKey);
+						const { data: tokenData, success: tokenDataSuccess } = token.safeParse(typeof tokenDataRaw === 'string' ? JSON.parse(tokenDataRaw) : tokenDataRaw);
 
-			const [userId, grantId] = tokenParts;
-			const accessTokenId = await this.generateTokenId(accessToken);
-			const tokenKey = `token:${userId}:${grantId}:${accessTokenId}`;
+						// Verify token
+						if (!tokenDataSuccess) return false;
 
-			const tokenData = await this.options.storage.get<Token>(tokenKey);
+						// Check if token is expired (should be auto-deleted by KV TTL, but double-check)
+						const now = Math.floor(Date.now() / 1000);
+						if (tokenData.expiresAt < now) {
+							return this.createErrorResponse('invalid_token', 'Access token expired', 401, {
+								'WWW-Authenticate': 'Bearer realm="OAuth", error="invalid_token"',
+							});
+						}
 
-			if (!tokenData) {
-				return this.createErrorResponse('invalid_token', 'Invalid access token', 401, {
-					'WWW-Authenticate': 'Bearer realm="OAuth", error="invalid_token"',
-				});
-			}
+						// Unwrap the encryption key and decrypt props
+						const encryptionKey = await this.unwrapKeyWithToken(accessToken, tokenData.wrappedEncryptionKey);
+						const decryptedProps = await this.decryptProps(encryptionKey, tokenData.grant.encryptedProps);
 
-			const now = Math.floor(Date.now() / 1000);
-			if (tokenData.expiresAt < now) {
-				return this.createErrorResponse('invalid_token', 'Access token expired', 401, {
-					'WWW-Authenticate': 'Bearer realm="OAuth", error="invalid_token"',
-				});
-			} // Unwrap the encryption key and decrypt props
-			const encryptionKey = await this.unwrapKeyWithToken(accessToken, tokenData.wrappedEncryptionKey);
-			const decryptedProps = await this.decryptProps(encryptionKey, tokenData.grant.encryptedProps);
+						// Add user context to the request
+						if (typeof c.var.oauth !== 'object') c.set('oauth', { helpers: new OAuthHelpersImpl(this.options.storage, this) });
+						c.var.oauth.user = {
+							userId: tokenData.userId,
+							clientId: tokenData.grant.clientId,
+							scope: tokenData.grant.scope,
+							props: decryptedProps,
+						};
 
-			// Add user context to the request
-			const oauthContext = c as OAuth21Context;
-			oauthContext.user = {
-				userId: tokenData.userId,
-				clientId: tokenData.grant.clientId,
-				scope: tokenData.grant.scope,
-				props: decryptedProps,
-			};
-
-			await next();
-		});
-	}
-
-	/**
-	 * Create middleware that adds OAuth helpers to the context
-	 */
-	createHelpersMiddleware(): MiddlewareHandler {
-		return createMiddleware(async (c: Context, next) => {
-			const oauthContext = c as OAuth21Context;
-			oauthContext.oauth = new OAuthHelpersImpl(this.options.storage, this);
-			await next();
+						await next();
+					},
+					noAuthenticationHeaderMessage: 'Missing or invalid access token',
+					invalidAuthenticationHeaderMessage: 'Invalid token format',
+					invalidTokenMessage: 'Invalid access token',
+				})(c, next),
+			);
 		});
 	}
 
@@ -117,9 +108,6 @@ export class OAuth21Provider {
 				c.header('Access-Control-Max-Age', '86400');
 			}
 		});
-
-		// Add OAuth helpers middleware
-		this.app.use('*', this.createHelpersMiddleware());
 
 		// OAuth metadata discovery endpoint
 		this.app.get('/.well-known/oauth-authorization-server', async (c) => {
