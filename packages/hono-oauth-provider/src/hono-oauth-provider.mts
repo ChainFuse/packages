@@ -18,14 +18,12 @@ const WRAPPING_KEY_HMAC_KEY = new Uint8Array([0x22, 0x7e, 0x26, 0x86, 0x8d, 0xf1
  */
 export class OAuth21Provider {
 	private options: z4.output<typeof oauth21ProviderOptions>;
-	public app: Hono;
 	public app = new Hono<{ Variables: OAuthContext }>();
 
 	constructor(options: z4.input<typeof oauth21ProviderOptions>) {
 		// Validate options using Zod schema
 		this.options = oauth21ProviderOptions.parse(options);
 
-		this.app = new Hono();
 		this.setupRoutes();
 	}
 
