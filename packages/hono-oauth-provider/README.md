@@ -101,7 +101,7 @@ app.get('/api/*', oauth.createAuthMiddleware(), async (c) => {
 });
 
 // Authorization endpoint (implement your own UI)
-app.get('/oauth/authorize', oauth.createHelpersMiddleware(), async (c) => {
+app.get('/oauth/authorize', async (c) => {
 	const authRequest = await c.oauth.parseAuthRequest(c.req.raw);
 
 	// Your authorization logic here
@@ -312,7 +312,7 @@ const oauth = new OAuth21Provider({
 app.route('/oauth', oauth.app);
 
 // Authorization endpoint with custom UI
-app.get('/oauth/authorize', oauth.createHelpersMiddleware(), async (c) => {
+app.get('/oauth/authorize', async (c) => {
 	const authRequest = await c.oauth.parseAuthRequest(c.req.raw);
 
 	// In a real app, you'd show a consent screen
@@ -393,7 +393,6 @@ interface OAuthStorageCallbacks {
 ### Methods
 
 - `createAuthMiddleware()` - Creates middleware for protecting routes
-- `createHelpersMiddleware()` - Adds OAuth helper functions to context
 
 ## License
 
