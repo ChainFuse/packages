@@ -113,7 +113,7 @@ export class OAuth21Provider {
 				responseTypesSupported.push('token');
 			}
 
-			const metadata = {
+			return c.json({
 				issuer: url.origin,
 				authorization_endpoint: this.getFullEndpointUrl(this.options.authorizeEndpoint, url),
 				token_endpoint: this.getFullEndpointUrl(this.options.tokenEndpoint, url),
@@ -125,9 +125,7 @@ export class OAuth21Provider {
 				token_endpoint_auth_methods_supported: ['client_secret_basic', 'client_secret_post', 'none'],
 				revocation_endpoint: this.getFullEndpointUrl(this.options.tokenEndpoint, url),
 				code_challenge_methods_supported: ['plain', 'S256'],
-			};
-
-			return c.json(metadata);
+			});
 		});
 
 		// Token endpoint
