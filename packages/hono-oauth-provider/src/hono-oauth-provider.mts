@@ -24,6 +24,12 @@ export class OAuth21Provider {
 		// Validate options using Zod schema
 		this.options = oauth21ProviderOptions.parse(options);
 
+		this.app.use('*', async (c, next) => {
+			if (typeof c.var.oauth !== 'object') c.set('oauth', { helpers: new OAuthHelpersImpl(this.options.storage, this) });
+
+			await next();
+		});
+
 		this.setupRoutes();
 	}
 
