@@ -84,7 +84,6 @@ updates:
           - '@cloudflare/workers-types'
           - '@builder.io/qwik-city'
           - 'wrangler'
-          - '@modelcontextprotocol/sdk'
       code-management:
         patterns:
           - 'prettier'
