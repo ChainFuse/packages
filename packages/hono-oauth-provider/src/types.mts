@@ -1,4 +1,3 @@
-import type { Context, Env } from 'hono';
 import { z as z4 } from 'zod/v4';
 
 /**
@@ -52,64 +51,57 @@ export const oauth21ProviderOptions = z4.object({
 	 * Storage callbacks for OAuth data persistence
 	 */
 	storage: z4.object({
-		get: z4.any(),
-		put: z4.any(),
-		delete: z4.any(),
-		list: z4.any(),
+		/**
+		 * Get a value from storage
+		 * @param key - The storage key
+		 * @returns A Promise resolving to the value or null if not found
+		 */
+		get: z4
+			.any()
+			.refine((val) => typeof val === 'function', { error: 'get must be an async function' })
+			.transform((val) => val as (key: string) => Promise<string | object | null>),
+		/**
+		 * Set a value in storage
+		 * @param key - The storage key
+		 * @param value - The value to store (always pre-stringified JSON)
+		 * @param options - Optional settings like expiration
+		 * @returns A Promise resolving when the operation completes
+		 */
+		put: z4
+			.any()
+			.refine((val) => typeof val === 'function', { error: 'put must be an async function' })
+			.transform((val) => val as (key: string, value: string, options?: { expirationTtl?: number }) => Promise<void>),
+		/**
+		 * Delete a value from storage
+		 * @param key - The storage key
+		 * @returns A Promise resolving when the operation completes
+		 */
+		delete: z4
+			.any()
+			.refine((val) => typeof val === 'function', { error: 'delete must be an async function' })
+			.transform((val) => val as (key: string) => Promise<void>),
 	}),
 	/**
 	 * Optional callback function that is called during token exchange.
 	 * This allows updating the props stored in both the access token and the grant.
 	 */
-	tokenExchangeCallback: z4.any().optional(),
+	tokenExchangeCallback: z4
+		.any()
+		.refine((val) => typeof val === 'function', { error: 'tokenExchangeCallback must be a function' })
+		.transform((val) => val as (options: TokenExchangeCallbackOptions) => Promise<TokenExchangeCallbackResult | void> | TokenExchangeCallbackResult | void)
+		.optional(),
 	/**
 	 * Optional callback function that is called whenever the OAuthProvider returns an error response
 	 * This allows the client to emit notifications or perform other actions when an error occurs.
 	 *
 	 * If the function returns a Response, that will be used in place of the OAuthProvider's default one.
 	 */
-	onError: z4.any().default(({ status, code, description }: Parameters<OAuthErrorCallback>[0]) => console.warn(`OAuth error response: ${status} ${code} - ${description}`)),
+	onError: z4
+		.any()
+		.refine((val) => typeof val === 'function', { error: 'onError must be a function' })
+		.transform((val) => val as OAuthErrorCallback)
+		.default(({ status, code, description }: Parameters<OAuthErrorCallback>[0]) => console.warn(`OAuth error response: ${status} ${code} - ${description}`)),
 });
-
-/**
- * Storage callback functions for OAuth data persistence
- * Users implement these callbacks to persist OAuth data to their preferred storage solution
- */
-export interface OAuthStorageCallbacks {
-	/**
-	 * Get a value from storage
-	 * @param key - The storage key
-	 * @returns A Promise resolving to the value or null if not found
-	 */
-	get: <T = unknown>(key: string) => Promise<T | null>;
-
-	/**
-	 * Set a value in storage
-	 * @param key - The storage key
-	 * @param value - The value to store
-	 * @param options - Optional settings like expiration
-	 * @returns A Promise resolving when the operation completes
-	 */
-	put: (key: string, value: unknown, options?: { expirationTtl?: number }) => Promise<void>;
-
-	/**
-	 * Delete a value from storage
-	 * @param key - The storage key
-	 * @returns A Promise resolving when the operation completes
-	 */
-	delete: (key: string) => Promise<void>;
-
-	/**
-	 * List keys with optional prefix and pagination
-	 * @param options - Options for listing with prefix, cursor, and limit
-	 * @returns A Promise resolving to the list result
-	 */
-	list: (options: { prefix: string; cursor?: string; limit?: number }) => Promise<{
-		keys: { name: string }[];
-		list_complete: boolean;
-		cursor?: string;
-	}>;
-}
 
 /**
  * Options for token exchange callback functions
