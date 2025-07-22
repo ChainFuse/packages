@@ -163,7 +163,7 @@ export class OAuth21Provider {
 					token_endpoint_auth_methods_supported: ['client_secret_basic', 'client_secret_post', 'none'],
 					revocation_endpoint: this.getFullEndpointUrl(this.options.tokenEndpoint, url),
 					code_challenge_methods_supported: ['plain', 'S256'],
-				} satisfies z.input<typeof OAuthMetadataSchema>);
+				} as z.input<typeof OAuthMetadataSchema>);
 			},
 		);
 
