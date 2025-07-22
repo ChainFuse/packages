@@ -2,8 +2,8 @@ import type { Context, MiddlewareHandler } from 'hono';
 import { Hono } from 'hono';
 import { createMiddleware } from 'hono/factory';
 import type { z as z4 } from 'zod/v4';
-import type { AuthRequest, ClientInfo, CompleteAuthorizationOptions, Grant, GrantSummary, ListOptions, ListResult, OAuth21Context, OAuthHelpers, OAuthStorageCallbacks, Token, TokenExchangeCallbackOptions } from './types.mjs';
-import { oauth21ProviderOptionsSchema } from './types.mjs';
+import type { AuthRequest, ClientInfo, CompleteAuthorizationOptions, Grant, GrantSummary, ListOptions, ListResult, OAuth21Context, OAuthHelpers, OAuthStorageCallbacks, TokenExchangeCallbackOptions } from './types.mjs';
+import { oauth21ProviderOptions, token } from './types.mjs';
 
 // Constants
 const DEFAULT_ACCESS_TOKEN_TTL = 60 * 60; // 1 hour
@@ -17,12 +17,12 @@ const WRAPPING_KEY_HMAC_KEY = new Uint8Array([0x22, 0x7e, 0x26, 0x86, 0x8d, 0xf1
  * Creates a mini Hono app that can be mounted with `.route()` to handle OAuth endpoints
  */
 export class OAuth21Provider {
-	private options: z4.output<typeof oauth21ProviderOptionsSchema>;
+	private options: z4.output<typeof oauth21ProviderOptions>;
 	public app: Hono;
 
-	constructor(options: z4.input<typeof oauth21ProviderOptionsSchema>) {
+	constructor(options: z4.input<typeof oauth21ProviderOptions>) {
 		// Validate options using Zod schema
-		this.options = oauth21ProviderOptionsSchema.parse(options);
+		this.options = oauth21ProviderOptions.parse(options);
 
 		this.app = new Hono();
 		this.setupRoutes();
