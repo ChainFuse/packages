@@ -721,7 +721,7 @@ export class OAuth21Provider {
 		return this.options.storage.get<ClientInfo>(clientKey);
 	}
 
-	// Utility methods
+	// Utility method
 	private async encryptProps(data: Record<string, unknown>): Promise<{ encryptedData: string; key: CryptoKey }> {
 		const key: CryptoKey = await crypto.subtle.generateKey(
 			{
