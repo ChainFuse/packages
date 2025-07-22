@@ -5,7 +5,7 @@ import { z as z4 } from 'zod/v4';
  * Zod schema for OAuth 2.1 Provider Options validation
  * Note: Function validation is simplified to avoid Zod v4 function API complexities
  */
-export const oauth21ProviderOptionsSchema = z4.object({
+export const oauth21ProviderOptions = z4.object({
 	/**
 	 * URL of the OAuth authorization endpoint where users can grant permissions.
 	 * This URL is used in OAuth metadata and is not handled by the provider itself.
@@ -421,57 +421,49 @@ export interface Grant {
 /**
  * Token record stored in storage
  */
-export interface Token {
+export const token = z4.object({
 	/**
 	 * Unique identifier for the token (hash of the actual token)
 	 */
-	id: string;
-
+	id: z4.string().nonempty(),
 	/**
 	 * Identifier of the grant this token is associated with
 	 */
-	grantId: string;
-
+	grantId: z4.string().nonempty(),
 	/**
 	 * User ID associated with this token
 	 */
-	userId: string;
-
+	userId: z4.string().nonempty(),
 	/**
 	 * Unix timestamp when the token was created
 	 */
-	createdAt: number;
-
+	createdAt: z4.coerce.number().int().nonnegative(),
 	/**
 	 * Unix timestamp when the token expires
 	 */
-	expiresAt: number;
-
+	expiresAt: z4.coerce.number().int().nonnegative(),
 	/**
 	 * The encryption key for props, wrapped with this token
 	 */
-	wrappedEncryptionKey: string;
-
+	wrappedEncryptionKey: z4.string().nonempty(),
 	/**
 	 * Denormalized grant information for faster access
 	 */
-	grant: {
+	grant: z4.object({
 		/**
 		 * Client that received this grant
 		 */
-		clientId: string;
-
+		clientId: z4.string().nonempty(),
 		/**
 		 * List of scopes that were granted
 		 */
-		scope: string[];
-
+		scope: z4.array(z4.string().nonempty()),
 		/**
 		 * Encrypted application-specific properties
 		 */
-		encryptedProps: string;
-	};
-}
+		encryptedProps: z4.string().nonempty(),
+	}),
+});
 
 /**
  * Options for listing operations that support pagination
