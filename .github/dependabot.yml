@@ -70,6 +70,10 @@ updates:
         exclude-patterns:
           - '@cloudflare/ai*'
           - '@cloudflare/workers-types'
+      hono:
+        patterns:
+          - 'hono'
+          - '@hono/*'
       typescript-core:
         patterns:
           - 'typescript'

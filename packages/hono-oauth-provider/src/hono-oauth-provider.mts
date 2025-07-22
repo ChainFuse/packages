@@ -1,6 +1,6 @@
+import { OpenAPIHono } from '@hono/zod-openapi';
 import type { OAuthMetadata } from '@modelcontextprotocol/sdk/shared/auth.js';
 import type { Context } from 'hono';
-import { Hono } from 'hono';
 import { createMiddleware } from 'hono/factory';
 import type { z as z4 } from 'zod/v4';
 import type { AuthRequest, ClientInfo, CompleteAuthorizationOptions, Grant, GrantSummary, ListOptions, ListResult, OAuthContext, OAuthHelpers, TokenExchangeCallbackOptions } from './types.mjs';
@@ -19,7 +19,7 @@ const WRAPPING_KEY_HMAC_KEY = new Uint8Array([0x22, 0x7e, 0x26, 0x86, 0x8d, 0xf1
  */
 export class OAuth21Provider {
 	private options: z4.output<typeof oauth21ProviderOptions>;
-	public app = new Hono<{ Variables: OAuthContext }>();
+	public app = new OpenAPIHono<{ Variables: OAuthContext }>();
 
 	constructor(options: z4.input<typeof oauth21ProviderOptions>) {
 		// Validate options using Zod schema
