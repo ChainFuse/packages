@@ -107,7 +107,6 @@ export class OAuth21Provider {
 		// OAuth metadata discovery endpoint
 		this.app.get('/.well-known/oauth-authorization-server', async (c) => {
 			const url = new URL(c.req.url);
-			const baseUrl = `${url.protocol}//${url.host}`;
 
 			const responseTypesSupported = ['code'];
 			if (this.options.allowImplicitFlow) {
@@ -115,7 +114,7 @@ export class OAuth21Provider {
 			}
 
 			const metadata = {
-				issuer: baseUrl,
+				issuer: url.origin,
 				authorization_endpoint: this.getFullEndpointUrl(this.options.authorizeEndpoint, url),
 				token_endpoint: this.getFullEndpointUrl(this.options.tokenEndpoint, url),
 				registration_endpoint: this.options.clientRegistrationEndpoint ? this.getFullEndpointUrl(this.options.clientRegistrationEndpoint, url) : undefined,
