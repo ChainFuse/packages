@@ -734,48 +734,6 @@ export class OAuth21Provider {
 	}
 
 	// Utility methods
-	private generateRandomString(length: number): string {
-		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		let result = '';
-		const values = new Uint8Array(length);
-		crypto.getRandomValues(values);
-
-		for (let i = 0; i < length; i++) {
-			result += characters.charAt(values[i]! % characters.length);
-		}
-		return result;
-	}
-
-	private async generateTokenId(token: string): Promise<string> {
-		const encoder = new TextEncoder();
-		const data = encoder.encode(token);
-		const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-		const hashArray = Array.from(new Uint8Array(hashBuffer));
-		const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
-		return hashHex;
-	}
-
-	private async hashSecret(secret: string): Promise<string> {
-		return this.generateTokenId(secret);
-	}
-
-	private base64UrlEncode(str: string): string {
-		return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
-	}
-
-	private arrayBufferToBase64(buffer: ArrayBuffer): string {
-		return btoa(String.fromCharCode(...new Uint8Array(buffer)));
-	}
-
-	private base64ToArrayBuffer(base64: string): ArrayBuffer {
-		const binaryString = atob(base64);
-		const bytes = new Uint8Array(binaryString.length);
-		for (let i = 0; i < binaryString.length; i++) {
-			bytes[i] = binaryString.charCodeAt(i);
-		}
-		return bytes.buffer;
-	}
-
 	private async encryptProps(data: Record<string, unknown>): Promise<{ encryptedData: string; key: CryptoKey }> {
 		const key: CryptoKey = await crypto.subtle.generateKey(
 			{
