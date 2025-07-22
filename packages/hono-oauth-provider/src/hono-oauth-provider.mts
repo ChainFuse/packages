@@ -139,7 +139,7 @@ export class OAuth21Provider {
 								schema: OAuthMetadataSchema,
 							},
 						},
-						description: 'Returns the query result as an object.',
+						description: 'RFC 8414 OAuth 2.0 Authorization Server Metadata',
 					},
 				},
 			}),
