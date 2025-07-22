@@ -795,12 +795,12 @@ export class OAuth21Provider {
 	private async wrapKeyWithToken(tokenStr: string, keyToWrap: CryptoKey): Promise<string> {
 		const wrappingKey = await this.deriveKeyFromToken(tokenStr);
 		const wrappedKeyBuffer = await crypto.subtle.wrapKey('raw', keyToWrap, wrappingKey, { name: 'AES-KW' });
-		return this.arrayBufferToBase64(wrappedKeyBuffer);
+		return import('@chainfuse/helpers').then(({ BufferHelpers }) => BufferHelpers.bufferToBase64(wrappedKeyBuffer, false));
 	}
 
 	private async unwrapKeyWithToken(tokenStr: string, wrappedKeyBase64: string): Promise<CryptoKey> {
 		const wrappingKey = await this.deriveKeyFromToken(tokenStr);
-		const wrappedKeyBuffer = this.base64ToArrayBuffer(wrappedKeyBase64);
+		const wrappedKeyBuffer = await import('@chainfuse/helpers').then(({ BufferHelpers }) => BufferHelpers.base64ToBuffer(wrappedKeyBase64));
 
 		return await crypto.subtle.unwrapKey('raw', wrappedKeyBuffer, wrappingKey, { name: 'AES-KW' }, { name: 'AES-GCM' }, true, ['encrypt', 'decrypt']);
 	}
