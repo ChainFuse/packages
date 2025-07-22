@@ -38,7 +38,7 @@ export class OAuth21Provider {
 	 */
 	createAuthMiddleware() {
 		return createMiddleware<{ Variables: OAuthContext }>(
-			async (c, next): Promise<Response | void> =>
+			(c, next): Promise<Response | void> =>
 				import('hono/bearer-auth').then(({ bearerAuth }) =>
 					bearerAuth({
 						realm: 'OAuth',
@@ -47,8 +47,7 @@ export class OAuth21Provider {
 							// Parse the token to extract user ID and grant ID for parallel lookups
 							const tokenParts = accessToken.split(':');
 							if (tokenParts.length !== 3) return false;
-
-							const [userId, grantId, _] = tokenParts;
+							const [userId, grantId] = tokenParts;
 
 							// Generate token ID from the full token
 							const accessTokenId = await import('@chainfuse/helpers').then(({ CryptoHelpers }) => CryptoHelpers.getHash('SHA-256', accessToken));
