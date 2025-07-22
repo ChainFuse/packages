@@ -2,8 +2,8 @@ import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import type { Context } from 'hono';
 import { createMiddleware } from 'hono/factory';
 import type { z as z4 } from 'zod/v4';
-import type { AuthRequest, ClientInfo, CompleteAuthorizationOptions, Grant, GrantSummary, ListOptions, ListResult, OAuthContext, OAuthHelpers, TokenExchangeCallbackOptions } from './types.mjs';
-import { oauth21ProviderOptions, token } from './types.mjs';
+import type { AuthRequest, CompleteAuthorizationOptions, Grant, GrantSummary, ListOptions, ListResult, OAuthContext, OAuthHelpers, TokenExchangeCallbackOptions } from './types.mjs';
+import { clientInfo, oauth21ProviderOptions, token } from './types.mjs';
 
 // Constants
 const DEFAULT_ACCESS_TOKEN_TTL = 60 * 60; // 1 hour
@@ -168,64 +168,99 @@ export class OAuth21Provider {
 		);
 
 		// Token endpoint
-		this.app.post('/token', async (c) => {
-			const contentType = c.req.header('Content-Type') ?? '';
-			if (!contentType.includes('application/x-www-form-urlencoded')) {
-				return this.createErrorResponse('invalid_request', 'Content-Type must be application/x-www-form-urlencoded', 400);
-			}
+		this.app.openapi(
+			createRoute({
+				method: 'post',
+				path: '/token',
+				request: {
+					headers: z.object({
+						Authorization: z
+							.string()
+							.trim()
+							.nonempty()
+							.regex(/Basic\s+.+/i)
+							.transform((value) =>
+								value
+									.split(' ')
+									// Remove the prefix
+									.slice(1)
+									// Merge back into a single string
+									.join(' ')
+									.trim(),
+							)
+							.optional(),
+					}),
+					body: {
+						content: {
+							'application/x-www-form-urlencoded': {
+								schema: z.object({
+									client_id: z.string().trim().nonempty().optional(),
+									client_secret: z.string().trim().nonempty().optional(),
+									grant_type: z.enum(['authorization_code', 'refresh_token']),
+								}),
+							},
+						},
+					},
+				},
+				responses: {},
+			}),
+			async (c) => {
+				const body = c.req.valid('form');
+				const { Authorization: credentials } = c.req.valid('header');
 
-			const body = await c.req.parseBody();
-			const authHeader = c.req.header('Authorization');
+				let clientId: string | undefined;
+				let clientSecret: string | undefined;
 
-			let clientId = '';
-			let clientSecret = '';
-
-			if (authHeader?.startsWith('Basic ')) {
-				const credentials = atob(authHeader.substring(6));
-				const [id, secret] = credentials.split(':', 2);
-				clientId = decodeURIComponent(id ?? '');
-				clientSecret = decodeURIComponent(secret ?? '');
-			} else {
-				clientId = (body['client_id'] as string) || '';
-				clientSecret = (body['client_secret'] as string) || '';
-			}
-
-			if (!clientId) {
-				return this.createErrorResponse('invalid_client', 'Client ID is required', 401);
-			}
-
-			const clientInfo = await this.getClient(clientId);
-			if (!clientInfo) {
-				return this.createErrorResponse('invalid_client', 'Client not found', 401);
-			}
-
-			const isPublicClient = clientInfo.tokenEndpointAuthMethod === 'none';
-
-			if (!isPublicClient) {
-				if (!clientSecret) {
-					return this.createErrorResponse('invalid_client', 'Client authentication failed: missing client_secret', 401);
+				if (credentials) {
+					const [id, secret] = credentials.split(':', 2);
+					if (id) clientId = decodeURIComponent(id);
+					if (secret) clientSecret = decodeURIComponent(secret);
+				} else {
+					if (body.client_id) clientId = body.client_id;
+					if (body.client_secret) clientSecret = body.client_secret;
 				}
 
-				if (!clientInfo.clientSecret) {
-					return this.createErrorResponse('invalid_client', 'Client authentication failed: client has no registered secret', 401);
+				if (!clientId) {
+					return c.json({ error: 'invalid_client', error_description: 'Client ID is required' }, 401);
 				}
 
-				const providedSecretHash = await this.hashSecret(clientSecret);
-				if (providedSecretHash !== clientInfo.clientSecret) {
-					return this.createErrorResponse('invalid_client', 'Client authentication failed: invalid client_secret', 401);
+				// Verify client exists
+				const clientInfo = await this.getClient(clientId);
+				if (!clientInfo) {
+					return c.json({ error: 'invalid_client', error_description: 'Client not found' }, 401);
 				}
-			}
 
-			const grantType = body['grant_type'] as string;
+				// Determine authentication requirements based on token endpoint auth method
+				const isPublicClient = clientInfo.tokenEndpointAuthMethod === 'none';
 
-			if (grantType === 'authorization_code') {
-				return this.handleAuthorizationCodeGrant(c, body, clientInfo);
-			} else if (grantType === 'refresh_token') {
-				return this.handleRefreshTokenGrant(c, body, clientInfo);
-			} else {
-				return this.createErrorResponse('unsupported_grant_type', 'Grant type not supported');
-			}
-		});
+				// For confidential clients, validate the secret
+				if (!isPublicClient) {
+					if (!clientSecret) {
+						return c.json({ error: 'invalid_client', error_description: 'Client authentication failed: missing client_secret' }, 401);
+					}
+
+					// Verify the client secret matches
+					if (!clientInfo.clientSecret) {
+						return c.json({ error: 'invalid_client', error_description: 'Client authentication failed: client has no registered secret' }, 401);
+					}
+
+					const providedSecretHash = await import('@chainfuse/helpers').then(({ CryptoHelpers }) => CryptoHelpers.getHash('SHA-256', clientSecret));
+					if (providedSecretHash !== clientInfo.clientSecret) {
+						return c.json({ error: 'invalid_client', error_description: 'Client authentication failed: invalid client_secret' }, 401);
+					}
+				}
+				// For public clients, no secret is required
+
+				// Handle different grant types
+				const grantType = body.grant_type;
+
+				if (grantType === 'authorization_code') {
+					return this.handleAuthorizationCodeGrant(body, clientInfo, env);
+				} else if (grantType === 'refresh_token') {
+					return this.handleRefreshTokenGrant(body, clientInfo, env);
+				}
+			},
+		);
 
 		// Client registration endpoint
 		if (this.options.clientRegistrationEndpoint) {
@@ -739,9 +774,15 @@ export class OAuth21Provider {
 		}
 	}
 
-	async getClient(clientId: string): Promise<ClientInfo | null> {
+	async getClient(clientId: string) {
 		const clientKey = `client:${clientId}`;
-		return this.options.storage.get<ClientInfo>(clientKey);
+		const clientDataRaw = await this.options.storage.get(clientKey);
+
+		if (clientDataRaw) {
+			return clientInfo.parseAsync(typeof clientDataRaw === 'string' ? JSON.parse(clientDataRaw) : clientDataRaw);
+		} else {
+			return null;
+		}
 	}
 
 	// Utility method
