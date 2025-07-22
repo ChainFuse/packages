@@ -37,57 +37,56 @@ export class OAuth21Provider {
 	 * Create middleware that validates OAuth tokens and adds user context
 	 */
 	createAuthMiddleware() {
-		return createMiddleware<{ Variables: OAuthContext }>(
-			(c, next): Promise<Response | void> =>
-				import('hono/bearer-auth').then(({ bearerAuth }) =>
-					bearerAuth({
-						realm: 'OAuth',
-						headerName: 'Authorization',
-						verifyToken: async (accessToken) => {
-							// Parse the token to extract user ID and grant ID for parallel lookups
-							const tokenParts = accessToken.split(':');
-							if (tokenParts.length !== 3) return false;
-							const [userId, grantId] = tokenParts;
+		return createMiddleware<{ Variables: OAuthContext }>((c, next) =>
+			import('hono/bearer-auth').then(({ bearerAuth }) =>
+				bearerAuth({
+					realm: 'OAuth',
+					headerName: 'Authorization',
+					verifyToken: async (accessToken) => {
+						// Parse the token to extract user ID and grant ID for parallel lookups
+						const tokenParts = accessToken.split(':');
+						if (tokenParts.length !== 3) return false;
+						const [userId, grantId] = tokenParts;
 
-							// Generate token ID from the full token
-							const accessTokenId = await import('@chainfuse/helpers').then(({ CryptoHelpers }) => CryptoHelpers.getHash('SHA-256', accessToken));
+						// Generate token ID from the full token
+						const accessTokenId = await import('@chainfuse/helpers').then(({ CryptoHelpers }) => CryptoHelpers.getHash('SHA-256', accessToken));
 
-							// Look up the token record, which now contains the denormalized grant information
-							const tokenKey = `token:${userId}:${grantId}:${accessTokenId}`;
-							const tokenDataRaw = await this.options.storage.get(tokenKey);
-							const { data: tokenData, success: tokenDataSuccess } = token.safeParse(typeof tokenDataRaw === 'string' ? JSON.parse(tokenDataRaw) : tokenDataRaw);
+						// Look up the token record, which now contains the denormalized grant information
+						const tokenKey = `token:${userId}:${grantId}:${accessTokenId}`;
+						const tokenDataRaw = await this.options.storage.get(tokenKey);
+						const { data: tokenData, success: tokenDataSuccess } = token.safeParse(typeof tokenDataRaw === 'string' ? JSON.parse(tokenDataRaw) : tokenDataRaw);
 
-							// Verify token
-							if (!tokenDataSuccess) return false;
+						// Verify token
+						if (!tokenDataSuccess) return false;
 
-							// Check if token is expired (should be auto-deleted by KV TTL, but double-check)
-							const now = Math.floor(Date.now() / 1000);
-							if (tokenData.expiresAt < now) {
-								return this.createErrorResponse('invalid_token', 'Access token expired', 401, {
-									'WWW-Authenticate': 'Bearer realm="OAuth", error="invalid_token"',
-								});
-							}
+						// Check if token is expired (should be auto-deleted by KV TTL, but double-check)
+						const now = Math.floor(Date.now() / 1000);
+						if (tokenData.expiresAt < now) {
+							this.options.onError({ code: 'invalid_token', description: 'Access token expired', status: 401, headers: { 'WWW-Authenticate': 'Bearer realm="OAuth", error="invalid_token"' } });
 
-							// Unwrap the encryption key and decrypt props
-							const encryptionKey = await this.unwrapKeyWithToken(accessToken, tokenData.wrappedEncryptionKey);
-							const decryptedProps = await this.decryptProps(encryptionKey, tokenData.grant.encryptedProps);
+							return false;
+						}
 
-							// Add user context to the request
-							if (typeof c.var.oauth !== 'object') c.set('oauth', { helpers: new OAuthHelpersImpl(this.options.storage, this) });
-							c.var.oauth.user = {
-								userId: tokenData.userId,
-								clientId: tokenData.grant.clientId,
-								scope: tokenData.grant.scope,
-								props: decryptedProps,
-							};
+						// Unwrap the encryption key and decrypt props
+						const encryptionKey = await this.unwrapKeyWithToken(accessToken, tokenData.wrappedEncryptionKey);
+						const decryptedProps = await this.decryptProps(encryptionKey, tokenData.grant.encryptedProps);
 
-							await next();
-						},
-						noAuthenticationHeaderMessage: 'Missing or invalid access token',
-						invalidAuthenticationHeaderMessage: 'Invalid token format',
-						invalidTokenMessage: 'Invalid access token',
-					})(c, next),
-				),
+						// Add user context to the request
+						if (typeof c.var.oauth !== 'object') c.set('oauth', { helpers: new OAuthHelpersImpl(this.options.storage, this) });
+						c.var.oauth.user = {
+							userId: tokenData.userId,
+							clientId: tokenData.grant.clientId,
+							scope: tokenData.grant.scope,
+							props: decryptedProps,
+						};
+
+						return true;
+					},
+					noAuthenticationHeaderMessage: 'Missing or invalid access token',
+					invalidAuthenticationHeaderMessage: 'Invalid token format',
+					invalidTokenMessage: 'Invalid access token',
+				})(c, next),
+			),
 		);
 	}
 
