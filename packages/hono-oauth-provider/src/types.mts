@@ -174,76 +174,60 @@ export type OAuthErrorCallback = (error: { code: string; description: string; st
  */
 export type TokenExchangeCallback = (options: TokenExchangeCallbackOptions) => Promise<TokenExchangeCallbackResult | void> | TokenExchangeCallbackResult | void;
 
-/**
- * OAuth client registration information
- */
-export interface ClientInfo {
+export const clientInfo = z4.object({
 	/**
 	 * Unique identifier for the client
 	 */
-	clientId: string;
-
+	clientId: z4.string().nonempty().trim(),
 	/**
 	 * Secret used to authenticate the client (stored as a hash)
 	 * Only present for confidential clients; undefined for public clients.
 	 */
-	clientSecret?: string;
-
+	clientSecret: z4.string().trim().optional(),
 	/**
 	 * List of allowed redirect URIs for the client
 	 */
-	redirectUris: string[];
-
+	redirectUris: z4.array(z4.url()),
 	/**
 	 * Human-readable name of the client application
 	 */
-	clientName?: string;
-
+	clientName: z4.string().nonempty().trim().optional(),
 	/**
 	 * URL to the client's logo
 	 */
-	logoUri?: string;
-
+	logoUri: z4.url().optional(),
 	/**
 	 * URL to the client's homepage
 	 */
-	clientUri?: string;
-
+	clientUri: z4.url().optional(),
 	/**
 	 * URL to the client's privacy policy
 	 */
-	policyUri?: string;
-
+	policyUri: z4.url().optional(),
 	/**
 	 * URL to the client's terms of service
 	 */
-	tosUri?: string;
-
+	tosUri: z4.url().optional(),
 	/**
 	 * URL to the client's JSON Web Key Set for validating signatures
 	 */
-	jwksUri?: string;
-
+	jwksUri: z4.url().optional(),
 	/**
 	 * List of email addresses for contacting the client developers
 	 */
-	contacts?: string[];
-
+	contacts: z4.array(z4.string().nonempty().trim()).optional(),
 	/**
 	 * List of grant types the client supports
 	 */
-	grantTypes?: string[];
-
+	grantTypes: z4.array(z4.string().nonempty().trim()).optional(),
 	/**
 	 * List of response types the client supports
 	 */
-	responseTypes?: string[];
-
+	responseTypes: z4.array(z4.string().nonempty().trim()).optional(),
 	/**
 	 * Unix timestamp when the client was registered
 	 */
-	registrationDate?: number;
-
+	registrationDate: z4.coerce.number().int().nonnegative().optional(),
 	/**
 	 * The authentication method used by the client at the token endpoint.
 	 * Values include:
@@ -251,8 +235,8 @@ export interface ClientInfo {
 	 * - 'client_secret_post': Uses POST parameters for client authentication
 	 * - 'none': Used for public clients that can't securely store secrets (SPAs, mobile apps, etc.)
 	 */
-	tokenEndpointAuthMethod: string;
-}
+	tokenEndpointAuthMethod: z4.enum(['client_secret_basic', 'client_secret_post', 'none']),
+});
 
 /**
  * Parsed OAuth authorization request parameters
