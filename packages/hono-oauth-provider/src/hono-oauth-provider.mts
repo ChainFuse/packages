@@ -1,5 +1,4 @@
-import { OpenAPIHono } from '@hono/zod-openapi';
-import type { OAuthMetadata } from '@modelcontextprotocol/sdk/shared/auth.js';
+import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import type { Context } from 'hono';
 import { createMiddleware } from 'hono/factory';
 import type { z as z4 } from 'zod/v4';
@@ -106,28 +105,67 @@ export class OAuth21Provider {
 		);
 
 		// OAuth metadata discovery endpoint
-		this.app.get('/.well-known/oauth-authorization-server', async (c) => {
-			const url = new URL(c.req.url);
-
-			const responseTypesSupported = ['code'];
-			if (this.options.allowImplicitFlow) {
-				responseTypesSupported.push('token');
-			}
-
-			return c.json({
-				issuer: url.origin,
-				authorization_endpoint: this.getFullEndpointUrl(this.options.authorizeEndpoint, url),
-				token_endpoint: this.getFullEndpointUrl(this.options.tokenEndpoint, url),
-				registration_endpoint: this.options.clientRegistrationEndpoint ? this.getFullEndpointUrl(this.options.clientRegistrationEndpoint, url) : undefined,
-				scopes_supported: this.options.scopesSupported,
-				response_types_supported: responseTypesSupported,
-				response_modes_supported: ['query'],
-				grant_types_supported: ['authorization_code', 'refresh_token'],
-				token_endpoint_auth_methods_supported: ['client_secret_basic', 'client_secret_post', 'none'],
-				revocation_endpoint: this.getFullEndpointUrl(this.options.tokenEndpoint, url),
-				code_challenge_methods_supported: ['plain', 'S256'],
-			} satisfies OAuthMetadata);
+		const OAuthMetadataSchema = z.looseObject({
+			issuer: z.string(),
+			authorization_endpoint: z.string(),
+			token_endpoint: z.string(),
+			registration_endpoint: z.string().optional(),
+			scopes_supported: z.array(z.string()).optional(),
+			response_types_supported: z.array(z.string()),
+			response_modes_supported: z.array(z.string()).optional(),
+			grant_types_supported: z.array(z.string()).optional(),
+			token_endpoint_auth_methods_supported: z.array(z.string()).optional(),
+			token_endpoint_auth_signing_alg_values_supported: z.array(z.string()).optional(),
+			service_documentation: z.string().optional(),
+			revocation_endpoint: z.string().optional(),
+			revocation_endpoint_auth_methods_supported: z.array(z.string()).optional(),
+			revocation_endpoint_auth_signing_alg_values_supported: z.array(z.string()).optional(),
+			introspection_endpoint: z.string().optional(),
+			introspection_endpoint_auth_methods_supported: z.array(z.string()).optional(),
+			introspection_endpoint_auth_signing_alg_values_supported: z.array(z.string()).optional(),
+			code_challenge_methods_supported: z.array(z.string()).optional(),
 		});
+		this.app.openapi(
+			createRoute({
+				method: 'get',
+				path: '/.well-known/oauth-authorization-server',
+				responses: {
+					200: {
+						content: {
+							'application/json': {
+								/**
+								 * @link https://github.com/modelcontextprotocol/typescript-sdk/blob/main/src/shared/auth.ts#L28-L57
+								 */
+								schema: OAuthMetadataSchema,
+							},
+						},
+						description: 'Returns the query result as an object.',
+					},
+				},
+			}),
+			(c) => {
+				const url = new URL(c.req.url);
+
+				const responseTypesSupported = ['code'];
+				if (this.options.allowImplicitFlow) {
+					responseTypesSupported.push('token');
+				}
+
+				return c.json({
+					issuer: url.origin,
+					authorization_endpoint: this.getFullEndpointUrl(this.options.authorizeEndpoint, url),
+					token_endpoint: this.getFullEndpointUrl(this.options.tokenEndpoint, url),
+					registration_endpoint: this.options.clientRegistrationEndpoint ? this.getFullEndpointUrl(this.options.clientRegistrationEndpoint, url) : undefined,
+					scopes_supported: this.options.scopesSupported,
+					response_types_supported: responseTypesSupported,
+					response_modes_supported: ['query'],
+					grant_types_supported: ['authorization_code', 'refresh_token'],
+					token_endpoint_auth_methods_supported: ['client_secret_basic', 'client_secret_post', 'none'],
+					revocation_endpoint: this.getFullEndpointUrl(this.options.tokenEndpoint, url),
+					code_challenge_methods_supported: ['plain', 'S256'],
+				} satisfies z.input<typeof OAuthMetadataSchema>);
+			},
+		);
 
 		// Token endpoint
 		this.app.post('/token', async (c) => {
