@@ -92,26 +92,17 @@ export class OAuth21Provider {
 
 	private setupRoutes(): void {
 		// Add CORS middleware
-		this.app.use('*', async (c, next): Promise<Response | void> => {
-			if (c.req.method === 'OPTIONS') {
-				const origin = c.req.header('Origin');
-				if (origin) {
-					c.header('Access-Control-Allow-Origin', origin);
-					c.header('Access-Control-Allow-Methods', '*');
-					c.header('Access-Control-Allow-Headers', 'Authorization, *');
-					c.header('Access-Control-Max-Age', '86400');
-				}
-				return new Response('', { status: 204 });
-			}
-			await next();
-			const origin = c.req.header('Origin');
-			if (origin) {
-				c.header('Access-Control-Allow-Origin', origin);
-				c.header('Access-Control-Allow-Methods', '*');
-				c.header('Access-Control-Allow-Headers', 'Authorization, *');
-				c.header('Access-Control-Max-Age', '86400');
-			}
-		});
+		this.app.use('*', (c, next) =>
+			import('hono/cors').then(({ cors }) =>
+				cors({
+					origin: (origin) => origin,
+					allowMethods: ['*'],
+					// Include Authorization explicitly since it's not included in * for security reasons
+					allowHeaders: ['Authorization', '*'],
+					maxAge: 24 * 60 * 60,
+				})(c, next),
+			),
+		);
 
 		// OAuth metadata discovery endpoint
 		this.app.get('/.well-known/oauth-authorization-server', async (c) => {
