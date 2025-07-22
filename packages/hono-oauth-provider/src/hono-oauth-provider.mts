@@ -696,7 +696,7 @@ export class OAuth21Provider {
 
 	private getFullEndpointUrl(endpoint: string, requestUrl: URL): string {
 		if (endpoint.startsWith('/')) {
-			return `${requestUrl.origin}${endpoint}`;
+			return new URL(endpoint, requestUrl.origin).toString();
 		} else {
 			return endpoint;
 		}
