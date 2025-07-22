@@ -595,27 +595,21 @@ export interface OAuthHelpers {
 	revokeGrant(grantId: string, userId: string): Promise<void>;
 }
 
-/**
- * Context extension for OAuth authentication
- */
 export interface OAuthContext {
-	/**
-	 * OAuth helpers for interacting with the OAuth system
-	 */
-	oauth: OAuthHelpers;
+	oauth: {
+		/**
+		 * OAuth helpers for interacting with the OAuth system
+		 */
+		helpers: OAuthHelpers;
 
-	/**
-	 * Authenticated user properties (available in protected routes)
-	 */
-	user?: {
-		userId: string;
-		clientId: string;
-		scope: string[];
-		props: Record<string, unknown>;
+		/**
+		 * Authenticated user properties (available in protected routes)
+		 */
+		user?: {
+			userId: string;
+			clientId: string;
+			scope: string[];
+			props: Record<string, unknown>;
+		};
 	};
 }
-
-/**
- * Extended Context type that includes OAuth functionality
- */
-export type OAuth21Context<E extends Env = Env> = Context<E> & OAuthContext;
