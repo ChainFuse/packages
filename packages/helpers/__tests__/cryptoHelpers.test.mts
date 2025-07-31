@@ -1,4 +1,5 @@
 import { doesNotReject, strictEqual } from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { describe, it } from 'node:test';
 import { CryptoHelpers } from '../dist/crypto.mjs';
 import { CryptoHelpersInternals } from '../dist/cryptoInternals.mjs';
@@ -27,14 +28,31 @@ void describe('Crypto Helper Tests', () => {
 	});
 
 	void describe('Hashing', () => {
-		void it('Node native tests', async () => {
-			const testData = 'Hello, World!';
-			await doesNotReject(CryptoHelpersInternals.node_getHash('SHA-256', testData).then((hash) => strictEqual(typeof hash, 'string')));
-		});
+		const hashAlgorithms: { name: Parameters<typeof CryptoHelpers.getHash>[0]; node: Parameters<typeof createHash>[0]; length: number }[] = [
+			{ name: 'SHA-1', node: 'sha1', length: (160 / 8) * 2 },
+			{ name: 'SHA-256', node: 'sha256', length: (256 / 8) * 2 },
+			{ name: 'SHA-384', node: 'sha384', length: (384 / 8) * 2 },
+			{ name: 'SHA-512', node: 'sha512', length: (512 / 8) * 2 },
+		];
 
-		void it('Browser tests', async () => {
-			const testData = 'Hello, World!';
-			await doesNotReject(CryptoHelpersInternals.browser_getHash('SHA-256', testData).then((hash) => strictEqual(typeof hash, 'string')));
+		hashAlgorithms.forEach(({ name, node, length }) => {
+			void it(`Node native tests for ${name}`, async () => {
+				const testData = 'Hello, World!';
+				const expectedHash = createHash(node).update(testData).digest('hex');
+				const actualHash = await CryptoHelpersInternals.node_getHash(name, testData);
+				strictEqual(typeof actualHash, 'string');
+				strictEqual(actualHash.length, length);
+				strictEqual(actualHash.toLowerCase(), expectedHash.toLowerCase());
+			});
+
+			void it(`Browser tests for ${name}`, async () => {
+				const testData = 'Hello, World!';
+				const expectedHash = createHash(node).update(testData).digest('hex');
+				const actualHash = await CryptoHelpersInternals.browser_getHash(name, testData);
+				strictEqual(typeof actualHash, 'string');
+				strictEqual(actualHash.length, length);
+				strictEqual(actualHash.toLowerCase(), expectedHash.toLowerCase());
+			});
 		});
 	});
 });
