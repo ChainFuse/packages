@@ -1,5 +1,29 @@
 # @chainfuse/ai-tools
 
+## 0.13.26
+
+### Patch Changes
+
+- [#530](https://github.com/ChainFuse/packages/pull/530) [`5e7ecde`](https://github.com/ChainFuse/packages/commit/5e7ecde7e0255c13e9ddfdbfcca827aa93051089) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump openai
+
+- [#541](https://github.com/ChainFuse/packages/pull/541) [`44930d4`](https://github.com/ChainFuse/packages/commit/44930d4343c82573ce18efad681c5a85a965a977) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @azure/arm-cognitiveservices, openai
+
+- [#531](https://github.com/ChainFuse/packages/pull/531) [`c98376e`](https://github.com/ChainFuse/packages/commit/c98376ef6d406fb53c7c8ebd75ffb7c719dc5e78) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump cloudflare
+
+- [#543](https://github.com/ChainFuse/packages/pull/543) [`f57de4c`](https://github.com/ChainFuse/packages/commit/f57de4cc211251baa83c595661131efef3aeb6a1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump drizzle-orm
+
+- [#545](https://github.com/ChainFuse/packages/pull/545) [`b25a8cd`](https://github.com/ChainFuse/packages/commit/b25a8cd29e1cfd07f4d6c4b5b7cca46dc2e4aa1c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(): bump form-data
+
+- [#537](https://github.com/ChainFuse/packages/pull/537) [`b92bfda`](https://github.com/ChainFuse/packages/commit/b92bfdaae9c20102f29d1c3042de0fef194b8753) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#532](https://github.com/ChainFuse/packages/pull/532) [`519e852`](https://github.com/ChainFuse/packages/commit/519e8526537e50addffe9416faec02ad97b53354) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#542](https://github.com/ChainFuse/packages/pull/542) [`b01fedc`](https://github.com/ChainFuse/packages/commit/b01fedc1db96ae9d0fac310c00451e287068badc) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- Updated dependencies [[`5e7ecde`](https://github.com/ChainFuse/packages/commit/5e7ecde7e0255c13e9ddfdbfcca827aa93051089), [`44930d4`](https://github.com/ChainFuse/packages/commit/44930d4343c82573ce18efad681c5a85a965a977), [`c98376e`](https://github.com/ChainFuse/packages/commit/c98376ef6d406fb53c7c8ebd75ffb7c719dc5e78), [`f57de4c`](https://github.com/ChainFuse/packages/commit/f57de4cc211251baa83c595661131efef3aeb6a1), [`b25a8cd`](https://github.com/ChainFuse/packages/commit/b25a8cd29e1cfd07f4d6c4b5b7cca46dc2e4aa1c), [`b92bfda`](https://github.com/ChainFuse/packages/commit/b92bfdaae9c20102f29d1c3042de0fef194b8753), [`519e852`](https://github.com/ChainFuse/packages/commit/519e8526537e50addffe9416faec02ad97b53354), [`b01fedc`](https://github.com/ChainFuse/packages/commit/b01fedc1db96ae9d0fac310c00451e287068badc), [`817f084`](https://github.com/ChainFuse/packages/commit/817f084ef97e0591a18392853a94da320a60449d)]:
+    - @chainfuse/helpers@3.4.6
+    - @chainfuse/types@2.10.27
+
 ## 0.13.25
 
 ### Patch Changes
