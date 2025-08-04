@@ -51,6 +51,6 @@
 		"@chainfuse/helpers": "^3.4.5",
 		"@hono/zod-openapi": "^1.0.2",
 		"hono": "^4.8.5",
-		"zod": "^4.0.5"
+		"zod": "^4.0.14"
 	}
 }
