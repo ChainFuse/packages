@@ -78,7 +78,7 @@
 	"dependencies": {
 		"@chainfuse/types": "^2.10.27",
 		"@discordjs/rest": "^2.5.1",
-		"chalk": "^5.4.1",
+		"chalk": "^5.5.0",
 		"cloudflare": "^4.5.0",
 		"drizzle-orm": "^0.44.4",
 		"strip-ansi": "^7.1.0",
