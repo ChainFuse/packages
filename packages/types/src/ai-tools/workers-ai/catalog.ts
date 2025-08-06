@@ -5,6 +5,29 @@ export const workersAiCatalog = {
 			description: 'Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks.',
 			models: [
 				{
+					id: 'f9f2250b-1048-4a52-9910-d0bf976616a1',
+					source: 1,
+					name: '@cf/openai/gpt-oss-120b',
+					description: 'OpenAI’s open-weight models designed for powerful reasoning, agentic tasks, and versatile developer use cases – gpt-oss-120b is for production, general purpose, high reasoning use-cases.',
+					created_at: '2025-08-05 10:27:29.131',
+					tags: [],
+					properties: {
+						context_window: 128000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.35,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.75,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+				{
 					id: 'f8703a00-ed54-4f98-bdc3-cd9a813286f3',
 					source: 1,
 					name: '@cf/qwen/qwen1.5-0.5b-chat',
@@ -697,6 +720,29 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						context_window: 8192,
+					},
+				},
+				{
+					id: '188a4e1e-253e-46d0-9616-0bf8c149763f',
+					source: 1,
+					name: '@cf/openai/gpt-oss-20b',
+					description: 'OpenAI’s open-weight models designed for powerful reasoning, agentic tasks, and versatile developer use cases – gpt-oss-20b is for lower latency, and local or specialized use-cases.',
+					created_at: '2025-08-05 10:49:53.265',
+					tags: [],
+					properties: {
+						context_window: 128000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.2,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.3,
+								currency: 'USD',
+							},
+						],
 					},
 				},
 				{
