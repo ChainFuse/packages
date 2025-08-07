@@ -66,7 +66,8 @@ export class AiCustomProviders extends AiBase {
 																	.forEach((choice) => {
 																		controller.enqueue({
 																			type: 'text-delta',
-																			textDelta: choice.delta.content!,
+																			delta: choice.delta.content!,
+																			id: '',
 																		});
 																	});
 															}
