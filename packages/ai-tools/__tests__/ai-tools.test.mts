@@ -4,7 +4,7 @@ import { generateObject, generateText, Output, streamObject, streamText, tool } 
 import { doesNotReject, strictEqual } from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import test, { before, beforeEach, describe, it } from 'node:test';
-import { z } from 'zod/v3';
+import { z } from 'zod';
 import { AiModel, type AiConfig, type AiConfigOaiOpenai, type AiRequestConfig, type AiStreamChunkType } from '../dist/index.mjs';
 
 const { GH_RUNNER_ID } = process.env;
@@ -114,7 +114,7 @@ await describe('AI Tests', () => {
 									content: 'Tell me about black holes',
 								},
 							],
-							maxTokens: 128,
+							maxOutputTokens: 128,
 						});
 
 						for await (const chunk of textStream) {
@@ -144,7 +144,7 @@ await describe('AI Tests', () => {
 									content: 'Tell me about black holes',
 								},
 							],
-							maxTokens: 128,
+							maxOutputTokens: 128,
 						});
 
 						await doesNotReject(responsePromise);
@@ -189,7 +189,7 @@ await describe('AI Tests', () => {
 										content: 'Where (geographically) are you running?',
 									},
 								],
-								maxTokens: 128,
+								maxOutputTokens: 128,
 								schema: z.object({
 									city: z.string().trim().describe('City of the incoming request'),
 									state: z.string().trim().describe('The ISO 3166-2 name for the first level region of the incoming request'),
@@ -240,7 +240,7 @@ await describe('AI Tests', () => {
 										content: 'Where (geographically) are you running?',
 									},
 								],
-								maxTokens: 128,
+								maxOutputTokens: 128,
 								schema: z.object({
 									city: z.string().describe('City of the incoming request'),
 									state: z.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
@@ -298,11 +298,11 @@ await describe('AI Tests', () => {
 										content: 'Where (geographically) are you running?',
 									},
 								],
-								maxTokens: 128,
+								maxOutputTokens: 128,
 								tools: {
 									'get-container-info': tool({
 										description: 'Get external statistics of the current container including geographical information',
-										parameters: z.object({}),
+										inputSchema: z.object({}),
 										// eslint-disable-next-line @typescript-eslint/require-await
 										execute: async () => geoJson,
 									}),
@@ -367,11 +367,11 @@ await describe('AI Tests', () => {
 										content: 'Where (geographically) are you running?',
 									},
 								],
-								maxTokens: 128,
+								maxOutputTokens: 128,
 								tools: {
 									'get-container-info': tool({
 										description: 'Get external statistics of the current container including geographical information',
-										parameters: z.object({}),
+										inputSchema: z.object({}),
 										// eslint-disable-next-line @typescript-eslint/require-await
 										execute: async () => geoJson,
 									}),
