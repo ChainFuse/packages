@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 0.14.0
+
+### Minor Changes
+
+- [`78ab445`](https://github.com/ChainFuse/packages/commit/78ab4454a1362812975eaa3060ac41cbeacf1b5a) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Upgrade to ai sdk v5 and providers to v2
+
+### Patch Changes
+
+- [`4d73988`](https://github.com/ChainFuse/packages/commit/4d73988fc900049be6e4e032f725677af2049de0) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Include usage in workers ai over http
+
 ## 0.13.28
 
 ### Patch Changes
