@@ -302,7 +302,7 @@ await describe('AI Tests', () => {
 								tools: {
 									'get-container-info': tool({
 										description: 'Get external statistics of the current container including geographical information',
-										parameters: z.object({}),
+										inputSchema: z.object({}),
 										// eslint-disable-next-line @typescript-eslint/require-await
 										execute: async () => geoJson,
 									}),
@@ -371,7 +371,7 @@ await describe('AI Tests', () => {
 								tools: {
 									'get-container-info': tool({
 										description: 'Get external statistics of the current container including geographical information',
-										parameters: z.object({}),
+										inputSchema: z.object({}),
 										// eslint-disable-next-line @typescript-eslint/require-await
 										execute: async () => geoJson,
 									}),
