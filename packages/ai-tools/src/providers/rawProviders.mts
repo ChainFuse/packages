@@ -526,6 +526,7 @@ export class AiRawProviders extends AiBase {
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 				},
+				includeUsage: true,
 				name: 'workersai',
 				fetch: async (input, rawInit) => {
 					const startRoundTrip = performance.now();
