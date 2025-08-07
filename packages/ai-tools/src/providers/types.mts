@@ -16,5 +16,5 @@ export interface AzureOpenAIProvider extends Provider {
 	/**
 	 * Creates a model for image generation.
 	 */
-	// imageModel(modelId: AzureImageModels, settings?: Parameters<OpenAIProvider['imageModel']>[1]): ImageModelV1;
+	// imageModel(modelId: AzureImageModels, settings?: Parameters<OpenAIProvider['imageModel']>[1]): ImageModelV2;
 }
