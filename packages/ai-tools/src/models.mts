@@ -1,5 +1,6 @@
+import type { LanguageModelV2Middleware } from '@ai-sdk/provider';
 import type { LanguageModelValues, TextEmbeddingModelValues } from '@chainfuse/types/ai-tools';
-import type { embed, embedMany, LanguageModelV1Middleware, wrapLanguageModel } from 'ai';
+import type { embed, embedMany, wrapLanguageModel } from 'ai';
 import { AiBase } from './base.mjs';
 import type { AiRegistry } from './registry.mjs';
 import type { AiRequestConfig } from './types.mjs';
@@ -53,7 +54,7 @@ export class AiModel extends AiBase {
 			);
 	}
 
-	private get middleware(): LanguageModelV1Middleware {
+	private get middleware(): LanguageModelV2Middleware {
 		return {};
 	}
 }
