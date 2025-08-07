@@ -1,8 +1,9 @@
 import type { GoogleGenerativeAIProvider } from '@ai-sdk/google';
+import type { LanguageModelV2StreamPart } from '@ai-sdk/provider';
 import { Helpers } from '@chainfuse/helpers';
 import { AiModels } from '@chainfuse/types/ai-tools';
 import { enabledCloudflareLlmProviders, type cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
-import { customProvider, TypeValidationError, wrapLanguageModel, type LanguageModelV1StreamPart } from 'ai';
+import { customProvider, TypeValidationError, wrapLanguageModel } from 'ai';
 import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
 import { ZodError } from 'zod/v3';
 import { AiBase } from '../base.mjs';
@@ -45,7 +46,7 @@ export class AiCustomProviders extends AiBase {
 									wrapStream: async ({ doStream }) => {
 										const { stream, ...rest } = await doStream();
 
-										const transformStream = new TransformStream<LanguageModelV1StreamPart, LanguageModelV1StreamPart>({
+										const transformStream = new TransformStream<LanguageModelV2StreamPart, LanguageModelV2StreamPart>({
 											transform(chunk, controller) {
 												if (chunk.type === 'error') {
 													if (TypeValidationError.isInstance(chunk.error) && chunk.error.cause instanceof ZodError) {
