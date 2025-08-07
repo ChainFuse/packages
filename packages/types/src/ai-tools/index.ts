@@ -39,11 +39,8 @@ export namespace AiModels {
 		 */
 		export enum GoogleGenerativeAi {
 			gemini_flash_lite = 'google.generative-ai:gemini-2.0-flash-lite',
-			gemini_flash_lite_search = 'google.generative-ai:gemini-2.0-flash-lite:search',
 			gemini_flash = 'google.generative-ai:gemini-2.5-flash-preview',
-			gemini_flash_search = 'google.generative-ai:gemini-2.5-flash-preview:search',
 			gemini_pro = 'google.generative-ai:gemini-2.5-pro-preview',
-			gemini_pro_search = 'google.generative-ai:gemini-2.5-pro-preview:search',
 		}
 
 		export enum OpenAi {
