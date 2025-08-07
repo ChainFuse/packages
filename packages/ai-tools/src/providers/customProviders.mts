@@ -106,7 +106,10 @@ export class AiCustomProviders extends AiBase {
 												 * 2. Remove start and end
 												 * 3. Trim again to remove any leading/trailing whitespace
 												 */
-												text: result.text?.trim().replace(codeFenceStart, '').replace(codefenceEnd, '').trim(),
+												content: result.content.map((content) => ({
+													...content,
+													...('text' in content && { text: content.text.trim().replace(codeFenceStart, '').replace(codefenceEnd, '').trim() }),
+												})),
 											};
 										}
 
