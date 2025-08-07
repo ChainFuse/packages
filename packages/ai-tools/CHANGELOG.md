@@ -1,5 +1,23 @@
 # @chainfuse/ai-tools
 
+## 0.13.28
+
+### Patch Changes
+
+- [#561](https://github.com/ChainFuse/packages/pull/561) [`779e394`](https://github.com/ChainFuse/packages/commit/779e39487dbe08792aa18abcbdb2d342262df002) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @azure/identity, openai
+
+- [#558](https://github.com/ChainFuse/packages/pull/558) [`85ed2df`](https://github.com/ChainFuse/packages/commit/85ed2df55efc37d328b7b7600e92e5f11826f68d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(): bump form-data
+
+- [`fb63235`](https://github.com/ChainFuse/packages/commit/fb63235d0184a181e80dd8c6d5ebbcef20ee33e8) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump typescript
+
+- [#554](https://github.com/ChainFuse/packages/pull/554) [`320b78b`](https://github.com/ChainFuse/packages/commit/320b78bf1065b3416a968527c4914a896fb0d2c7) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#555](https://github.com/ChainFuse/packages/pull/555) [`082a760`](https://github.com/ChainFuse/packages/commit/082a760fa2c35d6e302dd6acf25ae8d24fbbeae8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- Updated dependencies [[`779e394`](https://github.com/ChainFuse/packages/commit/779e39487dbe08792aa18abcbdb2d342262df002), [`85ed2df`](https://github.com/ChainFuse/packages/commit/85ed2df55efc37d328b7b7600e92e5f11826f68d), [`fb63235`](https://github.com/ChainFuse/packages/commit/fb63235d0184a181e80dd8c6d5ebbcef20ee33e8), [`320b78b`](https://github.com/ChainFuse/packages/commit/320b78bf1065b3416a968527c4914a896fb0d2c7), [`082a760`](https://github.com/ChainFuse/packages/commit/082a760fa2c35d6e302dd6acf25ae8d24fbbeae8), [`1d8db06`](https://github.com/ChainFuse/packages/commit/1d8db06e5e6f05af79b6c9444144514feca330ae)]:
+    - @chainfuse/helpers@3.4.8
+    - @chainfuse/types@2.10.29
+
 ## 0.13.27
 
 ### Patch Changes
