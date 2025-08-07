@@ -10,6 +10,10 @@ updates:
     schedule:
       interval: 'weekly'
       day: 'wednesday'
+    cooldown:
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3
     open-pull-requests-limit: 999
   - package-ecosystem: 'docker'
     directories:
@@ -23,6 +27,10 @@ updates:
     schedule:
       interval: 'weekly'
       day: 'wednesday'
+    cooldown:
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3
     open-pull-requests-limit: 999
     groups:
       artifacts:
@@ -45,6 +53,10 @@ updates:
     schedule:
       interval: 'weekly'
       day: 'wednesday'
+    cooldown:
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3
     versioning-strategy: increase
     open-pull-requests-limit: 999
     ignore:
