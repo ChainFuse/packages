@@ -12,6 +12,7 @@ export const workersAiCatalog = {
 					created_at: '2025-08-05 10:27:29.131',
 					tags: [],
 					properties: {
+						async_queue: true,
 						context_window: 128000,
 						price: [
 							{
@@ -1167,7 +1168,6 @@ export const workersAiCatalog = {
 					created_at: '2024-02-27 17:40:38.881',
 					tags: [],
 					properties: {
-						beta: true,
 						info: 'https://huggingface.co/Lykon/DreamShaper',
 					},
 				},
