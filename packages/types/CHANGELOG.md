@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.11.0
+
+### Minor Changes
+
+- [`0566ad4`](https://github.com/ChainFuse/packages/commit/0566ad48b03cc75651ec69b3d2564efc8bd09c57) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Consolidate zod uuid schemas
+
 ## 2.10.29
 
 ### Patch Changes
