@@ -1,5 +1,14 @@
 # @chainfuse/helpers
 
+## 3.4.9
+
+### Patch Changes
+
+- [`6b8366a`](https://github.com/ChainFuse/packages/commit/6b8366abdfdf2396b98704f02df986f900c5d127) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Adapt to new zod schemas
+
+- Updated dependencies [[`0566ad4`](https://github.com/ChainFuse/packages/commit/0566ad48b03cc75651ec69b3d2564efc8bd09c57)]:
+    - @chainfuse/types@2.11.0
+
 ## 3.4.8
 
 ### Patch Changes
