@@ -87,10 +87,6 @@
 			"import": "./dist/discourse/topic/index.js",
 			"types": "./dist/discourse/topic/index.d.ts"
 		},
-		"./wf": {
-			"import": "./dist/wf/index.js",
-			"types": "./dist/wf/index.d.ts"
-		},
 		"./zod": {
 			"import": "./dist/zod/index.js",
 			"types": "./dist/zod/index.d.ts"
