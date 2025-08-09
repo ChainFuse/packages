@@ -81,7 +81,7 @@ export class BufferHelpers {
 				return import('zod/v4').then(({ z }) =>
 					Promise.any([
 						//
-						import('@chainfuse/types/d0').then(({ PrefixedUuidRaw }) =>
+						import('@chainfuse/types/zod').then(({ PrefixedUuidRaw }) =>
 							z
 								.union([
 									//
