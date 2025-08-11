@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.11.1
+
+### Patch Changes
+
+- [`e38810a`](https://github.com/ChainFuse/packages/commit/e38810a9a764551e5a84a10752af543d52218148) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add FakeUuidExport zod schema
+
 ## 2.11.0
 
 ### Minor Changes
