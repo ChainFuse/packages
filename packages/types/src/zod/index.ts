@@ -207,3 +207,32 @@ export const ZodUuid7 = z4.union([
 	z4.base64().trim().nonempty(),
 	z4.base64url().trim().nonempty(),
 ]);
+
+/**
+ * @deprecated
+ */
+export const Zod3FakeUuidExport = z3.object({
+	utf8: z3.string().trim().toLowerCase().uuid(),
+	hex: z3
+		.string()
+		.trim()
+		.toLowerCase()
+		.length(32)
+		.regex(hexUuidRegex)
+		.refine((value) => import('validator/es/lib/isHexadecimal').then(({ default: isHexadecimal }) => isHexadecimal(value)).catch(() => import('validator').then(({ default: validator }) => validator.isHexadecimal(value)))),
+	base64: z3.string().trim().nonempty().base64(),
+	base64url: z3.string().trim().nonempty().base64url(),
+});
+
+export const Zod4FakeUuidExport = z4.object({
+	utf8: z4.uuid().trim().toLowerCase(),
+	hex: z4
+		.string()
+		.trim()
+		.toLowerCase()
+		.length(32)
+		.regex(hexUuidRegex)
+		.refine((value) => import('validator/es/lib/isHexadecimal').then(({ default: isHexadecimal }) => isHexadecimal(value)).catch(() => import('validator').then(({ default: validator }) => validator.isHexadecimal(value)))),
+	base64: z4.base64().trim().nonempty(),
+	base64url: z4.base64url().trim().nonempty(),
+});
