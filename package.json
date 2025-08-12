@@ -39,13 +39,13 @@
 		"@azure/arm-resources-subscriptions": "^2.1.0",
 		"@azure/identity": "^4.11.1",
 		"@demosjarco/prettier-config": "^1.0.2",
-		"@eslint/js": "^9.32.0",
+		"@eslint/js": "^9.33.0",
 		"@types/node": "^22.17.1",
 		"deepmerge": "^4.3.1",
-		"eslint": "^9.32.0",
+		"eslint": "^9.33.0",
 		"prettier": "^3.6.2",
 		"tsx": "^4.20.4",
 		"typescript": "^5.9.2",
-		"typescript-eslint": "^8.39.0"
+		"typescript-eslint": "^8.39.1"
 	}
 }
