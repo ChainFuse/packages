@@ -98,7 +98,7 @@
 		"zod": "^4.0.15"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20250807.0",
+		"@cloudflare/workers-types": "^4.20250812.0",
 		"@types/validator": "^13.15.2"
 	}
 }
