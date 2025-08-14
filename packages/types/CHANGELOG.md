@@ -1,5 +1,23 @@
 # @chainfuse/types
 
+## 2.11.2
+
+### Patch Changes
+
+- [#570](https://github.com/ChainFuse/packages/pull/570) [`a428c8c`](https://github.com/ChainFuse/packages/commit/a428c8c35b341aff2c56edcc5c4a1a1fa1a0637d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#576](https://github.com/ChainFuse/packages/pull/576) [`ea11f80`](https://github.com/ChainFuse/packages/commit/ea11f805dfab82f9c8b5190222384a41f4a26274) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, workers-ai-provider
+
+- [#573](https://github.com/ChainFuse/packages/pull/573) [`8afdabd`](https://github.com/ChainFuse/packages/commit/8afdabd8c30ace7c271df19032653cdc7886aae6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+- [#571](https://github.com/ChainFuse/packages/pull/571) [`db6bf6f`](https://github.com/ChainFuse/packages/commit/db6bf6f92726d2ec03b72205df344dbbedf4a49b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump tsx
+
+- [#577](https://github.com/ChainFuse/packages/pull/577) [`61ac491`](https://github.com/ChainFuse/packages/commit/61ac4911bbbd12acd39926d313ffc5bf2d799fe8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#572](https://github.com/ChainFuse/packages/pull/572) [`954a7d1`](https://github.com/ChainFuse/packages/commit/954a7d1ebffef3f4e93c7c5dbf6431d0e04a6ef0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#574](https://github.com/ChainFuse/packages/pull/574) [`e55bdd3`](https://github.com/ChainFuse/packages/commit/e55bdd3f1aafb2efdc8a0adc21bf12799dff2d69) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
 ## 2.11.1
 
 ### Patch Changes
