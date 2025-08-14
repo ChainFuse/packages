@@ -32,7 +32,7 @@ export class AiRawProviders extends AiBase {
 
 		if (logId) {
 			const updateMetadata = import('@chainfuse/helpers')
-				.then(({ NetHelpers }) => NetHelpers.cfApi(this.config.gateway.apiToken, { level: Number(logging) }))
+				.then(({ NetHelpers }) => NetHelpers.cfApi(this.config.gateway.apiToken, { logging: { level: Number(logging) } }))
 				.then((cf) =>
 					cf.aiGateway.logs.edit(this.gatewayName, logId, {
 						account_id: this.config.gateway.accountId,
