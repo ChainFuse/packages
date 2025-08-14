@@ -1,3 +1,4 @@
+import type { RequestInitCfProperties } from '@cloudflare/workers-types/experimental';
 import type { z as z3 } from 'zod/v3';
 import type { z as z4 } from 'zod/v4';
 
@@ -21,18 +22,88 @@ export enum Methods {
 }
 
 export class NetHelpers {
-	public static cfApiLogging() {
+	public static cfApiConfig() {
 		return import('zod/v3').then(({ z: z3 }) =>
 			z3
 				.object({
-					level: z3.coerce.number().int().min(0).max(3).default(0),
-					error: z3.coerce.number().int().min(0).max(3).default(1),
-					color: z3.boolean().default(true),
-					custom: z3
-						.function()
-						.args()
-						.returns(z3.union([z3.void(), z3.promise(z3.void())]))
-						.optional(),
+					logging: z3
+						.object({
+							level: z3.coerce.number().int().min(0).max(3).default(0),
+							error: z3.coerce.number().int().min(0).max(3).default(1),
+							color: z3.boolean().default(true),
+							custom: z3
+								.function()
+								.args()
+								.returns(z3.union([z3.void(), z3.promise(z3.void())]))
+								.optional(),
+						})
+						.default({}),
+					cf: z3
+						.object({
+							/**
+							 * Whether Cloudflare Apps should be enabled for this request
+							 * @link https://www.cloudflare.com/apps/
+							 * @default true
+							 */
+							apps: z3.boolean().default(true),
+							/**
+							 * Treats all content as static and caches all file types beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule Cache Level (to Cache Everything).
+							 * @default false
+							 * @note This option applies to GET and HEAD request methods only
+							 */
+							cacheEverything: z3.boolean().default(false),
+							/**
+							 * A request’s cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both.
+							 */
+							cacheKey: z3.string().nonempty().optional(),
+							/**
+							 * This option appends additional Cache-Tag headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the Purge by Tag feature.
+							 */
+							cacheTags: z3.array(z3.string().nonempty()).nonempty().optional(),
+							/**
+							 * This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: Edge Cache TTL and Cache Level (to Cache Everything). The value must be zero or a positive number. A value of 0 indicates that the cache asset expires immediately.
+							 * @note This option applies to GET and HEAD request methods only.
+							 */
+							cacheTtl: z3.coerce.number().int().nonnegative().optional(),
+							/**
+							 * This option is a version of the cacheTtl feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time and override cache instructives sent by the origin. For example: { "200-299": 86400, "404": 1, "500-599": 0 }. The value can be any integer, including zero and negative integers. A value of 0 indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all.
+							 * @note This option applies to GET and HEAD request methods only.
+							 */
+							cacheTtlByStatus: z3
+								.record(
+									z3
+										.string()
+										.nonempty()
+										.regex(/^(1|2|3|4|5)\d{2}(-(1|2|3|4|5)\d{2})?$/),
+									z3.coerce.number().int(),
+								)
+								.optional(),
+							// image:
+							/**
+							 * Whether Mirage should be enabled for this request, if otherwise configured for this zone.
+							 * @link https://www.cloudflare.com/website-optimization/mirage/
+							 * @default true
+							 */
+							mirage: z3.boolean().default(true),
+							/**
+							 * Sets Polish mode. The possible values are lossy, lossless or off.
+							 * @link https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/
+							 */
+							polish: z3.enum(['lossy', 'lossless', 'off']).optional(),
+							// resolveOverride:
+							/**
+							 * Whether ScrapeShield should be enabled for this request, if otherwise configured for this zone.
+							 * @link https://blog.cloudflare.com/introducing-scrapeshield-discover-defend-dete/
+							 * @default true
+							 */
+							scrapeShield: z3.boolean().default(true),
+							/**
+							 * Enables or disables WebP image format in Polish.
+							 * @link https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/
+							 */
+							webp: z3.boolean().optional(),
+						})
+						.default({}),
 				})
 				.default({}),
 		);
@@ -41,7 +112,7 @@ export class NetHelpers {
 	 * Creates an instance of the Cloudflare API client with enhanced logging capabilities.
 	 *
 	 * @param apiKey - The API token used to authenticate with the Cloudflare API.
-	 * @param logging - The logging configuration object, parsed using the `cfApiLogging` parser.
+	 * @param config - The logging configuration object, parsed using the `cfApiLogging` parser.
 	 *
 	 * @returns A promise that resolves to an instance of the Cloudflare API client.
 	 *
@@ -55,24 +126,28 @@ export class NetHelpers {
 	 * - Formatting and coloring log output for better readability.
 	 * - Stripping redundant parts of URLs and wrapping unique IDs in brackets with color coding.
 	 */
-	public static cfApi(apiKey: string, logging?: z3.input<Awaited<ReturnType<typeof NetHelpers.cfApiLogging>>>) {
+	public static cfApi(apiKey: string, config?: z3.input<Awaited<ReturnType<typeof NetHelpers.cfApiConfig>>>) {
 		return Promise.all([
 			//
 			import('cloudflare'),
-			NetHelpers.cfApiLogging().then((parser) => parser.parseAsync(logging)),
+			NetHelpers.cfApiConfig().then((parser) => parser.parseAsync(config)),
 		]).then(
-			([{ Cloudflare }, logging]) =>
+			([{ Cloudflare }, config]) =>
 				new Cloudflare({
 					apiToken: apiKey,
 					fetch: (info, init) =>
 						this.loggingFetch(info, {
 							...init,
+							cf: {
+								...(init && 'cf' in init && (init.cf as RequestInitCfProperties)),
+								...config.cf,
+							},
 							logging: {
 								// Fake level 1 as 2 to get headers for ray-id
-								level: logging.level === 1 ? 2 : logging.level,
-								error: logging.error === 1 ? 2 : logging.error,
-								...('color' in logging && { color: logging.color }),
-								...((logging.level > 0 || logging.error > 0) && {
+								level: config.logging.level === 1 ? 2 : config.logging.level,
+								error: config.logging.error === 1 ? 2 : config.logging.error,
+								...('color' in config.logging && { color: config.logging.color }),
+								...((config.logging.level > 0 || config.logging.error > 0) && {
 									custom: async (...args: any[]) => {
 										const [, id, , url, headers] = args as [Date, string, Methods | number, string, Record<string, string>];
 										const customUrl = new URL(url);
@@ -81,7 +156,7 @@ export class NetHelpers {
 										if (customHeaders.has('cf-ray')) {
 											args.splice(3, 0, customHeaders.get('cf-ray'));
 
-											if ('color' in logging && logging.color) {
+											if ('color' in config && config.logging.color) {
 												await import('chalk')
 													.then(({ Chalk }) => new Chalk({ level: 2 }))
 													// eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -91,19 +166,19 @@ export class NetHelpers {
 											}
 										}
 
-										if ('custom' in logging && logging.custom) {
+										if ('custom' in config && config.logging.custom) {
 											// We faked level 1 as 2 to get headers for ray-id
-											if (logging.level === 1 || logging.error === 1) {
+											if (config.logging.level === 1 || config.logging.error === 1) {
 												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-												return logging.custom(...args.slice(0, -1));
+												return config.logging.custom(...args.slice(0, -1));
 											} else {
 												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-												return logging.custom(...args);
+												return config.logging.custom(...args);
 											}
 										} else {
 											await Promise.all([import('strip-ansi'), import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([{ default: stripAnsi }, chalk, { Helpers }]) => {
 												// We faked level 1 as 2 to get headers for ray-id
-												if (logging.level === 1) {
+												if (config.logging.level === 1) {
 													console.info(
 														'CF Rest',
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -117,7 +192,7 @@ export class NetHelpers {
 																if (value === id) {
 																	const wrappedString = `[${stripAnsi(id)}]`;
 
-																	if (logging.color) {
+																	if (config.logging.color) {
 																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
 																	} else {
 																		return wrappedString;
@@ -131,7 +206,7 @@ export class NetHelpers {
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
 													);
-												} else if (logging.error === 1) {
+												} else if (config.logging.error === 1) {
 													console.error(
 														'CF Rest',
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -145,7 +220,7 @@ export class NetHelpers {
 																if (value === id) {
 																	const wrappedString = `[${stripAnsi(id)}]`;
 
-																	if (logging.color) {
+																	if (config.logging.color) {
 																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
 																	} else {
 																		return wrappedString;
@@ -159,7 +234,7 @@ export class NetHelpers {
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
 													);
-												} else if (logging.level > 0) {
+												} else if (config.logging.level > 0) {
 													console.info(
 														'CF Rest',
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -172,7 +247,7 @@ export class NetHelpers {
 																if (value === id) {
 																	const wrappedString = `[${stripAnsi(id)}]`;
 
-																	if (logging.color) {
+																	if (config.logging.color) {
 																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
 																	} else {
 																		return wrappedString;
@@ -186,7 +261,7 @@ export class NetHelpers {
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 															.map((value) => (value === url ? `${customUrl.pathname}${customUrl.search}${customUrl.hash}` : value)),
 													);
-												} else if (logging.error > 0) {
+												} else if (config.logging.error > 0) {
 													console.error(
 														'CF Rest',
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -199,7 +274,7 @@ export class NetHelpers {
 																if (value === id) {
 																	const wrappedString = `[${stripAnsi(id)}]`;
 
-																	if (logging.color) {
+																	if (config.logging.color) {
 																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
 																	} else {
 																		return wrappedString;
