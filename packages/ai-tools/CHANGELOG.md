@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 0.14.2
+
+### Patch Changes
+
+- [`3bf36f0`](https://github.com/ChainFuse/packages/commit/3bf36f0d85c3b2af92098cc85f8a5121a7210536) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Don't stop process chain on failed gateway log update
+
 ## 0.14.1
 
 ### Patch Changes
