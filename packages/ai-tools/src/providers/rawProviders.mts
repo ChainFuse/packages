@@ -48,7 +48,7 @@ export class AiRawProviders extends AiBase {
 			if (this.config.backgroundContext) {
 				this.config.backgroundContext.waitUntil(updateMetadata);
 			} else {
-				await updateMetadata;
+				await updateMetadata.catch((error) => console.warn('Not updating gateway log', error));
 			}
 		} else {
 			console.warn('Not updating gateway log, no cf-aig-log-id header');
