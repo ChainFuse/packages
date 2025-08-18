@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 2.11.3
+
+### Patch Changes
+
+- [`e25bf13`](https://github.com/ChainFuse/packages/commit/e25bf130dd685862798a979ed506c474eb0a3357) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Remove top level import for `ZodCoordinate`
+
 ## 2.11.2
 
 ### Patch Changes
