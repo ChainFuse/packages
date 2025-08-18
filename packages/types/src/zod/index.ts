@@ -1,5 +1,5 @@
-import { z as z4 } from 'zod';
 import { z as z3 } from 'zod/v3';
+import { z as z4 } from 'zod/v4';
 
 /**
  * @link https://zod.dev/?id=json-type
@@ -8,13 +8,11 @@ const literalSchema = z3.union([z3.string(), z3.number(), z3.boolean(), z3.null(
 export type JSON = z3.infer<typeof literalSchema> | { [key: string]: JSON } | JSON[];
 export const jsonSchema: z3.ZodType<JSON> = z3.lazy(() => z3.union([literalSchema, z3.array(jsonSchema), z3.record(jsonSchema)]));
 
-export const ZodCoordinate = await import('zod/v4').then(({ z }) =>
-	z
-		.string()
-		.trim()
-		.min(3)
-		.regex(new RegExp(/^-?\d+\.\d+$/i)),
-);
+export const ZodCoordinate = z4
+	.string()
+	.trim()
+	.min(3)
+	.regex(new RegExp(/^-?\d+\.\d+$/i));
 
 const prefixedUuidRegex = /^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i;
 const hexUuidRegex = /^[0-9a-f]{8}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{12}$/i;
