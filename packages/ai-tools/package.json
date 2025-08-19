@@ -51,7 +51,7 @@
 		"@ai-sdk/anthropic": "^2.0.5",
 		"@ai-sdk/azure": "^2.0.16",
 		"@ai-sdk/google": "^2.0.7",
-		"@ai-sdk/openai": "^2.0.5",
+		"@ai-sdk/openai": "^2.0.16",
 		"@ai-sdk/openai-compatible": "^1.0.10",
 		"@chainfuse/helpers": "^3.5.0",
 		"@chainfuse/types": "^2.11.2",
