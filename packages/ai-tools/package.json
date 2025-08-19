@@ -48,21 +48,21 @@
 	},
 	"prettier": "@demosjarco/prettier-config",
 	"dependencies": {
-		"@ai-sdk/anthropic": "^2.0.4",
-		"@ai-sdk/azure": "^2.0.14",
-		"@ai-sdk/google": "^2.0.6",
+		"@ai-sdk/anthropic": "^2.0.5",
+		"@ai-sdk/azure": "^2.0.16",
+		"@ai-sdk/google": "^2.0.7",
 		"@ai-sdk/openai": "^2.0.5",
-		"@ai-sdk/openai-compatible": "^1.0.7",
+		"@ai-sdk/openai-compatible": "^1.0.10",
 		"@chainfuse/helpers": "^3.5.0",
 		"@chainfuse/types": "^2.11.2",
-		"ai": "^5.0.14",
+		"ai": "^5.0.17",
 		"chalk": "^5.6.0",
 		"haversine-distance": "^1.2.4",
-		"workers-ai-provider": "^0.7.3"
+		"workers-ai-provider": "^0.7.5"
 	},
 	"devDependencies": {
 		"@ai-sdk/provider": "^2.0.0",
 		"@cloudflare/workers-types": "^4.20250819.0",
-		"openai": "^5.12.2"
+		"openai": "^5.13.1"
 	}
 }
