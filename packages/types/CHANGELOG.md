@@ -1,5 +1,21 @@
 # @chainfuse/types
 
+## 2.11.4
+
+### Patch Changes
+
+- [#587](https://github.com/ChainFuse/packages/pull/587) [`cbb2ffc`](https://github.com/ChainFuse/packages/commit/cbb2ffc4026cd794c0c2e1e2f87075d504a5c630) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/openai
+
+- [#581](https://github.com/ChainFuse/packages/pull/581) [`61d9cc5`](https://github.com/ChainFuse/packages/commit/61d9cc5b0c3eb45c518c6a1116394c9936693df9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, workers-ai-provider, openai
+
+- [#585](https://github.com/ChainFuse/packages/pull/585) [`4ded670`](https://github.com/ChainFuse/packages/commit/4ded67016de6fade2ba9d0ed660b1abbb283d640) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump chalk
+
+- [#583](https://github.com/ChainFuse/packages/pull/583) [`97c41c5`](https://github.com/ChainFuse/packages/commit/97c41c5b296599ead5772fab6680b3155e02e396) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#584](https://github.com/ChainFuse/packages/pull/584) [`7a5b460`](https://github.com/ChainFuse/packages/commit/7a5b460f4738b0a29048f35ecd25ff47eb703bf8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
+
+- [#582](https://github.com/ChainFuse/packages/pull/582) [`7de0787`](https://github.com/ChainFuse/packages/commit/7de078731e43ac6382db1091d5fcacdacc4a2735) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 2.11.3
 
 ### Patch Changes
