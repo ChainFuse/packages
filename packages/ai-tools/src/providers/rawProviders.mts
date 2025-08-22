@@ -128,6 +128,7 @@ export class AiRawProviders extends AiBase {
 					 * From the table, pick the `Latest GA release` for `Data plane - inference`
 					 */
 					apiVersion: '2024-10-21',
+					useDeploymentBasedUrls: true,
 					baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'azure-openai', 'server-placeholder'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 					headers: {
 						'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
