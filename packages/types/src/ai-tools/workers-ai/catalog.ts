@@ -928,6 +928,20 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '09e0e83d-b055-49c9-81a5-c13250a176a7',
+					source: 1,
+					name: '@cf/baai/omni-bge-base-en-v1.5',
+					description: 'BAAI general embedding (Base) model that transforms any given text into a 768-dimensional vector',
+					created_at: '2025-08-24 11:06:58.799',
+					tags: [],
+					properties: {
+						async_queue: true,
+						info: 'https://huggingface.co/BAAI/bge-base-en-v1.5',
+						max_input_tokens: 512,
+						output_dimensions: 768,
+					},
+				},
+				{
 					id: '01bc2fb0-4bca-4598-b985-d2584a3f46c0',
 					source: 1,
 					name: '@cf/baai/bge-large-en-v1.5',
