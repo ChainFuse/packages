@@ -40,7 +40,7 @@
 		"@azure/identity": "^4.11.1",
 		"@demosjarco/prettier-config": "^1.0.2",
 		"@eslint/js": "^9.33.0",
-		"@types/node": "^22.17.2",
+		"@types/node": "^22.18.0",
 		"deepmerge": "^4.3.1",
 		"eslint": "^9.33.0",
 		"prettier": "^3.6.2",
