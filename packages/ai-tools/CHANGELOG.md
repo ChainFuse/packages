@@ -1,5 +1,25 @@
 # @chainfuse/ai-tools
 
+## 0.14.5
+
+### Patch Changes
+
+- [#594](https://github.com/ChainFuse/packages/pull/594) [`91552a3`](https://github.com/ChainFuse/packages/commit/91552a3e8d633f440c5a567002009ec84382f164) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai
+
+- [#597](https://github.com/ChainFuse/packages/pull/597) [`e171b99`](https://github.com/ChainFuse/packages/commit/e171b99bec22f126c594701370d9c8f9e4d550fe) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+- [#598](https://github.com/ChainFuse/packages/pull/598) [`5e0b280`](https://github.com/ChainFuse/packages/commit/5e0b280b0f63cf03674dda3158dac4e85fa6f29a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump drizzle-orm
+
+- [#595](https://github.com/ChainFuse/packages/pull/595) [`92ee30d`](https://github.com/ChainFuse/packages/commit/92ee30d25807cbd59a2fd142fabd228aa4961da2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump tsx
+
+- [#596](https://github.com/ChainFuse/packages/pull/596) [`ff12dc4`](https://github.com/ChainFuse/packages/commit/ff12dc4c78f35b4c54100c4609a796571167e1b0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#599](https://github.com/ChainFuse/packages/pull/599) [`bac6ede`](https://github.com/ChainFuse/packages/commit/bac6ede316afdd2a6e988289d79d318c564c6ce4) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump zod
+
+- Updated dependencies [[`91552a3`](https://github.com/ChainFuse/packages/commit/91552a3e8d633f440c5a567002009ec84382f164), [`e171b99`](https://github.com/ChainFuse/packages/commit/e171b99bec22f126c594701370d9c8f9e4d550fe), [`5e0b280`](https://github.com/ChainFuse/packages/commit/5e0b280b0f63cf03674dda3158dac4e85fa6f29a), [`92ee30d`](https://github.com/ChainFuse/packages/commit/92ee30d25807cbd59a2fd142fabd228aa4961da2), [`ff12dc4`](https://github.com/ChainFuse/packages/commit/ff12dc4c78f35b4c54100c4609a796571167e1b0), [`bac6ede`](https://github.com/ChainFuse/packages/commit/bac6ede316afdd2a6e988289d79d318c564c6ce4)]:
+    - @chainfuse/helpers@3.5.3
+    - @chainfuse/types@2.11.6
+
 ## 0.14.4
 
 ### Patch Changes
