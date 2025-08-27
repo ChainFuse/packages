@@ -55,7 +55,7 @@
 		"@ai-sdk/openai-compatible": "^1.0.13",
 		"@chainfuse/helpers": "^3.5.3",
 		"@chainfuse/types": "^2.11.6",
-		"ai": "^5.0.25",
+		"ai": "^5.0.26",
 		"chalk": "^5.6.0",
 		"haversine-distance": "^1.2.4",
 		"workers-ai-provider": "^0.7.5"
@@ -63,6 +63,6 @@
 	"devDependencies": {
 		"@ai-sdk/provider": "^2.0.0",
 		"@cloudflare/workers-types": "^4.20250826.0",
-		"openai": "^5.15.0"
+		"openai": "^5.16.0"
 	}
 }
