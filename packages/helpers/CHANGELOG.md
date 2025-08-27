@@ -1,5 +1,14 @@
 # @chainfuse/helpers
 
+## 3.5.4
+
+### Patch Changes
+
+- [#601](https://github.com/ChainFuse/packages/pull/601) [`c331e0b`](https://github.com/ChainFuse/packages/commit/c331e0b9836fc4c2119d8eb1df81445e02aeadce) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump ai, openai
+
+- Updated dependencies [[`c331e0b`](https://github.com/ChainFuse/packages/commit/c331e0b9836fc4c2119d8eb1df81445e02aeadce)]:
+    - @chainfuse/types@2.11.7
+
 ## 3.5.3
 
 ### Patch Changes
