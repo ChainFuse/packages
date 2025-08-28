@@ -1,5 +1,29 @@
 export const workersAiCatalog = {
 	modelGroups: {
+		'Dumb Pipe': {
+			id: 'ccb1ca5a-043d-41a7-8a3b-61017b2796fd',
+			description: "Internal - Dumb Pipe models don't use tensors",
+			models: [
+				{
+					id: 'fe8904cf-e20e-4884-b829-ed7cec0a01cb',
+					source: 1,
+					name: '@cf/pipecat-ai/smart-turn-v2',
+					description: 'An open source, community-driven, native audio turn detection model in 2nd version',
+					created_at: '2025-08-04 10:08:04.219',
+					tags: [],
+					properties: {
+						async_queue: true,
+						price: [
+							{
+								unit: 'per audio minute',
+								price: 0.00034,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+			],
+		},
 		'Text Generation': {
 			id: 'c329a1f9-323d-4e91-b2aa-582dd4188d34',
 			description: 'Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks.',
@@ -928,20 +952,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '09e0e83d-b055-49c9-81a5-c13250a176a7',
-					source: 1,
-					name: '@cf/baai/omni-bge-base-en-v1.5',
-					description: 'BAAI general embedding (Base) model that transforms any given text into a 768-dimensional vector',
-					created_at: '2025-08-24 11:06:58.799',
-					tags: [],
-					properties: {
-						async_queue: true,
-						info: 'https://huggingface.co/BAAI/bge-base-en-v1.5',
-						max_input_tokens: 512,
-						output_dimensions: 768,
-					},
-				},
-				{
 					id: '01bc2fb0-4bca-4598-b985-d2584a3f46c0',
 					source: 1,
 					name: '@cf/baai/bge-large-en-v1.5',
@@ -1026,6 +1036,24 @@ export const workersAiCatalog = {
 						],
 					},
 				},
+				{
+					id: '1f55679f-009e-4456-aa4f-049a62b4b6a0',
+					source: 1,
+					name: '@cf/deepgram/aura-1',
+					description: 'Aura is a context-aware text-to-speech (TTS) model that applies natural pacing, expressiveness, and fillers based on the context of the provided text. The quality of your text input directly impacts the naturalness of the audio output.',
+					created_at: '2025-08-27 01:18:18.880',
+					tags: [],
+					properties: {
+						async_queue: true,
+						price: [
+							{
+								unit: 'per audio minute',
+								price: 0,
+								currency: 'USD',
+							},
+						],
+					},
+				},
 			],
 		},
 		'Automatic Speech Recognition': {
@@ -1048,6 +1076,24 @@ export const workersAiCatalog = {
 							},
 						],
 						info: 'https://openai.com/research/whisper',
+					},
+				},
+				{
+					id: 'a226909f-eef8-4265-a3a0-90db0422762e',
+					source: 1,
+					name: '@cf/deepgram/nova-3',
+					description: 'Transcribe audio using Deepgram’s speech-to-text model',
+					created_at: '2025-06-05 16:05:15.199',
+					tags: [],
+					properties: {
+						async_queue: true,
+						price: [
+							{
+								unit: 'per audio minute',
+								price: 0.0052,
+								currency: 'USD',
+							},
+						],
 					},
 				},
 				{
@@ -1186,6 +1232,28 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '724608fa-983e-495d-b95c-340d6b7e78be',
+					source: 1,
+					name: '@cf/leonardo/phoenix-1.0',
+					description: 'Phoenix 1.0 is a model by Leonardo.Ai that generates images with exceptional prompt adherence and coherent text.',
+					created_at: '2025-08-25 18:12:18.073',
+					tags: [],
+					properties: {
+						price: [
+							{
+								unit: 'per 512 by 512 tile',
+								price: 0.0058,
+								currency: 'USD',
+							},
+							{
+								unit: 'per step',
+								price: 0.00011,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+				{
 					id: '6d52253a-b731-4a03-b203-cde2d4fae871',
 					source: 1,
 					name: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
@@ -1223,6 +1291,28 @@ export const workersAiCatalog = {
 						],
 						info: 'https://huggingface.co/runwayml/stable-diffusion-v1-5',
 						terms: 'https://github.com/runwayml/stable-diffusion/blob/main/LICENSE',
+					},
+				},
+				{
+					id: '0e372c11-8720-46c9-a02d-666188a22dae',
+					source: 1,
+					name: '@cf/leonardo/lucid-origin',
+					description: "Lucid Origin from Leonardo.AI is their most adaptable and prompt-responsive model to date. Whether you're generating images with sharp graphic design, stunning full-HD renders, or highly specific creative direction, it adheres closely to your prompts, renders text with accuracy, and supports a wide array of visual styles and aesthetics – from stylized concept art to crisp product mockups.\n",
+					created_at: '2025-08-25 19:21:28.770',
+					tags: [],
+					properties: {
+						price: [
+							{
+								unit: 'per 512 by 512 tile',
+								price: 0.007,
+								currency: 'USD',
+							},
+							{
+								unit: 'per step',
+								price: 0.00013,
+								currency: 'USD',
+							},
+						],
 					},
 				},
 			],
