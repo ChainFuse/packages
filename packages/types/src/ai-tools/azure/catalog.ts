@@ -738,6 +738,8 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
 			},
 			{
 				name: 'o4-mini',
