@@ -1,5 +1,20 @@
 # @chainfuse/helpers
 
+## 3.5.5
+
+### Patch Changes
+
+- [#605](https://github.com/ChainFuse/packages/pull/605) [`71247bc`](https://github.com/ChainFuse/packages/commit/71247bcdd62b466fc4dc8f04814904840d3a1f6e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#607](https://github.com/ChainFuse/packages/pull/607) [`7bb3f3e`](https://github.com/ChainFuse/packages/commit/7bb3f3ec01c7cd41ad729704ac7e057dfbe2bfd6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#606](https://github.com/ChainFuse/packages/pull/606) [`c2ad23c`](https://github.com/ChainFuse/packages/commit/c2ad23c4851ecec50773b8beda54c84b648217af) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types, @types/validator
+
+- [#608](https://github.com/ChainFuse/packages/pull/608) [`d668fa3`](https://github.com/ChainFuse/packages/commit/d668fa3d098e38d468fce8d25c98b3930127f9cd) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- Updated dependencies [[`71247bc`](https://github.com/ChainFuse/packages/commit/71247bcdd62b466fc4dc8f04814904840d3a1f6e), [`7bb3f3e`](https://github.com/ChainFuse/packages/commit/7bb3f3ec01c7cd41ad729704ac7e057dfbe2bfd6), [`c2ad23c`](https://github.com/ChainFuse/packages/commit/c2ad23c4851ecec50773b8beda54c84b648217af), [`d668fa3`](https://github.com/ChainFuse/packages/commit/d668fa3d098e38d468fce8d25c98b3930127f9cd)]:
+    - @chainfuse/types@2.11.8
+
 ## 3.5.4
 
 ### Patch Changes
