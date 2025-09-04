@@ -67,11 +67,11 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
-				tokenCost: 1.3e-7,
+				tokenCost: 1.43e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
-				tokenCost: 2e-8,
+				tokenCost: 2.2e-8,
 			},
 		],
 	},
@@ -150,11 +150,11 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
-				tokenCost: 1.3e-7,
+				tokenCost: 1.58e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
-				tokenCost: 2e-8,
+				tokenCost: 2.5e-8,
 			},
 		],
 	},
@@ -216,11 +216,11 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
-				tokenCost: 1.3e-7,
+				tokenCost: 1.58e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
-				tokenCost: 2e-8,
+				tokenCost: 2.5e-8,
 			},
 		],
 	},
@@ -326,7 +326,7 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
-				tokenCost: 1.3e-7,
+				tokenCost: 1.58e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
@@ -509,7 +509,7 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
-				tokenCost: 1.3e-7,
+				tokenCost: 1.58e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
@@ -638,11 +638,11 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
-				tokenCost: 1.3e-7,
+				tokenCost: 1.58e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
-				tokenCost: 2e-8,
+				tokenCost: 2.5e-8,
 			},
 		],
 	},
@@ -721,7 +721,7 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
-				tokenCost: 1.3e-7,
+				tokenCost: 1.58e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
@@ -788,7 +788,7 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
-				tokenCost: 1.3e-7,
+				tokenCost: 1.58e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
@@ -846,7 +846,7 @@ export const azureCatalog = [
 			},
 			{
 				name: 'text-embedding-3-small',
-				tokenCost: 2e-8,
+				tokenCost: 2.2e-8,
 			},
 		],
 	},
@@ -1064,11 +1064,11 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
-				tokenCost: 1.3e-7,
+				tokenCost: 1.43e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
-				tokenCost: 2e-8,
+				tokenCost: 2.2e-8,
 			},
 		],
 	},
@@ -1119,11 +1119,11 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
-				tokenCost: 1.3e-7,
+				tokenCost: 1.43e-7,
 			},
 			{
 				name: 'text-embedding-3-small',
-				tokenCost: 2e-8,
+				tokenCost: 2.2e-8,
 			},
 		],
 	},
