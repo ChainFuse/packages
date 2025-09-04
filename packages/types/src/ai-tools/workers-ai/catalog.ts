@@ -608,6 +608,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 4096,
 						info: 'https://huggingface.co/TheBloke/zephyr-7B-beta-AWQ',
+						planned_deprecation_date: '2025-10-01 05:00:00.000',
 					},
 				},
 				{
