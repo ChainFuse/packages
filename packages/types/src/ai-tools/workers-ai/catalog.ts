@@ -64,6 +64,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 32000,
 						info: 'https://huggingface.co/qwen/qwen1.5-0.5b-chat',
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -93,6 +94,7 @@ export const workersAiCatalog = {
 						max_batch_prefill_tokens: 8192,
 						max_input_length: 3072,
 						max_total_tokens: 4096,
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -154,6 +156,7 @@ export const workersAiCatalog = {
 					properties: {
 						beta: true,
 						context_window: 4096,
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -166,6 +169,7 @@ export const workersAiCatalog = {
 					properties: {
 						beta: true,
 						context_window: 4096,
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -265,6 +269,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 2048,
 						info: 'https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0',
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -294,6 +299,7 @@ export const workersAiCatalog = {
 					properties: {
 						beta: true,
 						context_window: 15000,
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -331,6 +337,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 4096,
 						info: 'https://huggingface.co/TheBloke/DiscoLM_German_7b_v1-AWQ',
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -379,6 +386,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 4096,
 						info: 'https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-AWQ',
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -392,6 +400,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 20000,
 						info: 'https://huggingface.co/qwen/qwen1.5-7b-chat-awq',
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -429,6 +438,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 4096,
 						info: 'https://huggingface.co/TheBloke/Llama-2-13B-chat-AWQ',
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -441,6 +451,7 @@ export const workersAiCatalog = {
 					properties: {
 						beta: true,
 						context_window: 4096,
+						planned_deprecation_date: '2025-10-01',
 						terms: 'https://huggingface.co/TheBloke/deepseek-coder-6.7B-base-AWQ',
 					},
 				},
@@ -493,6 +504,7 @@ export const workersAiCatalog = {
 					properties: {
 						beta: true,
 						context_window: 4096,
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -505,6 +517,7 @@ export const workersAiCatalog = {
 					properties: {
 						beta: true,
 						context_window: 4096,
+						planned_deprecation_date: '2025-10-01',
 						terms: 'https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-AWQ',
 					},
 				},
@@ -543,6 +556,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 4096,
 						info: 'https://huggingface.co/deepseek-ai/deepseek-math-7b-instruct',
+						planned_deprecation_date: '2025-10-01',
 						terms: 'https://github.com/deepseek-ai/DeepSeek-Math/blob/main/LICENSE-MODEL',
 					},
 				},
@@ -557,6 +571,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 4096,
 						info: 'https://huggingface.co/tiiuae/falcon-7b-instruct',
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -608,7 +623,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 4096,
 						info: 'https://huggingface.co/TheBloke/zephyr-7B-beta-AWQ',
-						planned_deprecation_date: '2025-10-01 05:00:00.000',
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -635,6 +650,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 32000,
 						info: 'https://huggingface.co/qwen/qwen1.5-1.8b-chat',
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -799,6 +815,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 7500,
 						info: 'https://huggingface.co/qwen/qwen1.5-14b-chat-awq',
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -812,6 +829,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 8192,
 						info: 'https://huggingface.co/openchat/openchat-3.5-0106',
+						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -953,6 +971,15 @@ export const workersAiCatalog = {
 						max_input_tokens: 512,
 						output_dimensions: 768,
 					},
+				},
+				{
+					id: '15631501-2742-4346-a469-22fe202188a2',
+					source: 1,
+					name: '@cf/google/embeddinggemma-300m',
+					description: 'EmbeddingGemma is a 300M parameter, state-of-the-art for its size, open embedding model from Google, built from Gemma 3 (with T5Gemma initialization) and the same research and technology used to create Gemini models. EmbeddingGemma produces vector representations of text, making it well-suited for search and retrieval tasks, including classification, clustering, and semantic similarity search. This model was trained with data in 100+ spoken languages.',
+					created_at: '2025-09-04 16:38:44.980',
+					tags: [],
+					properties: {},
 				},
 				{
 					id: '01bc2fb0-4bca-4598-b985-d2584a3f46c0',
