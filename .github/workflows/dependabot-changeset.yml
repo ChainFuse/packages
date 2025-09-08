@@ -41,7 +41,8 @@ jobs:
           node-version: lts/*
           check-latest: true
           cache: 'npm'
-      - run: npm ci --include-workspace-root
+      - run: npm ci --ignore-scripts --include-workspace-root
+      - run: npm --include-workspace-root run-script install --if-present
       - name: Get packages affected
         run: |
           npx lerna changed --json | jq -r '.[] | "'\''\(.name)'\'': patch"' | sed '1s/^/---\n/; $s/$/\n---\n/' > ${{ steps.changeset-filename.outputs.FILENAME }}
