@@ -102,8 +102,8 @@ jobs:
           node-version: ${{ matrix.version }}
           check-latest: true
           cache: npm
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm ci --include-workspace-root
+      - run: npm ci --ignore-scripts --include-workspace-root
+      - run: npm  --include-workspace-root run-script install --if-present
       - run: npm test -- --since -- --test-reporter=junit --test-reporter-destination=test-output.xml
         env:
           GH_RUNNER_ID: ${{ github.run_id }}
