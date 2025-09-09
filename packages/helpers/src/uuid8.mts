@@ -19,7 +19,7 @@ const v8OptionsBase = z.object({
 	 * 32-bit sequence Number between 0 - 0xffffffff. This may be provided to help ensure uniqueness for UUIDs generated within the same millisecond time interval. Default = random value.
 	 */
 	seq: z.int().min(0).max(0xffffffff).optional(),
-	region: z.union([
+	location: z.union([
 		//
 		z.hex().length(2).default('00'),
 		z
@@ -79,20 +79,20 @@ function replaceByIndex(_input: string, _start: number, _end: number, _replaceme
 }
 
 /**
- * Generates a UUID version 8 with custom fields for region, shard type, and suffix.
+ * Generates a UUID version 8 with custom fields for location, shard type, and suffix.
  *
  * This function creates a UUID v8 by starting with a UUID v7 and then injecting custom fields into specific positions to encode regional information, shard types, and additional suffixes for distributed system identification.
  *
  * @param options - Configuration options for UUID generation
  * @param options.msecs - RFC "timestamp" field - milliseconds since epoch or Date object
  * @param options.seq - 32-bit sequence number (0 - 0xffffffff) for uniqueness within same millisecond
- * @param options.region - Region identifier as hex string or DOCombinedLocations enum
+ * @param options.region - Location identifier as hex string or DOCombinedLocations enum
  * @param options.shardType - Shard type as hex string or ShardType enum
  * @param options.suffix - Custom suffix as hex string or Uint8Array of 2 bytes
  * @param options.random - Array of 16 random bytes for UUID generation
  * @param options.rng - Alternative random number generator function
  *
- * @returns A UUID v8 string with embedded region, shard type, and suffix information
+ * @returns A UUID v8 string with embedded location, shard type, and suffix information
  */
 export function v8(_options?: Version8Options) {
 	const options = v8Options.parse(_options ?? {});
@@ -103,10 +103,10 @@ export function v8(_options?: Version8Options) {
 	const uuid8 = replaceByIndex(uuid7, 14, 15, '8');
 	// Inject
 	const uuid8Suffix = replaceByIndex(uuid8, 15, 18, options.suffix);
-	const uuid8SuffixRegion = replaceByIndex(uuid8Suffix, 20, 22, options.region);
-	const uuid8SuffixRegionShard = replaceByIndex(uuid8SuffixRegion, 22, 23, options.shardType);
+	const uuid8SuffixLocation = replaceByIndex(uuid8Suffix, 20, 22, options.location);
+	const uuid8SuffixLocationShard = replaceByIndex(uuid8SuffixLocation, 22, 23, options.shardType);
 
-	return uuid8SuffixRegionShard;
+	return uuid8SuffixLocationShard;
 }
 
 export default v8;
