@@ -85,6 +85,32 @@ void describe('Buffer Helper Tests', () => {
 				ok(timestamp >= beforeGeneration - 1000, 'Timestamp should not be too far in the past');
 				ok(timestamp <= afterGeneration + 1000, 'Timestamp should not be too far in the future');
 			});
+
+			void it('generates UUID v7 with custom date', async () => {
+				const customDate = new Date('2023-06-15T12:30:45.123Z');
+				const uuid = await BufferHelpers.generateUuid7({
+					msecs: customDate,
+				});
+
+				// Check all required fields are present
+				ok(uuid.utf8, 'Should have utf8 field');
+				ok(uuid.hex, 'Should have hex field');
+				ok(uuid.blob, 'Should have blob field');
+				ok(uuid.base64, 'Should have base64 field');
+				ok(uuid.base64url, 'Should have base64url field');
+
+				// Validate UUID v7 format using Zod
+				const { z } = await import('zod/v4');
+				const result = z.uuid({ version: 'v7' }).safeParse(uuid.utf8);
+				ok(result.success, `Expected valid UUID v7, got: ${uuid.utf8}`);
+
+				// Extract timestamp from UUID v7 (first 48 bits)
+				const timestampHex = uuid.hex.substring(0, 12);
+				const timestamp = Number(BigInt(`0x${timestampHex}`));
+
+				// Timestamp should match the custom date
+				strictEqual(timestamp, customDate.getTime(), 'UUID should contain the custom timestamp');
+			});
 		});
 
 		void describe('UUID v8 Generation', () => {
