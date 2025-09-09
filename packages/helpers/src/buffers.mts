@@ -1,5 +1,5 @@
 import type { UndefinedProperties } from '@chainfuse/types';
-import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
+import type { PrefixedUuid, UuidExport, UUIDExtract, UUIDExtract7, UUIDExtract8 } from '@chainfuse/types/d1';
 import { BufferHelpersInternals } from './bufferInternals.mts';
 import { CryptoHelpers } from './crypto.mjs';
 import type { Version8Options } from './uuid8.mjs';
@@ -201,5 +201,55 @@ export class BufferHelpers {
 			base64: undefined,
 			base64url: undefined,
 		}))();
+	}
+
+	public static uuidExtractor(input: undefined): Promise<UUIDExtract>;
+	public static uuidExtractor(prefixedUtf: PrefixedUuid): Promise<UUIDExtract>;
+	public static uuidExtractor(input: UuidExport['utf8']): Promise<UUIDExtract>;
+	public static uuidExtractor(input: UuidExport['hex']): Promise<UUIDExtract>;
+	public static uuidExtractor(input: UuidExportBlobInput): Promise<UUIDExtract>;
+	public static uuidExtractor(input: UuidExport['base64']): Promise<UUIDExtract>;
+	public static uuidExtractor(input: UuidExport['base64url']): Promise<UUIDExtract>;
+	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+	public static uuidExtractor(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExportBlobInput): Promise<UUIDExtract> {
+		return Promise.all([import('zod/v4'), this.uuidConvert(input)]).then(async ([{ z }, { utf8, hex: _hex }]) => {
+			const { success: hexSuccess, data: hex } = z.hex().length(32).safeParse(_hex);
+
+			if (hexSuccess) {
+				const { success: utf8v7Success } = z.uuid({ version: 'v7' }).safeParse(utf8);
+				const { success: utf8v8Success } = z.uuid({ version: 'v8' }).safeParse(utf8);
+
+				if (utf8v7Success || utf8v8Success) {
+					const date = new Date(Number(BigInt(`0x${hex.substring(0, 12)}`)));
+
+					if (utf8v8Success) {
+						const suffix_hex = hex.substring(15, 18);
+						const suffix_buffer = await BufferHelpers.hexToBuffer(suffix_hex);
+
+						return {
+							date,
+							location: parseInt(hex.slice(20, 22), 16),
+							shardType: parseInt(hex.slice(22, 23), 16),
+							suffix:
+								suffix_hex === '000'
+									? undefined
+									: {
+											hex: suffix_hex,
+											base64: await BufferHelpers.bufferToBase64(suffix_buffer, false),
+											base64url: await BufferHelpers.bufferToBase64(suffix_buffer, true),
+										},
+						} satisfies UUIDExtract8;
+					} else {
+						return {
+							date,
+						} satisfies UUIDExtract7;
+					}
+				} else {
+					throw new Error('Unsupported UUID version provided');
+				}
+			} else {
+				throw new Error('Invalid UUID provided');
+			}
+		});
 	}
 }
