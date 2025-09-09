@@ -15,3 +15,13 @@ import helpers from '@chainfuse/helpers';
 
 // TODO: DEMONSTRATE API
 ```
+
+## UUIDv8
+
+Based on UUIDv7 but with added values to prevent unecessary lookups
+
+`01f3ffff-fc18-8bb7-9120-cabc55668d92`
+
+| 01f3ffff-fc18                             | 8            | bb7                               | 9                                | 12                                       | 0           | cabc55668d92   |
+| ----------------------------------------- | ------------ | --------------------------------- | -------------------------------- | ---------------------------------------- | ----------- | -------------- |
+| 48bit Timestamp (Unix epoch milliseconds) | UUID Version | Suffix random (`000` if director) | variant (2 bits) + 2 random bits | `DOCombinedLocations` (`00` if anywhere) | `ShardType` | 48 random bits |
