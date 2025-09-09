@@ -38,6 +38,256 @@ void describe('Buffer Helper Tests', () => {
 		}
 	});
 
+	void describe('UUID Generation Tests', () => {
+		void describe('UUID v7 Generation', () => {
+			void it('generates a valid UUID v7', async () => {
+				const uuid = await BufferHelpers.generateUuid7();
+
+				// Check all required fields are present
+				ok(uuid.utf8, 'Should have utf8 field');
+				ok(uuid.hex, 'Should have hex field');
+				ok(uuid.blob, 'Should have blob field');
+				ok(uuid.base64, 'Should have base64 field');
+				ok(uuid.base64url, 'Should have base64url field');
+
+				// Validate UUID v7 format using Zod
+				const { z } = await import('zod/v4');
+				const result = z.uuid({ version: 'v7' }).safeParse(uuid.utf8);
+				ok(result.success, `Expected valid UUID v7, got: ${uuid.utf8}`);
+
+				// Check hex is 32 characters (no hyphens)
+				strictEqual(uuid.hex.length, 32);
+				ok(/^[0-9a-f]{32}$/i.test(uuid.hex), 'Hex should contain only hex characters');
+
+				// Check blob is 16 bytes
+				ok(uuid.blob instanceof ArrayBuffer, 'Blob should be ArrayBuffer');
+				strictEqual(uuid.blob.byteLength, 16);
+			});
+
+			void it('generates different UUIDs on multiple calls to generateUuid7', async () => {
+				const uuid1 = await BufferHelpers.generateUuid7();
+				const uuid2 = await BufferHelpers.generateUuid7();
+
+				ok(uuid1.utf8 !== uuid2.utf8, 'UUIDs should be different');
+				ok(uuid1.hex !== uuid2.hex, 'Hex values should be different');
+			});
+
+			void it('generates UUIDs with recent timestamps using generateUuid7', async () => {
+				const beforeGeneration = Date.now();
+				const uuid = await BufferHelpers.generateUuid7();
+				const afterGeneration = Date.now();
+
+				// Extract timestamp from UUID v7 (first 48 bits)
+				const timestampHex = uuid.hex.substring(0, 12);
+				const timestamp = Number(BigInt(`0x${timestampHex}`));
+
+				// Timestamp should be within reasonable range of generation time
+				ok(timestamp >= beforeGeneration - 1000, 'Timestamp should not be too far in the past');
+				ok(timestamp <= afterGeneration + 1000, 'Timestamp should not be too far in the future');
+			});
+		});
+
+		void describe('UUID v8 Generation', () => {
+			void it('generates a valid UUID v8 with default options', async () => {
+				const uuid = await BufferHelpers.generateUuid8();
+
+				// Check all required fields are present
+				ok(uuid.utf8, 'Should have utf8 field');
+				ok(uuid.hex, 'Should have hex field');
+				ok(uuid.blob, 'Should have blob field');
+				ok(uuid.base64, 'Should have base64 field');
+				ok(uuid.base64url, 'Should have base64url field');
+
+				// Validate UUID v8 format using Zod
+				const { z } = await import('zod/v4');
+				const result = z.uuid({ version: 'v8' }).safeParse(uuid.utf8);
+				ok(result.success, `Expected valid UUID v8, got: ${uuid.utf8}`);
+
+				// Check hex is 32 characters (no hyphens)
+				strictEqual(uuid.hex.length, 32);
+				ok(/^[0-9a-f]{32}$/i.test(uuid.hex), 'Hex should contain only hex characters');
+
+				// Check blob is 16 bytes
+				ok(uuid.blob instanceof ArrayBuffer, 'Blob should be ArrayBuffer');
+				strictEqual(uuid.blob.byteLength, 16);
+
+				// Check default values are injected correctly
+				// Default suffix should be '000' at positions 13-16 in hex (corresponds to 16-19 in UUID string)
+				strictEqual(uuid.hex.substring(13, 16), '000', 'Default suffix should be 000');
+				// Note: Default location '00' is part of the default suffix '000' pattern
+			});
+
+			void it('generates UUID v8 with custom location', async () => {
+				const { DOCombinedLocations } = await import('@chainfuse/types');
+				const uuid = await BufferHelpers.generateUuid8({
+					location: DOCombinedLocations.wnam,
+				});
+
+				// Validate UUID v8 format
+				const { z } = await import('zod/v4');
+				const result = z.uuid({ version: 'v8' }).safeParse(uuid.utf8);
+				ok(result.success, `Expected valid UUID v8, got: ${uuid.utf8}`);
+
+				// Check custom location is injected (wnam = 10 = 0x0a)
+				// From debug: pattern "a0a1" at positions 16-19, where 'a' is at 16, '0' at 17, 'a' at 18, '1' at 19
+				// It seems the location byte 'a' is at position 16
+				strictEqual(uuid.hex.substring(18, 19), 'a', 'Custom location should be injected');
+			});
+
+			void it('generates UUID v8 with custom shard type', async () => {
+				const { ShardType } = await import('@chainfuse/types/d0');
+				const uuid = await BufferHelpers.generateUuid8({
+					shardType: ShardType.Storage,
+				});
+
+				// Validate UUID v8 format
+				const { z } = await import('zod/v4');
+				const result = z.uuid({ version: 'v8' }).safeParse(uuid.utf8);
+				ok(result.success, `Expected valid UUID v8, got: ${uuid.utf8}`);
+
+				// Check custom shard type is injected (Storage = 1)
+				// From debug: pattern "a0a1" shows '1' at position 19
+				strictEqual(uuid.hex.substring(19, 20), '1', 'Custom shard type should be injected');
+			});
+
+			void it('generates UUID v8 with custom suffix', async () => {
+				const uuid = await BufferHelpers.generateUuid8({
+					suffix: 'abc',
+				});
+
+				// Validate UUID v8 format
+				const { z } = await import('zod/v4');
+				const result = z.uuid({ version: 'v8' }).safeParse(uuid.utf8);
+				ok(result.success, `Expected valid UUID v8, got: ${uuid.utf8}`);
+
+				// Check custom suffix is injected
+				// From debug: "abc" found at position 13-16
+				strictEqual(uuid.hex.substring(13, 16), 'abc', 'Custom suffix should be injected');
+			});
+
+			void it('generates UUID v8 with custom timestamp', async () => {
+				const customTime = new Date('2023-01-01T00:00:00.000Z');
+				const uuid = await BufferHelpers.generateUuid8({
+					msecs: customTime,
+				});
+
+				// Validate UUID v8 format
+				const { z } = await import('zod/v4');
+				const result = z.uuid({ version: 'v8' }).safeParse(uuid.utf8);
+				ok(result.success, `Expected valid UUID v8, got: ${uuid.utf8}`);
+
+				// Extract timestamp from UUID (first 48 bits)
+				const timestampHex = uuid.hex.substring(0, 12);
+				const timestamp = Number(BigInt(`0x${timestampHex}`));
+
+				// Should match the custom timestamp
+				strictEqual(timestamp, customTime.getTime(), 'Custom timestamp should be injected');
+			});
+
+			void it('generates UUID v8 with all custom fields', async () => {
+				const { DOCombinedLocations } = await import('@chainfuse/types');
+				const { ShardType } = await import('@chainfuse/types/d0');
+
+				const customTime = new Date('2023-06-15T12:00:00.000Z');
+				const uuid = await BufferHelpers.generateUuid8({
+					msecs: customTime,
+					location: DOCombinedLocations.enam,
+					shardType: ShardType.Storage,
+					suffix: 'def',
+				});
+
+				// Validate UUID v8 format
+				const { z } = await import('zod/v4');
+				const result = z.uuid({ version: 'v8' }).safeParse(uuid.utf8);
+				ok(result.success, `Expected valid UUID v8, got: ${uuid.utf8}`);
+
+				// Check all custom fields are injected
+				strictEqual(uuid.hex.substring(13, 16), 'def', 'Custom suffix should be injected');
+				strictEqual(uuid.hex.substring(18, 19), 'b', 'Custom location should be injected (enam = 11 = 0x0b)');
+				strictEqual(uuid.hex.substring(19, 20), '1', 'Custom shard type should be injected (Storage = 1)');
+
+				// Check custom timestamp
+				const timestampHex = uuid.hex.substring(0, 12);
+				const timestamp = Number(BigInt(`0x${timestampHex}`));
+				strictEqual(timestamp, customTime.getTime(), 'Custom timestamp should be injected');
+			});
+
+			void it('generates different UUIDs on multiple calls', async () => {
+				const uuid1 = await BufferHelpers.generateUuid8();
+				const uuid2 = await BufferHelpers.generateUuid8();
+
+				ok(uuid1.utf8 !== uuid2.utf8, 'UUIDs should be different');
+				ok(uuid1.hex !== uuid2.hex, 'Hex values should be different');
+			});
+
+			void it('generates consistent UUID with same inputs', async () => {
+				const { DOCombinedLocations } = await import('@chainfuse/types');
+				const { ShardType } = await import('@chainfuse/types/d0');
+
+				const options = {
+					msecs: new Date('2023-01-01T00:00:00.000Z'),
+					location: DOCombinedLocations.weur,
+					shardType: ShardType.Director,
+					suffix: 'abc',
+				};
+
+				const uuid1 = await BufferHelpers.generateUuid8(options);
+				const uuid2 = await BufferHelpers.generateUuid8(options);
+
+				// Should be identical with same inputs (assuming same random bytes, which they won't be)
+				// But at least the deterministic parts should be the same
+				strictEqual(uuid1.hex.substring(0, 12), uuid2.hex.substring(0, 12), 'Timestamp portion should be identical');
+				strictEqual(uuid1.hex.substring(13, 16), uuid2.hex.substring(13, 16), 'Suffix should be identical');
+				strictEqual(uuid1.hex.substring(18, 19), uuid2.hex.substring(18, 19), 'Location should be identical');
+				strictEqual(uuid1.hex.substring(19, 20), uuid2.hex.substring(19, 20), 'Shard type should be identical');
+			});
+
+			void it('handles Uint8Array suffix input', async () => {
+				const suffixBytes = new Uint8Array([0xab, 0xcd]);
+				const uuid = await BufferHelpers.generateUuid8({
+					suffix: suffixBytes,
+				});
+
+				// Validate UUID v8 format
+				const { z } = await import('zod/v4');
+				const result = z.uuid({ version: 'v8' }).safeParse(uuid.utf8);
+				ok(result.success, `Expected valid UUID v8, got: ${uuid.utf8}`);
+
+				// Check that the suffix was processed correctly
+				// The implementation should convert Uint8Array to hex and truncate to 3 chars
+				const expectedSuffix = 'bcd'; // Last 3 chars of 'abcd'
+				strictEqual(uuid.hex.substring(13, 16), expectedSuffix, 'Uint8Array suffix should be converted correctly');
+			});
+		});
+
+		void describe('UUID Format Consistency', () => {
+			void it('maintains consistent format between v7 and v8 generation', async () => {
+				const uuidV7 = await BufferHelpers.generateUuid7();
+				const uuidV8 = await BufferHelpers.generateUuid8();
+
+				// Both should have the same structure
+				const v7Keys = Object.keys(uuidV7).sort();
+				const v8Keys = Object.keys(uuidV8).sort();
+				deepStrictEqual(v7Keys, v8Keys, 'Both UUID types should have the same fields');
+
+				// Both should have same field types
+				strictEqual(typeof uuidV7.utf8, typeof uuidV8.utf8, 'utf8 types should match');
+				strictEqual(typeof uuidV7.hex, typeof uuidV8.hex, 'hex types should match');
+				strictEqual(typeof uuidV7.base64, typeof uuidV8.base64, 'base64 types should match');
+				strictEqual(typeof uuidV7.base64url, typeof uuidV8.base64url, 'base64url types should match');
+				ok(uuidV7.blob instanceof ArrayBuffer && uuidV8.blob instanceof ArrayBuffer, 'blob should be ArrayBuffer for both');
+
+				// Both should have 32-char hex strings
+				strictEqual(uuidV7.hex.length, 32);
+				strictEqual(uuidV8.hex.length, 32);
+
+				// Both should have 16-byte blobs
+				strictEqual(uuidV7.blob.byteLength, 16);
+				strictEqual(uuidV8.blob.byteLength, 16);
+			});
+		});
+	});
+
 	void describe('BigInt Conversion Tests', () => {
 		void it('Convert from bigint to buffer', async () => {
 			const input = BigInt(`0x${crypto.getRandomValues(new Uint8Array(16)).reduce((acc, byte) => acc + byte.toString(16).padStart(2, '0'), '')}`);
@@ -98,7 +348,7 @@ void describe('Buffer Helper Tests', () => {
 				const convertedBuffer = await BufferHelpers.hexToBuffer(hex);
 
 				strictEqual(convertedBuffer.byteLength, originalBuffer.byteLength);
-				const convertedView = new Uint8Array(convertedBuffer as ArrayBuffer);
+				const convertedView = new Uint8Array(convertedBuffer);
 				for (let i = 0; i < originalData.length; i++) {
 					strictEqual(convertedView[i], originalData[i], `Byte at index ${i} should match`);
 				}
@@ -141,7 +391,7 @@ void describe('Buffer Helper Tests', () => {
 				const convertedBuffer = BufferHelpersInternals.browser_hexToBuffer(hex);
 
 				strictEqual(convertedBuffer.byteLength, originalBuffer.byteLength);
-				const convertedView = new Uint8Array(convertedBuffer as ArrayBuffer);
+				const convertedView = new Uint8Array(convertedBuffer);
 				for (let i = 0; i < originalData.length; i++) {
 					strictEqual(convertedView[i], originalData[i], `Byte at index ${i} should match`);
 				}
@@ -226,7 +476,7 @@ void describe('Buffer Helper Tests', () => {
 				const convertedBuffer = await BufferHelpers.base64ToBuffer(base64);
 
 				strictEqual(convertedBuffer.byteLength, originalBuffer.byteLength);
-				const convertedView = new Uint8Array(convertedBuffer as ArrayBuffer);
+				const convertedView = new Uint8Array(convertedBuffer);
 				for (let i = 0; i < originalData.length; i++) {
 					strictEqual(convertedView[i], originalData[i], `Byte at index ${i} should match`);
 				}
@@ -240,7 +490,7 @@ void describe('Buffer Helper Tests', () => {
 				const convertedBuffer = await BufferHelpers.base64ToBuffer(base64url);
 
 				strictEqual(convertedBuffer.byteLength, originalBuffer.byteLength);
-				const convertedView = new Uint8Array(convertedBuffer as ArrayBuffer);
+				const convertedView = new Uint8Array(convertedBuffer);
 				for (let i = 0; i < originalData.length; i++) {
 					strictEqual(convertedView[i], originalData[i], `Byte at index ${i} should match`);
 				}
@@ -319,7 +569,7 @@ void describe('Buffer Helper Tests', () => {
 				const convertedBuffer = BufferHelpersInternals.browser_base64ToBuffer(base64);
 
 				strictEqual(convertedBuffer.byteLength, originalBuffer.byteLength);
-				const convertedView = new Uint8Array(convertedBuffer as ArrayBuffer);
+				const convertedView = new Uint8Array(convertedBuffer);
 				for (let i = 0; i < originalData.length; i++) {
 					strictEqual(convertedView[i], originalData[i], `Byte at index ${i} should match`);
 				}
@@ -333,7 +583,7 @@ void describe('Buffer Helper Tests', () => {
 				const convertedBuffer = BufferHelpersInternals.browser_base64UrlToBuffer(base64url);
 
 				strictEqual(convertedBuffer.byteLength, originalBuffer.byteLength);
-				const convertedView = new Uint8Array(convertedBuffer as ArrayBuffer);
+				const convertedView = new Uint8Array(convertedBuffer);
 				for (let i = 0; i < originalData.length; i++) {
 					strictEqual(convertedView[i], originalData[i], `Byte at index ${i} should match`);
 				}
