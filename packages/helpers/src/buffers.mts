@@ -69,7 +69,7 @@ export class BufferHelpers {
 	}
 
 	public static generateUuid8(temp: Pick<Version8Options, 'msecs' | 'location' | 'shardType' | 'suffix'>): Promise<UuidExport> {
-		return Promise.all([CryptoHelpers.secretBytes(16), import('./uuid8.mjs')]).then(([random, { v8: uuidv8 }]) => {
+		return Promise.all([import('./uuid8.mjs'), CryptoHelpers.secretBytes(16)]).then(([{ v8: uuidv8 }, random]) => {
 			const uuid = uuidv8({
 				// @ts-expect-error they're the exact same
 				random,
