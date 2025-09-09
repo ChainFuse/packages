@@ -7,12 +7,12 @@ import { BufferHelpersInternals } from '../dist/bufferInternals.mjs';
 import { BufferHelpers } from '../dist/buffers.mjs';
 
 void describe('Buffer Helper Tests', () => {
-	void describe('UUID Converter', async () => {
+	void describe('UUID 7 Converter', async () => {
 		void it(`Convert from ${undefined} using ${undefined} to ${undefined}`, async () => {
 			deepStrictEqual({ blob: undefined, hex: undefined, utf8: undefined, base64: undefined, base64url: undefined } satisfies UndefinedProperties<UuidExport>, await BufferHelpers.uuidConvert(undefined));
 		});
 
-		const uuid = await BufferHelpers.generateUuid;
+		const uuid = await BufferHelpers.generateUuid7();
 		const encoder = new TextEncoder();
 
 		for (const [baseType, baseValue] of Object.entries(uuid)) {
