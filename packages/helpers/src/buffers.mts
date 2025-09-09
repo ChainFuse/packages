@@ -262,13 +262,13 @@ export class BufferHelpers {
 					const date = new Date(Number(BigInt(`0x${hex.substring(0, 12)}`)));
 
 					if (utf8v8Success) {
-						const suffix_hex = hex.substring(15, 18);
+						const suffix_hex = hex.substring(13, 16);
 						const suffix_buffer = await BufferHelpers.hexToBuffer(suffix_hex);
 
 						return {
 							date,
-							location: parseInt(hex.slice(20, 22), 16),
-							shardType: parseInt(hex.slice(22, 23), 16),
+							location: parseInt(hex.slice(18, 19), 16),
+							shardType: parseInt(hex.slice(19, 20), 16),
 							suffix:
 								suffix_hex === '000'
 									? undefined
