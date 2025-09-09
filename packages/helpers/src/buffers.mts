@@ -68,12 +68,12 @@ export class BufferHelpers {
 		});
 	}
 
-	public static generateUuid8(temp: Pick<Version8Options, 'msecs' | 'location' | 'shardType' | 'suffix'>): Promise<UuidExport> {
+	public static generateUuid8(options: Pick<Version8Options, 'msecs' | 'location' | 'shardType' | 'suffix'>): Promise<UuidExport> {
 		return Promise.all([import('./uuid8.mjs'), CryptoHelpers.secretBytes(16)]).then(([{ v8: uuidv8 }, random]) => {
 			const uuid = uuidv8({
 				// @ts-expect-error they're the exact same
 				random,
-				...temp,
+				...options,
 			}) as UuidExport['utf8'];
 			const uuidHex = uuid.replaceAll('-', '');
 
