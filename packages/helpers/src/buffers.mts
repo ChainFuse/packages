@@ -212,7 +212,13 @@ export class BufferHelpers {
 	public static uuidExtractor(input: UuidExport['base64url']): Promise<UUIDExtract>;
 	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 	public static uuidExtractor(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExportBlobInput): Promise<UUIDExtract> {
-		return Promise.all([import('zod/v4'), this.uuidConvert(input)]).then(async ([{ z }, { utf8, hex: _hex }]) => {
+		return Promise.all([
+			import('zod/v4'),
+			this.uuidConvert(
+				// @ts-expect-error it's the same type
+				input,
+			),
+		]).then(async ([{ z }, { utf8, hex: _hex }]) => {
 			const { success: hexSuccess, data: hex } = z.hex().length(32).safeParse(_hex);
 
 			if (hexSuccess) {
