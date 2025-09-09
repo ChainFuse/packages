@@ -7,7 +7,9 @@ export class CryptoHelpers {
 	}
 
 	public static base16secret(secretLength: number) {
-		return this.secretBytes(secretLength / 2).then((bytes) => BufferHelpers.bufferToHex(bytes.buffer));
+		return this.secretBytes(Math.ceil(secretLength / 2))
+			.then((bytes) => BufferHelpers.bufferToHex(bytes.buffer))
+			.then((hex) => hex.substring(0, secretLength));
 	}
 
 	public static base62secret(secretLength: number) {
