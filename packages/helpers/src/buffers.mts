@@ -2,6 +2,7 @@ import type { UndefinedProperties } from '@chainfuse/types';
 import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
 import { BufferHelpersInternals } from './bufferInternals.mts';
 import { CryptoHelpers } from './crypto.mjs';
+import type { Version8Options } from './uuid8.mjs';
 
 export type UuidExportBlobInput = Buffer | UuidExport['blob'];
 
@@ -53,6 +54,27 @@ export class BufferHelpers {
 	public static get generateUuid(): Promise<UuidExport> {
 		return Promise.all([CryptoHelpers.secretBytes(16), import('uuid')]).then(([random, { v7: uuidv7 }]) => {
 			const uuid = uuidv7({ random }) as UuidExport['utf8'];
+			const uuidHex = uuid.replaceAll('-', '');
+
+			return this.hexToBuffer(uuidHex).then((blob) =>
+				Promise.all([this.bufferToBase64(blob, false), this.bufferToBase64(blob, true)]).then(([base64, base64url]) => ({
+					utf8: uuid,
+					hex: uuidHex,
+					blob,
+					base64,
+					base64url,
+				})),
+			);
+		});
+	}
+
+	public static generateUuid8(temp: Pick<Version8Options, 'msecs' | 'region' | 'shardType' | 'suffix'>): Promise<UuidExport> {
+		return Promise.all([CryptoHelpers.secretBytes(16), import('./uuid8.mjs')]).then(([random, { v8: uuidv8 }]) => {
+			const uuid = uuidv8({
+				// @ts-expect-error they're the exact same
+				random,
+				...temp,
+			}) as UuidExport['utf8'];
 			const uuidHex = uuid.replaceAll('-', '');
 
 			return this.hexToBuffer(uuidHex).then((blob) =>
