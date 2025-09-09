@@ -68,7 +68,7 @@ export class BufferHelpers {
 		});
 	}
 
-	public static generateUuid8(temp: Pick<Version8Options, 'msecs' | 'region' | 'shardType' | 'suffix'>): Promise<UuidExport> {
+	public static generateUuid8(temp: Pick<Version8Options, 'msecs' | 'location' | 'shardType' | 'suffix'>): Promise<UuidExport> {
 		return Promise.all([CryptoHelpers.secretBytes(16), import('./uuid8.mjs')]).then(([random, { v8: uuidv8 }]) => {
 			const uuid = uuidv8({
 				// @ts-expect-error they're the exact same
