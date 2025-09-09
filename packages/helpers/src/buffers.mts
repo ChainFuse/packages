@@ -1,5 +1,6 @@
 import type { UndefinedProperties } from '@chainfuse/types';
 import type { PrefixedUuid, UuidExport, UUIDExtract, UUIDExtract7, UUIDExtract8 } from '@chainfuse/types/d1';
+import type { z } from 'zod/v4';
 import { BufferHelpersInternals } from './bufferInternals.mts';
 import { CryptoHelpers } from './crypto.mjs';
 import type { Version8Options } from './uuid8.mjs';
@@ -51,9 +52,41 @@ export class BufferHelpers {
 		return BufferHelpersInternals.node_bufferToBase64(buffer, urlSafe).catch(() => BufferHelpersInternals.browser_bufferToBase64(buffer, urlSafe));
 	}
 
-	public static get generateUuid(): Promise<UuidExport> {
-		return Promise.all([CryptoHelpers.secretBytes(16), import('uuid')]).then(([random, { v7: uuidv7 }]) => {
-			const uuid = uuidv7({ random }) as UuidExport['utf8'];
+	/**
+	 * @deprecated Use `BufferHelpers.generateUuid7` instead
+	 */
+	public static get generateUuid() {
+		return this.generateUuid7();
+	}
+
+	public static get v7OptionsBase() {
+		return import('zod/v4').then(({ z }) =>
+			z.object({
+				/**
+				 * RFC "timestamp" field
+				 */
+				msecs: z
+					.union([
+						z.int().nonnegative(),
+						// Allow converting from Date object
+						z.date().transform((date) => date.getTime()),
+					])
+					.optional(),
+				/**
+				 * 32-bit sequence Number between 0 - 0xffffffff. This may be provided to help ensure uniqueness for UUIDs generated within the same millisecond time interval. Default = random value.
+				 */
+				seq: z.int().min(0).max(0xffffffff).optional(),
+			}),
+		);
+	}
+	public static generateUuid7(_options?: z.input<Awaited<typeof this.v7OptionsBase>>): Promise<UuidExport> {
+		return Promise.all([
+			//
+			import('uuid'),
+			this.v7OptionsBase.then((schema) => schema.parseAsync(_options ?? {})),
+			CryptoHelpers.secretBytes(16),
+		]).then(([{ v7: uuidv7 }, options, random]) => {
+			const uuid = uuidv7({ msecs: options.msecs, random, seq: options.seq }) as UuidExport['utf8'];
 			const uuidHex = uuid.replaceAll('-', '');
 
 			return this.hexToBuffer(uuidHex).then((blob) =>
