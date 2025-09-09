@@ -84,3 +84,18 @@ export enum DOLocations {
 	'Africa' = 'afr',
 	'Middle East' = 'me',
 }
+
+export enum DOCombinedLocations {
+	none = 0,
+	eu = 1,
+	fedramp = 2,
+	wnam = 10,
+	enam = 11,
+	sam = 12,
+	weur = 13,
+	eeur = 14,
+	apac = 15,
+	oc = 16,
+	afr = 17,
+	me = 18,
+}
