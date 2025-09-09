@@ -33,7 +33,7 @@ const v8OptionsBase = z.object({
 		z
 			.enum(ShardType)
 			.default(ShardType.Director)
-			.transform((st) => st.toString(16).padStart(2, '0').slice(-2)),
+			.transform((st) => st.toString(16).padStart(1, '0')),
 	]),
 	suffix: z.union([
 		z.hex().length(3).default('000'),
