@@ -931,6 +931,17 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: 'e93e59ea-73d0-47dd-b0e1-469c6bda37c1',
+					source: 1,
+					name: '@cf/baai/omni-bge-m3',
+					description: 'Multi-Functionality, Multi-Linguality, and Multi-Granularity embeddings model.',
+					created_at: '2025-09-01 15:23:18.431',
+					tags: [],
+					properties: {
+						async_queue: true,
+					},
+				},
+				{
 					id: '57fbd08a-a4c4-411c-910d-b9459ff36c20',
 					source: 1,
 					name: '@cf/baai/bge-small-en-v1.5',
