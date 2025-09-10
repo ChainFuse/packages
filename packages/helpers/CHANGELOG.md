@@ -1,5 +1,18 @@
 # @chainfuse/helpers
 
+## 3.6.1
+
+### Patch Changes
+
+- [`acfe0bd`](https://github.com/ChainFuse/packages/commit/acfe0bdd6ace58c02e269da38583e22b6a4e4811) Thanks [@demosjarco](https://github.com/demosjarco)! - buffers(feat): Migrate to `zod/mini` from `zod/v4`
+
+- [`67cb490`](https://github.com/ChainFuse/packages/commit/67cb4904cc8c9f6ed62a37130ea79f4e9a34d872) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Use zod internally in `uuidExtractor()`
+
+- [`ec990d2`](https://github.com/ChainFuse/packages/commit/ec990d279b9693265b8bf392c3fde337ead2dbe3) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Use node native ansi stripper where possible, falling back to `strip-ansi`
+
+- Updated dependencies [[`14284e2`](https://github.com/ChainFuse/packages/commit/14284e284b7abdb20087ac1a47067f71a5e023b4), [`67cb490`](https://github.com/ChainFuse/packages/commit/67cb4904cc8c9f6ed62a37130ea79f4e9a34d872)]:
+    - @chainfuse/types@2.12.1
+
 ## 3.6.0
 
 ### Minor Changes
