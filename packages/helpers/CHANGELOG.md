@@ -1,5 +1,30 @@
 # @chainfuse/helpers
 
+## 3.6.0
+
+### Minor Changes
+
+- [#623](https://github.com/ChainFuse/packages/pull/623) [`e4d4928`](https://github.com/ChainFuse/packages/commit/e4d4928346060bce7fc3b9ca67c97e8416722674) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Added uuid v8 generation
+
+- [#623](https://github.com/ChainFuse/packages/pull/623) [`e4d4928`](https://github.com/ChainFuse/packages/commit/e4d4928346060bce7fc3b9ca67c97e8416722674) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add `uuidExtractor()` to extract content out of uuid7/8
+
+- [#623](https://github.com/ChainFuse/packages/pull/623) [`e4d4928`](https://github.com/ChainFuse/packages/commit/e4d4928346060bce7fc3b9ca67c97e8416722674) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): MIgrate `generateUuid` to `generateUuid7()` to allow for passing in parameters. `generateUuid` will be removed at a later update
+
+- [#623](https://github.com/ChainFuse/packages/pull/623) [`e4d4928`](https://github.com/ChainFuse/packages/commit/e4d4928346060bce7fc3b9ca67c97e8416722674) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add `generateUuid8()`
+
+### Patch Changes
+
+- [`eeab819`](https://github.com/ChainFuse/packages/commit/eeab819974a2478c3a1c9b901214d0bd0b6073f8) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Fix `base16secret()` generation to properly round up and trim
+
+- [#624](https://github.com/ChainFuse/packages/pull/624) [`2b57609`](https://github.com/ChainFuse/packages/commit/2b57609a68ef0d019fd9d40905d57e2ba170813f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @azure/identity, @ai-sdk/anthropic, ai
+
+- [#627](https://github.com/ChainFuse/packages/pull/627) [`edb1398`](https://github.com/ChainFuse/packages/commit/edb139873393e61b582406a88934ff3585f47ee0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
+
+- [#626](https://github.com/ChainFuse/packages/pull/626) [`2f10cd9`](https://github.com/ChainFuse/packages/commit/2f10cd9e1e19d2c0a3c8ae7334e1475de9a9097d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- Updated dependencies [[`13ff814`](https://github.com/ChainFuse/packages/commit/13ff814ff6a9c8d524d241c3b15841c4a94d3948), [`e4d4928`](https://github.com/ChainFuse/packages/commit/e4d4928346060bce7fc3b9ca67c97e8416722674), [`2b57609`](https://github.com/ChainFuse/packages/commit/2b57609a68ef0d019fd9d40905d57e2ba170813f), [`edb1398`](https://github.com/ChainFuse/packages/commit/edb139873393e61b582406a88934ff3585f47ee0), [`2f10cd9`](https://github.com/ChainFuse/packages/commit/2f10cd9e1e19d2c0a3c8ae7334e1475de9a9097d)]:
+    - @chainfuse/types@2.12.0
+
 ## 3.5.6
 
 ### Patch Changes
