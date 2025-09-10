@@ -1,5 +1,19 @@
 # @chainfuse/ai-tools
 
+## 0.14.9
+
+### Patch Changes
+
+- [#624](https://github.com/ChainFuse/packages/pull/624) [`2b57609`](https://github.com/ChainFuse/packages/commit/2b57609a68ef0d019fd9d40905d57e2ba170813f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @azure/identity, @ai-sdk/anthropic, ai
+
+- [#627](https://github.com/ChainFuse/packages/pull/627) [`edb1398`](https://github.com/ChainFuse/packages/commit/edb139873393e61b582406a88934ff3585f47ee0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
+
+- [#626](https://github.com/ChainFuse/packages/pull/626) [`2f10cd9`](https://github.com/ChainFuse/packages/commit/2f10cd9e1e19d2c0a3c8ae7334e1475de9a9097d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- Updated dependencies [[`e4d4928`](https://github.com/ChainFuse/packages/commit/e4d4928346060bce7fc3b9ca67c97e8416722674), [`e4d4928`](https://github.com/ChainFuse/packages/commit/e4d4928346060bce7fc3b9ca67c97e8416722674), [`eeab819`](https://github.com/ChainFuse/packages/commit/eeab819974a2478c3a1c9b901214d0bd0b6073f8), [`13ff814`](https://github.com/ChainFuse/packages/commit/13ff814ff6a9c8d524d241c3b15841c4a94d3948), [`e4d4928`](https://github.com/ChainFuse/packages/commit/e4d4928346060bce7fc3b9ca67c97e8416722674), [`2b57609`](https://github.com/ChainFuse/packages/commit/2b57609a68ef0d019fd9d40905d57e2ba170813f), [`edb1398`](https://github.com/ChainFuse/packages/commit/edb139873393e61b582406a88934ff3585f47ee0), [`2f10cd9`](https://github.com/ChainFuse/packages/commit/2f10cd9e1e19d2c0a3c8ae7334e1475de9a9097d), [`e4d4928`](https://github.com/ChainFuse/packages/commit/e4d4928346060bce7fc3b9ca67c97e8416722674), [`e4d4928`](https://github.com/ChainFuse/packages/commit/e4d4928346060bce7fc3b9ca67c97e8416722674)]:
+    - @chainfuse/helpers@3.6.0
+    - @chainfuse/types@2.12.0
+
 ## 0.14.8
 
 ### Patch Changes
