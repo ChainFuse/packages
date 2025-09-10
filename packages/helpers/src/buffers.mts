@@ -267,7 +267,7 @@ export class BufferHelpers {
 
 						return {
 							date,
-							location: parseInt(hex.slice(18, 19), 16),
+							location: parseInt(hex.slice(17, 19), 16),
 							shardType: parseInt(hex.slice(19, 20), 16),
 							suffix:
 								suffix_hex === '000'
