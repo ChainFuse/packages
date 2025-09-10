@@ -1,5 +1,16 @@
 # @chainfuse/helpers
 
+## 4.0.0
+
+### Major Changes
+
+- [`9cc9616`](https://github.com/ChainFuse/packages/commit/9cc9616abeb7e54f6b3cb00005ab74d7d80c3c5f) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(deprecate): Drop `generateUuid()`
+
+### Patch Changes
+
+- Updated dependencies [[`de2cb27`](https://github.com/ChainFuse/packages/commit/de2cb27eeeb9d00b731ec603991850137e6964e7)]:
+    - @chainfuse/types@3.0.0
+
 ## 3.6.1
 
 ### Patch Changes
