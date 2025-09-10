@@ -9,20 +9,20 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
-      day: 'wednesday'
+      day: 'tuesday'
     open-pull-requests-limit: 999
   - package-ecosystem: 'docker'
     directories:
       - '/.devcontainer'
     schedule:
       interval: 'weekly'
-      day: 'wednesday'
+      day: 'tuesday'
     open-pull-requests-limit: 999
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
-      day: 'wednesday'
+      day: 'tuesday'
     open-pull-requests-limit: 999
     groups:
       artifacts:
@@ -44,7 +44,7 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
-      day: 'wednesday'
+      day: 'tuesday'
     cooldown:
       semver-major-days: 30
     versioning-strategy: increase
