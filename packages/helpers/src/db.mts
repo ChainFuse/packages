@@ -2,7 +2,7 @@ import { Cache as DrizzleCache, type MutationOption } from 'drizzle-orm/cache/co
 import type { CacheConfig } from 'drizzle-orm/cache/core/types';
 import { is } from 'drizzle-orm/entity';
 import { getTableName, Table } from 'drizzle-orm/table';
-import { z } from 'zod/v4';
+import * as z from 'zod/mini';
 import { CryptoHelpers } from './crypto.mts';
 
 /**
@@ -26,33 +26,28 @@ export interface CacheStorageLike {
  * @extends DrizzleCache
  */
 export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
-	private dbName: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['dbName'];
-	private dbType: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['dbType'];
+	private dbName: z.output<(typeof SQLCache)['constructorArgs']>['dbName'];
+	private dbType: z.output<(typeof SQLCache)['constructorArgs']>['dbType'];
 	private cache: Promise<Cache>;
-	private globalTtl: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['cacheTTL'];
-	private ttlCutoff: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['cachePurge'];
-	private _strategy: z.output<ReturnType<(typeof SQLCache)['constructorArgs']>>['strategy'];
+	private globalTtl: z.output<(typeof SQLCache)['constructorArgs']>['cacheTTL'];
+	private ttlCutoff: z.output<(typeof SQLCache)['constructorArgs']>['cachePurge'];
+	private _strategy: z.output<(typeof SQLCache)['constructorArgs']>['strategy'];
 	// This object will be used to store which query keys were used for a specific table, so we can later use it for invalidation.
 	private usedTablesPerKey: Record<string, string[]> = {};
 
-	public static constructorArgs() {
-		return z.object({
-			dbName: z
-				.string()
-				.nonempty()
-				.transform((val) => encodeURIComponent(val)),
-			dbType: z
-				.string()
-				.nonempty()
-				.transform((val) => encodeURIComponent(val)),
-			cacheTTL: z
-				.int()
-				.nonnegative()
-				.default(5 * 60),
-			cachePurge: z.union([z.boolean(), z.date()]).default(false),
-			strategy: z.enum(['explicit', 'all']).default('explicit'),
-		});
-	}
+	public static constructorArgs = z.object({
+		dbName: z.pipe(
+			z.string().check(z.minLength(1)),
+			z.transform((val) => encodeURIComponent(val)),
+		),
+		dbType: z.pipe(
+			z.string().check(z.minLength(1)),
+			z.transform((val) => encodeURIComponent(val)),
+		),
+		cacheTTL: z._default(z.int().check(z.nonnegative()), 5 * 60),
+		cachePurge: z._default(z.union([z.boolean(), z.date()]), false),
+		strategy: z._default(z.enum(['explicit', 'all']), 'explicit'),
+	});
 
 	/**
 	 * Creates an instance of the class with the specified database name, type, and cache TTL.
@@ -65,9 +60,9 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	 * - `all`: All queries are cached globally.
 	 * @param cacheStore - The cache store to use. Can be a CacheStorage or CacheStorage-like object that atleast contains the `open()` function
 	 */
-	constructor(args: z.input<ReturnType<(typeof SQLCache)['constructorArgs']>>, cacheStore?: C) {
+	constructor(args: z.input<(typeof SQLCache)['constructorArgs']>, cacheStore?: C) {
 		super();
-		const { dbName, dbType, cacheTTL, cachePurge, strategy } = SQLCache.constructorArgs().parse(args);
+		const { dbName, dbType, cacheTTL, cachePurge, strategy } = SQLCache.constructorArgs.parse(args);
 
 		this.dbName = dbName;
 		this.dbType = dbType;
