@@ -1,5 +1,17 @@
 # @chainfuse/ai-tools
 
+## 1.0.1
+
+### Patch Changes
+
+- [#630](https://github.com/ChainFuse/packages/pull/630) [`3b6df3c`](https://github.com/ChainFuse/packages/commit/3b6df3cd53a843b0483aff3b949cfa9decd70a0f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/azure, @ai-sdk/openai, openai
+
+- [#631](https://github.com/ChainFuse/packages/pull/631) [`87f0839`](https://github.com/ChainFuse/packages/commit/87f0839a86d12ef4aab8117d9524b10931c26191) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- Updated dependencies [[`3b6df3c`](https://github.com/ChainFuse/packages/commit/3b6df3cd53a843b0483aff3b949cfa9decd70a0f), [`87f0839`](https://github.com/ChainFuse/packages/commit/87f0839a86d12ef4aab8117d9524b10931c26191)]:
+    - @chainfuse/helpers@4.0.1
+    - @chainfuse/types@3.0.1
+
 ## 1.0.0
 
 ### Major Changes
