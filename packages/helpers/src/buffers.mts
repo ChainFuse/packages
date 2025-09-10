@@ -48,13 +48,6 @@ export class BufferHelpers {
 		return BufferHelpersInternals.node_bufferToBase64(buffer, urlSafe).catch(() => BufferHelpersInternals.browser_bufferToBase64(buffer, urlSafe));
 	}
 
-	/**
-	 * @deprecated Use `BufferHelpers.generateUuid7` instead
-	 */
-	public static get generateUuid() {
-		return this.generateUuid7();
-	}
-
 	public static v7OptionsBase = z.object({
 		/**
 		 * RFC "timestamp" field
