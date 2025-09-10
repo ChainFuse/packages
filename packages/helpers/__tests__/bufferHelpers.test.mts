@@ -872,8 +872,6 @@ void describe('Buffer Helper Tests', () => {
 
 						const extracted = await BufferHelpers.uuidExtractor(uuid.utf8);
 
-						console.log(uuid, extracted);
-
 						// Type guard for UUID v8
 						if ('location' in extracted && 'shardType' in extracted && 'suffix' in extracted) {
 							strictEqual(extracted.location, locationValue, `Should extract correct location for ${locationName} + ${shardTypeName}`);
