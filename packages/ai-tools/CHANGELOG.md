@@ -1,5 +1,19 @@
 # @chainfuse/ai-tools
 
+## 1.0.0
+
+### Major Changes
+
+- [`4f9dedb`](https://github.com/ChainFuse/packages/commit/4f9dedb7abe7416f16d762f4a077555c581e15c3) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(deprecate): Drop `z3` and `z4` for `zod/mini`
+
+### Patch Changes
+
+- [`2d5aa43`](https://github.com/ChainFuse/packages/commit/2d5aa43b0d97b8de53f7801de0aa2293edc2d0b9) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Migrate to `generateUuid7()` from `generateUuid`
+
+- Updated dependencies [[`de2cb27`](https://github.com/ChainFuse/packages/commit/de2cb27eeeb9d00b731ec603991850137e6964e7), [`9cc9616`](https://github.com/ChainFuse/packages/commit/9cc9616abeb7e54f6b3cb00005ab74d7d80c3c5f)]:
+    - @chainfuse/types@3.0.0
+    - @chainfuse/helpers@4.0.0
+
 ## 0.14.9
 
 ### Patch Changes
