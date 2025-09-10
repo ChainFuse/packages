@@ -18,7 +18,7 @@ import helpers from '@chainfuse/helpers';
 
 ## UUIDv8
 
-Based on UUIDv7 but with added values to prevent unecessary lookups
+Based on UUIDv7 but with added values to prevent unnecessary lookups
 
 `01f3ffff-fc18-8bb7-9120-cabc55668d92`
 
