@@ -69,12 +69,7 @@ export const v8Options = z.union([
 ]);
 export type Version8Options = z.input<typeof v8Options>;
 
-function replaceByIndex(_input: string, _start: number, _end: number, _replacement: string) {
-	const input = z.string().parse(_input);
-	const end = z.int().max(input.length).parse(_end);
-	const start = z.int().min(0).max(end).parse(_start);
-	const replacement = z.string().parse(_replacement);
-
+function replaceByIndex(input: string, start: number, end: number, replacement: string) {
 	return input.slice(0, start) + replacement + input.slice(end);
 }
 
