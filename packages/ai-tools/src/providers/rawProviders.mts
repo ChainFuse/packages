@@ -75,7 +75,7 @@ export class AiRawProviders extends AiBase {
 							name: 'openai',
 						} satisfies AiRequestMetadata['serverInfo']),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 						executor: JSON.stringify(args.executor),
 					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
@@ -137,7 +137,7 @@ export class AiRawProviders extends AiBase {
 							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 							...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
 							// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-							idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+							idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 							executor: JSON.stringify(args.executor),
 							// @ts-expect-error server info gets added in afterwards
 						} satisfies AiRequestMetadataStringified),
@@ -289,7 +289,7 @@ export class AiRawProviders extends AiBase {
 							name: 'anthropic',
 						} satisfies AiRequestMetadata['serverInfo']),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 						executor: JSON.stringify(args.executor),
 					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
@@ -385,7 +385,7 @@ export class AiRawProviders extends AiBase {
 											'X-Dataspace-Id': (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 											'X-Executor': JSON.stringify(args.executor),
 											// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-											'X-Idempotency-Id': args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+											'X-Idempotency-Id': args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 											// Request to skip or custom cache duration (no guarantee that upstream server will respect it)
 											// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 											...((args.skipCache || args.cache) && { 'Cache-Control': [args.skipCache && 'no-cache', args.cache && `max-age=${typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache}`].join(', ') }),
@@ -464,7 +464,7 @@ export class AiRawProviders extends AiBase {
 							name: 'googleai',
 						} satisfies AiRequestMetadata['serverInfo']),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 						executor: JSON.stringify(args.executor),
 					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
@@ -521,7 +521,7 @@ export class AiRawProviders extends AiBase {
 							name: 'cloudflare',
 						} satisfies AiRequestMetadata['serverInfo']),
 						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 						executor: JSON.stringify(args.executor),
 					} satisfies AiRequestMetadataStringified),
 					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
@@ -588,7 +588,7 @@ export class AiRawProviders extends AiBase {
 								name: 'cloudflare',
 							} satisfies AiRequestMetadata['serverInfo']),
 							// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-							idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+							idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
 							executor: JSON.stringify(args.executor),
 						} satisfies AiRequestMetadataStringified,
 					} satisfies GatewayOptions,
