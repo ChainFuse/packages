@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 3.0.0
+
+### Major Changes
+
+- [`de2cb27`](https://github.com/ChainFuse/packages/commit/de2cb27eeeb9d00b731ec603991850137e6964e7) Thanks [@demosjarco](https://github.com/demosjarco)! - types(deprecate): Drop `z3` and `z4` for `zod/mini`
+
 ## 2.12.1
 
 ### Patch Changes
