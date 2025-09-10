@@ -1,7 +1,7 @@
 import type { Buffer } from 'node:buffer';
 import * as z from 'zod/mini';
-import { DOCombinedLocations } from '..';
-import { ShardType } from '../d0';
+import { ShardType } from '../d0/index.js';
+import { DOCombinedLocations } from '../index.js';
 
 export type PrefixedUuid = `${'t_' | 'd_' | 'u_'}${UuidExport['utf8']}${'' | '_p'}`;
 export interface UuidExport {
