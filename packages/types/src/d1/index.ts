@@ -1,6 +1,7 @@
 import type { Buffer } from 'node:buffer';
-import type { DOCombinedLocations } from '..';
-import type { ShardType } from '../d0';
+import * as z from 'zod/mini';
+import { DOCombinedLocations } from '..';
+import { ShardType } from '../d0';
 
 export type PrefixedUuid = `${'t_' | 'd_' | 'u_'}${UuidExport['utf8']}${'' | '_p'}`;
 export interface UuidExport {
@@ -12,20 +13,23 @@ export interface UuidExport {
 	base64url: string;
 }
 
-export interface UUIDExtract7 {
-	date: Date;
-}
-export interface UUIDExtract8 {
-	date: Date;
-	location: DOCombinedLocations;
-	shardType: ShardType;
-	suffix?: {
-		hex: string;
-		base64?: string;
-		base64url?: string;
-	};
-}
-export type UUIDExtract = UUIDExtract7 | UUIDExtract8;
+export const UUIDExtract7 = z.object({
+	date: z.coerce.date(),
+});
+
+export const UUIDExtract8 = z.extend(UUIDExtract7, {
+	location: z.enum(DOCombinedLocations),
+	shardType: z.enum(ShardType),
+	suffix: z.optional(
+		z.object({
+			hex: z.hex().check(z.length(3)),
+			base64: z.base64(),
+			base64url: z.base64url(),
+		}),
+	),
+});
+
+export type UUIDExtract = z.output<typeof UUIDExtract7> | z.output<typeof UUIDExtract8>;
 
 export type ISODateString = `${number}-${number}-${number}T${number}:${number}:${number}.${number}Z`;
 
