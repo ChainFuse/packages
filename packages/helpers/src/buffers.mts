@@ -1,7 +1,9 @@
 import type { UndefinedProperties } from '@chainfuse/types';
-import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
+import type { PrefixedUuid, UuidExport, UUIDExtract, UUIDExtract7, UUIDExtract8 } from '@chainfuse/types/d1';
+import type { z } from 'zod/v4';
 import { BufferHelpersInternals } from './bufferInternals.mts';
 import { CryptoHelpers } from './crypto.mjs';
+import type { Version8Options } from './uuid8.mjs';
 
 export type UuidExportBlobInput = Buffer | UuidExport['blob'];
 
@@ -50,9 +52,62 @@ export class BufferHelpers {
 		return BufferHelpersInternals.node_bufferToBase64(buffer, urlSafe).catch(() => BufferHelpersInternals.browser_bufferToBase64(buffer, urlSafe));
 	}
 
-	public static get generateUuid(): Promise<UuidExport> {
-		return Promise.all([CryptoHelpers.secretBytes(16), import('uuid')]).then(([random, { v7: uuidv7 }]) => {
-			const uuid = uuidv7({ random }) as UuidExport['utf8'];
+	/**
+	 * @deprecated Use `BufferHelpers.generateUuid7` instead
+	 */
+	public static get generateUuid() {
+		return this.generateUuid7();
+	}
+
+	public static get v7OptionsBase() {
+		return import('zod/v4').then(({ z }) =>
+			z.object({
+				/**
+				 * RFC "timestamp" field
+				 */
+				msecs: z
+					.union([
+						z.int().nonnegative(),
+						// Allow converting from Date object
+						z.date().transform((date) => date.getTime()),
+					])
+					.optional(),
+				/**
+				 * 32-bit sequence Number between 0 - 0xffffffff. This may be provided to help ensure uniqueness for UUIDs generated within the same millisecond time interval. Default = random value.
+				 */
+				seq: z.int().min(0).max(0xffffffff).optional(),
+			}),
+		);
+	}
+	public static generateUuid7(_options?: z.input<Awaited<typeof this.v7OptionsBase>>): Promise<UuidExport> {
+		return Promise.all([
+			//
+			import('uuid'),
+			this.v7OptionsBase.then((schema) => schema.parseAsync(_options ?? {})),
+			CryptoHelpers.secretBytes(16),
+		]).then(([{ v7: uuidv7 }, options, random]) => {
+			const uuid = uuidv7({ msecs: options.msecs, random, seq: options.seq }) as UuidExport['utf8'];
+			const uuidHex = uuid.replaceAll('-', '');
+
+			return this.hexToBuffer(uuidHex).then((blob) =>
+				Promise.all([this.bufferToBase64(blob, false), this.bufferToBase64(blob, true)]).then(([base64, base64url]) => ({
+					utf8: uuid,
+					hex: uuidHex,
+					blob,
+					base64,
+					base64url,
+				})),
+			);
+		});
+	}
+
+	public static generateUuid8(options?: Omit<Version8Options, 'random' | 'rng'>): Promise<UuidExport> {
+		return Promise.all([import('./uuid8.mjs'), CryptoHelpers.secretBytes(16)]).then(([{ v8: uuidv8 }, random]) => {
+			const uuid = uuidv8({
+				// @ts-expect-error they're the exact same
+				random,
+				...options,
+			}) as UuidExport['utf8'];
 			const uuidHex = uuid.replaceAll('-', '');
 
 			return this.hexToBuffer(uuidHex).then((blob) =>
@@ -179,5 +234,61 @@ export class BufferHelpers {
 			base64: undefined,
 			base64url: undefined,
 		}))();
+	}
+
+	public static uuidExtractor(input: undefined): Promise<UUIDExtract>;
+	public static uuidExtractor(prefixedUtf: PrefixedUuid): Promise<UUIDExtract>;
+	public static uuidExtractor(input: UuidExport['utf8']): Promise<UUIDExtract>;
+	public static uuidExtractor(input: UuidExport['hex']): Promise<UUIDExtract>;
+	public static uuidExtractor(input: UuidExportBlobInput): Promise<UUIDExtract>;
+	public static uuidExtractor(input: UuidExport['base64']): Promise<UUIDExtract>;
+	public static uuidExtractor(input: UuidExport['base64url']): Promise<UUIDExtract>;
+	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+	public static uuidExtractor(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExportBlobInput): Promise<UUIDExtract> {
+		return Promise.all([
+			import('zod/v4'),
+			this.uuidConvert(
+				// @ts-expect-error it's the same type
+				input,
+			),
+		]).then(async ([{ z }, { utf8, hex: _hex }]) => {
+			const { success: hexSuccess, data: hex } = z.hex().length(32).safeParse(_hex);
+
+			if (hexSuccess) {
+				const { success: utf8v7Success } = z.uuid({ version: 'v7' }).safeParse(utf8);
+				const { success: utf8v8Success } = z.uuid({ version: 'v8' }).safeParse(utf8);
+
+				if (utf8v7Success || utf8v8Success) {
+					const date = new Date(Number(BigInt(`0x${hex.substring(0, 12)}`)));
+
+					if (utf8v8Success) {
+						const suffix_hex = hex.substring(13, 16);
+						const suffix_buffer = await BufferHelpers.hexToBuffer(suffix_hex);
+
+						return {
+							date,
+							location: parseInt(hex.slice(17, 19), 16),
+							shardType: parseInt(hex.slice(19, 20), 16),
+							suffix:
+								suffix_hex === '000'
+									? undefined
+									: {
+											hex: suffix_hex,
+											base64: await BufferHelpers.bufferToBase64(suffix_buffer, false),
+											base64url: await BufferHelpers.bufferToBase64(suffix_buffer, true),
+										},
+						} satisfies UUIDExtract8;
+					} else {
+						return {
+							date,
+						} satisfies UUIDExtract7;
+					}
+				} else {
+					throw new Error('Unsupported UUID version provided');
+				}
+			} else {
+				throw new Error('Invalid UUID provided');
+			}
+		});
 	}
 }
