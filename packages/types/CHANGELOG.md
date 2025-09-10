@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 2.12.1
+
+### Patch Changes
+
+- [`14284e2`](https://github.com/ChainFuse/packages/commit/14284e284b7abdb20087ac1a47067f71a5e023b4) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Fix esm import in `/d1`
+
+- [`67cb490`](https://github.com/ChainFuse/packages/commit/67cb4904cc8c9f6ed62a37130ea79f4e9a34d872) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Use zod internally in `uuidExtractor()`
+
 ## 2.12.0
 
 ### Minor Changes
