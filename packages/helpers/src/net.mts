@@ -200,7 +200,15 @@ export class NetHelpers {
 												return config.logging.custom(argsFirst, ...argsRest);
 											}
 										} else {
-											await Promise.all([import('strip-ansi'), import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })), import('./index.mts')]).then(([{ default: stripAnsi }, chalk, { Helpers }]) => {
+											await Promise.all([
+												// Try the new native one
+												import('node:util')
+													.then(({ stripVTControlCharacters }) => stripVTControlCharacters)
+													// For web or unavailable node in general
+													.catch(() => import('strip-ansi').then(({ default: stripAnsi }) => stripAnsi)),
+												import('chalk').then(({ Chalk }) => new Chalk({ level: 2 })),
+												import('./index.mts'),
+											]).then(([ansiStripper, chalk, { Helpers }]) => {
 												// We faked level 1 as 2 to get headers for ray-id
 												if (config.logging.level === 1) {
 													console.info(
@@ -214,10 +222,10 @@ export class NetHelpers {
 															// Wrap id in brackets
 															.map((value) => {
 																if (value === id) {
-																	const wrappedString = `[${stripAnsi(id)}]`;
+																	const wrappedString = `[${ansiStripper(id)}]`;
 
 																	if (config.logging.color) {
-																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
+																		return chalk.rgb(...Helpers.uniqueIdColor(ansiStripper(id)))(wrappedString);
 																	} else {
 																		return wrappedString;
 																	}
@@ -242,10 +250,10 @@ export class NetHelpers {
 															// Wrap id in brackets
 															.map((value) => {
 																if (value === id) {
-																	const wrappedString = `[${stripAnsi(id)}]`;
+																	const wrappedString = `[${ansiStripper(id)}]`;
 
 																	if (config.logging.color) {
-																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
+																		return chalk.rgb(...Helpers.uniqueIdColor(ansiStripper(id)))(wrappedString);
 																	} else {
 																		return wrappedString;
 																	}
@@ -269,10 +277,10 @@ export class NetHelpers {
 															// Wrap id in brackets
 															.map((value) => {
 																if (value === id) {
-																	const wrappedString = `[${stripAnsi(id)}]`;
+																	const wrappedString = `[${ansiStripper(id)}]`;
 
 																	if (config.logging.color) {
-																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
+																		return chalk.rgb(...Helpers.uniqueIdColor(ansiStripper(id)))(wrappedString);
 																	} else {
 																		return wrappedString;
 																	}
@@ -296,10 +304,10 @@ export class NetHelpers {
 															// Wrap id in brackets
 															.map((value) => {
 																if (value === id) {
-																	const wrappedString = `[${stripAnsi(id)}]`;
+																	const wrappedString = `[${ansiStripper(id)}]`;
 
 																	if (config.logging.color) {
-																		return chalk.rgb(...Helpers.uniqueIdColor(stripAnsi(id)))(wrappedString);
+																		return chalk.rgb(...Helpers.uniqueIdColor(ansiStripper(id)))(wrappedString);
 																	} else {
 																		return wrappedString;
 																	}
