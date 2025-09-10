@@ -72,6 +72,10 @@
 		"./net": {
 			"import": "./dist/net.mjs",
 			"types": "./dist/net.d.mts"
+		},
+		"./uuid8": {
+			"import": "./dist/uuid8.mjs",
+			"types": "./dist/uuid8.d.mts"
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",
