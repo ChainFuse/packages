@@ -86,7 +86,7 @@ function replaceByIndex(_input: string, _start: number, _end: number, _replaceme
  * @param options - Configuration options for UUID generation
  * @param options.msecs - RFC "timestamp" field - milliseconds since epoch or Date object
  * @param options.seq - 32-bit sequence number (0 - 0xffffffff) for uniqueness within same millisecond
- * @param options.region - Location identifier as hex string or DOCombinedLocations enum
+ * @param options.location - Location identifier as hex string or DOCombinedLocations enum
  * @param options.shardType - Shard type as hex string or ShardType enum
  * @param options.suffix - Custom suffix as hex string or Uint8Array of 2 bytes
  * @param options.random - Array of 16 random bytes for UUID generation
