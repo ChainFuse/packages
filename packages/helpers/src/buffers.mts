@@ -127,8 +127,10 @@ export class BufferHelpers {
 						import('@chainfuse/types/zod').then(({ PrefixedUuidRaw }) =>
 							z
 								.union([
-									//
-									PrefixedUuidRaw.transform((prefixedUtf8) => prefixedUtf8.split('_')[1]!),
+									z.pipe(
+										PrefixedUuidRaw,
+										z.transform((prefixedUtf8) => prefixedUtf8.split('_')[1]!),
+									),
 									z.uuid().trim().nonempty().toLowerCase(),
 								])
 								.transform((value) => value as UuidExport['utf8'])
