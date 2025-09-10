@@ -16,7 +16,7 @@ void describe('Logging fetch', () => {
 });
 
 void describe('CF fetch', () => {
-	void it(`Fetch JSON`, async () => {
+	void it(`Fetch account list`, async () => {
 		const response = (await NetHelpers.cfApi('apikey', { logging: { level: 3 } })).accounts.list({ per_page: 50 }, { maxRetries: 0 });
 
 		await rejects(response);
