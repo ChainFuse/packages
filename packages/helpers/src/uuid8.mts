@@ -1,70 +1,69 @@
 import { DOCombinedLocations } from '@chainfuse/types';
 import { ShardType } from '@chainfuse/types/d0';
 import { v7 } from 'uuid';
-import { z } from 'zod/v4';
+import * as z from 'zod/mini';
 import { BufferHelpersInternals } from './bufferInternals.mts';
 
 const v8OptionsBase = z.object({
 	/**
 	 * RFC "timestamp" field
 	 */
-	msecs: z
-		.union([
-			z.int().nonnegative(),
+	msecs: z.optional(
+		z.union([
+			z.int().check(z.nonnegative()),
 			// Allow converting from Date object
-			z.date().transform((date) => date.getTime()),
-		])
-		.optional(),
+			z.pipe(
+				z.date(),
+				z.transform((date) => date.getTime()),
+			),
+		]),
+	),
 	/**
 	 * 32-bit sequence Number between 0 - 0xffffffff. This may be provided to help ensure uniqueness for UUIDs generated within the same millisecond time interval. Default = random value.
 	 */
-	seq: z.int().min(0).max(0xffffffff).optional(),
+	seq: z.optional(z.int().check(z.minimum(0), z.maximum(0xffffffff))),
 	location: z.union([
 		//
-		z.hex().length(2).default('00'),
-		z
-			.enum(DOCombinedLocations)
-			.default(DOCombinedLocations.none)
-			.transform((r) => r.toString(16).padStart(2, '0').slice(-2)),
+		z._default(z.hex().check(z.length(2)), '00'),
+		z.pipe(
+			z._default(z.enum(DOCombinedLocations), DOCombinedLocations.none),
+			z.transform((l) => l.toString(16).padStart(2, '0').slice(-2)),
+		),
 	]),
 	shardType: z.union([
 		//
-		z.hex().length(1).default('0'),
-		z
-			.enum(ShardType)
-			.default(ShardType.Director)
-			.transform((st) => st.toString(16).padStart(1, '0')),
+		z._default(z.hex().check(z.length(1)), '0'),
+		z.pipe(
+			z._default(z.enum(ShardType), ShardType.Director),
+			z.transform((st) => st.toString(16).padStart(1, '0')),
+		),
 	]),
 	suffix: z.union([
-		z.hex().length(3).default('000'),
+		z._default(z.hex().check(z.length(3)), '000'),
 		// It's technically 1.5 bytes, but we round up to nearest integer
-		z
-			.instanceof(Uint8Array)
-			.refine((arr) => arr.byteLength === 2, { message: 'suffix must be a Uint8Array of 2 bytes' })
-			.default(new Uint8Array(2))
-			.transform((arr) => BufferHelpersInternals.browser_bufferToHex(arr.buffer).padStart(3, '0').slice(-3)),
+		z.pipe(
+			z._default(z.instanceof(Uint8Array).check(z.refine((arr) => arr.byteLength === 2, { message: 'suffix must be a Uint8Array of 2 bytes' })), new Uint8Array(2)),
+			z.transform((arr) => BufferHelpersInternals.browser_bufferToHex(arr.buffer).padStart(3, '0').slice(-3)),
+		),
 	]),
 });
 export const v8Options = z.union([
-	v8OptionsBase.extend({
+	z.extend(v8OptionsBase, {
 		/**
 		 * Array of 16 random bytes (0-255) used to generate other fields
 		 */
-		random: z
-			.instanceof(Uint8Array)
-			.refine((arr) => arr.byteLength === 16, { message: '`random` must be a Uint8Array of 16 random bytes' })
-			.optional(),
+		random: z.optional(z.instanceof(Uint8Array).check(z.refine((arr) => arr.byteLength === 16, { message: '`random` must be a Uint8Array of 16 random bytes' }))),
 	}),
-	v8OptionsBase.extend({
+	z.extend(v8OptionsBase, {
 		/**
 		 * Alternative to options.random, a Function that returns an Array of 16 random bytes (0-255)
 		 */
-		rng: z
-			.function({
+		rng: z.optional(
+			z.function({
 				input: [],
-				output: z.instanceof(Uint8Array).refine((arr) => arr.byteLength === 16, { message: '`random` must be a Uint8Array of 16 random bytes' }),
-			})
-			.optional(),
+				output: z.instanceof(Uint8Array).check(z.refine((arr) => arr.byteLength === 16, { message: '`random` must be a Uint8Array of 16 random bytes' })),
+			}),
+		),
 	}),
 ]);
 export type Version8Options = z.input<typeof v8Options>;

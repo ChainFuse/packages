@@ -1,6 +1,6 @@
 import type { UndefinedProperties } from '@chainfuse/types';
 import { UUIDExtract7, UUIDExtract8, type PrefixedUuid, type UuidExport, type UUIDExtract } from '@chainfuse/types/d1';
-import type { z } from 'zod/v4';
+import * as z from 'zod/mini';
 import { BufferHelpersInternals } from './bufferInternals.mts';
 import { CryptoHelpers } from './crypto.mjs';
 import type { Version8Options } from './uuid8.mjs';
@@ -30,22 +30,18 @@ export class BufferHelpers {
 	}
 
 	public static base64ToBuffer(rawBase64: string) {
-		return import('zod/v4').then(({ z }) =>
-			Promise.any([
-				z
-					.base64()
-					.trim()
-					.nonempty()
-					.parseAsync(rawBase64)
-					.then((base64) => BufferHelpersInternals.node_base64ToBuffer(base64, false).catch(() => BufferHelpersInternals.browser_base64ToBuffer(base64))),
-				z
-					.base64url()
-					.trim()
-					.nonempty()
-					.parseAsync(rawBase64)
-					.then((base64url) => BufferHelpersInternals.node_base64ToBuffer(base64url, true).catch(() => BufferHelpersInternals.browser_base64UrlToBuffer(base64url))),
-			]),
-		);
+		return Promise.any([
+			z
+				.base64()
+				.check(z.trim(), z.minLength(1))
+				.parseAsync(rawBase64)
+				.then((base64) => BufferHelpersInternals.node_base64ToBuffer(base64, false).catch(() => BufferHelpersInternals.browser_base64ToBuffer(base64))),
+			z
+				.base64url()
+				.check(z.trim(), z.minLength(1))
+				.parseAsync(rawBase64)
+				.then((base64url) => BufferHelpersInternals.node_base64ToBuffer(base64url, true).catch(() => BufferHelpersInternals.browser_base64UrlToBuffer(base64url))),
+		]);
 	}
 
 	public static bufferToBase64(buffer: UuidExportBlobInput, urlSafe: boolean): Promise<string> {
@@ -59,31 +55,30 @@ export class BufferHelpers {
 		return this.generateUuid7();
 	}
 
-	public static get v7OptionsBase() {
-		return import('zod/v4').then(({ z }) =>
-			z.object({
-				/**
-				 * RFC "timestamp" field
-				 */
-				msecs: z
-					.union([
-						z.int().nonnegative(),
-						// Allow converting from Date object
-						z.date().transform((date) => date.getTime()),
-					])
-					.optional(),
-				/**
-				 * 32-bit sequence Number between 0 - 0xffffffff. This may be provided to help ensure uniqueness for UUIDs generated within the same millisecond time interval. Default = random value.
-				 */
-				seq: z.int().min(0).max(0xffffffff).optional(),
-			}),
-		);
-	}
+	public static v7OptionsBase = z.object({
+		/**
+		 * RFC "timestamp" field
+		 */
+		msecs: z.optional(
+			z.union([
+				z.int().check(z.nonnegative()),
+				// Allow converting from Date object
+				z.pipe(
+					z.date(),
+					z.transform((date) => date.getTime()),
+				),
+			]),
+		),
+		/**
+		 * 32-bit sequence Number between 0 - 0xffffffff. This may be provided to help ensure uniqueness for UUIDs generated within the same millisecond time interval. Default = random value.
+		 */
+		seq: z.optional(z.int().check(z.minimum(0), z.maximum(0xffffffff))),
+	});
 	public static generateUuid7(_options?: z.input<Awaited<typeof this.v7OptionsBase>>): Promise<UuidExport> {
 		return Promise.all([
 			//
 			import('uuid'),
-			this.v7OptionsBase.then((schema) => schema.parseAsync(_options ?? {})),
+			this.v7OptionsBase.parseAsync(_options ?? {}),
 			CryptoHelpers.secretBytes(16),
 		]).then(([{ v7: uuidv7 }, options, random]) => {
 			const uuid = uuidv7({ msecs: options.msecs, random, seq: options.seq }) as UuidExport['utf8'];
@@ -245,13 +240,10 @@ export class BufferHelpers {
 	public static uuidExtractor(input: UuidExport['base64url']): Promise<UUIDExtract>;
 	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 	public static uuidExtractor(input?: PrefixedUuid | UuidExport['utf8'] | UuidExport['hex'] | UuidExportBlobInput): Promise<UUIDExtract> {
-		return Promise.all([
-			import('zod/mini'),
-			this.uuidConvert(
-				// @ts-expect-error it's the same type
-				input,
-			),
-		]).then(async ([z, { utf8, hex: _hex }]) => {
+		return this.uuidConvert(
+			// @ts-expect-error it's the same type
+			input,
+		).then(async ({ utf8, hex: _hex }) => {
 			const { success: hexSuccess, data: hex } = z.hex().check(z.length(32)).safeParse(_hex);
 
 			if (hexSuccess) {

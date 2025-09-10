@@ -1,8 +1,7 @@
 import type { RequestInitCfProperties } from '@cloudflare/workers-types/experimental';
-import type { z as z3 } from 'zod/v3';
-import type { z as z4 } from 'zod/v4';
+import * as z from 'zod/mini';
 
-export type LoggingFetchInitType<RI extends RequestInit = RequestInit> = RI & z3.input<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>;
+export type LoggingFetchInitType<RI extends RequestInit = RequestInit> = RI & z.input<typeof NetHelpers.loggingFetchInit>;
 
 /**
  * Enum representing HTTP request methods.
@@ -22,92 +21,109 @@ export enum Methods {
 }
 
 export class NetHelpers {
-	public static cfApiConfig() {
-		return import('zod/v3').then(({ z: z3 }) =>
-			z3
-				.object({
-					logging: z3
-						.object({
-							level: z3.coerce.number().int().min(0).max(3).default(0),
-							error: z3.coerce.number().int().min(0).max(3).default(1),
-							color: z3.boolean().default(true),
-							custom: z3
-								.function()
-								.args()
-								.returns(z3.union([z3.void(), z3.promise(z3.void())]))
-								.optional(),
-						})
-						.default({}),
-					cf: z3
-						.object({
-							/**
-							 * Whether Cloudflare Apps should be enabled for this request
-							 * @link https://www.cloudflare.com/apps/
-							 * @default true
-							 */
-							apps: z3.boolean().default(true),
-							/**
-							 * Treats all content as static and caches all file types beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule Cache Level (to Cache Everything).
-							 * @default false
-							 * @note This option applies to GET and HEAD request methods only
-							 */
-							cacheEverything: z3.boolean().default(false),
-							/**
-							 * A request’s cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both.
-							 */
-							cacheKey: z3.string().nonempty().optional(),
-							/**
-							 * This option appends additional Cache-Tag headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the Purge by Tag feature.
-							 */
-							cacheTags: z3.array(z3.string().nonempty()).nonempty().optional(),
-							/**
-							 * This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: Edge Cache TTL and Cache Level (to Cache Everything). The value must be zero or a positive number. A value of 0 indicates that the cache asset expires immediately.
-							 * @note This option applies to GET and HEAD request methods only.
-							 */
-							cacheTtl: z3.coerce.number().int().nonnegative().optional(),
-							/**
-							 * This option is a version of the cacheTtl feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time and override cache instructives sent by the origin. For example: { "200-299": 86400, "404": 1, "500-599": 0 }. The value can be any integer, including zero and negative integers. A value of 0 indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all.
-							 * @note This option applies to GET and HEAD request methods only.
-							 */
-							cacheTtlByStatus: z3
-								.record(
-									z3
-										.string()
-										.nonempty()
-										.regex(/^(1|2|3|4|5)\d{2}(-(1|2|3|4|5)\d{2})?$/),
-									z3.coerce.number().int(),
-								)
-								.optional(),
-							// image:
-							/**
-							 * Whether Mirage should be enabled for this request, if otherwise configured for this zone.
-							 * @link https://www.cloudflare.com/website-optimization/mirage/
-							 * @default true
-							 */
-							mirage: z3.boolean().default(true),
-							/**
-							 * Sets Polish mode. The possible values are lossy, lossless or off.
-							 * @link https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/
-							 */
-							polish: z3.enum(['lossy', 'lossless', 'off']).optional(),
-							// resolveOverride:
-							/**
-							 * Whether ScrapeShield should be enabled for this request, if otherwise configured for this zone.
-							 * @link https://blog.cloudflare.com/introducing-scrapeshield-discover-defend-dete/
-							 * @default true
-							 */
-							scrapeShield: z3.boolean().default(true),
-							/**
-							 * Enables or disables WebP image format in Polish.
-							 * @link https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/
-							 */
-							webp: z3.boolean().optional(),
-						})
-						.default({}),
-				})
-				.default({}),
-		);
-	}
+	public static cfApiConfig = z._default(
+		z.object({
+			logging: z._default(
+				z.object({
+					level: z._default(z.int().check(z.minimum(0), z.maximum(3)), 0),
+					error: z._default(z.int().check(z.minimum(0), z.maximum(3)), 1),
+					color: z._default(z.boolean(), true),
+					custom: z.optional(
+						z.pipe(
+							z.function({
+								input: z.array(z.any()),
+								output: z.void(),
+							}),
+							z.transform((fn) => fn as (...args: any[]) => void | Promise<void>),
+						),
+					),
+				}),
+				{
+					level: 0,
+					error: 1,
+					color: true,
+				},
+			),
+			cf: z._default(
+				z.object({
+					/**
+					 * Whether Cloudflare Apps should be enabled for this request
+					 * @link https://www.cloudflare.com/apps/
+					 * @default true
+					 */
+					apps: z._default(z.boolean(), true),
+					/**
+					 * Treats all content as static and caches all file types beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule Cache Level (to Cache Everything).
+					 * @default false
+					 * @note This option applies to GET and HEAD request methods only
+					 */
+					cacheEverything: z._default(z.boolean(), false),
+					/**
+					 * A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both.
+					 */
+					cacheKey: z.optional(z.string().check(z.minLength(1))),
+					/**
+					 * This option appends additional Cache-Tag headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the Purge by Tag feature.
+					 */
+					cacheTags: z.optional(z.array(z.string().check(z.minLength(1))).check(z.minLength(1))),
+					/**
+					 * This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: Edge Cache TTL and Cache Level (to Cache Everything). The value must be zero or a positive number. A value of 0 indicates that the cache asset expires immediately.
+					 * @note This option applies to GET and HEAD request methods only.
+					 */
+					cacheTtl: z.optional(z.int().check(z.nonnegative())),
+					/**
+					 * This option is a version of the cacheTtl feature which chooses a TTL based on the response's status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time and override cache instructives sent by the origin. For example: { "200-299": 86400, "404": 1, "500-599": 0 }. The value can be any integer, including zero and negative integers. A value of 0 indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all.
+					 * @note This option applies to GET and HEAD request methods only.
+					 */
+					cacheTtlByStatus: z.optional(z.record(z.string().check(z.minLength(1), z.regex(/^(1|2|3|4|5)\d{2}(-(1|2|3|4|5)\d{2})?$/)), z.int())),
+					// image:
+					/**
+					 * Whether Mirage should be enabled for this request, if otherwise configured for this zone.
+					 * @link https://www.cloudflare.com/website-optimization/mirage/
+					 * @default true
+					 */
+					mirage: z._default(z.boolean(), true),
+					/**
+					 * Sets Polish mode. The possible values are lossy, lossless or off.
+					 * @link https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/
+					 */
+					polish: z.optional(z.enum(['lossy', 'lossless', 'off'])),
+					// resolveOverride:
+					/**
+					 * Whether ScrapeShield should be enabled for this request, if otherwise configured for this zone.
+					 * @link https://blog.cloudflare.com/introducing-scrapeshield-discover-defend-dete/
+					 * @default true
+					 */
+					scrapeShield: z._default(z.boolean(), true),
+					/**
+					 * Enables or disables WebP image format in Polish.
+					 * @link https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/
+					 */
+					webp: z.optional(z.boolean()),
+				}),
+				{
+					apps: true,
+					cacheEverything: false,
+					mirage: true,
+					scrapeShield: true,
+				},
+			),
+		}),
+		{
+			logging: {
+				level: 0,
+				error: 1,
+				color: true,
+			},
+			cf: {
+				apps: true,
+				cacheEverything: false,
+				mirage: true,
+				scrapeShield: true,
+			},
+		},
+	);
+
 	/**
 	 * Creates an instance of the Cloudflare API client with enhanced logging capabilities.
 	 *
@@ -126,11 +142,11 @@ export class NetHelpers {
 	 * - Formatting and coloring log output for better readability.
 	 * - Stripping redundant parts of URLs and wrapping unique IDs in brackets with color coding.
 	 */
-	public static cfApi(apiKey: string, config?: z3.input<Awaited<ReturnType<typeof NetHelpers.cfApiConfig>>>) {
+	public static cfApi(apiKey: string, config?: z.input<typeof NetHelpers.cfApiConfig>) {
 		return Promise.all([
 			//
 			import('cloudflare'),
-			NetHelpers.cfApiConfig().then((parser) => parser.parseAsync(config)),
+			NetHelpers.cfApiConfig.parseAsync(config),
 		]).then(
 			([{ Cloudflare }, config]) =>
 				new Cloudflare({
@@ -299,28 +315,30 @@ export class NetHelpers {
 		);
 	}
 
-	public static loggingFetchInit() {
-		return Promise.all([import('zod/v3'), this.loggingFetchInitLogging()]).then(([{ z: z3 }, logging]) =>
-			z3.object({
-				logging,
-			}),
-		);
-	}
-	public static loggingFetchInitLogging() {
-		return import('zod/v3').then(({ z: z3 }) =>
-			z3
-				.object({
-					level: z3.coerce.number().int().min(0).max(3).default(0),
-					error: z3.coerce.number().int().min(0).max(3).default(1),
-					color: z3.boolean().default(true),
-					custom: z3
-						.function()
-						.returns(z3.union([z3.void(), z3.promise(z3.void())]))
-						.optional(),
-				})
-				.default({}),
-		);
-	}
+	public static loggingFetchInitLogging = z._default(
+		z.object({
+			level: z._default(z.int().check(z.minimum(0), z.maximum(3)), 0),
+			error: z._default(z.int().check(z.minimum(0), z.maximum(3)), 1),
+			color: z._default(z.boolean(), true),
+			custom: z.optional(
+				z.pipe(
+					z.function({
+						input: z.array(z.any()),
+						output: z.void(),
+					}),
+					z.transform((fn) => fn as (...args: any[]) => void | Promise<void>),
+				),
+			),
+		}),
+		{
+			level: 0,
+			error: 1,
+			color: true,
+		},
+	);
+	public static loggingFetchInit = z.object({
+		logging: this.loggingFetchInitLogging,
+	});
 	/**
 	 * A utility function that wraps the native `fetch` API with enhanced capabilities.
 	 * This function allows for customizable logging of request and response details, including headers, body, and status, with support for colorized output and custom logging handlers.
@@ -357,9 +375,10 @@ export class NetHelpers {
 	 */
 	public static loggingFetch<RI extends RequestInit = RequestInit>(info: Parameters<typeof fetch>[0], init?: LoggingFetchInitType<RI>) {
 		return Promise.all([
-			NetHelpers.loggingFetchInit()
-				.then((parser) => parser.passthrough().parseAsync(init))
-				.then((parsed) => parsed as unknown as RI & z3.output<Awaited<ReturnType<typeof NetHelpers.loggingFetchInit>>>),
+			z
+				.looseObject(this.loggingFetchInit)
+				.parseAsync(init)
+				.then((parsed) => parsed as unknown as RI & z.output<typeof NetHelpers.loggingFetchInit>),
 			import('./crypto.mts').then(({ CryptoHelpers }) => CryptoHelpers.base62secret(8)),
 		]).then(async ([init, id]) => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -672,23 +691,20 @@ export class NetHelpers {
 		return result;
 	}
 
-	public static withRetryInit() {
-		return import('zod/v4').then(({ z: z4 }) =>
-			z4
-				.object({
-					maxRetries: z4.int().nonnegative().default(3),
-					initialDelay: z4.int().nonnegative().default(100),
-					maxDelay: z4.int().nonnegative().default(1000),
-					backoffFactor: z4.int().nonnegative().default(2),
-				})
-				.default({
-					maxRetries: 3,
-					initialDelay: 100,
-					maxDelay: 1000,
-					backoffFactor: 2,
-				}),
-		);
-	}
+	public static withRetryInit = z._default(
+		z.object({
+			maxRetries: z._default(z.int().check(z.nonnegative()), 3),
+			initialDelay: z._default(z.int().check(z.nonnegative()), 100),
+			maxDelay: z._default(z.int().check(z.nonnegative()), 1000),
+			backoffFactor: z._default(z.int().check(z.nonnegative()), 2),
+		}),
+		{
+			maxRetries: 3,
+			initialDelay: 100,
+			maxDelay: 1000,
+			backoffFactor: 2,
+		},
+	);
 
 	/**
 	 * Executes an asynchronous operation with configurable retry logic.
@@ -715,8 +731,8 @@ export class NetHelpers {
 	 * // With custom retry configuration
 	 * await NetHelpers.withRetry(() => apiCall(), { maxRetries: 5, initialDelay: 200 })
 	 */
-	public static withRetry<T>(operation: () => Promise<T>, config?: z4.input<Awaited<ReturnType<typeof NetHelpers.withRetryInit>>>): Promise<T> {
-		return Promise.all([NetHelpers.withRetryInit().then((parser) => parser.parseAsync(config)), import('./common.mjs')]).then(async ([config, { Helpers }]) => {
+	public static withRetry<T>(operation: () => Promise<T>, config?: z.input<typeof NetHelpers.withRetryInit>): Promise<T> {
+		return Promise.all([NetHelpers.withRetryInit.parseAsync(config), import('./common.mjs')]).then(async ([config, { Helpers }]) => {
 			let lastError: unknown;
 			let delay = config.initialDelay;
 
