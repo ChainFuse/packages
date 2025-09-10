@@ -174,23 +174,6 @@ void describe('Buffer Helper Tests', () => {
 				// Note: Default location '00' is part of the default suffix '000' pattern
 			});
 
-			void it('generates UUID v8 with custom location', async () => {
-				const { DOCombinedLocations } = await import('@chainfuse/types');
-				const uuid = await BufferHelpers.generateUuid8({
-					location: DOCombinedLocations.wnam,
-				});
-
-				// Validate UUID v8 format
-				const { z } = await import('zod/v4');
-				const result = z.uuid({ version: 'v8' }).safeParse(uuid.utf8);
-				ok(result.success, `Expected valid UUID v8, got: ${uuid.utf8}`);
-
-				// Check custom location is injected (wnam = 10 = 0x0a)
-				// From debug: pattern "a0a1" at positions 16-19, where 'a' is at 16, '0' at 17, 'a' at 18, '1' at 19
-				// It seems the location byte 'a' is at position 16
-				strictEqual(uuid.hex.substring(18, 19), 'a', 'Custom location should be injected');
-			});
-
 			void it('generates UUID v8 with custom shard type', async () => {
 				const { ShardType } = await import('@chainfuse/types/d0');
 				const uuid = await BufferHelpers.generateUuid8({
@@ -746,22 +729,6 @@ void describe('Buffer Helper Tests', () => {
 				strictEqual(extracted.date.getTime(), customDate.getTime(), 'Should extract the correct custom timestamp');
 			});
 
-			void it('extracts custom location from UUID v8', async () => {
-				const { DOCombinedLocations } = await import('@chainfuse/types');
-				const uuid = await BufferHelpers.generateUuid8({
-					location: DOCombinedLocations.wnam,
-				});
-
-				const extracted = await BufferHelpers.uuidExtractor(uuid.utf8);
-
-				// Type guard for UUID v8
-				if ('location' in extracted) {
-					strictEqual(extracted.location, DOCombinedLocations.wnam, 'Should extract the correct location');
-				} else {
-					ok(false, 'Should extract UUID v8 with location property');
-				}
-			});
-
 			void it('extracts custom shard type from UUID v8', async () => {
 				const { ShardType } = await import('@chainfuse/types/d0');
 				const uuid = await BufferHelpers.generateUuid8({
@@ -879,6 +846,95 @@ void describe('Buffer Helper Tests', () => {
 					strictEqual(extracted.suffix.hex, 'bcd', 'Should extract correct suffix from Uint8Array');
 				} else {
 					ok(false, 'Should extract UUID v8 with suffix property');
+				}
+			});
+		});
+
+		void describe('Comprehensive Enum Testing', () => {
+			void it('extracts all combinations of DOCombinedLocations and ShardType', async () => {
+				const { DOCombinedLocations } = await import('@chainfuse/types');
+				const { ShardType } = await import('@chainfuse/types/d0');
+
+				// Test all locations and shard types
+				const locations = Object.entries(DOCombinedLocations).filter(([, value]) => typeof value === 'number');
+				const shardTypes = Object.entries(ShardType).filter(([, value]) => typeof value === 'number');
+
+				// Test every combination of location and shard type
+				for (const [locationName, locationValue] of locations) {
+					for (const [shardTypeName, shardTypeValue] of shardTypes) {
+						const customDate = new Date('2023-01-01T00:00:00.000Z');
+						const uuid = await BufferHelpers.generateUuid8({
+							msecs: customDate,
+							location: locationValue as number,
+							shardType: shardTypeValue as number,
+							suffix: 'abc',
+						});
+
+						const extracted = await BufferHelpers.uuidExtractor(uuid.utf8);
+
+						console.log(uuid, extracted);
+
+						// Type guard for UUID v8
+						if ('location' in extracted && 'shardType' in extracted && 'suffix' in extracted) {
+							strictEqual(extracted.location, locationValue, `Should extract correct location for ${locationName} + ${shardTypeName}`);
+							strictEqual(extracted.shardType, shardTypeValue, `Should extract correct shard type for ${locationName} + ${shardTypeName}`);
+							strictEqual(extracted.date.getTime(), customDate.getTime(), `Should extract correct timestamp for ${locationName} + ${shardTypeName}`);
+							ok(extracted.suffix, `Should have suffix for ${locationName} + ${shardTypeName}`);
+							strictEqual(extracted.suffix.hex, 'abc', `Should extract correct suffix for ${locationName} + ${shardTypeName}`);
+						} else {
+							ok(false, `Should extract UUID v8 with all properties for ${locationName} + ${shardTypeName}`);
+						}
+					}
+				}
+			});
+
+			void it('validates extraction consistency across different UUID input formats', async () => {
+				const { DOCombinedLocations } = await import('@chainfuse/types');
+				const { ShardType } = await import('@chainfuse/types/d0');
+
+				// Test a few representative combinations across different input formats
+				const testCases = [
+					{ location: DOCombinedLocations.wnam, shardType: ShardType.Director, suffix: '123' },
+					{ location: DOCombinedLocations.eeur, shardType: ShardType.Storage, suffix: 'def' },
+					{ location: DOCombinedLocations.apac, shardType: ShardType.Director, suffix: '789' },
+				];
+
+				for (const testCase of testCases) {
+					const customDate = new Date('2023-06-15T12:30:45.123Z');
+					const uuid = await BufferHelpers.generateUuid8({
+						msecs: customDate,
+						...testCase,
+					});
+
+					// Test extraction from all supported formats
+					const extractedFromUtf8 = await BufferHelpers.uuidExtractor(uuid.utf8);
+					const extractedFromHex = await BufferHelpers.uuidExtractor(uuid.hex);
+					const extractedFromBlob = await BufferHelpers.uuidExtractor(uuid.blob);
+					const extractedFromBase64 = await BufferHelpers.uuidExtractor(uuid.base64);
+					const extractedFromBase64url = await BufferHelpers.uuidExtractor(uuid.base64url);
+
+					const formats = [
+						{ name: 'utf8', extracted: extractedFromUtf8 },
+						{ name: 'hex', extracted: extractedFromHex },
+						{ name: 'blob', extracted: extractedFromBlob },
+						{ name: 'base64', extracted: extractedFromBase64 },
+						{ name: 'base64url', extracted: extractedFromBase64url },
+					];
+
+					for (const format of formats) {
+						const extracted = format.extracted;
+
+						// Type guard for UUID v8
+						if ('location' in extracted && 'shardType' in extracted && 'suffix' in extracted) {
+							strictEqual(extracted.location, testCase.location, `Should extract correct location from ${format.name} format`);
+							strictEqual(extracted.shardType, testCase.shardType, `Should extract correct shard type from ${format.name} format`);
+							strictEqual(extracted.date.getTime(), customDate.getTime(), `Should extract correct timestamp from ${format.name} format`);
+							ok(extracted.suffix, `Should have suffix from ${format.name} format`);
+							strictEqual(extracted.suffix.hex, testCase.suffix, `Should extract correct suffix from ${format.name} format`);
+						} else {
+							ok(false, `Should extract UUID v8 with all properties from ${format.name} format`);
+						}
+					}
 				}
 			});
 		});
