@@ -1,7 +1,7 @@
-import type { ZodMiniJSONSchema } from 'zod/mini';
+import type { infer as zInfer, ZodMiniJSONSchema } from 'zod/mini';
 import * as z from 'zod/mini';
 
-export type JSON = z.infer<ZodMiniJSONSchema>;
+export type JSON = zInfer<ZodMiniJSONSchema>;
 
 export const ZodCoordinate = z.string().check(z.trim(), z.minLength(3), z.regex(new RegExp(/^-?\d+\.\d+$/i)));
 
