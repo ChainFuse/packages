@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 3.0.3
+
+### Patch Changes
+
+- [`70d2ab9`](https://github.com/ChainFuse/packages/commit/70d2ab9f6b06dfaf999100c193c6c61bed1508dd) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Bring back `JSON`
+
 ## 3.0.2
 
 ### Patch Changes
