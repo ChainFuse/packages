@@ -5,6 +5,9 @@ export class CryptoHelpers {
 	public static secretBytes(byteSize: number) {
 		return CryptoHelpersInternals.node_secretBytes(byteSize).catch(() => CryptoHelpersInternals.browser_secretBytes(byteSize));
 	}
+	public static secretBytesSync(byteSize: number) {
+		return CryptoHelpersInternals.browser_secretBytes(byteSize);
+	}
 
 	public static base16secret(secretLength: number) {
 		return this.secretBytes(Math.ceil(secretLength / 2))
