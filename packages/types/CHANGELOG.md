@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 3.0.2
+
+### Patch Changes
+
+- [`2ce92bc`](https://github.com/ChainFuse/packages/commit/2ce92bcddf6f88a53ab9be8fccca11cee2294ebd) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Remove JSON import as it's no longer portable
+
 ## 3.0.1
 
 ### Patch Changes
