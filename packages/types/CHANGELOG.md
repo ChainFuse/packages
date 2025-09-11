@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 3.0.4
+
+### Patch Changes
+
+- [`8d97ad5`](https://github.com/ChainFuse/packages/commit/8d97ad59944b4bdcbb3fe3e513b30a6380015073) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Tighten export of `JSON`
+
 ## 3.0.3
 
 ### Patch Changes
