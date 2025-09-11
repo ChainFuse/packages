@@ -1,9 +1,5 @@
-import type { LanguageModelV2StreamPart } from '@ai-sdk/provider';
-import { Helpers } from '@chainfuse/helpers';
 import { enabledCloudflareLlmProviders, type cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
-import { customProvider, TypeValidationError, wrapLanguageModel } from 'ai';
-import type { ChatCompletionChunk } from 'openai/resources/chat/completions';
-import { ZodError } from 'zod/v4';
+import { customProvider, wrapLanguageModel } from 'ai';
 import { AiBase } from '../base.mjs';
 import type { AiConfigWorkersai, AiConfigWorkersaiRest, AiRequestConfig } from '../types.mjs';
 import { AiRawProviders } from './rawProviders.mjs';
@@ -40,50 +36,53 @@ export class AiCustomProviders extends AiBase {
 						acc[model] = wrapLanguageModel({
 							model: (await raw.restWorkersAi(args))(model),
 							middleware: [
-								{
-									wrapStream: async ({ doStream }) => {
-										const { stream, ...rest } = await doStream();
+								/**
+								 * @todo @demosjarco Rework for zod v4 error format
+								 */
+								// {
+								// 	wrapStream: async ({ doStream }) => {
+								// 		const { stream, ...rest } = await doStream();
 
-										const transformStream = new TransformStream<LanguageModelV2StreamPart, LanguageModelV2StreamPart>({
-											transform(chunk, controller) {
-												if (chunk.type === 'error') {
-													if (TypeValidationError.isInstance(chunk.error) && chunk.error.cause instanceof ZodError) {
-														if (chunk.error.cause.issues.filter((issues) => issues.code === 'invalid_union')) {
-															// Verify the specific error instead of assuming all errors
-															const missingIndexPropertyError = chunk.error.cause.issues
-																.filter((issues) => issues.code === 'invalid_union')
-																.flatMap((issue) => issue.unionErrors)
-																.flatMap((issue) => issue.issues)
-																.filter((issue) => issue.code === 'invalid_type' && Helpers.areArraysEqual(issue.path, ['choices', 0, 'index']));
+								// 		const transformStream = new TransformStream<LanguageModelV2StreamPart, LanguageModelV2StreamPart>({
+								// 			transform(chunk, controller) {
+								// 				if (chunk.type === 'error') {
+								// 					if (TypeValidationError.isInstance(chunk.error) && chunk.error.cause instanceof ZodError) {
+								// 						if (chunk.error.cause.issues.filter((issues) => issues.code === 'invalid_union')) {
+								// 							// Verify the specific error instead of assuming all errors
+								// 							const missingIndexPropertyError = chunk.error.cause.issues
+								// 								.filter((issues) => issues.code === 'invalid_union')
+								// 								.flatMap((issue) => issue.unionErrors)
+								// 								.flatMap((issue) => issue.issues)
+								// 								.filter((issue) => issue.code === 'invalid_type' && Helpers.areArraysEqual(issue.path, ['choices', 0, 'index']));
 
-															if (missingIndexPropertyError.length > 0) {
-																const newChunk = chunk.error.value as ChatCompletionChunk;
+								// 							if (missingIndexPropertyError.length > 0) {
+								// 								const newChunk = chunk.error.value as ChatCompletionChunk;
 
-																newChunk.choices
-																	.filter((choice) => choice.delta.content)
-																	.forEach((choice) => {
-																		controller.enqueue({
-																			type: 'text-delta',
-																			delta: choice.delta.content!,
-																			id: '',
-																		});
-																	});
-															}
-														}
-													}
-												} else {
-													// Passthrough untouched
-													controller.enqueue(chunk);
-												}
-											},
-										});
+								// 								newChunk.choices
+								// 									.filter((choice) => choice.delta.content)
+								// 									.forEach((choice) => {
+								// 										controller.enqueue({
+								// 											type: 'text-delta',
+								// 											delta: choice.delta.content!,
+								// 											id: '',
+								// 										});
+								// 									});
+								// 							}
+								// 						}
+								// 					}
+								// 				} else {
+								// 					// Passthrough untouched
+								// 					controller.enqueue(chunk);
+								// 				}
+								// 			},
+								// 		});
 
-										return {
-											stream: stream.pipeThrough(transformStream),
-											...rest,
-										};
-									},
-								},
+								// 		return {
+								// 			stream: stream.pipeThrough(transformStream),
+								// 			...rest,
+								// 		};
+								// 	},
+								// },
 								// Fix output generation where it's correct, but encapsulated in a code fence
 								{
 									wrapGenerate: async ({ doGenerate, model }) => {
