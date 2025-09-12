@@ -1,7 +1,7 @@
-import type { util, infer as zInfer, ZodMiniJSONSchema, ZodMiniObject, ZodMiniOptional } from 'zod/mini';
+import type { output, infer as zInfer, ZodMiniJSONSchema, ZodMiniObject, ZodMiniOptional } from 'zod/mini';
 import * as z from 'zod/mini';
 
-export type ZodPick<T extends ZodMiniObject> = util.Mask<keyof T['shape']>;
+export type ZodPick<O extends ZodMiniObject> = Partial<Record<keyof output<O>, boolean>>;
 
 export type ZodPartial<T extends ZodMiniObject> = ZodMiniObject<
 	{
