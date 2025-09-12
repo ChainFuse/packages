@@ -59,10 +59,10 @@ export const v8Options = z.union([
 		 * Alternative to options.random, a Function that returns an Array of 16 random bytes (0-255)
 		 */
 		rng: z.optional(
-			z.function({
-				input: [],
-				output: z.instanceof(Uint8Array).check(z.refine((arr) => arr.byteLength === 16, { message: '`random` must be a Uint8Array of 16 random bytes' })),
-			}),
+			z.pipe(
+				z.unknown(),
+				z.transform((fn) => fn as () => Uint8Array),
+			),
 		),
 	}),
 ]);
