@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 4.0.3
+
+### Patch Changes
+
+- [`1934f41`](https://github.com/ChainFuse/packages/commit/1934f41c2818d96e8c9ec36bc94aa702cb2e0178) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Move away from `z.function`
+
 ## 4.0.2
 
 ### Patch Changes
