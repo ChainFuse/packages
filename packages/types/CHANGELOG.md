@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 3.0.7
+
+### Patch Changes
+
+- [`4164204`](https://github.com/ChainFuse/packages/commit/41642042089264471ddfbe230dd36119e51b0a90) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add `ZodPickedKeys`
+
+- [`1be2ca7`](https://github.com/ChainFuse/packages/commit/1be2ca7d485292fdfb30f78111aa1a015ad22da8) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Fix `ZodPick`
+
 ## 3.0.6
 
 ### Patch Changes
