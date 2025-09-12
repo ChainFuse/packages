@@ -21,10 +21,6 @@ export enum Methods {
 }
 
 export class NetHelpers {
-	public static customLogging = z.function({
-		input: z.tuple([z.any()], z.any()),
-		output: z.union([z.promise(z.void()), z.void()]),
-	});
 	public static cfApiConfig = z._default(
 		z.object({
 			logging: z._default(
@@ -34,9 +30,8 @@ export class NetHelpers {
 					color: z._default(z.boolean(), true),
 					custom: z.optional(
 						z.pipe(
-							this.customLogging,
-							// eslint-disable-next-line @typescript-eslint/no-explicit-any
-							z.transform((fn) => fn as (args_0: any, ...args: any[]) => void | Promise<void>),
+							z.unknown(),
+							z.transform((fn) => fn as (...args: any[]) => void | Promise<void>),
 						),
 					),
 				}),
@@ -144,7 +139,7 @@ export class NetHelpers {
 	 * - Formatting and coloring log output for better readability.
 	 * - Stripping redundant parts of URLs and wrapping unique IDs in brackets with color coding.
 	 */
-	public static cfApi(apiKey: string, config?: z.input<typeof NetHelpers.cfApiConfig>) {
+	public static cfApi(apiKey: string, config?: z.input<typeof NetHelpers.cfApiConfig> & { logging?: { custom?: (...args: any[]) => void | Promise<void> } }) {
 		return Promise.all([
 			//
 			import('cloudflare'),
@@ -166,9 +161,7 @@ export class NetHelpers {
 								error: config.logging.error === 1 ? 2 : config.logging.error,
 								...('color' in config.logging && { color: config.logging.color }),
 								...((config.logging.level > 0 || config.logging.error > 0) && {
-									custom: this.customLogging.implementAsync(async (args_0, ...args_x) => {
-										// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-										const args = [args_0, ...args_x];
+									custom: async (...args: any[]) => {
 										const [, id, , url, headers] = args as [Date, string, Methods | number, string, Record<string, string>];
 										const customUrl = new URL(url);
 										const customHeaders = new Headers(headers);
@@ -189,15 +182,11 @@ export class NetHelpers {
 										if ('custom' in config && config.logging.custom) {
 											// We faked level 1 as 2 to get headers for ray-id
 											if (config.logging.level === 1 || config.logging.error === 1) {
-												// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-												const [argsFirst, ...argsRest] = args.slice(0, -1);
 												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-												return config.logging.custom(argsFirst, ...argsRest);
+												return void config.logging.custom(...args.slice(0, -1));
 											} else {
-												// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-												const [argsFirst, ...argsRest] = args;
 												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-												return config.logging.custom(argsFirst, ...argsRest);
+												return void config.logging.custom(...args);
 											}
 										} else {
 											await Promise.all([
@@ -323,7 +312,7 @@ export class NetHelpers {
 												}
 											});
 										}
-									}),
+									},
 								}),
 							},
 						}),
@@ -338,9 +327,8 @@ export class NetHelpers {
 			color: z._default(z.boolean(), true),
 			custom: z.optional(
 				z.pipe(
-					this.customLogging,
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					z.transform((fn) => fn as (args_0: any, ...args: any[]) => void | Promise<void>),
+					z.unknown(),
+					z.transform((fn) => fn as (...args: any[]) => void | Promise<void>),
 				),
 			),
 		}),
@@ -387,7 +375,7 @@ export class NetHelpers {
 	 * - Allows for colorized output using the `chalk` library.
 	 * - Provides hooks for custom logging implementations.
 	 */
-	public static loggingFetch<RI extends RequestInit = RequestInit>(info: Parameters<typeof fetch>[0], init?: LoggingFetchInitType<RI>) {
+	public static loggingFetch<RI extends RequestInit = RequestInit>(info: Parameters<typeof fetch>[0], _init?: LoggingFetchInitType<RI> & { logging?: { custom?: (...args: any[]) => void | Promise<void> } }) {
 		return Promise.all([
 			z
 				.pipe(
@@ -400,7 +388,7 @@ export class NetHelpers {
 					}),
 					z.transform((parsed) => parsed as unknown as RI & z.output<typeof NetHelpers.loggingFetchInit>),
 				)
-				.parseAsync(init),
+				.parseAsync(_init),
 			import('./crypto.mts').then(({ CryptoHelpers }) => CryptoHelpers.base62secret(8)),
 		]).then(async ([init, id]) => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -457,10 +445,8 @@ export class NetHelpers {
 				}
 
 				if (init.logging.level > 0 && 'custom' in init.logging && init.logging.custom) {
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-					const [requestLoggingItemsFirst, ...requestLoggingItemsRest] = requestLoggingItems;
 					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-					await init.logging.custom(requestLoggingItemsFirst, ...requestLoggingItemsRest);
+					await init.logging.custom(...requestLoggingItems)!;
 				} else if (init.logging.level > 0) {
 					console.info(
 						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -533,21 +519,15 @@ export class NetHelpers {
 							}
 
 							if (init.logging.level > 0 && 'custom' in init.logging && init.logging.custom) {
-								// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-								const [responseLoggingItemsFirst, ...responseLoggingItemsRest] = responseLoggingItems;
 								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-								await init.logging.custom(responseLoggingItemsFirst, ...responseLoggingItemsRest);
+								await init.logging.custom(...responseLoggingItems);
 							} else if (init.logging.error > 0 && !response.ok && 'custom' in init.logging && init.logging.custom) {
 								// Send request errors too (since we barely now know if error or not)
-								// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-								const [requestErrorItemsFirst, ...requestErrorItemsRest] = requestErrorItems;
 								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-								await init.logging.custom(requestErrorItemsFirst, ...requestErrorItemsRest);
+								await init.logging.custom(...requestErrorItems);
 
-								// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-								const [responseErrorItemsFirst, ...responseErrorItemsRest] = responseErrorItems;
 								// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-								await init.logging.custom(responseErrorItemsFirst, ...responseErrorItemsRest);
+								await init.logging.custom(...responseErrorItems);
 							} else if (init.logging.level > 0) {
 								console.info(
 									// eslint-disable-next-line @typescript-eslint/no-unsafe-argument

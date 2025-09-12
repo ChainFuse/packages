@@ -36,10 +36,6 @@ export class DiscordHelpers {
 		return new Date(Number((snowflake >> BigInt(22)) + this.discordEpoch));
 	}
 
-	public static customLogging = z.function({
-		input: z.tuple([z.any()], z.any()),
-		output: z.union([z.promise(z.void()), z.void()]),
-	});
 	public static disordRestLogging = z._default(
 		z.object({
 			level: z._default(z.int().check(z.minimum(0), z.maximum(3)), 0),
@@ -47,9 +43,8 @@ export class DiscordHelpers {
 			color: z._default(z.boolean(), true),
 			custom: z.optional(
 				z.pipe(
-					this.customLogging,
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					z.transform((fn) => fn as (args_0: any, ...args: any[]) => void | Promise<void>),
+					z.unknown(),
+					z.transform((fn) => fn as (...args: any[]) => void | Promise<void>),
 				),
 			),
 		}),
@@ -80,17 +75,13 @@ export class DiscordHelpers {
 								error: logging.error >= 2 ? logging.error - 1 : logging.error,
 								...('color' in logging && { color: logging.color }),
 								...((logging.level > 0 || logging.error > 0) && {
-									custom: this.customLogging.implementAsync(async (args_0, ...args_x) => {
-										// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-										const args = [args_0, ...args_x];
+									custom: async (...args: any[]) => {
 										const [, id, , url] = args as [Date, string, Methods | number, string, Record<string, string>];
 										const customUrl = new URL(url);
 
 										if ('custom' in logging && logging.custom) {
-											// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-											const [argsFirst, ...argsRest] = args.slice(0, -1);
 											// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-											return logging.custom(argsFirst, ...argsRest);
+											return logging.custom(...args.slice(0, -1));
 										} else {
 											await Promise.all([
 												// Try the new native one
@@ -134,7 +125,7 @@ export class DiscordHelpers {
 												}
 											});
 										}
-									}),
+									},
 								}),
 							},
 						};
@@ -168,10 +159,8 @@ export class DiscordHelpers {
 													}
 
 													if ('custom' in logging && logging.custom) {
-														// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-														const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-														await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+														await logging.custom(...loggingItems);
 													} else {
 														console.info(
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -210,10 +199,8 @@ export class DiscordHelpers {
 													}
 
 													if ('custom' in logging && logging.custom) {
-														// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-														const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-														await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+														await logging.custom(...loggingItems);
 													} else {
 														console.info(
 															// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -255,10 +242,8 @@ export class DiscordHelpers {
 																				}
 
 																				if ('custom' in logging && logging.custom) {
-																					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-																					const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 																					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-																					await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+																					await logging.custom(...loggingItems);
 																				} else {
 																					console.info(
 																						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -287,10 +272,8 @@ export class DiscordHelpers {
 																				}
 
 																				if ('custom' in logging && logging.custom) {
-																					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-																					const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 																					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-																					await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+																					await logging.custom(...loggingItems);
 																				} else {
 																					console.info(
 																						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -323,10 +306,8 @@ export class DiscordHelpers {
 																			}
 
 																			if ('custom' in logging && logging.custom) {
-																				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-																				const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 																				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-																				await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+																				await logging.custom(...loggingItems);
 																			} else {
 																				console.info(
 																					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -355,10 +336,8 @@ export class DiscordHelpers {
 																			}
 
 																			if ('custom' in logging && logging.custom) {
-																				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-																				const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 																				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-																				await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+																				await logging.custom(...loggingItems);
 																			} else {
 																				console.info(
 																					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -394,10 +373,8 @@ export class DiscordHelpers {
 																					}
 
 																					if ('custom' in logging && logging.custom) {
-																						// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-																						const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 																						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-																						await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+																						await logging.custom(...loggingItems);
 																					} else {
 																						console.info(
 																							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -427,10 +404,8 @@ export class DiscordHelpers {
 																				}
 
 																				if ('custom' in logging && logging.custom) {
-																					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-																					const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 																					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-																					await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+																					await logging.custom(...loggingItems);
 																				} else {
 																					console.info(
 																						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -464,10 +439,8 @@ export class DiscordHelpers {
 																				}
 
 																				if ('custom' in logging && logging.custom) {
-																					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-																					const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 																					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-																					await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+																					await logging.custom(...loggingItems);
 																				} else {
 																					console.info(
 																						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -497,10 +470,8 @@ export class DiscordHelpers {
 																			}
 
 																			if ('custom' in logging && logging.custom) {
-																				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-																				const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 																				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-																				await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+																				await logging.custom(...loggingItems);
 																			} else {
 																				console.info(
 																					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -537,10 +508,8 @@ export class DiscordHelpers {
 												}
 
 												if ('custom' in logging && logging.custom) {
-													// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-													const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 													// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-													await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+													await logging.custom(...loggingItems);
 												} else {
 													console.info(
 														// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -572,10 +541,8 @@ export class DiscordHelpers {
 										}
 
 										if ('custom' in logging && logging.custom) {
-											// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-											const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 											// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-											await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+											await logging.custom(...loggingItems);
 										} else {
 											console.info(
 												// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -606,10 +573,8 @@ export class DiscordHelpers {
 								}
 
 								if ('custom' in logging && logging.custom) {
-									// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-									const [loggingItemsFirst, ...loggingItemsRest] = loggingItems;
 									// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-									await logging.custom(loggingItemsFirst, ...loggingItemsRest);
+									await logging.custom(...loggingItems);
 								} else {
 									console.info(
 										// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
