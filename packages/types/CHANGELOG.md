@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 3.0.6
+
+### Patch Changes
+
+- [`ec775e2`](https://github.com/ChainFuse/packages/commit/ec775e24291b3ab6a26873151fd17ddccb180e0c) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add new zod mini helpers
+
 ## 3.0.5
 
 ### Patch Changes
