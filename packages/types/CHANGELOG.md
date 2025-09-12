@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 3.0.5
+
+### Patch Changes
+
+- [#638](https://github.com/ChainFuse/packages/pull/638) [`2116b25`](https://github.com/ChainFuse/packages/commit/2116b259d8f67dda7bd2d061050318be6dd47551) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(): bump axios
+
 ## 3.0.4
 
 ### Patch Changes

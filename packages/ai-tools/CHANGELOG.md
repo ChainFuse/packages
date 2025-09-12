@@ -1,5 +1,17 @@
 # @chainfuse/ai-tools
 
+## 1.0.2
+
+### Patch Changes
+
+- [#638](https://github.com/ChainFuse/packages/pull/638) [`2116b25`](https://github.com/ChainFuse/packages/commit/2116b259d8f67dda7bd2d061050318be6dd47551) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(): bump axios
+
+- [`8adaafa`](https://github.com/ChainFuse/packages/commit/8adaafaf87aaf38b42c6424889ac4fe07cec3c4b) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Migrate remaining to `zod/mini` and (`zod/v4` where applicable)
+
+- Updated dependencies [[`2116b25`](https://github.com/ChainFuse/packages/commit/2116b259d8f67dda7bd2d061050318be6dd47551), [`202d6f8`](https://github.com/ChainFuse/packages/commit/202d6f85f97a89b149d0023e1cf368eaf73b2406), [`b5469b6`](https://github.com/ChainFuse/packages/commit/b5469b60c86d48a538436bcce1b5e1e287201eb9)]:
+    - @chainfuse/helpers@4.0.2
+    - @chainfuse/types@3.0.5
+
 ## 1.0.1
 
 ### Patch Changes

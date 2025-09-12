@@ -1,5 +1,18 @@
 # @chainfuse/helpers
 
+## 4.0.2
+
+### Patch Changes
+
+- [#638](https://github.com/ChainFuse/packages/pull/638) [`2116b25`](https://github.com/ChainFuse/packages/commit/2116b259d8f67dda7bd2d061050318be6dd47551) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(): bump axios
+
+- [`202d6f8`](https://github.com/ChainFuse/packages/commit/202d6f85f97a89b149d0023e1cf368eaf73b2406) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Migrate remaining to `zod/mini`
+
+- [`b5469b6`](https://github.com/ChainFuse/packages/commit/b5469b60c86d48a538436bcce1b5e1e287201eb9) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): add synchronous methods for each method. It's still recommended to use async wherever possible
+
+- Updated dependencies [[`2116b25`](https://github.com/ChainFuse/packages/commit/2116b259d8f67dda7bd2d061050318be6dd47551)]:
+    - @chainfuse/types@3.0.5
+
 ## 4.0.1
 
 ### Patch Changes
