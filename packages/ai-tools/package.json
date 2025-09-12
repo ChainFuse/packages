@@ -55,10 +55,11 @@
 		"@ai-sdk/openai-compatible": "^1.0.15",
 		"@chainfuse/helpers": "^4.0.1",
 		"@chainfuse/types": "^3.0.1",
-		"ai": "^5.0.40",
+		"ai": "^5.0.41",
 		"chalk": "^5.6.2",
 		"haversine-distance": "^1.2.4",
-		"workers-ai-provider": "^2.0.0"
+		"workers-ai-provider": "^2.0.0",
+		"zod": "^4.1.8"
 	},
 	"devDependencies": {
 		"@ai-sdk/provider": "^2.0.0",
