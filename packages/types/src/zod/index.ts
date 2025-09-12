@@ -2,6 +2,7 @@ import type { output, infer as zInfer, ZodMiniJSONSchema, ZodMiniObject, ZodMini
 import * as z from 'zod/mini';
 
 export type ZodPick<O extends ZodMiniObject> = Partial<Record<keyof output<O>, boolean>>;
+export type ZodPickedKeys<P extends ZodPick<O>, O extends ZodMiniObject> = Extract<{ [K in keyof P]: P[K] extends true ? K : never }[keyof P], keyof output<O>>;
 
 export type ZodPartial<T extends ZodMiniObject> = ZodMiniObject<
 	{
