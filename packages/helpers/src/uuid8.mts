@@ -3,6 +3,7 @@ import { ShardType } from '@chainfuse/types/d0';
 import { v7 } from 'uuid';
 import * as z from 'zod/mini';
 import { BufferHelpersInternals } from './bufferInternals.mts';
+import { Helpers } from './common.mts';
 
 const v8OptionsBase = z.object({
 	/**
@@ -68,10 +69,6 @@ export const v8Options = z.union([
 ]);
 export type Version8Options = z.input<typeof v8Options>;
 
-function replaceByIndex(input: string, start: number, end: number, replacement: string) {
-	return input.slice(0, start) + replacement + input.slice(end);
-}
-
 /**
  * Generates a UUID version 8 with custom fields for location, shard type, and suffix.
  *
@@ -94,11 +91,11 @@ export function v8(_options?: Version8Options) {
 	// 36 character string including hyphens
 	const uuid7 = v7(options);
 	// Swap version
-	const uuid8 = replaceByIndex(uuid7, 14, 15, '8');
+	const uuid8 = Helpers.replaceByIndex(uuid7, 14, 15, '8');
 	// Inject
-	const uuid8Suffix = replaceByIndex(uuid8, 15, 18, options.suffix);
-	const uuid8SuffixLocation = replaceByIndex(uuid8Suffix, 20, 22, options.location);
-	const uuid8SuffixLocationShard = replaceByIndex(uuid8SuffixLocation, 22, 23, options.shardType);
+	const uuid8Suffix = Helpers.replaceByIndex(uuid8, 15, 18, options.suffix);
+	const uuid8SuffixLocation = Helpers.replaceByIndex(uuid8Suffix, 20, 22, options.location);
+	const uuid8SuffixLocationShard = Helpers.replaceByIndex(uuid8SuffixLocation, 22, 23, options.shardType);
 
 	return uuid8SuffixLocationShard;
 }
