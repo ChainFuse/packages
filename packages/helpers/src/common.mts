@@ -114,4 +114,17 @@ export class Helpers {
 	public static sleep(ms: number) {
 		return new Promise<void>((resolve) => setTimeout(resolve, ms));
 	}
+
+	/**
+	 * Replaces a substring in the input string between the specified start and end indices with the provided replacement string.
+	 *
+	 * @param input - The original string to modify.
+	 * @param start - The starting index (inclusive) of the substring to replace.
+	 * @param end - The ending index (exclusive) of the substring to replace.
+	 * @param replacement - The string to insert in place of the specified substring.
+	 * @returns The resulting string after replacement.
+	 */
+	public static replaceByIndex(input: string, start: number, end: number, replacement: string) {
+		return input.slice(0, start) + replacement + input.slice(end);
+	}
 }
