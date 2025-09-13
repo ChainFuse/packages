@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 4.0.4
+
+### Patch Changes
+
+- [`ffbcf99`](https://github.com/ChainFuse/packages/commit/ffbcf992f910a3a17c0d7adec0e86219bffc22e5) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Export `replaceByIndex` as a helper
+
 ## 4.0.3
 
 ### Patch Changes
