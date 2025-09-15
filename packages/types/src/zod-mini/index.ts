@@ -13,8 +13,6 @@ export type ZodPartial<T extends ZodMiniObject> = ZodMiniObject<
 
 export type JSON = zInfer<ZodMiniJSONSchema>;
 
-export const ZodCoordinate = z.string().check(z.trim(), z.minLength(3), z.regex(new RegExp(/^-?\d+\.\d+$/i)));
-
 export const WorkflowId = z.string().check(
 	z.trim(),
 	z.maxLength(64),
@@ -25,13 +23,15 @@ export const WorkflowId = z.string().check(
 );
 export const DoId = z.hex().check(z.trim(), z.length(64), z.toLowerCase());
 
-const prefixedUuidRegex = /^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i;
-const hexUuidRegex = /^[0-9a-f]{8}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{12}$/i;
-const hexUuid4Regex = /^[0-9a-f]{8}[0-9a-f]{4}4[0-9a-f]{3}[0-9a-f]{4}[0-9a-f]{12}$/i;
-const prefixedUuid7Regex = /^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i;
-const hexUuid7Regex = /^[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[0-9a-f]{4}[0-9a-f]{12}$/i;
-const prefixedUuid8Regex = /^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-8[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i;
-const hexUuid8Regex = /^[0-9a-f]{8}[0-9a-f]{4}8[0-9a-f]{3}[0-9a-f]{4}[0-9a-f]{12}$/i;
+export const ZodCoordinate = z.string().check(z.trim(), z.minLength(3), z.regex(new RegExp(/^-?\d+\.\d+$/i)));
+
+export const prefixedUuidRegex = /^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i;
+export const hexUuidRegex = /^[0-9a-f]{8}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{12}$/i;
+export const hexUuid4Regex = /^[0-9a-f]{8}[0-9a-f]{4}4[0-9a-f]{3}[0-9a-f]{4}[0-9a-f]{12}$/i;
+export const prefixedUuid7Regex = /^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i;
+export const hexUuid7Regex = /^[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[0-9a-f]{4}[0-9a-f]{12}$/i;
+export const prefixedUuid8Regex = /^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-8[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i;
+export const hexUuid8Regex = /^[0-9a-f]{8}[0-9a-f]{4}8[0-9a-f]{3}[0-9a-f]{4}[0-9a-f]{12}$/i;
 
 export const PrefixedUuidRaw = z.string().check(z.trim(), z.toLowerCase(), z.minLength(38), z.maxLength(40), z.regex(prefixedUuidRegex));
 export const PrefixedUuid7Raw = z.string().check(z.trim(), z.toLowerCase(), z.minLength(38), z.maxLength(40), z.regex(prefixedUuid7Regex));
