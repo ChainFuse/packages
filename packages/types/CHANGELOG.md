@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.0.0
+
+### Major Changes
+
+- [`50bb335`](https://github.com/ChainFuse/packages/commit/50bb335af790749ed5b68bdd3e8ce97650a9af37) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Dual export zod, under their own top level exports
+
 ## 3.0.8
 
 ### Patch Changes
