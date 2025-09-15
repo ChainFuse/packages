@@ -1,5 +1,21 @@
 # @chainfuse/types
 
+## 3.0.8
+
+### Patch Changes
+
+- [#653](https://github.com/ChainFuse/packages/pull/653) [`f84c876`](https://github.com/ChainFuse/packages/commit/f84c876149e8e7c9ec1751f29e85ce1067ff0dfc) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#652](https://github.com/ChainFuse/packages/pull/652) [`24a2d31`](https://github.com/ChainFuse/packages/commit/24a2d31cca2e8895b00c0a9ea7044f569a23c3ab) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump cloudflare
+
+- [#650](https://github.com/ChainFuse/packages/pull/650) [`565bc99`](https://github.com/ChainFuse/packages/commit/565bc996c1324f0379c1881797100dfa2e59aaa5) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#651](https://github.com/ChainFuse/packages/pull/651) [`e4c1882`](https://github.com/ChainFuse/packages/commit/e4c18820f61a8e396e275b61d40a3478492add1e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump lerna
+
+- [#647](https://github.com/ChainFuse/packages/pull/647) [`4b08675`](https://github.com/ChainFuse/packages/commit/4b086753797569c5076b98687bbffb3099da369a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [`3c0a364`](https://github.com/ChainFuse/packages/commit/3c0a364de3b0ffd31a58254bbd36139c200bd14e) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add cf variable checks
+
 ## 3.0.7
 
 ### Patch Changes
