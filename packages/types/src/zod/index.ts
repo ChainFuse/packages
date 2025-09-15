@@ -15,6 +15,16 @@ export type JSON = zInfer<ZodMiniJSONSchema>;
 
 export const ZodCoordinate = z.string().check(z.trim(), z.minLength(3), z.regex(new RegExp(/^-?\d+\.\d+$/i)));
 
+export const WorkflowId = z.string().check(
+	z.trim(),
+	z.maxLength(64),
+	/**
+	 * @link https://developers.cloudflare.com/workflows/reference/limits/
+	 */
+	z.regex(/^[a-zA-Z0-9_][a-zA-Z0-9-_]*$/),
+);
+export const DoId = z.hex().check(z.trim(), z.length(64), z.toLowerCase());
+
 const prefixedUuidRegex = /^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i;
 const hexUuidRegex = /^[0-9a-f]{8}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{12}$/i;
 const hexUuid4Regex = /^[0-9a-f]{8}[0-9a-f]{4}4[0-9a-f]{3}[0-9a-f]{4}[0-9a-f]{12}$/i;
