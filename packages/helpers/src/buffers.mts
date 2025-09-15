@@ -1,6 +1,6 @@
 import type { UndefinedProperties } from '@chainfuse/types';
 import { UUIDExtract7, UUIDExtract8, type PrefixedUuid, type UuidExport, type UUIDExtract } from '@chainfuse/types/d1';
-import { PrefixedUuidRaw } from '@chainfuse/types/zod';
+import { PrefixedUuidRaw } from '@chainfuse/types/zod-mini';
 import { v7 as uuidv7 } from 'uuid';
 import * as z from 'zod/mini';
 import { BufferHelpersInternals } from './bufferInternals.mts';
