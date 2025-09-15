@@ -1,5 +1,14 @@
 # @chainfuse/helpers
 
+## 4.0.6
+
+### Patch Changes
+
+- [`dec7c00`](https://github.com/ChainFuse/packages/commit/dec7c00c8a8d188df2de3b1bd5cbeec6cca04456) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Fix zod types import
+
+- Updated dependencies [[`50bb335`](https://github.com/ChainFuse/packages/commit/50bb335af790749ed5b68bdd3e8ce97650a9af37)]:
+    - @chainfuse/types@4.0.0
+
 ## 4.0.5
 
 ### Patch Changes
