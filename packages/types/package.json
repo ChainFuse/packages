@@ -87,9 +87,13 @@
 			"import": "./dist/discourse/topic/index.js",
 			"types": "./dist/discourse/topic/index.d.ts"
 		},
-		"./zod": {
-			"import": "./dist/zod/index.js",
-			"types": "./dist/zod/index.d.ts"
+		"./zod-mini": {
+			"import": "./dist/zod-mini/index.js",
+			"types": "./dist/zod-mini/index.d.ts"
+		},
+		"./zod-4": {
+			"import": "./dist/zod-4/index.js",
+			"types": "./dist/zod-4/index.d.ts"
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",

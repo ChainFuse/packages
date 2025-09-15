@@ -1,6 +1,6 @@
 import * as z from 'zod/mini';
 import type { EnumOrEnumLike, ObjectValues } from '../index.js';
-import type { ZodCoordinate } from '../zod/index.js';
+import type { ZodCoordinate } from '../zod-mini/index.js';
 import { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmFunctionProviders, enabledCloudflareLlmImageProviders, enabledCloudflareLlmProviders, type CloudflareFunctionModelsEnum, type CloudflareModelsEnum } from './workers-ai/index.js';
 
 export interface Coordinate {
