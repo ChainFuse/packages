@@ -49,8 +49,6 @@ jobs:
             packages/*/.tsbuildinfo
             packages/*/dist
           key: tsc-${{ hashFiles('**/*.tsbuildinfo', '**/package-lock.json') }}
-          restore-keys: |
-            tsc-
           enableCrossOsArchive: true
       - run: npm -w @chainfuse/types run build
       - run: npm run ci:catalog:azure
