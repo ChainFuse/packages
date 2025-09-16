@@ -22,13 +22,13 @@ In Japanese, する (suru) is a versatile, irregular verb meaning "to do"
 
 384 bit long id (max 64 characters as base64, 96 as hex)
 
-| Format          | Example                                                                                                                                                                 |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| hex             | `11f3fffffc18001000000036a0ea9c0d7d27581ebf4876defd304469119f0f4cfc41b0fb96d6b1e18900ec4522706e3aa`                                                                     |
-| SQLite Blob     | `17243255255252240160005416023415613125398830191721182222534868105171591576252651762511502141772251370236693411211058`                                                  |
-| JS Buffer Array | `[17,243,255,255,252,24,0,16,0,0,0,54,160,234,156,13,125,39,88,30,191,72,118,222,253,48,68,105,17,159,15,76,252,65,176,251,150,214,177,225,137,0,236,69,34,112,110,58]` |
-| base64          | `EfP///wYABAAAAA2oOqcDX0nWB6/SHbe/TBEaRGfD0z8QbD7ltax4YkA7EUicG46`                                                                                                      |
-| base64url       | `EfP___wYABAAAAA2oOqcDX0nWB6_SHbe_TBEaRGfD0z8QbD7ltax4YkA7EUicG46`                                                                                                      |
+| Format          | Example                                                                                                                                                                   |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| hex             | `11f3fffffc18001000004522706e3aa036a0ea9c0d7d27581ebf4876defd304469119f0f4cfc41b0fb96d6b1e18900ec`                                                                        |
+| SQLite Blob     | `1724325525525224016006934112110581605416023415613125398830191721182222534868105171591576252651762511502141772251370236`                                                  |
+| JS Buffer Array | `[17,243,255,255,252,24,0,16,0,0,69,34,112,110,58,160,54,160,234,156,13,125,39,88,30,191,72,118,222,253,48,68,105,17,159,15,76,252,65,176,251,150,214,177,225,137,0,236]` |
+| base64          | `EfP///wYABAAAEUicG46oDag6pwNfSdYHr9Idt79MERpEZ8PTPxBsPuW1rHhiQDs`                                                                                                        |
+| base64url       | `EfP___wYABAAAEUicG46oDag6pwNfSdYHr9Idt79MERpEZ8PTPxBsPuW1rHhiQDs`                                                                                                        |
 
 ### Breakdown
 
@@ -36,9 +36,10 @@ In Japanese, する (suru) is a versatile, irregular verb meaning "to do"
 | ------------- | ----------- | ------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------- |
 | 0             | 4           | Version       | `1`                                                                | Masked into timestamp's top nibble                                   |
 | 4             | 44          | Timestamp     | `1f3fffffc18`                                                      | Lower 44 bits of 48bit epoch milliseconds                            |
-| 48            | 12          | System Type   | `001`                                                              | TODO Enum                                                            |
-| 60            | 4           | Environment   | `0`                                                                | TODO Enum                                                            |
-| 64            | 12          | Location      | `000`                                                              | `DOCombinedLocations` TS Enum                                        |
-| 76            | 8           | Shard Type    | `000`                                                              | `ShardType` TS Enum                                                  |
-| 84            | 256         | Stable random | `36a0ea9c0d7d27581ebf4876defd304469119f0f4cfc41b0fb96d6b1e18900ec` | Stable per logical entity; correlates related IDs without DB lookups |
-| 340           | 44          | Suffix        | `4522706e3aa`                                                      | Fresh entropy per ID to ensure uniqueness even if other fields match |
+| 48            | 12          | System Type   | `001`                                                              | `D0SystemType` TS Enum                                               |
+| 60            | 12          | Location      | `000`                                                              | `D0CombinedLocations` TS Enum                                        |
+| 72            | 8           | Shard Type    | `00`                                                               | `D0ShardType` TS Enum                                                |
+| 80            | 44          | Suffix random | `4522706e3aa`                                                      | Fresh entropy per ID to ensure uniqueness even if other fields match |
+| 124           | 4           | Environment   | `0`                                                                | `D0Environment` TS Enum                                              |
+| 128           | 256         | Stable random | `36a0ea9c0d7d27581ebf4876defd304469119f0f4cfc41b0fb96d6b1e18900ec` | Stable per logical entity; correlates related IDs without DB lookups |
+| **Total**     | **384**     |
