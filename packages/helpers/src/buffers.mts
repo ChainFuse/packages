@@ -1,12 +1,10 @@
 import type { UndefinedProperties } from '@chainfuse/types';
-import { UUIDExtract7, UUIDExtract8, type PrefixedUuid, type UuidExport, type UUIDExtract } from '@chainfuse/types/d1';
+import { UUIDExtract7, type PrefixedUuid, type UuidExport, type UUIDExtract } from '@chainfuse/types/d1';
 import { PrefixedUuidRaw } from '@chainfuse/types/zod-mini';
 import { v7 as uuidv7 } from 'uuid';
 import * as z from 'zod/mini';
 import { BufferHelpersInternals } from './bufferInternals.mts';
 import { CryptoHelpers } from './crypto.mjs';
-import type { Version8Options } from './uuid8.mjs';
-import { v8 as uuidv8 } from './uuid8.mjs';
 
 export type UuidExportBlobInput = Buffer | UuidExport['blob'];
 
@@ -127,50 +125,6 @@ export class BufferHelpers {
 
 		const random = CryptoHelpers.secretBytesSync(16);
 		const uuid = uuidv7({ msecs: options.msecs, random, seq: options.seq }) as UuidExport['utf8'];
-		const uuidHex = uuid.replaceAll('-', '');
-
-		const blob = this.hexToBufferSync(uuidHex);
-		const base64 = this.bufferToBase64Sync(blob, false);
-		const base64url = this.bufferToBase64Sync(blob, true);
-		return {
-			utf8: uuid,
-			hex: uuidHex,
-			blob,
-			base64,
-			base64url,
-		} as UuidExport;
-	}
-
-	public static generateUuid8(options?: Omit<Version8Options, 'random' | 'rng'>) {
-		return Promise.all([import('./uuid8.mjs'), CryptoHelpers.secretBytes(16)]).then(([{ v8: uuidv8 }, random]) => {
-			const uuid = uuidv8({
-				// @ts-expect-error they're the exact same
-				random,
-				...options,
-			}) as UuidExport['utf8'];
-			const uuidHex = uuid.replaceAll('-', '');
-
-			return this.hexToBuffer(uuidHex).then((blob) =>
-				Promise.all([this.bufferToBase64(blob, false), this.bufferToBase64(blob, true)]).then(
-					([base64, base64url]) =>
-						({
-							utf8: uuid,
-							hex: uuidHex,
-							blob,
-							base64,
-							base64url,
-						}) as UuidExport,
-				),
-			);
-		});
-	}
-	public static generateUuid8Sync(options?: Omit<Version8Options, 'random' | 'rng'>) {
-		const random = CryptoHelpers.secretBytesSync(16);
-		const uuid = uuidv8({
-			// @ts-expect-error they're the exact same
-			random,
-			...options,
-		}) as UuidExport['utf8'];
 		const uuidHex = uuid.replaceAll('-', '');
 
 		const blob = this.hexToBufferSync(uuidHex);
@@ -432,31 +386,12 @@ export class BufferHelpers {
 				.safeParseAsync(_hex)
 				.then(async ({ success: hexSuccess, data: hex }) => {
 					if (hexSuccess) {
-						const [{ success: utf8v7Success }, { success: utf8v8Success }] = await Promise.all([z.uuid({ version: 'v7' }).safeParseAsync(utf8), z.uuid({ version: 'v8' }).safeParseAsync(utf8)]);
+						const { success: utf8v7Success } = await z.uuid({ version: 'v7' }).safeParseAsync(utf8);
 
-						if (utf8v7Success || utf8v8Success) {
-							if (utf8v8Success) {
-								const suffix_hex = hex.substring(13, 16);
-								const suffix_buffer = await BufferHelpers.hexToBuffer(suffix_hex);
-
-								return UUIDExtract8.parseAsync({
-									date: Number(BigInt(`0x${hex.substring(0, 12)}`)),
-									location: parseInt(hex.slice(17, 19), 16),
-									shardType: parseInt(hex.slice(19, 20), 16),
-									suffix:
-										suffix_hex === '000'
-											? undefined
-											: {
-													hex: suffix_hex,
-													base64: await BufferHelpers.bufferToBase64(suffix_buffer, false),
-													base64url: await BufferHelpers.bufferToBase64(suffix_buffer, true),
-												},
-								});
-							} else {
-								return UUIDExtract7.parseAsync({
-									date: Number(BigInt(`0x${hex.substring(0, 12)}`)),
-								});
-							}
+						if (utf8v7Success) {
+							return UUIDExtract7.parseAsync({
+								date: Number(BigInt(`0x${hex.substring(0, 12)}`)),
+							});
 						} else {
 							throw new Error('Unsupported UUID version provided');
 						}
@@ -483,31 +418,11 @@ export class BufferHelpers {
 
 		if (hexSuccess) {
 			const { success: utf8v7Success } = z.uuid({ version: 'v7' }).safeParse(utf8);
-			const { success: utf8v8Success } = z.uuid({ version: 'v8' }).safeParse(utf8);
 
-			if (utf8v7Success || utf8v8Success) {
-				if (utf8v8Success) {
-					const suffix_hex = hex.substring(13, 16);
-					const suffix_buffer = BufferHelpers.hexToBufferSync(suffix_hex);
-
-					return UUIDExtract8.parse({
-						date: Number(BigInt(`0x${hex.substring(0, 12)}`)),
-						location: parseInt(hex.slice(17, 19), 16),
-						shardType: parseInt(hex.slice(19, 20), 16),
-						suffix:
-							suffix_hex === '000'
-								? undefined
-								: {
-										hex: suffix_hex,
-										base64: BufferHelpers.bufferToBase64Sync(suffix_buffer, false),
-										base64url: BufferHelpers.bufferToBase64Sync(suffix_buffer, true),
-									},
-					});
-				} else {
-					return UUIDExtract7.parse({
-						date: Number(BigInt(`0x${hex.substring(0, 12)}`)),
-					});
-				}
+			if (utf8v7Success) {
+				return UUIDExtract7.parse({
+					date: Number(BigInt(`0x${hex.substring(0, 12)}`)),
+				});
 			} else {
 				throw new Error('Unsupported UUID version provided');
 			}
