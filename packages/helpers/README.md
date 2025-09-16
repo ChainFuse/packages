@@ -20,8 +20,6 @@ import helpers from '@chainfuse/helpers';
 
 In Japanese, する (suru) is a versatile, irregular verb meaning "to do"
 
-384 bit long id (max 64 characters as base64, 96 as hex)
-
 | Format          | Example                                                                                                                                                                   |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | hex             | `11f3fffffc18001000004522706e3aa036a0ea9c0d7d27581ebf4876defd304469119f0f4cfc41b0fb96d6b1e18900ec`                                                                        |
@@ -32,14 +30,14 @@ In Japanese, する (suru) is a versatile, irregular verb meaning "to do"
 
 ### Breakdown
 
-| Offset (bits) | Size (bits) | Field         | (Hex) Example                                                      | Notes                                                                |
-| ------------- | ----------- | ------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------- |
-| 0             | 4           | Version       | `1`                                                                | Masked into timestamp's top nibble                                   |
-| 4             | 44          | Timestamp     | `1f3fffffc18`                                                      | Lower 44 bits of 48bit epoch milliseconds                            |
-| 48            | 12          | System Type   | `001`                                                              | `D0SystemType` TS Enum                                               |
-| 60            | 12          | Location      | `000`                                                              | `D0CombinedLocations` TS Enum                                        |
-| 72            | 8           | Shard Type    | `00`                                                               | `D0ShardType` TS Enum                                                |
-| 80            | 44          | Suffix random | `4522706e3aa`                                                      | Fresh entropy per ID to ensure uniqueness even if other fields match |
-| 124           | 4           | Environment   | `0`                                                                | `D0Environment` TS Enum                                              |
-| 128           | 256         | Stable random | `36a0ea9c0d7d27581ebf4876defd304469119f0f4cfc41b0fb96d6b1e18900ec` | Stable per logical entity; correlates related IDs without DB lookups |
+| Offset (bits) | Size (bits) | Field         | (Hex) Example                                                      | Notes                                                                                 |
+| ------------- | ----------- | ------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| 0             | 4           | Version       | `1`                                                                | Masked into timestamp's top nibble                                                    |
+| 4             | 44          | Timestamp     | ~~`0`~~`1f3fffffc18`                                               | Lower 44 bits of 48bit epoch milliseconds (max date value `2527-06-23T06:20:44.415Z`) |
+| 48            | 12          | System Type   | `001`                                                              | `D0SystemType` TS Enum                                                                |
+| 60            | 12          | Location      | `000`                                                              | `D0CombinedLocations` TS Enum                                                         |
+| 72            | 8           | Shard Type    | `00`                                                               | `D0ShardType` TS Enum                                                                 |
+| 80            | 44          | Suffix random | `4522706e3aa`                                                      | Fresh entropy per ID to ensure uniqueness even if other fields match                  |
+| 124           | 4           | Environment   | `0`                                                                | `D0Environment` TS Enum                                                               |
+| 128           | 256         | Stable random | `36a0ea9c0d7d27581ebf4876defd304469119f0f4cfc41b0fb96d6b1e18900ec` | Stable per logical entity; correlates related IDs without DB lookups                  |
 | **Total**     | **384**     |
