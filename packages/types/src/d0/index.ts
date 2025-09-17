@@ -1,14 +1,14 @@
 export type D0Blob = [number, ...number[]];
 
 export enum D0Version {
-	v0 = 0,
+	v1 = 1,
 }
 
 export enum D0SystemType {
-	Dataspace = 0,
-	Tenant = 1,
-	User = 2,
-	Workflow = 3,
+	Dataspace = 1,
+	Tenant = 2,
+	User = 3,
+	Workflow = 4,
 }
 
 export enum D0CombinedLocations {
