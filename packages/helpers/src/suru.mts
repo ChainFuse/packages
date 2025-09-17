@@ -1,5 +1,5 @@
 import { DOJurisdictions, DOLocations } from '@chainfuse/types';
-import { D0Environment, D0ShardType, D0SystemType, D0Version, type D0Blob } from '@chainfuse/types/d0';
+import { D0CombinedLocations, D0Environment, D0ShardType, D0SystemType, D0Version, type D0Blob } from '@chainfuse/types/d0';
 import { ZodBlob, ZodBlobExport, type ZodPartial, type ZodSuruId } from '@chainfuse/types/zod-mini';
 import * as z from 'zod/mini';
 import { BufferHelpers } from './buffers.mts';
@@ -35,34 +35,23 @@ export class SuruId {
 		}),
 	]);
 
+	public static convertOutput = z.object({
+		hex: z.hex().check(z.trim(), z.toLowerCase(), z.length(96)),
+		blob: ZodBlobExport,
+		base64: z.base64().check(z.trim(), z.maxLength(64)),
+		base64url: z.base64url().check(z.trim(), z.maxLength(64)),
+	});
+
 	public static createInputBase = z.object({
 		...this.extractOutputBase.def.shape,
-		version: z._default(this.extractOutputBase.def.shape.version, D0Version.v0),
+		version: z._default(this.extractOutputBase.def.shape.version, D0Version.v1),
 		date: z._default(this.extractOutputBase.def.shape.date, () => new Date()),
 		// systemType
 		shardType: z._default(this.extractOutputBase.def.shape.shardType, D0ShardType.None),
 		// Location
-		suffixRandom: z.pipe(
-			z._default(ZodBlob, () => CryptoHelpers.secretBytesSync(Math.ceil(44 / 8))).check(z.refine((b) => b.byteLength === Math.ceil(44 / 8))),
-			z.transform((b) =>
-				Promise.all([BufferHelpers.bufferToHex(b.buffer), BufferHelpers.bufferToBase64(b.buffer, false), BufferHelpers.bufferToBase64(b.buffer, true)]).then(([hex, base64, base64url]) => ({
-					hex,
-					base64,
-					base64url,
-				})),
-			),
-		),
+		suffixRandom: z._default(ZodBlob, () => CryptoHelpers.secretBytesSync(Math.ceil(44 / 8))).check(z.refine((b) => b.byteLength === Math.ceil(44 / 8))),
 		// environment
-		stableRandom: z.pipe(
-			z._default(ZodBlob, () => CryptoHelpers.secretBytesSync(256 / 8)).check(z.refine((b) => b.byteLength === 256 / 8)),
-			z.transform((b) =>
-				Promise.all([BufferHelpers.bufferToHex(b.buffer), BufferHelpers.bufferToBase64(b.buffer, false), BufferHelpers.bufferToBase64(b.buffer, true)]).then(([hex, base64, base64url]) => ({
-					hex,
-					base64,
-					base64url,
-				})),
-			),
-		),
+		stableRandom: z._default(ZodBlob, () => CryptoHelpers.secretBytesSync(256 / 8)).check(z.refine((b) => b.byteLength === 256 / 8)),
 	});
 	public static createInput = z.union([
 		z.extend(SuruId.createInputBase, {
@@ -74,14 +63,47 @@ export class SuruId {
 			locationHint: z._default(z.nullable(z.enum(DOLocations)), null),
 		}),
 	]);
-	public static suruCreate(_input: z.input<typeof this.createInput>) {}
+	public static suruCreate(_input: z.input<typeof this.createInput>): Promise<z.output<typeof this.convertOutput>> {
+		return SuruId.createInput.parseAsync(_input).then(async (input) => {
+			// Pack fields into hex
+			let hex = '';
 
-	public static convertOutput = z.object({
-		hex: z.hex().check(z.trim(), z.toLowerCase(), z.length(96)),
-		blob: ZodBlobExport,
-		base64: z.base64().check(z.trim(), z.maxLength(64)),
-		base64url: z.base64url().check(z.trim(), z.maxLength(64)),
-	});
+			// Version (4 bytes)
+			hex += Number(input.version).toString(16);
+
+			// Timestamp (11 bytes, pad to 12 chars, mask top nibble for version)
+			hex += input.date.getTime().toString(16).padStart(12, '0').slice(-11);
+
+			// System Type (3 bytes)
+			hex += input.systemType.toString(16).padStart(3, '0').slice(-3);
+
+			// Location (3 bytes)
+			hex += (input.locationJurisdiction ? D0CombinedLocations[input.locationJurisdiction] : input.locationHint ? D0CombinedLocations[input.locationHint] : D0CombinedLocations.none).toString(16).padStart(3, '0').slice(-3);
+
+			// Shard Type (2 bytes)
+			hex += input.shardType.toString(16).padStart(2, '0').slice(-2);
+
+			// Suffix random (11 bytes)
+			hex += (await BufferHelpers.bufferToHex(input.suffixRandom.buffer)).padStart(11, '0').slice(-11);
+
+			// Environment (1 byte)
+			hex += input.environment.toString(16).slice(-3);
+
+			// Stable random (32 bytes)
+			hex += (await BufferHelpers.bufferToHex(input.stableRandom.buffer)).padStart(64, '0').slice(-64);
+
+			const blob = await BufferHelpers.hexToBuffer(hex);
+			const [base64, base64url] = await Promise.all([BufferHelpers.bufferToBase64(blob, false), BufferHelpers.bufferToBase64(blob, true)]);
+
+			return this.convertOutput.parseAsync({
+				hex,
+				blob: Array.from(new Uint8Array(blob)) as D0Blob,
+				base64,
+				base64url,
+			} satisfies z.input<typeof this.convertOutput>);
+		});
+	}
+
 	public static suruConvert<O extends typeof this.convertOutput = typeof this.convertOutput>(_input: undefined): Promise<z.output<ZodPartial<O>>>;
 	public static suruConvert<I extends z.input<typeof ZodSuruId> = z.input<typeof ZodSuruId>, O extends typeof this.convertOutput = typeof this.convertOutput>(_input: I): Promise<z.output<O>>;
 	public static suruConvert<I extends z.input<typeof ZodSuruId> = z.input<typeof ZodSuruId>, O extends typeof this.convertOutput = typeof this.convertOutput>(_input?: I): Promise<z.output<O | ZodPartial<O>>> {
@@ -245,5 +267,3 @@ export class SuruId {
 		}
 	}
 }
-
-type temp = z.output<ZodPartial<typeof SuruId.extractOutputBase>> & { locationJurisdiction: undefined; locationHint: undefined };
