@@ -20,6 +20,50 @@ export const ZodCoordinate = z
 	.min(3)
 	.regex(new RegExp(/^-?\d+\.\d+$/i));
 
+export const ZodBlob = z.union([
+	// Literal `node:buffer` type
+	z.instanceof(Buffer).transform((b) => new Uint8Array(b)),
+	// Uint8Array
+	z.instanceof(Uint8Array).transform((ui8a) => ui8a as Uint8Array<ArrayBufferLike>),
+	// ArrayBuffer
+	z
+		.union([
+			// Each one has to be manually specified
+			z.instanceof(ArrayBuffer).transform((ab) => ab as ArrayBufferLike),
+			z.instanceof(SharedArrayBuffer).transform((sab) => sab as ArrayBufferLike),
+		])
+		.transform((abl) => new Uint8Array(abl)),
+	// D0Blob
+	z
+		.tuple(
+			[
+				z
+					.int()
+					.min(0)
+					.max((2 ^ 8) - 1),
+			],
+			z
+				.int()
+				.min(0)
+				.max((2 ^ 8) - 1),
+		)
+		.transform((arr) => new Uint8Array(arr)),
+]);
+export const ZodBlobExport = z
+	.tuple(
+		[
+			z
+				.int()
+				.min(0)
+				.max((2 ^ 8) - 1),
+		],
+		z
+			.int()
+			.min(0)
+			.max((2 ^ 8) - 1),
+	)
+	.transform((arr) => new Uint8Array(arr));
+
 export const PrefixedUuidRaw = z.string().trim().toLowerCase().min(38).max(40).regex(prefixedUuidRegex);
 export const PrefixedUuid7Raw = z.string().trim().toLowerCase().min(38).max(40).regex(prefixedUuid7Regex);
 
@@ -85,3 +129,10 @@ export const Zod4FakeUuidExport = z.object({
 	base64: z.base64().trim().nonempty(),
 	base64url: z.base64url().trim().nonempty(),
 });
+
+export const ZodSuruId = z.union([
+	//
+	z.hex().trim().toLowerCase().length(96),
+	z.base64().trim().max(64),
+	z.base64url().trim().max(64),
+]);

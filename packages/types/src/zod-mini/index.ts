@@ -25,6 +25,40 @@ export const DoId = z.hex().check(z.trim(), z.length(64), z.toLowerCase());
 
 export const ZodCoordinate = z.string().check(z.trim(), z.minLength(3), z.regex(new RegExp(/^-?\d+\.\d+$/i)));
 
+export const ZodBlob = z.union([
+	// Literal `node:buffer` type
+	z.pipe(
+		z.instanceof(Buffer),
+		z.transform((b) => new Uint8Array(b) as Uint8Array<ArrayBufferLike>),
+	),
+	// Uint8Array
+	z.pipe(
+		z.instanceof(Uint8Array),
+		z.transform((ui8a) => ui8a as Uint8Array<ArrayBufferLike>),
+	),
+	// ArrayBuffer
+	z.pipe(
+		z.union([
+			// Each one has to be manually specified
+			z.pipe(
+				z.instanceof(ArrayBuffer),
+				z.transform((ab) => ab as ArrayBufferLike),
+			),
+			z.pipe(
+				z.instanceof(SharedArrayBuffer),
+				z.transform((sab) => sab as ArrayBufferLike),
+			),
+		]),
+		z.transform((abl) => new Uint8Array(abl)),
+	),
+	// D0Blob
+	z.pipe(
+		z.tuple([z.int().check(z.minimum(0), z.maximum((2 ^ 8) - 1))], z.int().check(z.minimum(0), z.maximum((2 ^ 8) - 1))),
+		z.transform((arr) => new Uint8Array(arr) as Uint8Array<ArrayBufferLike>),
+	),
+]);
+export const ZodBlobExport = z.tuple([z.int().check(z.minimum(0), z.maximum((2 ^ 8) - 1))], z.int().check(z.minimum(0), z.maximum((2 ^ 8) - 1)));
+
 export const prefixedUuidRegex = /^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i;
 export const hexUuidRegex = /^[0-9a-f]{8}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{12}$/i;
 export const hexUuid4Regex = /^[0-9a-f]{8}[0-9a-f]{4}4[0-9a-f]{3}[0-9a-f]{4}[0-9a-f]{12}$/i;
@@ -102,3 +136,11 @@ export const Zod4FakeUuidExport = z.object({
 	base64: z.base64().check(z.trim(), z.minLength(1)),
 	base64url: z.base64url().check(z.trim(), z.minLength(1)),
 });
+
+export const ZodSuruId = z.union([
+	//
+	z.hex().check(z.trim(), z.toLowerCase(), z.length(96)),
+	ZodBlob,
+	z.base64().check(z.trim(), z.maxLength(64)),
+	z.base64url().check(z.trim(), z.maxLength(64)),
+]);
