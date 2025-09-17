@@ -27,7 +27,7 @@ export enum D0CombinedLocations {
 }
 
 export enum D0ShardType {
-	Director = 0,
+	None = 0,
 	Storage = 1,
 }
 
