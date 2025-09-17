@@ -53,11 +53,11 @@ export const ZodBlob = z.union([
 	),
 	// D0Blob
 	z.pipe(
-		z.tuple([z.int().check(z.minimum(0), z.maximum((2 ^ 8) - 1))], z.int().check(z.minimum(0), z.maximum((2 ^ 8) - 1))),
+		z.tuple([z.int().check(z.minimum(0), z.maximum(255))], z.int().check(z.minimum(0), z.maximum(255))),
 		z.transform((arr) => new Uint8Array(arr) as Uint8Array<ArrayBufferLike>),
 	),
 ]);
-export const ZodBlobExport = z.tuple([z.int().check(z.minimum(0), z.maximum((2 ^ 8) - 1))], z.int().check(z.minimum(0), z.maximum((2 ^ 8) - 1)));
+export const ZodBlobExport = z.tuple([z.int().check(z.minimum(0), z.maximum(255))], z.int().check(z.minimum(0), z.maximum(255)));
 
 export const prefixedUuidRegex = /^((d|t|u)_)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(_p)?$/i;
 export const hexUuidRegex = /^[0-9a-f]{8}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{12}$/i;
