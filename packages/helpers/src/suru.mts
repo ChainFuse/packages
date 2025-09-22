@@ -24,16 +24,10 @@ export class SuruId {
 			base64url: z.base64url().check(z.trim(), z.maxLength(Math.round(64 * (4 / 6)))),
 		}),
 	});
-	public static extractOutput = z.union([
-		z.extend(SuruId.extractOutputBase, {
-			locationJurisdiction: z.nullable(z.enum(DOJurisdictions)),
-			locationHint: z.null(),
-		}),
-		z.extend(SuruId.extractOutputBase, {
-			locationJurisdiction: z.null(),
-			locationHint: z.nullable(z.enum(DOLocations)),
-		}),
-	]);
+	public static extractOutput = z.extend(SuruId.extractOutputBase, {
+		locationJurisdiction: z.nullable(z.enum(DOJurisdictions)),
+		locationHint: z.nullable(z.enum(DOLocations)),
+	});
 
 	public static convertOutput = z.object({
 		hex: z.hex().check(z.trim(), z.toLowerCase(), z.length(96)),
