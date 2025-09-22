@@ -27,7 +27,7 @@ void describe('SuruId', () => {
 
 			// Extract from created SuruId
 			const extracted = await SuruId.suruExtract(created.hex);
-			
+
 			// Verify all fields match
 			strictEqual(extracted.version, input.version);
 			strictEqual(extracted.date.getTime(), testDate.getTime());
@@ -36,7 +36,7 @@ void describe('SuruId', () => {
 			strictEqual(extracted.locationJurisdiction, input.locationJurisdiction);
 			strictEqual(extracted.locationHint, input.locationHint);
 			strictEqual(extracted.environment, input.environment);
-			
+
 			// Random fields should have correct format
 			ok(extracted.suffixRandom.hex);
 			strictEqual(extracted.suffixRandom.hex.length, 11);
@@ -65,7 +65,7 @@ void describe('SuruId', () => {
 
 			// Extract from created SuruId
 			const extracted = await SuruId.suruExtract(created.hex);
-			
+
 			// Verify all fields match
 			strictEqual(extracted.version, input.version);
 			strictEqual(extracted.date.getTime(), testDate.getTime());
@@ -97,7 +97,7 @@ void describe('SuruId', () => {
 
 			// Extract from created SuruId
 			const extracted = await SuruId.suruExtract(created.hex);
-			
+
 			// Verify all fields match
 			strictEqual(extracted.version, input.version);
 			strictEqual(extracted.date.getTime(), testDate.getTime());
@@ -122,7 +122,7 @@ void describe('SuruId', () => {
 
 			// Extract from created SuruId
 			const extracted = await SuruId.suruExtract(created.hex);
-			
+
 			// Verify defaults are applied correctly
 			strictEqual(extracted.version, D0Version.v1);
 			strictEqual(extracted.systemType, D0SystemType.Tenant);
@@ -156,7 +156,7 @@ void describe('SuruId', () => {
 
 			// Extract from created SuruId
 			const extracted = SuruId.suruExtractSync(created.hex);
-			
+
 			// Verify all fields match
 			strictEqual(extracted.version, input.version);
 			strictEqual(extracted.date.getTime(), testDate.getTime());
@@ -168,16 +168,7 @@ void describe('SuruId', () => {
 		});
 
 		void it('should create and extract with various location hints (sync)', () => {
-			const locations = [
-				DOLocations['Eastern North America'],
-				DOLocations['South America'],
-				DOLocations['Western Europe'],
-				DOLocations['Eastern Europe'],
-				DOLocations['Asia-Pacific'],
-				DOLocations.Oceania,
-				DOLocations.Africa,
-				DOLocations['Middle East'],
-			];
+			const locations = [DOLocations['Eastern North America'], DOLocations['South America'], DOLocations['Western Europe'], DOLocations['Eastern Europe'], DOLocations['Asia-Pacific'], DOLocations.Oceania, DOLocations.Africa, DOLocations['Middle East']];
 
 			for (const location of locations) {
 				const testDate = new Date('2023-03-15T09:30:00.000Z');
@@ -195,7 +186,7 @@ void describe('SuruId', () => {
 				// Create and extract
 				const created = SuruId.suruCreateSync(input);
 				const extracted = SuruId.suruExtractSync(created.hex);
-				
+
 				// Verify location hint is preserved
 				strictEqual(extracted.locationHint, location);
 				strictEqual(extracted.locationJurisdiction, null);
@@ -305,11 +296,7 @@ void describe('SuruId', () => {
 		});
 
 		void it('should preserve exact timestamp precision', async () => {
-			const preciseDates = [
-				new Date('2023-01-01T00:00:00.000Z'),
-				new Date('2023-01-01T00:00:00.123Z'),
-				new Date('2023-01-01T00:00:00.999Z'),
-			];
+			const preciseDates = [new Date('2023-01-01T00:00:00.000Z'), new Date('2023-01-01T00:00:00.123Z'), new Date('2023-01-01T00:00:00.999Z')];
 
 			for (const testDate of preciseDates) {
 				const input = {
@@ -326,15 +313,10 @@ void describe('SuruId', () => {
 		});
 
 		void it('should handle all system types', () => {
-			const systemTypes = [
-				D0SystemType.Dataspace,
-				D0SystemType.Tenant,
-				D0SystemType.User,
-				D0SystemType.Workflow,
-			];
+			const systemTypes = [D0SystemType.Dataspace, D0SystemType.Tenant, D0SystemType.User, D0SystemType.Workflow];
 
 			for (const systemType of systemTypes) {
-				const input = { 
+				const input = {
 					systemType,
 					environment: D0Environment.Production,
 				};
@@ -347,10 +329,7 @@ void describe('SuruId', () => {
 		});
 
 		void it('should handle all shard types', () => {
-			const shardTypes = [
-				D0ShardType.None,
-				D0ShardType.Storage,
-			];
+			const shardTypes = [D0ShardType.None, D0ShardType.Storage];
 
 			for (const shardType of shardTypes) {
 				const input = {
@@ -367,10 +346,7 @@ void describe('SuruId', () => {
 		});
 
 		void it('should handle all environments', () => {
-			const environments = [
-				D0Environment.Production,
-				D0Environment.Preview,
-			];
+			const environments = [D0Environment.Production, D0Environment.Preview];
 
 			for (const environment of environments) {
 				const input = {
@@ -388,7 +364,7 @@ void describe('SuruId', () => {
 
 	void describe('Format Validation', () => {
 		void it('should produce correct hex length', async () => {
-			const created = await SuruId.suruCreate({ 
+			const created = await SuruId.suruCreate({
 				systemType: D0SystemType.User,
 				environment: D0Environment.Production,
 			});
@@ -396,35 +372,35 @@ void describe('SuruId', () => {
 		});
 
 		void it('should produce valid base64 format', async () => {
-			const created = await SuruId.suruCreate({ 
+			const created = await SuruId.suruCreate({
 				systemType: D0SystemType.User,
 				environment: D0Environment.Production,
 			});
-			
+
 			// Base64 should be valid (no validation here, just format check)
 			ok(/^[A-Za-z0-9+/]+=*$/.test(created.base64));
 			strictEqual(created.base64.length, 64);
 		});
 
 		void it('should produce valid base64url format', async () => {
-			const created = await SuruId.suruCreate({ 
+			const created = await SuruId.suruCreate({
 				systemType: D0SystemType.User,
 				environment: D0Environment.Production,
 			});
-			
+
 			// Base64url should be valid (no validation here, just format check)
 			ok(/^[A-Za-z0-9_-]+$/.test(created.base64url));
 		});
 
 		void it('should have consistent blob array format', async () => {
-			const created = await SuruId.suruCreate({ 
+			const created = await SuruId.suruCreate({
 				systemType: D0SystemType.User,
 				environment: D0Environment.Production,
 			});
-			
+
 			ok(Array.isArray(created.blob));
 			strictEqual(created.blob.length, 48); // 96 hex chars / 2 = 48 bytes
-			ok(created.blob.every(byte => typeof byte === 'number' && byte >= 0 && byte <= 255));
+			ok(created.blob.every((byte) => typeof byte === 'number' && byte >= 0 && byte <= 255));
 		});
 	});
 });
