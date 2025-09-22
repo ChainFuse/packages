@@ -97,6 +97,45 @@ export class SuruId {
 			} satisfies z.input<typeof this.convertOutput>);
 		});
 	}
+	public static suruCreateSync(_input: z.input<typeof this.createInput>): z.output<typeof this.convertOutput> {
+		const input = SuruId.createInput.parse(_input);
+
+		// Pack fields into hex
+		let hex = '';
+
+		// Version (4 bytes)
+		hex += Number(input.version).toString(16);
+
+		// Timestamp (11 bytes, pad to 12 chars, mask top nibble for version)
+		hex += input.date.getTime().toString(16).padStart(12, '0').slice(-11);
+
+		// System Type (3 bytes)
+		hex += input.systemType.toString(16).padStart(3, '0').slice(-3);
+
+		// Location (3 bytes)
+		hex += (input.locationJurisdiction ? D0CombinedLocations[input.locationJurisdiction] : input.locationHint ? D0CombinedLocations[input.locationHint] : D0CombinedLocations.none).toString(16).padStart(3, '0').slice(-3);
+
+		// Shard Type (2 bytes)
+		hex += input.shardType.toString(16).padStart(2, '0').slice(-2);
+
+		// Suffix random (11 bytes)
+		hex += BufferHelpers.bufferToHexSync(input.suffixRandom.buffer).padStart(11, '0').slice(-11);
+
+		// Environment (1 byte)
+		hex += input.environment.toString(16).slice(-3);
+
+		// Stable random (32 bytes)
+		hex += BufferHelpers.bufferToHexSync(input.stableRandom.buffer).padStart(64, '0').slice(-64);
+
+		const blob = BufferHelpers.hexToBufferSync(hex);
+
+		return this.convertOutput.parse({
+			hex,
+			blob: Array.from(new Uint8Array(blob)) as D0Blob,
+			base64: BufferHelpers.bufferToBase64Sync(blob, false),
+			base64url: BufferHelpers.bufferToBase64Sync(blob, true),
+		} satisfies z.input<typeof this.convertOutput>);
+	}
 
 	public static suruConvert<O extends typeof this.convertOutput = typeof this.convertOutput>(_input: undefined): Promise<z.output<ZodPartial<O>>>;
 	public static suruConvert<I extends z.input<typeof ZodSuruId> = z.input<typeof ZodSuruId>, O extends typeof this.convertOutput = typeof this.convertOutput>(_input: I): Promise<z.output<O>>;
