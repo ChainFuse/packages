@@ -283,7 +283,86 @@ export class SuruId {
 	public static suruExtract<I extends z.input<typeof ZodSuruId> = z.input<typeof ZodSuruId>, O extends typeof this.extractOutput = typeof this.extractOutput>(_input: I): Promise<z.output<O>>;
 	public static suruExtract<I extends z.input<typeof ZodSuruId> = z.input<typeof ZodSuruId>, O extends typeof this.extractOutput = typeof this.extractOutput, UO extends z.output<ZodPartial<O>> = z.output<ZodPartial<O>>>(_input?: I): Promise<z.output<O> | UO> {
 		if (_input) {
-			return this.suruConvert(_input).then(({ hex }) => {});
+			return this.suruConvert(_input).then(async ({ hex }) => {
+				// Extract fields from hex string (96 chars total)
+				let offset = 0;
+
+				// Version (1 char = 4 bits)
+				const version = parseInt(hex.slice(offset, offset + 1), 16) as z.output<typeof this.extractOutputBase>['version'];
+				offset += 1;
+
+				// Timestamp (11 chars)
+				const timestamp = parseInt(hex.slice(offset, offset + 11), 16);
+				const date = new Date(timestamp);
+				offset += 11;
+
+				// System Type (3 chars)
+				const systemType = parseInt(hex.slice(offset, offset + 3), 16) as z.output<typeof this.extractOutputBase>['systemType'];
+				offset += 3;
+
+				// Location (3 chars)
+				const locationValue = parseInt(hex.slice(offset, offset + 3), 16);
+				offset += 3;
+
+				// Find jurisdiction and hint from location value
+				let locationJurisdiction: z.output<typeof this.extractOutput>['locationJurisdiction'] = null;
+				let locationHint: z.output<typeof this.extractOutput>['locationHint'] = null;
+
+				// Map D0CombinedLocations values to jurisdiction/location enums
+				// Find the location key that matches the value
+				const locationKey = Object.entries(D0CombinedLocations).find(([, enumValue]) => Number(enumValue) === locationValue)?.[0] as keyof typeof D0CombinedLocations | undefined;
+
+				if (locationKey && locationKey !== 'none') {
+					// Check if it's a jurisdiction
+					if ((Object.values(DOJurisdictions) as string[]).includes(locationKey)) {
+						locationJurisdiction = locationKey as z.output<typeof this.extractOutput>['locationJurisdiction'];
+					}
+
+					// Check if it's a location hint
+					if ((Object.values(DOLocations) as string[]).includes(locationKey)) {
+						locationHint = locationKey as z.output<typeof this.extractOutput>['locationHint'];
+					}
+				}
+
+				// Shard Type (2 chars)
+				const shardType = parseInt(hex.slice(offset, offset + 2), 16) as z.output<typeof this.extractOutputBase>['shardType'];
+				offset += 2;
+
+				// Suffix random (11 chars)
+				const suffixRandomHex = hex.slice(offset, offset + 11);
+				const suffixRandomBuffer = await BufferHelpers.hexToBuffer(suffixRandomHex);
+				const [suffixRandomBase64, suffixRandomBase64Url] = await Promise.all([BufferHelpers.bufferToBase64(suffixRandomBuffer, false), BufferHelpers.bufferToBase64(suffixRandomBuffer, true)]);
+				offset += 11;
+
+				// Environment (1 char)
+				const environment = parseInt(hex.slice(offset, offset + 1), 16) as z.output<typeof this.extractOutputBase>['environment'];
+				offset += 1;
+
+				// Stable random (64 chars)
+				const stableRandomHex = hex.slice(offset, offset + 64);
+				const stableRandomBuffer = await BufferHelpers.hexToBuffer(stableRandomHex);
+				const [stableRandomBase64, stableRandomBase64Url] = await Promise.all([BufferHelpers.bufferToBase64(stableRandomBuffer, false), BufferHelpers.bufferToBase64(stableRandomBuffer, true)]);
+
+				return this.extractOutput.parseAsync({
+					version,
+					date,
+					systemType,
+					shardType,
+					locationJurisdiction,
+					locationHint,
+					suffixRandom: {
+						hex: suffixRandomHex,
+						base64: suffixRandomBase64,
+						base64url: suffixRandomBase64Url,
+					},
+					environment,
+					stableRandom: {
+						hex: stableRandomHex,
+						base64: stableRandomBase64,
+						base64url: stableRandomBase64Url,
+					},
+				} satisfies z.input<typeof this.extractOutput>) as Promise<z.output<O>>;
+			});
 		} else {
 			// eslint-disable-next-line @typescript-eslint/require-await
 			return (async () =>
@@ -298,6 +377,106 @@ export class SuruId {
 					environment: undefined,
 					stableRandom: undefined,
 				}) as UO)();
+		}
+	}
+	public static suruExtractSync<O extends typeof this.extractOutput = typeof this.extractOutput, UO extends z.output<ZodPartial<O>> = z.output<ZodPartial<O>>>(_input: undefined): UO;
+	public static suruExtractSync<I extends z.input<typeof ZodSuruId> = z.input<typeof ZodSuruId>, O extends typeof this.extractOutput = typeof this.extractOutput>(_input: I): z.output<O>;
+	public static suruExtractSync<I extends z.input<typeof ZodSuruId> = z.input<typeof ZodSuruId>, O extends typeof this.extractOutput = typeof this.extractOutput, UO extends z.output<ZodPartial<O>> = z.output<ZodPartial<O>>>(_input?: I): z.output<O> | UO {
+		if (_input) {
+			const { hex } = this.suruConvertSync(_input);
+
+			// Extract fields from hex string (96 chars total)
+			let offset = 0;
+
+			// Version (1 char = 4 bits)
+			const version = parseInt(hex.slice(offset, offset + 1), 16) as z.output<typeof this.extractOutputBase>['version'];
+			offset += 1;
+
+			// Timestamp (11 chars)
+			const timestamp = parseInt(hex.slice(offset, offset + 11), 16);
+			const date = new Date(timestamp);
+			offset += 11;
+
+			// System Type (3 chars)
+			const systemType = parseInt(hex.slice(offset, offset + 3), 16) as z.output<typeof this.extractOutputBase>['systemType'];
+			offset += 3;
+
+			// Location (3 chars)
+			const locationValue = parseInt(hex.slice(offset, offset + 3), 16);
+			offset += 3;
+
+			// Find jurisdiction and hint from location value
+			let locationJurisdiction: z.output<typeof this.extractOutput>['locationJurisdiction'] = null;
+			let locationHint: z.output<typeof this.extractOutput>['locationHint'] = null;
+
+			// Map D0CombinedLocations values to jurisdiction/location enums
+			// Find the location key that matches the value
+			const locationKey = Object.entries(D0CombinedLocations).find(([, enumValue]) => Number(enumValue) === locationValue)?.[0] as keyof typeof D0CombinedLocations | undefined;
+
+			if (locationKey && locationKey !== 'none') {
+				// Check if it's a jurisdiction
+				if ((Object.values(DOJurisdictions) as string[]).includes(locationKey)) {
+					locationJurisdiction = locationKey as z.output<typeof this.extractOutput>['locationJurisdiction'];
+				}
+
+				// Check if it's a location hint
+				if ((Object.values(DOLocations) as string[]).includes(locationKey)) {
+					locationHint = locationKey as z.output<typeof this.extractOutput>['locationHint'];
+				}
+			}
+
+			// Shard Type (2 chars)
+			const shardType = parseInt(hex.slice(offset, offset + 2), 16) as z.output<typeof this.extractOutputBase>['shardType'];
+			offset += 2;
+
+			// Suffix random (11 chars)
+			const suffixRandomHex = hex.slice(offset, offset + 11);
+			const suffixRandomBuffer = BufferHelpers.hexToBufferSync(suffixRandomHex);
+			const suffixRandomBase64 = BufferHelpers.bufferToBase64Sync(suffixRandomBuffer, false);
+			const suffixRandomBase64Url = BufferHelpers.bufferToBase64Sync(suffixRandomBuffer, true);
+			offset += 11;
+
+			// Environment (1 char)
+			const environment = parseInt(hex.slice(offset, offset + 1), 16) as z.output<typeof this.extractOutputBase>['environment'];
+			offset += 1;
+
+			// Stable random (64 chars)
+			const stableRandomHex = hex.slice(offset, offset + 64);
+			const stableRandomBuffer = BufferHelpers.hexToBufferSync(stableRandomHex);
+			const stableRandomBase64 = BufferHelpers.bufferToBase64Sync(stableRandomBuffer, false);
+			const stableRandomBase64Url = BufferHelpers.bufferToBase64Sync(stableRandomBuffer, true);
+
+			return this.extractOutput.parse({
+				version,
+				date,
+				systemType,
+				shardType,
+				locationJurisdiction,
+				locationHint,
+				suffixRandom: {
+					hex: suffixRandomHex,
+					base64: suffixRandomBase64,
+					base64url: suffixRandomBase64Url,
+				},
+				environment,
+				stableRandom: {
+					hex: stableRandomHex,
+					base64: stableRandomBase64,
+					base64url: stableRandomBase64Url,
+				},
+			} satisfies z.input<typeof this.extractOutput>) as z.output<O>;
+		} else {
+			return {
+				version: undefined,
+				date: undefined,
+				systemType: undefined,
+				shardType: undefined,
+				locationJurisdiction: undefined,
+				locationHint: undefined,
+				suffixRandom: undefined,
+				environment: undefined,
+				stableRandom: undefined,
+			} as UO;
 		}
 	}
 }
