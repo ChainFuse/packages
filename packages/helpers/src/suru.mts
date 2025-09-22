@@ -244,6 +244,7 @@ export class SuruId {
 	public static suruExtract<I extends z.input<typeof ZodSuruId> = z.input<typeof ZodSuruId>, O extends typeof this.extractOutput = typeof this.extractOutput, UO extends z.output<ZodPartial<typeof SuruId.extractOutputBase>> & { locationJurisdiction: undefined; locationHint: undefined } = z.output<ZodPartial<typeof SuruId.extractOutputBase>> & { locationJurisdiction: undefined; locationHint: undefined }>(_input: I): Promise<UO>;
 	public static suruExtract<I extends z.input<typeof ZodSuruId> = z.input<typeof ZodSuruId>, O extends typeof this.extractOutput = typeof this.extractOutput, UO extends z.output<ZodPartial<typeof SuruId.extractOutputBase>> & { locationJurisdiction: undefined; locationHint: undefined } = z.output<ZodPartial<typeof SuruId.extractOutputBase>> & { locationJurisdiction: undefined; locationHint: undefined }>(_input?: I): Promise<z.output<O> | UO> {
 		if (_input) {
+			return this.suruConvert(_input).then(({ hex }) => {});
 		} else {
 			// eslint-disable-next-line @typescript-eslint/require-await
 			return (async () =>
