@@ -755,17 +755,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '1a7b6ad6-9987-4bd3-a329-20ee8de93296',
-					source: 2,
-					name: '@hf/meta-llama/meta-llama-3-8b-instruct',
-					description: 'Generation over generation, Meta Llama 3 demonstrates state-of-the-art performance on a wide range of industry benchmarks and offers new capabilities, including improved reasoning.\t',
-					created_at: '2024-05-22 18:21:04.371',
-					tags: [],
-					properties: {
-						context_window: 8192,
-					},
-				},
-				{
 					id: '188a4e1e-253e-46d0-9616-0bf8c149763f',
 					source: 1,
 					name: '@cf/openai/gpt-oss-20b',
