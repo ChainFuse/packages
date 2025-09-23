@@ -1,7 +1,7 @@
 export type D0Blob = [number, ...number[]];
 
 export enum D0Version {
-	v1 = 1,
+	v1 = 0,
 }
 
 export enum D0SystemType {
