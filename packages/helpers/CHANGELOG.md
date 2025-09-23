@@ -1,5 +1,16 @@
 # @chainfuse/helpers
 
+## 4.1.2
+
+### Patch Changes
+
+- [`c5fd375`](https://github.com/ChainFuse/packages/commit/c5fd3759d498f172057a7b2608304481cc864d58) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Allow passing in randoms in different forms
+
+- [`5395d9d`](https://github.com/ChainFuse/packages/commit/5395d9d7d50c3ef1f7fc938f15bcdbe46a42a5ac) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Reduce suffix to 40 bits and move the 4 bits to date
+
+- Updated dependencies [[`10920d7`](https://github.com/ChainFuse/packages/commit/10920d7a78380ff92e977b6925a6cc17ca6d1bf4)]:
+    - @chainfuse/types@4.0.3
+
 ## 4.1.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.0.3
+
+### Patch Changes
+
+- [`10920d7`](https://github.com/ChainFuse/packages/commit/10920d7a78380ff92e977b6925a6cc17ca6d1bf4) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Rollback v1 to `0`
+
 ## 4.0.2
 
 ### Patch Changes
