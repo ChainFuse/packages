@@ -34,35 +34,9 @@ export const ZodBlob = z.union([
 		])
 		.transform((abl) => new Uint8Array(abl)),
 	// D0Blob
-	z
-		.tuple(
-			[
-				z
-					.int()
-					.min(0)
-					.max((2 ^ 8) - 1),
-			],
-			z
-				.int()
-				.min(0)
-				.max((2 ^ 8) - 1),
-		)
-		.transform((arr) => new Uint8Array(arr)),
+	z.tuple([z.int().min(0).max(255)], z.int().min(0).max(255)).transform((arr) => new Uint8Array(arr)),
 ]);
-export const ZodBlobExport = z
-	.tuple(
-		[
-			z
-				.int()
-				.min(0)
-				.max((2 ^ 8) - 1),
-		],
-		z
-			.int()
-			.min(0)
-			.max((2 ^ 8) - 1),
-	)
-	.transform((arr) => new Uint8Array(arr));
+export const ZodBlobExport = z.tuple([z.int().min(0).max(255)], z.int().min(0).max(255)).transform((arr) => new Uint8Array(arr));
 
 export const PrefixedUuidRaw = z.string().trim().toLowerCase().min(38).max(40).regex(prefixedUuidRegex);
 export const PrefixedUuid7Raw = z.string().trim().toLowerCase().min(38).max(40).regex(prefixedUuid7Regex);
