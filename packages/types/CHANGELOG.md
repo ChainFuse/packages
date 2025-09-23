@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.0.2
+
+### Patch Changes
+
+- [#667](https://github.com/ChainFuse/packages/pull/667) [`7d6ec05`](https://github.com/ChainFuse/packages/commit/7d6ec056ad6d881547520c367f3a5dc3b9945d28) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/azure, @ai-sdk/openai, ai, openai
+
 ## 4.0.1
 
 ### Patch Changes
