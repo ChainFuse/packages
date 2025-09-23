@@ -13,9 +13,9 @@ export class SuruId {
 		shardType: z.enum(D0ShardType),
 		// Location
 		suffixRandom: z.object({
-			hex: z.hex().check(z.trim(), z.toLowerCase(), z.length(11)),
-			base64: z.base64().check(z.trim(), z.maxLength(Math.ceil((11 * (4 / 6)) / 4) * 4)),
-			base64url: z.base64url().check(z.trim(), z.maxLength(Math.round(11 * (4 / 6)))),
+			hex: z.hex().check(z.trim(), z.toLowerCase(), z.length(10)),
+			base64: z.base64().check(z.trim(), z.maxLength(Math.ceil((10 * (4 / 6)) / 4) * 4)),
+			base64url: z.base64url().check(z.trim(), z.maxLength(Math.round(10 * (4 / 6)))),
 		}),
 		environment: z.enum(D0Environment),
 		stableRandom: z.object({
@@ -64,10 +64,9 @@ export class SuruId {
 						z.transform((base64url) => new Uint8Array(BufferHelpers.base64ToBufferSync(base64url))),
 					),
 				]),
-				() => CryptoHelpers.secretBytesSync(Math.ceil(44 / 8)),
+				() => CryptoHelpers.secretBytesSync(40 / 8),
 			)
-			// It's technically 5.5 bytes, but `.byteLength` rounds to int
-			.check(z.refine((b) => b.byteLength === (Math.floor(44 / 8) || Math.ceil(44 / 8)))),
+			.check(z.refine((b) => b.byteLength === 40 / 8)),
 		// environment
 		stableRandom: z
 			._default(
@@ -109,28 +108,28 @@ export class SuruId {
 			// Pack fields into hex
 			let hex = '';
 
-			// Version (4 bytes)
+			// Version (4 bits = 1 hex char)
 			hex += Number(input.version).toString(16);
 
-			// Timestamp (11 bytes, pad to 12 chars, mask top nibble for version)
-			hex += input.date.getTime().toString(16).padStart(12, '0').slice(-11);
+			// Timestamp (48 bits, 12 hex chars)
+			hex += input.date.getTime().toString(16).padStart(12, '0');
 
-			// System Type (3 bytes)
+			// System Type (12 bits = 3 hex chars)
 			hex += input.systemType.toString(16).padStart(3, '0').slice(-3);
 
-			// Location (3 bytes)
+			// Location (12 bits = 3 hex chars)
 			hex += (input.locationJurisdiction ? D0CombinedLocations[input.locationJurisdiction] : input.locationHint ? D0CombinedLocations[input.locationHint] : D0CombinedLocations.none).toString(16).padStart(3, '0').slice(-3);
 
-			// Shard Type (2 bytes)
+			// Shard Type (8 bits = 2 hex chars)
 			hex += input.shardType.toString(16).padStart(2, '0').slice(-2);
 
-			// Suffix random (11 bytes)
-			hex += (await BufferHelpers.bufferToHex(input.suffixRandom.buffer)).padStart(11, '0').slice(-11);
+			// Suffix random (40 bits = 10 hex chars)
+			hex += (await BufferHelpers.bufferToHex(input.suffixRandom.buffer)).padStart(10, '0').slice(-10);
 
-			// Environment (1 byte)
-			hex += input.environment.toString(16).slice(-3);
+			// Environment (4 bits = 1 hex char)
+			hex += input.environment.toString(16);
 
-			// Stable random (32 bytes)
+			// Stable random (256 bits = 64 hex chars)
 			hex += (await BufferHelpers.bufferToHex(input.stableRandom.buffer)).padStart(64, '0').slice(-64);
 
 			const blob = await BufferHelpers.hexToBuffer(hex);
@@ -150,28 +149,28 @@ export class SuruId {
 		// Pack fields into hex
 		let hex = '';
 
-		// Version (4 bytes)
+		// Version (4 bits = 1 hex char)
 		hex += Number(input.version).toString(16);
 
-		// Timestamp (11 bytes, pad to 12 chars, mask top nibble for version)
-		hex += input.date.getTime().toString(16).padStart(12, '0').slice(-11);
+		// Timestamp (48 bits, 12 hex chars)
+		hex += input.date.getTime().toString(16).padStart(12, '0');
 
-		// System Type (3 bytes)
+		// System Type (12 bits = 3 hex chars)
 		hex += input.systemType.toString(16).padStart(3, '0').slice(-3);
 
-		// Location (3 bytes)
+		// Location (12 bits = 3 hex chars)
 		hex += (input.locationJurisdiction ? D0CombinedLocations[input.locationJurisdiction] : input.locationHint ? D0CombinedLocations[input.locationHint] : D0CombinedLocations.none).toString(16).padStart(3, '0').slice(-3);
 
-		// Shard Type (2 bytes)
+		// Shard Type (8 bits = 2 hex chars)
 		hex += input.shardType.toString(16).padStart(2, '0').slice(-2);
 
-		// Suffix random (11 bytes)
-		hex += BufferHelpers.bufferToHexSync(input.suffixRandom.buffer).padStart(11, '0').slice(-11);
+		// Suffix random (40 bits = 10 hex chars)
+		hex += BufferHelpers.bufferToHexSync(input.suffixRandom.buffer).padStart(10, '0').slice(-10);
 
-		// Environment (1 byte)
-		hex += input.environment.toString(16).slice(-3);
+		// Environment (4 bits = 1 hex char)
+		hex += input.environment.toString(16);
 
-		// Stable random (32 bytes)
+		// Stable random (256 bits = 64 hex chars)
 		hex += BufferHelpers.bufferToHexSync(input.stableRandom.buffer).padStart(64, '0').slice(-64);
 
 		const blob = BufferHelpers.hexToBufferSync(hex);
@@ -338,16 +337,16 @@ export class SuruId {
 				const version = parseInt(hex.slice(offset, offset + 1), 16) as z.output<typeof this.extractOutputBase>['version'];
 				offset += 1;
 
-				// Timestamp (11 chars)
-				const timestamp = parseInt(hex.slice(offset, offset + 11), 16);
+				// Timestamp (12 chars = 48 bits)
+				const timestamp = parseInt(hex.slice(offset, offset + 12), 16);
 				const date = new Date(timestamp);
-				offset += 11;
+				offset += 12;
 
-				// System Type (3 chars)
+				// System Type (3 chars = 12 bits)
 				const systemType = parseInt(hex.slice(offset, offset + 3), 16) as z.output<typeof this.extractOutputBase>['systemType'];
 				offset += 3;
 
-				// Location (3 chars)
+				// Location (3 chars = 12 bits)
 				const locationValue = parseInt(hex.slice(offset, offset + 3), 16);
 				offset += 3;
 
@@ -371,21 +370,21 @@ export class SuruId {
 					}
 				}
 
-				// Shard Type (2 chars)
+				// Shard Type (2 chars = 8 bits)
 				const shardType = parseInt(hex.slice(offset, offset + 2), 16) as z.output<typeof this.extractOutputBase>['shardType'];
 				offset += 2;
 
-				// Suffix random (11 chars)
-				const suffixRandomHex = hex.slice(offset, offset + 11);
+				// Suffix random (10 chars = 40 bits)
+				const suffixRandomHex = hex.slice(offset, offset + 10);
 				const suffixRandomBuffer = await BufferHelpers.hexToBuffer(suffixRandomHex);
 				const [suffixRandomBase64, suffixRandomBase64Url] = await Promise.all([BufferHelpers.bufferToBase64(suffixRandomBuffer, false), BufferHelpers.bufferToBase64(suffixRandomBuffer, true)]);
-				offset += 11;
+				offset += 10;
 
-				// Environment (1 char)
+				// Environment (1 char = 4 bits)
 				const environment = parseInt(hex.slice(offset, offset + 1), 16) as z.output<typeof this.extractOutputBase>['environment'];
 				offset += 1;
 
-				// Stable random (64 chars)
+				// Stable random (64 chars = 256 bits)
 				const stableRandomHex = hex.slice(offset, offset + 64);
 				const stableRandomBuffer = await BufferHelpers.hexToBuffer(stableRandomHex);
 				const [stableRandomBase64, stableRandomBase64Url] = await Promise.all([BufferHelpers.bufferToBase64(stableRandomBuffer, false), BufferHelpers.bufferToBase64(stableRandomBuffer, true)]);
@@ -439,16 +438,16 @@ export class SuruId {
 			const version = parseInt(hex.slice(offset, offset + 1), 16) as z.output<typeof this.extractOutputBase>['version'];
 			offset += 1;
 
-			// Timestamp (11 chars)
-			const timestamp = parseInt(hex.slice(offset, offset + 11), 16);
+			// Timestamp (12 chars = 48 bits)
+			const timestamp = parseInt(hex.slice(offset, offset + 12), 16);
 			const date = new Date(timestamp);
-			offset += 11;
+			offset += 12;
 
-			// System Type (3 chars)
+			// System Type (3 chars = 12 bits)
 			const systemType = parseInt(hex.slice(offset, offset + 3), 16) as z.output<typeof this.extractOutputBase>['systemType'];
 			offset += 3;
 
-			// Location (3 chars)
+			// Location (3 chars = 12 bits)
 			const locationValue = parseInt(hex.slice(offset, offset + 3), 16);
 			offset += 3;
 
@@ -472,22 +471,22 @@ export class SuruId {
 				}
 			}
 
-			// Shard Type (2 chars)
+			// Shard Type (2 chars = 8 bits)
 			const shardType = parseInt(hex.slice(offset, offset + 2), 16) as z.output<typeof this.extractOutputBase>['shardType'];
 			offset += 2;
 
-			// Suffix random (11 chars)
-			const suffixRandomHex = hex.slice(offset, offset + 11);
+			// Suffix random (10 chars = 40 bits)
+			const suffixRandomHex = hex.slice(offset, offset + 10);
 			const suffixRandomBuffer = BufferHelpers.hexToBufferSync(suffixRandomHex);
 			const suffixRandomBase64 = BufferHelpers.bufferToBase64Sync(suffixRandomBuffer, false);
 			const suffixRandomBase64Url = BufferHelpers.bufferToBase64Sync(suffixRandomBuffer, true);
-			offset += 11;
+			offset += 10;
 
-			// Environment (1 char)
+			// Environment (1 char = 4 bits)
 			const environment = parseInt(hex.slice(offset, offset + 1), 16) as z.output<typeof this.extractOutputBase>['environment'];
 			offset += 1;
 
-			// Stable random (64 chars)
+			// Stable random (64 chars = 256 bits)
 			const stableRandomHex = hex.slice(offset, offset + 64);
 			const stableRandomBuffer = BufferHelpers.hexToBufferSync(stableRandomHex);
 			const stableRandomBase64 = BufferHelpers.bufferToBase64Sync(stableRandomBuffer, false);

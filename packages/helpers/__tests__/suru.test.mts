@@ -39,7 +39,7 @@ void describe('SuruId', () => {
 
 			// Random fields should have correct format
 			ok(extracted.suffixRandom.hex);
-			strictEqual(extracted.suffixRandom.hex.length, 11);
+			strictEqual(extracted.suffixRandom.hex.length, 10);
 			ok(extracted.stableRandom.hex);
 			strictEqual(extracted.stableRandom.hex.length, 64);
 		});
