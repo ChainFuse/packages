@@ -89,6 +89,10 @@ updates:
           - 'eslint-plugin-*'
           - '@eslint/*'
           - 'typescript-eslint'
+      hono:
+        patterns:
+          - 'hono'
+          - '@hono/*'
       monorepo-management:
         patterns:
           - 'lerna'
