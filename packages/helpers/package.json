@@ -72,6 +72,10 @@
 		"./net": {
 			"import": "./dist/net.mjs",
 			"types": "./dist/net.d.mts"
+		},
+		"./suru": {
+			"import": "./dist/suru.mjs",
+			"types": "./dist/suru.d.mts"
 		}
 	},
 	"prettier": "@demosjarco/prettier-config",
