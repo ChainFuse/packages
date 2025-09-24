@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 4.1.3
+
+### Patch Changes
+
+- [`f7dcc4b`](https://github.com/ChainFuse/packages/commit/f7dcc4b6a2aeb41e05cda1eb4716bb2e78425e2a) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Use `z.lazy()` to make sure default gets executed on trigger rather than on load
+
 ## 4.1.2
 
 ### Patch Changes
