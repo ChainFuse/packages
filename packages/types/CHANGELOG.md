@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.0.5
+
+### Patch Changes
+
+- [`45e6489`](https://github.com/ChainFuse/packages/commit/45e6489e3e4cd79704c09d4829a8b2fd4f677339) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Fix zod imports
+
 ## 4.0.4
 
 ### Patch Changes
