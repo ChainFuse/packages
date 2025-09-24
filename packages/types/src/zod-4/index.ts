@@ -1,8 +1,7 @@
-import type { infer as zInfer, ZodJSONSchema } from 'zod/v4';
-import { z } from 'zod/v4';
+import * as z from 'zod/v4';
 import { hexUuid4Regex, hexUuid7Regex, hexUuidRegex, prefixedUuid7Regex, prefixedUuidRegex } from '../zod-mini/index.js';
 
-export type JSON = zInfer<ZodJSONSchema>;
+export type JSON = z.infer<z.ZodJSONSchema>;
 
 export const WorkflowId = z
 	.string()
