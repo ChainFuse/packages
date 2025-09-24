@@ -43,55 +43,59 @@ export class SuruId {
 		// systemType
 		shardType: z._default(this.extractOutputBase.def.shape.shardType, D0ShardType.None),
 		// Location
-		suffixRandom: z
-			._default(
-				z.union([
-					// hex
-					z.pipe(
-						this.extractOutputBase.def.shape.suffixRandom.shape.hex,
-						z.transform((hex) => new Uint8Array(BufferHelpers.hexToBufferSync(hex))),
-					),
-					// blob
-					ZodBlob,
-					// base64
-					z.pipe(
-						this.extractOutputBase.def.shape.suffixRandom.shape.base64,
-						z.transform((base64) => new Uint8Array(BufferHelpers.base64ToBufferSync(base64))),
-					),
-					// base64url
-					z.pipe(
-						this.extractOutputBase.def.shape.suffixRandom.shape.base64url,
-						z.transform((base64url) => new Uint8Array(BufferHelpers.base64ToBufferSync(base64url))),
-					),
-				]),
-				() => CryptoHelpers.secretBytesSync(40 / 8),
-			)
-			.check(z.refine((b) => b.byteLength === 40 / 8)),
+		suffixRandom: z.lazy(() =>
+			z
+				._default(
+					z.union([
+						// hex
+						z.pipe(
+							this.extractOutputBase.def.shape.suffixRandom.shape.hex,
+							z.transform((hex) => new Uint8Array(BufferHelpers.hexToBufferSync(hex))),
+						),
+						// blob
+						ZodBlob,
+						// base64
+						z.pipe(
+							this.extractOutputBase.def.shape.suffixRandom.shape.base64,
+							z.transform((base64) => new Uint8Array(BufferHelpers.base64ToBufferSync(base64))),
+						),
+						// base64url
+						z.pipe(
+							this.extractOutputBase.def.shape.suffixRandom.shape.base64url,
+							z.transform((base64url) => new Uint8Array(BufferHelpers.base64ToBufferSync(base64url))),
+						),
+					]),
+					() => CryptoHelpers.secretBytesSync(40 / 8),
+				)
+				.check(z.refine((b) => b.byteLength === 40 / 8)),
+		),
 		// environment
-		stableRandom: z
-			._default(
-				z.union([
-					// hex
-					z.pipe(
-						this.extractOutputBase.def.shape.stableRandom.shape.hex,
-						z.transform((hex) => new Uint8Array(BufferHelpers.hexToBufferSync(hex))),
-					),
-					// blob
-					ZodBlob,
-					// base64
-					z.pipe(
-						this.extractOutputBase.def.shape.stableRandom.shape.base64,
-						z.transform((base64) => new Uint8Array(BufferHelpers.base64ToBufferSync(base64))),
-					),
-					// base64url
-					z.pipe(
-						this.extractOutputBase.def.shape.stableRandom.shape.base64url,
-						z.transform((base64url) => new Uint8Array(BufferHelpers.base64ToBufferSync(base64url))),
-					),
-				]),
-				() => CryptoHelpers.secretBytesSync(256 / 8),
-			)
-			.check(z.refine((b) => b.byteLength === 256 / 8)),
+		stableRandom: z.lazy(() =>
+			z
+				._default(
+					z.union([
+						// hex
+						z.pipe(
+							this.extractOutputBase.def.shape.stableRandom.shape.hex,
+							z.transform((hex) => new Uint8Array(BufferHelpers.hexToBufferSync(hex))),
+						),
+						// blob
+						ZodBlob,
+						// base64
+						z.pipe(
+							this.extractOutputBase.def.shape.stableRandom.shape.base64,
+							z.transform((base64) => new Uint8Array(BufferHelpers.base64ToBufferSync(base64))),
+						),
+						// base64url
+						z.pipe(
+							this.extractOutputBase.def.shape.stableRandom.shape.base64url,
+							z.transform((base64url) => new Uint8Array(BufferHelpers.base64ToBufferSync(base64url))),
+						),
+					]),
+					() => CryptoHelpers.secretBytesSync(256 / 8),
+				)
+				.check(z.refine((b) => b.byteLength === 256 / 8)),
+		),
 	});
 	public static createInput = z.union([
 		z.extend(SuruId.createInputBase, {
