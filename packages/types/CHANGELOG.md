@@ -1,5 +1,15 @@
 # @chainfuse/types
 
+## 4.0.4
+
+### Patch Changes
+
+- [`96123c0`](https://github.com/ChainFuse/packages/commit/96123c0b4da789456a68bf601f3c2482ab477a7d) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Also export zod 4 model enums
+
+- [#672](https://github.com/ChainFuse/packages/pull/672) [`90e67f7`](https://github.com/ChainFuse/packages/commit/90e67f7a6b631a9c011ec395dbedf0650669811b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [`52b4886`](https://github.com/ChainFuse/packages/commit/52b4886561f2fd18b7c2935364824017cae0c0b2) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Fix zod v4 import
+
 ## 4.0.3
 
 ### Patch Changes
