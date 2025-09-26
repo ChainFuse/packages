@@ -589,6 +589,29 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '41ca173f-72d5-4420-8915-49e835d2676e',
+					source: 1,
+					name: '@cf/aisingapore/gemma-sea-lion-v4-27b-it',
+					description: 'SEA-LION stands for Southeast Asian Languages In One Network, which is a collection of Large Language Models (LLMs) which have been pretrained and instruct-tuned for the Southeast Asia (SEA) region.',
+					created_at: '2025-09-23 19:27:30.468',
+					tags: [],
+					properties: {
+						context_window: 128000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.35,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.56,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+				{
 					id: '3dcb4f2d-26a8-412b-b6e3-2a368beff66b',
 					source: 1,
 					name: '@cf/meta/llama-3.1-8b-instruct-awq',
@@ -914,6 +937,23 @@ export const workersAiCatalog = {
 							{
 								unit: 'per M input tokens',
 								price: 0.012,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+				{
+					id: 'bc2b61f6-7eb3-4cdf-94f5-ffc128bd6aa4',
+					source: 1,
+					name: '@cf/pfnet/plamo-embedding-1b',
+					description: 'PLaMo-Embedding-1B is a Japanese text embedding model developed by Preferred Networks, Inc.\n\nIt can convert Japanese text input into numerical vectors and can be used for a wide range of applications, including information retrieval, text classification, and clustering.',
+					created_at: '2025-09-24 18:42:05.576',
+					tags: [],
+					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.019,
 								currency: 'USD',
 							},
 						],
@@ -1394,6 +1434,28 @@ export const workersAiCatalog = {
 						info: 'https://github.com/facebookresearch/fairseq/tree/main/examples/m2m_100',
 						languages: 'english, chinese, french, spanish, arabic, russian, german, japanese, portuguese, hindi',
 						terms: 'https://github.com/facebookresearch/fairseq/blob/main/LICENSE',
+					},
+				},
+				{
+					id: '60920ed4-cf72-449a-a0f3-a38456b78262',
+					source: 1,
+					name: '@cf/ai4bharat/indictrans2-en-indic-1B',
+					description: 'IndicTrans2 is the first open-source transformer-based multilingual NMT model that supports high-quality translations across all the 22 scheduled Indic languages',
+					created_at: '2025-09-23 18:19:17.382',
+					tags: [],
+					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.34,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.34,
+								currency: 'USD',
+							},
+						],
 					},
 				},
 			],
