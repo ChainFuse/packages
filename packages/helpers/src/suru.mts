@@ -364,12 +364,12 @@ export class SuruId {
 
 				if (locationKey && locationKey !== 'none') {
 					// Check if it's a jurisdiction
-					if ((Object.values(DOJurisdictions) as string[]).includes(locationKey)) {
+					if ((Object.values(DOJurisdictions)).includes(locationKey)) {
 						locationJurisdiction = locationKey as z.output<typeof this.extractOutput>['locationJurisdiction'];
 					}
 
 					// Check if it's a location hint
-					if ((Object.values(DOLocations) as string[]).includes(locationKey)) {
+					if ((Object.values(DOLocations)).includes(locationKey)) {
 						locationHint = locationKey as z.output<typeof this.extractOutput>['locationHint'];
 					}
 				}
@@ -465,12 +465,12 @@ export class SuruId {
 
 			if (locationKey && locationKey !== 'none') {
 				// Check if it's a jurisdiction
-				if ((Object.values(DOJurisdictions) as string[]).includes(locationKey)) {
+				if ((Object.values(DOJurisdictions)).includes(locationKey)) {
 					locationJurisdiction = locationKey as z.output<typeof this.extractOutput>['locationJurisdiction'];
 				}
 
 				// Check if it's a location hint
-				if ((Object.values(DOLocations) as string[]).includes(locationKey)) {
+				if ((Object.values(DOLocations)).includes(locationKey)) {
 					locationHint = locationKey as z.output<typeof this.extractOutput>['locationHint'];
 				}
 			}
