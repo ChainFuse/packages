@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer';
 import * as z4 from 'zod/v4';
 import { hexUuid4Regex, hexUuid7Regex, hexUuidRegex, prefixedUuid7Regex, prefixedUuidRegex } from '../zod-mini/index.js';
 

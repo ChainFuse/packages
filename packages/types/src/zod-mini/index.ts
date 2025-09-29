@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer';
 import * as zm from 'zod/mini';
 
 export type ZodPick<O extends zm.ZodMiniObject> = Partial<Record<keyof zm.output<O>, boolean>>;
