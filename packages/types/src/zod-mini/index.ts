@@ -1,4 +1,3 @@
-import { Buffer } from 'node:buffer';
 import * as zm from 'zod/mini';
 
 export type ZodPick<O extends zm.ZodMiniObject> = Partial<Record<keyof zm.output<O>, boolean>>;
@@ -26,11 +25,6 @@ export const DoId = zm.hex().check(zm.trim(), zm.length(64), zm.toLowerCase());
 export const ZodCoordinate = zm.string().check(zm.trim(), zm.minLength(3), zm.regex(new RegExp(/^-?\d+\.\d+$/i)));
 
 export const ZodBlob = zm.union([
-	// Literal `node:buffer` type
-	zm.pipe(
-		zm.instanceof(Buffer),
-		zm.transform((b) => new Uint8Array(b) as Uint8Array<ArrayBufferLike>),
-	),
 	// Uint8Array
 	zm.pipe(
 		zm.instanceof(Uint8Array),

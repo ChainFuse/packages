@@ -1,4 +1,3 @@
-import { Buffer } from 'node:buffer';
 import * as z4 from 'zod/v4';
 import { hexUuid4Regex, hexUuid7Regex, hexUuidRegex, prefixedUuid7Regex, prefixedUuidRegex } from '../zod-mini/index.js';
 
@@ -21,8 +20,6 @@ export const ZodCoordinate = z4
 	.regex(new RegExp(/^-?\d+\.\d+$/i));
 
 export const ZodBlob = z4.union([
-	// Literal `node:buffer` type
-	z4.instanceof(Buffer).transform((b) => new Uint8Array(b)),
 	// Uint8Array
 	z4.instanceof(Uint8Array).transform((ui8a) => ui8a as Uint8Array<ArrayBufferLike>),
 	// ArrayBuffer
