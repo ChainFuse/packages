@@ -1,5 +1,20 @@
 # @chainfuse/helpers
 
+## 4.1.5
+
+### Patch Changes
+
+- [#679](https://github.com/ChainFuse/packages/pull/679) [`4962023`](https://github.com/ChainFuse/packages/commit/49620235c6c8c8bf682cfcba9a66e4f790bef772) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#678](https://github.com/ChainFuse/packages/pull/678) [`c00de93`](https://github.com/ChainFuse/packages/commit/c00de9353555eff674e9d1f9971476f850f4d33b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#676](https://github.com/ChainFuse/packages/pull/676) [`1e5aa20`](https://github.com/ChainFuse/packages/commit/1e5aa20bf924b6de56bfb1aa8c3c26c0c431a7d9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump tsx
+
+- [#677](https://github.com/ChainFuse/packages/pull/677) [`43a4244`](https://github.com/ChainFuse/packages/commit/43a42440cf22d26226e1fa2a0fe920487b6e1425) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- Updated dependencies [[`4962023`](https://github.com/ChainFuse/packages/commit/49620235c6c8c8bf682cfcba9a66e4f790bef772), [`c00de93`](https://github.com/ChainFuse/packages/commit/c00de9353555eff674e9d1f9971476f850f4d33b), [`1e5aa20`](https://github.com/ChainFuse/packages/commit/1e5aa20bf924b6de56bfb1aa8c3c26c0c431a7d9), [`43a4244`](https://github.com/ChainFuse/packages/commit/43a42440cf22d26226e1fa2a0fe920487b6e1425), [`398d675`](https://github.com/ChainFuse/packages/commit/398d6757c0385a58e9198b464787c80b272fc69d), [`45e6489`](https://github.com/ChainFuse/packages/commit/45e6489e3e4cd79704c09d4829a8b2fd4f677339)]:
+    - @chainfuse/types@4.0.5
+
 ## 4.1.4
 
 ### Patch Changes
