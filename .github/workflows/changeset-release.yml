@@ -63,4 +63,3 @@ jobs:
           commitMode: github-api
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          NODE_AUTH_TOKEN: ${{ secrets.PUBLIC_DEPLOY_NPM_TOKEN }}
