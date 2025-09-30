@@ -32,17 +32,10 @@ export const ZodBlob = zm.union([
 	),
 	// ArrayBuffer
 	zm.pipe(
-		zm.union([
-			// Each one has to be manually specified
-			zm.pipe(
-				zm.instanceof(ArrayBuffer),
-				zm.transform((ab) => ab as ArrayBufferLike),
-			),
-			zm.pipe(
-				zm.instanceof(SharedArrayBuffer),
-				zm.transform((sab) => sab as ArrayBufferLike),
-			),
-		]),
+		zm.pipe(
+			zm.instanceof(ArrayBuffer),
+			zm.transform((ab) => ab as ArrayBufferLike),
+		),
 		zm.transform((abl) => new Uint8Array(abl)),
 	),
 	// D0Blob

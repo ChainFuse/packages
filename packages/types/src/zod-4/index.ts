@@ -24,11 +24,8 @@ export const ZodBlob = z4.union([
 	z4.instanceof(Uint8Array).transform((ui8a) => ui8a as Uint8Array<ArrayBufferLike>),
 	// ArrayBuffer
 	z4
-		.union([
-			// Each one has to be manually specified
-			z4.instanceof(ArrayBuffer).transform((ab) => ab as ArrayBufferLike),
-			z4.instanceof(SharedArrayBuffer).transform((sab) => sab as ArrayBufferLike),
-		])
+		.instanceof(ArrayBuffer)
+		.transform((ab) => ab as ArrayBufferLike)
 		.transform((abl) => new Uint8Array(abl)),
 	// D0Blob
 	z4.tuple([z4.int().min(0).max(255)], z4.int().min(0).max(255)).transform((arr) => new Uint8Array(arr)),
