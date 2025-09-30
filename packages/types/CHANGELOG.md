@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.0.6
+
+### Patch Changes
+
+- [`89c5044`](https://github.com/ChainFuse/packages/commit/89c504461eee21dcfb9de8e37f187fff077674df) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Remove literal `Buffer` type from `ZodBlob`
+
 ## 4.0.5
 
 ### Patch Changes
