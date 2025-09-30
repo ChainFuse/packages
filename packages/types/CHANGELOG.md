@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.0.7
+
+### Patch Changes
+
+- [`6f1a3b6`](https://github.com/ChainFuse/packages/commit/6f1a3b613f1495d020f79f19e0e44f615471eb68) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Remove `SharedArrayBuffer`
+
 ## 4.0.6
 
 ### Patch Changes
