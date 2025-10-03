@@ -933,6 +933,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						async_queue: true,
+						context_window: 60000,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -1137,6 +1138,18 @@ export const workersAiCatalog = {
 							},
 						],
 						info: 'https://openai.com/research/whisper',
+					},
+				},
+				{
+					id: 'a2a2afba-b609-4325-8c41-5791ce962239',
+					source: 1,
+					name: '@cf/deepgram/flux',
+					description: 'Flux is the first conversational speech recognition model built specifically for voice agents.',
+					created_at: '2025-09-29 21:07:55.114',
+					tags: [],
+					properties: {
+						partner: true,
+						realtime: true,
 					},
 				},
 				{
