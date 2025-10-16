@@ -495,6 +495,29 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '7952d0cc-cb00-4e10-be02-667565c2ee0f',
+					source: 1,
+					name: '@cf/ibm-granite/granite-4.0-h-micro',
+					description: 'Granite 4.0 instruct models deliver strong performance across benchmarks, achieving industry-leading results in key agentic tasks like instruction following and function calling. These efficiencies make the models well-suited for a wide range of use cases like retrieval-augmented generation (RAG), multi-agent workflows, and edge deployments.',
+					created_at: '2025-10-07 18:46:29.436',
+					tags: [],
+					properties: {
+						context_window: 131000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.017,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.11,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+				{
 					id: '673c56cc-8553-49a1-b179-dd549ec9209a',
 					source: 2,
 					name: '@hf/thebloke/openhermes-2.5-mistral-7b-awq',
