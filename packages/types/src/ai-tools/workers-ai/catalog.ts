@@ -1120,6 +1120,26 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: 'c5255b94-2161-4779-bd25-54f061829a2a',
+					source: 1,
+					name: '@cf/deepgram/aura-2-es',
+					description: 'Aura-2 is a context-aware text-to-speech (TTS) model that applies natural pacing, expressiveness, and fillers based on the context of the provided text. The quality of your text input directly impacts the naturalness of the audio output.',
+					created_at: '2025-10-09 22:42:37.002',
+					tags: [],
+					properties: {
+						async_queue: true,
+						price: [
+							{
+								unit: 'per 1k characters',
+								price: 0.03,
+								currency: 'USD',
+							},
+						],
+						partner: true,
+						realtime: true,
+					},
+				},
+				{
 					id: '1f55679f-009e-4456-aa4f-049a62b4b6a0',
 					source: 1,
 					name: '@cf/deepgram/aura-1',
@@ -1130,8 +1150,28 @@ export const workersAiCatalog = {
 						async_queue: true,
 						price: [
 							{
-								unit: 'per audio minute',
-								price: 0,
+								unit: 'per 1k characters',
+								price: 0.015,
+								currency: 'USD',
+							},
+						],
+						partner: true,
+						realtime: true,
+					},
+				},
+				{
+					id: '01564c52-8717-47dc-8efd-907a2ca18301',
+					source: 1,
+					name: '@cf/deepgram/aura-2-en',
+					description: 'Aura-2 is a context-aware text-to-speech (TTS) model that applies natural pacing, expressiveness, and fillers based on the context of the provided text. The quality of your text input directly impacts the naturalness of the audio output.',
+					created_at: '2025-10-09 22:19:34.483',
+					tags: [],
+					properties: {
+						async_queue: true,
+						price: [
+							{
+								unit: 'per 1k characters',
+								price: 0.03,
 								currency: 'USD',
 							},
 						],
@@ -1188,6 +1228,11 @@ export const workersAiCatalog = {
 							{
 								unit: 'per audio minute',
 								price: 0.0052,
+								currency: 'USD',
+							},
+							{
+								unit: 'per audio minute (websocket)',
+								price: 0.0092,
 								currency: 'USD',
 							},
 						],
