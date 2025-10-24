@@ -63,7 +63,7 @@
 	},
 	"devDependencies": {
 		"@ai-sdk/provider": "^2.0.0",
-		"@cloudflare/workers-types": "^4.20250927.0",
+		"@cloudflare/workers-types": "^4.20251014.0",
 		"openai": "^5.23.2"
 	}
 }
