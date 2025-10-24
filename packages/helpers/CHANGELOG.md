@@ -1,5 +1,18 @@
 # @chainfuse/helpers
 
+## 4.1.6
+
+### Patch Changes
+
+- [`23239b3`](https://github.com/ChainFuse/packages/commit/23239b3ed49ab03eb937c5d7a206a57305e35329) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+- [`f7aa5ba`](https://github.com/ChainFuse/packages/commit/f7aa5ba6fe56138082228c3189aef2cccc76353e) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump typescript
+
+- [`b6f55e9`](https://github.com/ChainFuse/packages/commit/b6f55e9d1782f9c3d68e692c259e370b7af18425) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- Updated dependencies [[`23239b3`](https://github.com/ChainFuse/packages/commit/23239b3ed49ab03eb937c5d7a206a57305e35329), [`f7aa5ba`](https://github.com/ChainFuse/packages/commit/f7aa5ba6fe56138082228c3189aef2cccc76353e), [`b6f55e9`](https://github.com/ChainFuse/packages/commit/b6f55e9d1782f9c3d68e692c259e370b7af18425)]:
+    - @chainfuse/types@4.0.8
+
 ## 4.1.5
 
 ### Patch Changes
