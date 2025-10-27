@@ -30,9 +30,9 @@
 	"prettier": "@demosjarco/prettier-config",
 	"devDependencies": {
 		"@actions/core": "^1.11.1",
-		"@azure/arm-cognitiveservices": "^7.7.0",
+		"@azure/arm-cognitiveservices": "^8.0.0",
 		"@azure/arm-resources-subscriptions": "^2.1.0",
-		"@azure/identity": "^4.12.0",
+		"@azure/identity": "^4.13.0",
 		"@changesets/changelog-github": "^0.5.1",
 		"@changesets/cli": "^2.29.7",
 		"@demosjarco/prettier-config": "^1.0.2",
