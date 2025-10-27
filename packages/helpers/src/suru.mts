@@ -363,13 +363,21 @@ export class SuruId {
 				const locationKey = Object.entries(D0CombinedLocations).find(([, enumValue]) => Number(enumValue) === locationValue)?.[0] as keyof typeof D0CombinedLocations | undefined;
 
 				if (locationKey && locationKey !== 'none') {
-					// Check if it's a jurisdiction
-					if ((Object.values(DOJurisdictions)).includes(locationKey)) {
+					if (
+						Object.values(DOJurisdictions).includes(
+							// @ts-expect-error Check if it's a jurisdiction
+							locationKey,
+						)
+					) {
 						locationJurisdiction = locationKey as z.output<typeof this.extractOutput>['locationJurisdiction'];
 					}
 
-					// Check if it's a location hint
-					if ((Object.values(DOLocations)).includes(locationKey)) {
+					if (
+						Object.values(DOLocations).includes(
+							// @ts-expect-error Check if it's a location hint
+							locationKey,
+						)
+					) {
 						locationHint = locationKey as z.output<typeof this.extractOutput>['locationHint'];
 					}
 				}
@@ -464,13 +472,21 @@ export class SuruId {
 			const locationKey = Object.entries(D0CombinedLocations).find(([, enumValue]) => Number(enumValue) === locationValue)?.[0] as keyof typeof D0CombinedLocations | undefined;
 
 			if (locationKey && locationKey !== 'none') {
-				// Check if it's a jurisdiction
-				if ((Object.values(DOJurisdictions)).includes(locationKey)) {
+				if (
+					Object.values(DOJurisdictions).includes(
+						// @ts-expect-error Check if it's a jurisdiction
+						locationKey,
+					)
+				) {
 					locationJurisdiction = locationKey as z.output<typeof this.extractOutput>['locationJurisdiction'];
 				}
 
-				// Check if it's a location hint
-				if ((Object.values(DOLocations)).includes(locationKey)) {
+				if (
+					Object.values(DOLocations).includes(
+						// @ts-expect-error Check if it's a location hint
+						locationKey,
+					)
+				) {
 					locationHint = locationKey as z.output<typeof this.extractOutput>['locationHint'];
 				}
 			}
