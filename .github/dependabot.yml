@@ -95,3 +95,7 @@ updates:
           - '@cloudflare/workers-types'
           - '@builder.io/qwik-city'
           - 'wrangler'
+      validation:
+        patterns:
+          - 'zod'
+          - 'validator'
