@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 4.1.7
+
+### Patch Changes
+
+- [`fd834fa`](https://github.com/ChainFuse/packages/commit/fd834fa9ece6cd33ac2573dd981bcfc1feae5b54) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): More lax Request types
+
 ## 4.1.6
 
 ### Patch Changes
