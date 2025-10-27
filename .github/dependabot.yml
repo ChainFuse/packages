@@ -72,16 +72,6 @@ updates:
         exclude-patterns:
           - '@cloudflare/ai*'
           - '@cloudflare/workers-types'
-      typescript-core:
-        patterns:
-          - 'typescript'
-          - 'tsx'
-      typescript-types:
-        patterns:
-          - '@types/*'
-          - '@cloudflare/workers-types'
-          - '@builder.io/qwik-city'
-          - 'wrangler'
       code-management:
         patterns:
           - 'prettier'
@@ -95,3 +85,13 @@ updates:
         patterns:
           - 'lerna'
           - '@changesets/*'
+      typescript-core:
+        patterns:
+          - 'typescript'
+          - 'tsx'
+      typescript-types:
+        patterns:
+          - '@types/*'
+          - '@cloudflare/workers-types'
+          - '@builder.io/qwik-city'
+          - 'wrangler'
