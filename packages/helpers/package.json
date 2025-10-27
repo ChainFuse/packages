@@ -84,7 +84,7 @@
 		"@discordjs/rest": "^2.6.0",
 		"chalk": "^5.6.2",
 		"cloudflare": "^5.2.0",
-		"drizzle-orm": "^0.44.5",
+		"drizzle-orm": "^0.44.7",
 		"strip-ansi": "^7.1.2",
 		"uuid": "^13.0.0",
 		"zod": "^4.1.12"
