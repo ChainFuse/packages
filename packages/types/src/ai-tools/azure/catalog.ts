@@ -42,8 +42,6 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4.1',
-				inputTokenCost: 0.000002,
-				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
@@ -124,8 +122,6 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4.1',
-				inputTokenCost: 0.000002,
-				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
@@ -190,8 +186,6 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4.1',
-				inputTokenCost: 0.000002,
-				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
@@ -285,8 +279,6 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4.1-mini',
-				inputTokenCost: 4e-7,
-				outputTokenCost: 0.0000016,
 			},
 			{
 				name: 'gpt-4.1-nano',
@@ -612,8 +604,6 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4.1',
-				inputTokenCost: 0.000002,
-				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
@@ -656,8 +646,6 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4.1',
-				inputTokenCost: 0.000002,
-				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
@@ -762,8 +750,6 @@ export const azureCatalog = [
 		languageModelAvailability: [
 			{
 				name: 'gpt-4.1',
-				inputTokenCost: 0.000002,
-				outputTokenCost: 0.000008,
 			},
 			{
 				name: 'gpt-4o',
