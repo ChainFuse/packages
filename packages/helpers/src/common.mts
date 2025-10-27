@@ -1,8 +1,8 @@
 import type { Request as CfRequest, WorkerVersionMetadata } from '@cloudflare/workers-types/experimental';
 import type { Chalk } from 'chalk';
 
-interface QwikCityPlatform {
-	request?: CfRequest;
+interface QwikCityPlatform<R extends CfRequest | Request = CfRequest | Request> {
+	request?: R;
 }
 
 export class Helpers {
