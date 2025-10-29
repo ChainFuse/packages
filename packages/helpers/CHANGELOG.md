@@ -1,5 +1,14 @@
 # @chainfuse/helpers
 
+## 4.1.9
+
+### Patch Changes
+
+- [`af54ec1`](https://github.com/ChainFuse/packages/commit/af54ec1bcf98ec65e3c6fe8daff48fc219d8ca8e) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Use `CacheStorageLike` from `types` package
+
+- Updated dependencies [[`637dafa`](https://github.com/ChainFuse/packages/commit/637dafac70200294ffdfd4503fc10edb31040849)]:
+    - @chainfuse/types@4.1.0
+
 ## 4.1.8
 
 ### Patch Changes
