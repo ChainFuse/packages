@@ -52,7 +52,7 @@ updates:
     ignore:
       - dependency-name: '@types/node'
         versions:
-          - '>=23.0.0'
+          - '>=25.0.0'
     groups:
       ai:
         patterns:
