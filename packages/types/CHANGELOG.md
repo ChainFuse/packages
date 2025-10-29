@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.1.0
+
+### Minor Changes
+
+- [`637dafa`](https://github.com/ChainFuse/packages/commit/637dafac70200294ffdfd4503fc10edb31040849) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Export `CacheStorageLike`
+
 ## 4.0.9
 
 ### Patch Changes
