@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 4.0.9
+
+### Patch Changes
+
+- [`9b229ca`](https://github.com/ChainFuse/packages/commit/9b229ca9bfbd8e89699be71f33df7c6a56a8657b) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai
+
+- [`e079ea2`](https://github.com/ChainFuse/packages/commit/e079ea22775da4ae4821317f88fce49ae3d05781) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-major): bump @types/node, @types/validator
+
 ## 4.0.8
 
 ### Patch Changes
