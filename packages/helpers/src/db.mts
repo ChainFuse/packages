@@ -158,16 +158,16 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 			ttl = Math.floor((new Date(config.pxat).getTime() - Date.now()) / 1000);
 		}
 
-		const cacheRequest = new Response(JSON.stringify(response), {
+		const cacheResponse = new Response(JSON.stringify(response), {
 			headers: {
 				'Content-Type': 'application/json',
 				'Cache-Control': `public, max-age=${ttl}, s-maxage=${ttl}`,
 			},
 		});
 
-		cacheRequest.headers.set('ETag', await CryptoHelpers.generateETag(cacheRequest));
+		cacheResponse.headers.set('ETag', await CryptoHelpers.generateETag(cacheResponse));
 
-		await this.cache.then(async (cache) => cache.put(this.getCacheKey(isTag ? { tag: hashedQuery } : { key: hashedQuery }), cacheRequest)).then(() => console.debug('SQLCache.put', isTag ? 'tag' : 'key', hashedQuery, 'SUCCESS'));
+		await this.cache.then(async (cache) => cache.put(this.getCacheKey(isTag ? { tag: hashedQuery } : { key: hashedQuery }), cacheResponse)).then(() => console.debug('SQLCache.put', isTag ? 'tag' : 'key', hashedQuery, 'SUCCESS'));
 
 		for (const table of tables) {
 			const keys = this.usedTablesPerKey[table];
