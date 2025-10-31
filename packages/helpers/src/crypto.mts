@@ -34,6 +34,10 @@ export class CryptoHelpers {
 		});
 	}
 
+	public static getHashStreaming(algorithm: 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512', body: ReadableStream<Uint8Array>) {
+		return CryptoHelpersInternals.node_getHashStreaming(algorithm, body).catch(() => CryptoHelpersInternals.browser_getHashStreaming(algorithm, body));
+	}
+
 	public static getHash(algorithm: 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512', input: string | ArrayBufferLike) {
 		return CryptoHelpersInternals.node_getHash(algorithm, input).catch(() => CryptoHelpersInternals.browser_getHash(algorithm, input));
 	}
