@@ -47,9 +47,18 @@ export class CryptoHelpers {
 	 * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag#etag_value
 	 */
 	public static generateETag(response: Response, algorithm: Parameters<typeof this.getHash>[0] = 'SHA-512') {
-		return response
-			.clone()
-			.arrayBuffer()
-			.then((buffer) => this.getHash(algorithm, buffer).then((hex) => `"${hex}"`));
+		return (() => {
+			const body = response.clone().body;
+			if (body) {
+				return this.getHashStreaming(algorithm, body).then((hex) => `"${hex}"`);
+			} else {
+				throw new Error('Response has no body to hash');
+			}
+		})().catch(() =>
+			response
+				.clone()
+				.arrayBuffer()
+				.then((buffer) => this.getHash(algorithm, buffer).then((hex) => `"${hex}"`)),
+		);
 	}
 }
