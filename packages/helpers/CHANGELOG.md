@@ -1,5 +1,15 @@
 # @chainfuse/helpers
 
+## 4.2.0
+
+### Minor Changes
+
+- [`db540ce`](https://github.com/ChainFuse/packages/commit/db540ce136f8966d8672e4ea7b15e860a0141268) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Add streaming hash support
+
+### Patch Changes
+
+- [`9f8aadc`](https://github.com/ChainFuse/packages/commit/9f8aadc3b48c6a0c7e45f36758d02d2f91a3c750) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Optimize ETag to use hash streaming if possible
+
 ## 4.1.9
 
 ### Patch Changes
