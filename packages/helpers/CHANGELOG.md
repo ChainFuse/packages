@@ -1,5 +1,20 @@
 # @chainfuse/helpers
 
+## 4.2.1
+
+### Patch Changes
+
+- [#713](https://github.com/ChainFuse/packages/pull/713) [`6aa172f`](https://github.com/ChainFuse/packages/commit/6aa172f308e80882b6f21e2869607a3b1b208252) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#714](https://github.com/ChainFuse/packages/pull/714) [`54b4038`](https://github.com/ChainFuse/packages/commit/54b403810a522fc26fc01da84c817e2e78ac6aa0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+- [#717](https://github.com/ChainFuse/packages/pull/717) [`f0ebeea`](https://github.com/ChainFuse/packages/commit/f0ebeeafbe99e708726842984e539c69092f90f2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#716](https://github.com/ChainFuse/packages/pull/716) [`b7bad30`](https://github.com/ChainFuse/packages/commit/b7bad30330edb3c090a933aa7f28fb44591302b2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump validator
+
+- Updated dependencies [[`6aa172f`](https://github.com/ChainFuse/packages/commit/6aa172f308e80882b6f21e2869607a3b1b208252), [`54b4038`](https://github.com/ChainFuse/packages/commit/54b403810a522fc26fc01da84c817e2e78ac6aa0), [`f0ebeea`](https://github.com/ChainFuse/packages/commit/f0ebeeafbe99e708726842984e539c69092f90f2), [`b7bad30`](https://github.com/ChainFuse/packages/commit/b7bad30330edb3c090a933aa7f28fb44591302b2)]:
+    - @chainfuse/types@4.1.1
+
 ## 4.2.0
 
 ### Minor Changes
