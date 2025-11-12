@@ -37,7 +37,7 @@
 		"@changesets/cli": "^2.29.7",
 		"@demosjarco/prettier-config": "^1.0.2",
 		"@eslint/js": "^9.39.1",
-		"@types/node": "^24.10.0",
+		"@types/node": "^24.10.1",
 		"deepmerge": "^4.3.1",
 		"eslint": "^9.39.1",
 		"lerna": "^9.0.0",
