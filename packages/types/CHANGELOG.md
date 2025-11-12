@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 4.1.2
+
+### Patch Changes
+
+- [#720](https://github.com/ChainFuse/packages/pull/720) [`ddc9ee3`](https://github.com/ChainFuse/packages/commit/ddc9ee338716b888d00545706779ea276537c1de) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump ai, openai
+
+- [#721](https://github.com/ChainFuse/packages/pull/721) [`eecb16d`](https://github.com/ChainFuse/packages/commit/eecb16d3bb827223ae3ae5c7950901ba2f92b797) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @types/node, @types/validator
+
 ## 4.1.1
 
 ### Patch Changes
