@@ -515,6 +515,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						function_calling: true,
 					},
 				},
 				{
@@ -632,6 +633,31 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+					},
+				},
+				{
+					id: '4090e54c-eee4-4221-b410-10c1c0f92f17',
+					source: 1,
+					name: '@cf/qwen/qwen3-30b-a3b-fp8',
+					description: 'Qwen3 is the latest generation of large language models in Qwen series, offering a comprehensive suite of dense and mixture-of-experts (MoE) models. Built upon extensive training, Qwen3 delivers groundbreaking advancements in reasoning, instruction-following, agent capabilities, and multilingual support.',
+					created_at: '2025-04-30 21:36:10.009',
+					tags: [],
+					properties: {
+						async_queue: true,
+						context_window: 32768,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.051,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.34,
+								currency: 'USD',
+							},
+						],
+						function_calling: true,
 					},
 				},
 				{
@@ -957,6 +983,23 @@ export const workersAiCatalog = {
 					properties: {
 						async_queue: true,
 						context_window: 60000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.012,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+				{
+					id: 'cb254e3b-372b-4d4e-8526-ada79940427a',
+					source: 1,
+					name: '@cf/qwen/qwen3-embedding-0.6b',
+					description: 'The Qwen3 Embedding model series is the latest proprietary model of the Qwen family, specifically designed for text embedding and ranking tasks. ',
+					created_at: '2025-06-18 20:23:22.086',
+					tags: [],
+					properties: {
 						price: [
 							{
 								unit: 'per M input tokens',
