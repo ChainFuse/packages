@@ -180,6 +180,7 @@ export const workersAiCatalog = {
 					created_at: '2025-01-22 23:26:23.495',
 					tags: [],
 					properties: {
+						context_window: 131072,
 						price: [
 							{
 								unit: 'per M input tokens',
