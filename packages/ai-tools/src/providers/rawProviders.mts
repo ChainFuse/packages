@@ -124,11 +124,6 @@ export class AiRawProviders extends AiBase {
 			async ({ createAzure }) =>
 				createAzure({
 					apiKey: 'apikey-placeholder',
-					/**
-					 * @link https://learn.microsoft.com/en-us/azure/ai-services/openai/reference#api-specs
-					 * From the table, pick the `Latest GA release` for `Data plane - inference`
-					 */
-					apiVersion: '2024-10-21',
 					useDeploymentBasedUrls: true,
 					baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'azure-openai', 'server-placeholder'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 					headers: {
