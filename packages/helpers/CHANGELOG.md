@@ -1,5 +1,20 @@
 # @chainfuse/helpers
 
+## 4.2.3
+
+### Patch Changes
+
+- [#732](https://github.com/ChainFuse/packages/pull/732) [`50d8818`](https://github.com/ChainFuse/packages/commit/50d881883ba51129b566e8342325198c20481199) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @azure/arm-cognitiveservices, @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, ai, openai
+
+- [#733](https://github.com/ChainFuse/packages/pull/733) [`e8b6899`](https://github.com/ChainFuse/packages/commit/e8b689905f535da835e55352dd0f406ebaeb5cd6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#734](https://github.com/ChainFuse/packages/pull/734) [`c171dd4`](https://github.com/ChainFuse/packages/commit/c171dd4e8048ca48a9b3582a6c49186a73eb341f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump lerna
+
+- [#735](https://github.com/ChainFuse/packages/pull/735) [`459b99f`](https://github.com/ChainFuse/packages/commit/459b99f923fd2a0019cbe9a95cd79a015386109f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types, @types/validator
+
+- Updated dependencies [[`50d8818`](https://github.com/ChainFuse/packages/commit/50d881883ba51129b566e8342325198c20481199), [`e8b6899`](https://github.com/ChainFuse/packages/commit/e8b689905f535da835e55352dd0f406ebaeb5cd6), [`c171dd4`](https://github.com/ChainFuse/packages/commit/c171dd4e8048ca48a9b3582a6c49186a73eb341f), [`459b99f`](https://github.com/ChainFuse/packages/commit/459b99f923fd2a0019cbe9a95cd79a015386109f)]:
+    - @chainfuse/types@4.1.3
+
 ## 4.2.2
 
 ### Patch Changes
