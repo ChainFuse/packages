@@ -1258,6 +1258,13 @@ export const workersAiCatalog = {
 					created_at: '2025-09-29 21:07:55.114',
 					tags: [],
 					properties: {
+						price: [
+							{
+								unit: 'per audio minute (websocket)',
+								price: 0,
+								currency: 'USD',
+							},
+						],
 						partner: true,
 						terms: 'https://deepgram.com/terms',
 						realtime: true,
