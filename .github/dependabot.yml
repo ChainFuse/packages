@@ -32,6 +32,10 @@ updates:
         patterns:
           - 'actions/cache'
           - 'actions/cache/*'
+      ci-cd:
+        patterns:
+          - 'changesets/*'
+          - 'dependabot/*'
       sast:
         patterns:
           - 'github/codeql-*'
@@ -40,6 +44,10 @@ updates:
           - 'microsoft/security-devops-action'
           - 'microsoft/DevSkim-Action'
           - 'ossf/*'
+      setup:
+        patterns:
+          - 'actions/checkout'
+          - 'actions/setup-*'
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
