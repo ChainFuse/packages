@@ -29,7 +29,7 @@ jobs:
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
           disable-sudo-and-containers: true
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           fetch-tags: true # Important to fetch all history for versioning
       - run: git config set --type=bool push.autoSetupRemote true
