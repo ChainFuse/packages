@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 1.0.14
+
+### Patch Changes
+
+- [`db4ce76`](https://github.com/ChainFuse/packages/commit/db4ce7679adb99aae49f2220c665d456ec56d6f7) Thanks [@demosjarco](https://github.com/demosjarco)! - fix package dependencies
+
+- Updated dependencies [[`db4ce76`](https://github.com/ChainFuse/packages/commit/db4ce7679adb99aae49f2220c665d456ec56d6f7)]:
+    - @chainfuse/helpers@4.2.4
+    - @chainfuse/types@4.1.4
+
 ## 1.0.13
 
 ### Patch Changes
