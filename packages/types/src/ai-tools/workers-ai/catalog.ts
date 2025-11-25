@@ -37,7 +37,6 @@ export const workersAiCatalog = {
 					created_at: '2025-08-05 10:27:29.131',
 					tags: [],
 					properties: {
-						async_queue: true,
 						context_window: 128000,
 						price: [
 							{
@@ -835,7 +834,6 @@ export const workersAiCatalog = {
 					created_at: '2025-08-05 10:49:53.265',
 					tags: [],
 					properties: {
-						async_queue: true,
 						context_window: 128000,
 						price: [
 							{
@@ -1474,6 +1472,18 @@ export const workersAiCatalog = {
 						],
 						info: 'https://stability.ai/stable-diffusion',
 						terms: 'https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md',
+					},
+				},
+				{
+					id: '3ae8936e-593e-4fb2-85ee-95dd8a057588',
+					source: 1,
+					name: '@cf/black-forest-labs/flux-2-dev',
+					description: 'FLUX.2 [dev] is an image model from Black Forest Labs where you can generate highly realistic and detailed images, with multi-reference support.',
+					created_at: '2025-11-24 15:44:06.050',
+					tags: [],
+					properties: {
+						partner: true,
+						terms: 'https://bfl.ai/legal/terms-of-service',
 					},
 				},
 				{
