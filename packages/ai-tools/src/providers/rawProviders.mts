@@ -33,21 +33,38 @@ export class AiRawProviders extends AiBase {
 		};
 
 		if (logId) {
-			const updateMetadata = import('@chainfuse/helpers')
-				.then(({ NetHelpers }) => NetHelpers.cfApi(this.config.gateway.apiToken, { logging: { level: Number(logging) } }))
-				.then((cf) =>
-					(
-						cf.aiGateway.logs.edit(this.gatewayName, logId, {
-							account_id: this.config.gateway.accountId,
+			const updateMetadata = (() => {
+				if ('gateway' in this.config.providers.workersAi && typeof this.config.providers.workersAi.gateway === 'function') {
+					return this.config.providers.workersAi
+						.gateway(this.gatewayName)
+						.patchLog(logId, {
 							metadata: {
 								...Object.entries(rawMetadata).reduce((acc, [key, value]) => {
 									acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
 									return acc;
 								}, {} as AiRequestMetadataStringified),
-							} satisfies AiRequestMetadataStringified,
-						}) as APIPromise<void>
-					).catch((error) => console.warn('Not updating gateway log', error)),
-				);
+							},
+						})
+						.catch((error) => console.warn('Not updating gateway log', error));
+				} else {
+					return import('@chainfuse/helpers')
+						.then(({ NetHelpers }) => NetHelpers.cfApi(this.config.gateway.apiToken, { logging: { level: Number(logging) } }))
+						.then((cf) =>
+							(
+								cf.aiGateway.logs.edit(this.gatewayName, logId, {
+									account_id: this.config.gateway.accountId,
+									metadata: {
+										...Object.entries(rawMetadata).reduce((acc, [key, value]) => {
+											acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
+											return acc;
+										}, {} as AiRequestMetadataStringified),
+									} satisfies AiRequestMetadataStringified,
+								}) as APIPromise<void>
+							).catch((error) => console.warn('Not updating gateway log', error)),
+						);
+				}
+			})();
+
 			if (this.config.backgroundContext) {
 				this.config.backgroundContext.waitUntil(updateMetadata);
 			} else {
