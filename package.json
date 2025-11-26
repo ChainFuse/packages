@@ -11,7 +11,8 @@
 		"build": "lerna run --stream build",
 		"build:clean": "lerna run --stream build:clean",
 		"test": "lerna run --parallel test",
-		"ci:catalog:azure": "npm run base -- --env-file-if-exists=./ciScripts/azure.dev.vars ./ciScripts/azure-catalog.mts"
+		"ci:catalog:azure": "npm run base -- --env-file-if-exists=./ciScripts/azure.dev.vars ./ciScripts/azure-catalog.mts",
+		"postci:catalog:azure": "prettier --write packages/types/src/ai-tools/azure/catalog.ts"
 	},
 	"repository": {
 		"type": "git",
