@@ -3,6 +3,7 @@ import type { UuidExport } from '@chainfuse/types/d1';
 import { deepStrictEqual, ok, strictEqual } from 'node:assert/strict';
 import { timingSafeEqual } from 'node:crypto';
 import { describe, it } from 'node:test';
+import * as zm from 'zod/mini';
 import { BufferHelpersInternals } from '../dist/bufferInternals.mjs';
 import { BufferHelpers } from '../dist/buffers.mjs';
 
@@ -51,8 +52,7 @@ void describe('Buffer Helper Tests', () => {
 				ok(uuid.base64url, 'Should have base64url field');
 
 				// Validate UUID v7 format using Zod
-				const { z } = await import('zod/v4');
-				const result = z.uuid({ version: 'v7' }).safeParse(uuid.utf8);
+				const result = zm.uuid({ version: 'v7' }).safeParse(uuid.utf8);
 				ok(result.success, `Expected valid UUID v7, got: ${uuid.utf8}`);
 
 				// Check hex is 32 characters (no hyphens)
@@ -100,8 +100,7 @@ void describe('Buffer Helper Tests', () => {
 				ok(uuid.base64url, 'Should have base64url field');
 
 				// Validate UUID v7 format using Zod
-				const { z } = await import('zod/v4');
-				const result = z.uuid({ version: 'v7' }).safeParse(uuid.utf8);
+				const result = zm.uuid({ version: 'v7' }).safeParse(uuid.utf8);
 				ok(result.success, `Expected valid UUID v7, got: ${uuid.utf8}`);
 
 				// Extract timestamp from UUID v7 (first 48 bits)

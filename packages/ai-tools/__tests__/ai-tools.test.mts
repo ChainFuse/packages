@@ -4,7 +4,7 @@ import { generateObject, generateText, Output, streamObject, streamText, tool } 
 import { doesNotReject, strictEqual } from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import test, { before, beforeEach, describe, it } from 'node:test';
-import { z } from 'zod/v4';
+import * as z4 from 'zod/v4';
 import { AiModel, type AiConfig, type AiConfigOaiOpenai, type AiRequestConfig, type AiStreamChunkType } from '../dist/index.mjs';
 
 const { GH_RUNNER_ID } = process.env;
@@ -190,9 +190,9 @@ await describe('AI Tests', () => {
 									},
 								],
 								maxOutputTokens: 128,
-								schema: z.object({
-									city: z.string().trim().describe('City of the incoming request'),
-									state: z.string().trim().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+								schema: z4.object({
+									city: z4.string().trim().describe('City of the incoming request'),
+									state: z4.string().trim().describe('The ISO 3166-2 name for the first level region of the incoming request'),
 								}),
 								schemaDescription: 'Return the current city and state of the runner',
 							});
@@ -241,9 +241,9 @@ await describe('AI Tests', () => {
 									},
 								],
 								maxOutputTokens: 128,
-								schema: z.object({
-									city: z.string().describe('City of the incoming request'),
-									state: z.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+								schema: z4.object({
+									city: z4.string().describe('City of the incoming request'),
+									state: z4.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
 								}),
 								schemaDescription: 'Return the current city and state of the runner',
 							});
@@ -302,16 +302,16 @@ await describe('AI Tests', () => {
 								tools: {
 									'get-container-info': tool({
 										description: 'Get external statistics of the current container including geographical information',
-										inputSchema: z.object({}),
+										inputSchema: z4.object({}),
 										// eslint-disable-next-line @typescript-eslint/require-await
 										execute: async () => geoJson,
 									}),
 								},
 								toolChoice: 'required',
 								experimental_output: Output.object({
-									schema: z.object({
-										city: z.string().describe('City of the incoming request'),
-										state: z.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+									schema: z4.object({
+										city: z4.string().describe('City of the incoming request'),
+										state: z4.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
 									}),
 								}),
 							});
@@ -371,16 +371,16 @@ await describe('AI Tests', () => {
 								tools: {
 									'get-container-info': tool({
 										description: 'Get external statistics of the current container including geographical information',
-										inputSchema: z.object({}),
+										inputSchema: z4.object({}),
 										// eslint-disable-next-line @typescript-eslint/require-await
 										execute: async () => geoJson,
 									}),
 								},
 								toolChoice: 'required',
 								experimental_output: Output.object({
-									schema: z.object({
-										city: z.string().describe('City of the incoming request'),
-										state: z.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+									schema: z4.object({
+										city: z4.string().describe('City of the incoming request'),
+										state: z4.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
 									}),
 								}),
 							});
