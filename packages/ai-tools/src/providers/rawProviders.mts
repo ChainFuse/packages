@@ -251,7 +251,31 @@ export class AiRawProviders extends AiBase {
 
 								if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
-								return fetch(new URL(['v1', this.config.gateway.accountId, this.gatewayName].join('/'), 'https://gateway.ai.cloudflare.com'), { ...rawInit, headers, body: JSON.stringify(fallbackedBody) }).then(async (response) => {
+								return (() => {
+									if ('gateway' in this.config.providers.workersAi && typeof this.config.providers.workersAi.gateway === 'function') {
+										return this.config.providers.workersAi.gateway(this.gatewayName).run(fallbackedBody, {
+											extraHeaders: (() => {
+												// Prevent duplicates
+												headers.delete('cf-aig-authorization');
+												headers.delete('cf-aig-metadata');
+												headers.delete('cf-aig-cache-ttl');
+												headers.delete('cf-aig-skip-cache');
+
+												return headers;
+											})(),
+											gateway: {
+												id: this.gatewayName,
+												eventId: metadataHeader.idempotencyId,
+												metadata: metadataHeader,
+												...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
+												...(args.skipCache && { skipCache: true }),
+											},
+										});
+									} else {
+										return fetch(new URL(['v1', this.config.gateway.accountId, this.gatewayName].join('/'), 'https://gateway.ai.cloudflare.com'), { ...rawInit, headers, body: JSON.stringify(fallbackedBody) });
+									}
+								})().then(async (_response) => {
+									const response = _response as Response;
 									// Inject it to have it available for retries
 									const mutableHeaders = new Headers(response.headers);
 									// Carry down
