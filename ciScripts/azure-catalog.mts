@@ -2,6 +2,7 @@ import { endGroup, info, startGroup, summary } from '@actions/core';
 import { CognitiveServicesManagementClient, type BillingMeterInfo } from '@azure/arm-cognitiveservices';
 import { SubscriptionClient } from '@azure/arm-resources-subscriptions';
 import { ClientSecretCredential } from '@azure/identity';
+import { writeFile } from 'node:fs/promises';
 
 const { AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_SUB_ID } = process.env;
 
@@ -210,6 +211,11 @@ const json = (
 ).sort((a, b) => a.id!.localeCompare(b.id!));
 endGroup();
 
+startGroup('Saving catalog');
+info(`Writing catalog with ${json.length} items`);
+await writeFile('packages/types/src/ai-tools/azure/catalog.ts', `export const azureCatalog = ${JSON.stringify(json, null, '\t')} as const`, { encoding: 'utf8' });
+endGroup();
+
 function convertObjectsToSummaryTable<T extends Record<string, string>>(items: T[]) {
 	if (items.length === 0) return [];
 
@@ -309,15 +315,3 @@ const pricedImageModels = Array.from(dedupedImageModels)
 	}));
 summary.addTable(convertObjectsToSummaryTable(pricedImageModels));
 await summary.write().catch(console.error);
-
-startGroup('Saving catalog');
-await import('node:fs').then(({ createWriteStream }) => {
-	const writeStream = createWriteStream('packages/types/src/ai-tools/azure/catalog.ts', { encoding: 'utf8' });
-
-	info(`Writing catalog with ${json.length} items`);
-	writeStream.write(`export const azureCatalog = ${JSON.stringify(json, null, '\t')} as const`);
-
-	writeStream.end();
-	info('Catalog saved');
-});
-endGroup();
