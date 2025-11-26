@@ -239,7 +239,7 @@ summary.addTable(
 			.sort((a, b) => a.server.toLowerCase().localeCompare(b.server.toLowerCase())),
 	),
 );
-await summary.write({ overwrite: true });
+await summary.write({ overwrite: true }).catch(console.error);
 
 summary.addHeading('Language Model Pricing');
 const dedupedLanguageModels = new Set(json.map((server) => server.languageModelAvailability.map((model) => model.name!)).flat());
@@ -264,7 +264,7 @@ const pricedLanguageModels = Array.from(dedupedLanguageModels)
 		averageOutputPrice: isNaN(parseFloat(model.averageOutputPrice)) ? model.averageOutputPrice : '$' + model.averageOutputPrice,
 	}));
 summary.addTable(convertObjectsToSummaryTable(pricedLanguageModels));
-await summary.write();
+await summary.write().catch(console.error);
 
 summary.addHeading('Embedding Model Pricing');
 const dedupedEmbedModels = new Set(json.map((server) => server.textEmbeddingModelAvailability.map((model) => model.name!)).flat());
@@ -286,7 +286,7 @@ const pricedEmbedModels = Array.from(dedupedEmbedModels)
 		averagePrice: isNaN(parseFloat(model.averagePrice)) ? model.averagePrice : '$' + model.averagePrice,
 	}));
 summary.addTable(convertObjectsToSummaryTable(pricedEmbedModels));
-await summary.write();
+await summary.write().catch(console.error);
 
 summary.addHeading('Image Model Pricing');
 const dedupedImageModels = new Set(json.map((server) => server.imageModelAvailability.map((model) => model.name!)).flat());
@@ -308,7 +308,7 @@ const pricedImageModels = Array.from(dedupedImageModels)
 		averagePrice: isNaN(parseFloat(model.averagePrice)) ? model.averagePrice : '$' + model.averagePrice,
 	}));
 summary.addTable(convertObjectsToSummaryTable(pricedImageModels));
-await summary.write();
+await summary.write().catch(console.error);
 
 startGroup('Saving catalog');
 await import('node:fs').then(({ createWriteStream }) => {
