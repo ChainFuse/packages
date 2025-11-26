@@ -9,8 +9,11 @@ export class AiBase {
 		this._config = config;
 	}
 
-	public get config() {
-		return Object.freeze(this._config);
+	public get config(): Readonly<Omit<AiConfig, 'backgroundContext'>> & Pick<AiConfig, 'backgroundContext'> {
+		return {
+			...Object.freeze(this._config),
+			backgroundContext: this._config.backgroundContext,
+		};
 	}
 
 	protected get gatewayName() {
