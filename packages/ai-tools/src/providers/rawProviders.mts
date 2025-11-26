@@ -138,9 +138,18 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public azOpenai(args: AiRequestConfig) {
+	public async azOpenai(args: AiRequestConfig) {
+		const metadataHeader = {
+			dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+			...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
+			// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+			idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+			executor: JSON.stringify(args.executor),
+			// @ts-expect-error server info gets added in afterwards
+		} satisfies AiRequestMetadataStringified;
+
 		return import('@ai-sdk/azure').then(
-			async ({ createAzure }) =>
+			({ createAzure }) =>
 				createAzure({
 					apiKey: 'apikey-placeholder',
 					/**
@@ -152,15 +161,7 @@ export class AiRawProviders extends AiBase {
 					baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'azure-openai', 'server-placeholder'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 					headers: {
 						'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
-						// ...(cost && { 'cf-aig-custom-cost': JSON.stringify({ per_token_in: cost.inputTokenCost ?? undefined, per_token_out: cost.outputTokenCost ?? undefined }) }),
-						'cf-aig-metadata': JSON.stringify({
-							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-							...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
-							// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-							idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
-							executor: JSON.stringify(args.executor),
-							// @ts-expect-error server info gets added in afterwards
-						} satisfies AiRequestMetadataStringified),
+						'cf-aig-metadata': JSON.stringify(metadataHeader),
 						...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 						...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 					},
@@ -171,7 +172,6 @@ export class AiRawProviders extends AiBase {
 								const startRoundTrip = performance.now();
 
 								const headers = new Headers(rawInit?.headers);
-								const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
 								// Calculate the idempotencyId if it doesn't exist yet
 								if (metadataHeader.idempotencyId.split('-').length === 4) {
 									metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
