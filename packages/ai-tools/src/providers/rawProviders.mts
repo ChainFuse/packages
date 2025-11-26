@@ -2,6 +2,7 @@ import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
 import type { cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
 import type { AIGatewayUniversalRequest, GatewayOptions } from '@cloudflare/workers-types/experimental';
+import type { APIPromise } from 'cloudflare/core';
 import * as z from 'zod/mini';
 import { AiBase } from '../base.mjs';
 import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified } from '../types.mjs';
@@ -35,21 +36,22 @@ export class AiRawProviders extends AiBase {
 			const updateMetadata = import('@chainfuse/helpers')
 				.then(({ NetHelpers }) => NetHelpers.cfApi(this.config.gateway.apiToken, { logging: { level: Number(logging) } }))
 				.then((cf) =>
-					cf.aiGateway.logs.edit(this.gatewayName, logId, {
-						account_id: this.config.gateway.accountId,
-						metadata: {
-							...Object.entries(rawMetadata).reduce((acc, [key, value]) => {
-								acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
-								return acc;
-							}, {} as AiRequestMetadataStringified),
-						} satisfies AiRequestMetadataStringified,
-					}),
+					(
+						cf.aiGateway.logs.edit(this.gatewayName, logId, {
+							account_id: this.config.gateway.accountId,
+							metadata: {
+								...Object.entries(rawMetadata).reduce((acc, [key, value]) => {
+									acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
+									return acc;
+								}, {} as AiRequestMetadataStringified),
+							} satisfies AiRequestMetadataStringified,
+						}) as APIPromise<void>
+					).catch((error) => console.warn('Not updating gateway log', error)),
 				);
-
 			if (this.config.backgroundContext) {
 				this.config.backgroundContext.waitUntil(updateMetadata);
 			} else {
-				await updateMetadata.catch((error) => console.warn('Not updating gateway log', error));
+				await updateMetadata;
 			}
 		} else {
 			console.warn('Not updating gateway log, no cf-aig-log-id header');
