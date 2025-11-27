@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 4.1.6
+
+### Patch Changes
+
+- [#750](https://github.com/ChainFuse/packages/pull/750) [`a6293cb`](https://github.com/ChainFuse/packages/commit/a6293cbffa1abed77974013e959172e3f7e6a314) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/azure, @ai-sdk/openai
+
+- [#751](https://github.com/ChainFuse/packages/pull/751) [`e73993f`](https://github.com/ChainFuse/packages/commit/e73993faeefc30328b1c30f26b3948051f477bee) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
 ## 4.1.5
 
 ### Patch Changes
