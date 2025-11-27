@@ -8,6 +8,7 @@ export interface AiConfig<C extends Pick<ExecutionContext | DurableObjectState, 
 	gateway: {
 		accountId: string;
 		apiToken: string;
+		binding?: AiConfigWorkersAiBinding;
 	};
 	geoRouting?: {
 		userCoordinate?: Coordinate;
