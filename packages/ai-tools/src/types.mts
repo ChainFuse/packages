@@ -69,12 +69,12 @@ export interface AiConfigOaiOpenai {
 	apiToken: `sk-${string}`;
 	organization: `org-${string}`;
 }
-export type AiConfigWorkersai = AiConfigWorkersaiRest | AiConfigWorkersaiBinding;
+export type AiConfigWorkersai = AiConfigWorkersaiRest | AiConfigWorkersAiBinding;
 export interface AiConfigWorkersaiRest {
 	apiToken: string;
 }
 // Use `extends` to avoid type errors when just a model list has been updated - only if structural changes have been made
-export type AiConfigWorkersaiBinding<T extends Ai = Ai> = T;
+export type AiConfigWorkersAiBinding<T extends Ai = Ai> = T;
 
 export type AzureServers = typeof azureCatalog;
 export type Servers = AzureServers;
