@@ -169,7 +169,7 @@ export class AiRawProviders extends AiBase {
 					fetch: (input, rawInit) =>
 						Promise.all([import('../serverSelector.mjs'), import('@chainfuse/types/ai-tools/azure/catalog')])
 							.then(([{ ServerSelector }, { azureCatalog }]) => new ServerSelector(this.config).closestServers(azureCatalog))
-							.then(async (filteredServers) => {
+							.then(async (closestServers) => {
 								const startRoundTrip = performance.now();
 
 								const headers = new Headers(rawInit?.headers);
@@ -200,6 +200,18 @@ export class AiRawProviders extends AiBase {
 									fallbackedQuery = rawInit?.body;
 								}
 
+								const modelName = fallbackedEndpointParts[1]!;
+								const filteredServers =
+									// Check language models
+									closestServers.filter(
+										(server) =>
+											server.languageModelAvailability.some((model) => model.name === modelName) ??
+											// Check image models
+											server.imageModelAvailability.some((model) => model.name === modelName) ??
+											// Check embedding models
+											server.textEmbeddingModelAvailability.some((model) => model.name === modelName),
+									);
+
 								// Build universal gateway request
 								const fallbackedBody = await Promise.all([import('haversine-distance'), import('../serverSelector.mts')]).then(([{ default: haversine }, { ServerSelector }]) =>
 									Promise.all(
@@ -225,7 +237,6 @@ export class AiRawProviders extends AiBase {
 												}),
 											};
 
-											const modelName = fallbackedEndpointParts[0]!;
 											const languageModel = server.languageModelAvailability.find((model) => model.name === modelName);
 											if (languageModel && ('inputTokenCost' in languageModel || 'outputTokenCost' in languageModel)) {
 												fallbackedHeaders['cf-aig-custom-cost'] = {
