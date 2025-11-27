@@ -1,10 +1,10 @@
 import type { Coordinate } from '@chainfuse/types/ai-tools';
 import type { azureCatalog } from '@chainfuse/types/ai-tools/azure/catalog';
 import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
-import type { Ai, ExecutionContext, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
+import type { Ai, DurableObjectState, ExecutionContext, IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
 import type haversine from 'haversine-distance';
 
-export interface AiConfig {
+export interface AiConfig<C extends Pick<ExecutionContext | DurableObjectState, 'waitUntil'> = Pick<ExecutionContext | DurableObjectState, 'waitUntil'>> {
 	gateway: {
 		accountId: string;
 		apiToken: string;
@@ -32,7 +32,7 @@ export interface AiConfig {
 				  }
 		  ));
 	providers: AiConfigProviders;
-	backgroundContext?: ExecutionContext;
+	backgroundContext?: C;
 }
 
 export interface AiConfigProviders {
