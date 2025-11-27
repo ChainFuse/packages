@@ -34,8 +34,8 @@ export class AiRawProviders extends AiBase {
 
 		if (logId) {
 			const updateMetadata = (() => {
-				if ('gateway' in this.config.providers.workersAi && typeof this.config.providers.workersAi.gateway === 'function') {
-					return this.config.providers.workersAi
+				if ('binding' in this.config.gateway && typeof this.config.gateway.binding?.gateway === 'function') {
+					return this.config.gateway.binding
 						.gateway(this.gatewayName)
 						.patchLog(logId, {
 							metadata: {
@@ -264,8 +264,8 @@ export class AiRawProviders extends AiBase {
 								if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
 								return (() => {
-									if ('gateway' in this.config.providers.workersAi && typeof this.config.providers.workersAi.gateway === 'function') {
-										return this.config.providers.workersAi.gateway(this.gatewayName).run(fallbackedBody, {
+									if ('binding' in this.config.gateway && typeof this.config.gateway.binding?.gateway === 'function') {
+										return this.config.gateway.binding.gateway(this.gatewayName).run(fallbackedBody, {
 											extraHeaders: (() => {
 												// Prevent duplicates
 												headers.delete('cf-aig-authorization');
