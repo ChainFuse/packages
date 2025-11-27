@@ -153,10 +153,11 @@ export class AiRawProviders extends AiBase {
 				createAzure({
 					apiKey: 'apikey-placeholder',
 					/**
+					 * @link https://learn.microsoft.com/en-us/azure/ai-foundry/openai/api-version-lifecycle?view=foundry-classic
 					 * @link https://learn.microsoft.com/en-us/azure/ai-services/openai/reference#api-specs
 					 * From the table, pick the `Latest GA release` for `Data plane - inference`
 					 */
-					apiVersion: '2024-10-21',
+					apiVersion: '2025-04-01-preview',
 					useDeploymentBasedUrls: true,
 					baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'azure-openai', 'server-placeholder'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 					headers: {
