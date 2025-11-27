@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 1.0.17
+
+### Patch Changes
+
+- [`b6eae79`](https://github.com/ChainFuse/packages/commit/b6eae79a495065f031ce8c56b20fd2e5af28371e) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix loss of workers ai binding context
+
+- [`7496d8e`](https://github.com/ChainFuse/packages/commit/7496d8ed5bc868cdbebad22996817bb32f6d01e7) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Add ai gateway binding separate of workers ai
+
+- [`a94f4c7`](https://github.com/ChainFuse/packages/commit/a94f4c7af2b1779a84957db275798dbfd106bacf) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix types for execution context
+
 ## 1.0.16
 
 ### Patch Changes
