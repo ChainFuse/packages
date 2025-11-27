@@ -1,5 +1,31 @@
 # @chainfuse/ai-tools
 
+## 1.0.16
+
+### Patch Changes
+
+- [`33a1d96`](https://github.com/ChainFuse/packages/commit/33a1d966d15365c713f1ceff699663d125f793b8) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix bad api schema version for azure
+
+- [#750](https://github.com/ChainFuse/packages/pull/750) [`a6293cb`](https://github.com/ChainFuse/packages/commit/a6293cbffa1abed77974013e959172e3f7e6a314) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/azure, @ai-sdk/openai
+
+- [#751](https://github.com/ChainFuse/packages/pull/751) [`e73993f`](https://github.com/ChainFuse/packages/commit/e73993faeefc30328b1c30f26b3948051f477bee) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [`216819a`](https://github.com/ChainFuse/packages/commit/216819a5286d555052c2a786fa04d96f4b3f41bc) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix `ExecutionContext`
+
+- [`e96be5f`](https://github.com/ChainFuse/packages/commit/e96be5f32d2ef177afb01fe676f05079093776f5) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Add support for gateway binding log patching
+
+- [`7e58a7e`](https://github.com/ChainFuse/packages/commit/7e58a7e91eaac4eaafd3603a9b5cd6ca7880473b) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Attempt to use gateway binding if possible for azure
+
+- [`4bd3a3b`](https://github.com/ChainFuse/packages/commit/4bd3a3bfea5cbade05ec520c336b7fdf3c42e738) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Azure endpoint api version
+
+- [`b304e5f`](https://github.com/ChainFuse/packages/commit/b304e5fb591a3165c445655b636fdf705b9fc13f) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Prevent unecessary calls to ai servers without models
+
+- [`9df6e0f`](https://github.com/ChainFuse/packages/commit/9df6e0f2d4fc9ad8a5a15e42d17e84a40770fad8) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Consistent error handling in updating metadata
+
+- Updated dependencies [[`a6293cb`](https://github.com/ChainFuse/packages/commit/a6293cbffa1abed77974013e959172e3f7e6a314), [`e73993f`](https://github.com/ChainFuse/packages/commit/e73993faeefc30328b1c30f26b3948051f477bee)]:
+    - @chainfuse/helpers@4.2.6
+    - @chainfuse/types@4.1.6
+
 ## 1.0.15
 
 ### Patch Changes
