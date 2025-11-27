@@ -7,9 +7,34 @@ export const azureCatalog = [
 		},
 		languageModelAvailability: [
 			{
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
+			},
+			{
+				name: 'gpt-4o',
+				inputTokenCost: 0.0000025,
+				outputTokenCost: 0.00001,
+			},
+			{
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.5e-7,
 				outputTokenCost: 6e-7,
+			},
+			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
 			},
 			{
 				name: 'o1',
@@ -17,12 +42,24 @@ export const azureCatalog = [
 				outputTokenCost: 0.00005999999999999999,
 			},
 			{
+				name: 'o3',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
+			},
+			{
 				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
 			},
+			{
+				name: 'o4-mini',
+			},
 		],
-		imageModelAvailability: [],
+		imageModelAvailability: [
+			{
+				name: 'gpt-image-1',
+			},
+		],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -46,6 +83,14 @@ export const azureCatalog = [
 				outputTokenCost: 0.000008,
 			},
 			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
+			},
+			{
 				name: 'gpt-4o',
 			},
 			{
@@ -54,16 +99,34 @@ export const azureCatalog = [
 				outputTokenCost: 6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.000015,
+				outputTokenCost: 0.00005999999999999999,
+			},
+			{
+				name: 'o3',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
+			},
+			{
 				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
 			},
-		],
-		imageModelAvailability: [
 			{
-				name: 'dall-e-3',
+				name: 'o4-mini',
 			},
 		],
+		imageModelAvailability: [],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -84,6 +147,17 @@ export const azureCatalog = [
 		privacyRegion: 'LGPD',
 		languageModelAvailability: [
 			{
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
+			},
+			{
 				name: 'gpt-4o',
 				inputTokenCost: 0.0000025,
 				outputTokenCost: 0.00001,
@@ -94,14 +168,31 @@ export const azureCatalog = [
 				outputTokenCost: 6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.000015,
 				outputTokenCost: 0.00005999999999999999,
 			},
 			{
+				name: 'o3',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
+			},
+			{
 				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
@@ -128,6 +219,14 @@ export const azureCatalog = [
 				outputTokenCost: 0.000008,
 			},
 			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
+			},
+			{
 				name: 'gpt-4o',
 			},
 			{
@@ -136,14 +235,31 @@ export const azureCatalog = [
 				outputTokenCost: 6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.000015,
 				outputTokenCost: 0.00005999999999999999,
 			},
 			{
+				name: 'o3',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
+			},
+			{
 				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
@@ -194,6 +310,14 @@ export const azureCatalog = [
 				outputTokenCost: 0.000008,
 			},
 			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
+			},
+			{
 				name: 'gpt-4o',
 			},
 			{
@@ -202,14 +326,31 @@ export const azureCatalog = [
 				outputTokenCost: 6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.000015,
 				outputTokenCost: 0.00005999999999999999,
 			},
 			{
+				name: 'o3',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
+			},
+			{
 				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
@@ -236,22 +377,37 @@ export const azureCatalog = [
 				name: 'gpt-4.1',
 			},
 			{
+				name: 'gpt-4.1-mini',
+			},
+			{
 				name: 'gpt-4.1-nano',
 			},
 			{
 				name: 'gpt-4o',
-				inputTokenCost: 0.00000275,
-				outputTokenCost: 0.000011,
+				inputTokenCost: 0.0000025,
+				outputTokenCost: 0.00001,
 			},
 			{
 				name: 'gpt-4o-mini',
-				inputTokenCost: 1.65e-7,
-				outputTokenCost: 6.6e-7,
+				inputTokenCost: 1.5e-7,
+				outputTokenCost: 6e-7,
+			},
+			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
 			},
 			{
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -300,14 +456,24 @@ export const azureCatalog = [
 				outputTokenCost: 6.6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
+				name: 'gpt-5.1',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
 			},
 			{
-				name: 'o1-mini',
-				inputTokenCost: 0.0000011,
-				outputTokenCost: 0.0000044,
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -320,7 +486,7 @@ export const azureCatalog = [
 		],
 		imageModelAvailability: [
 			{
-				name: 'dall-e-3',
+				name: 'gpt-image-1',
 			},
 		],
 		textEmbeddingModelAvailability: [
@@ -346,6 +512,9 @@ export const azureCatalog = [
 				name: 'gpt-4.1',
 			},
 			{
+				name: 'gpt-4.1-mini',
+			},
+			{
 				name: 'gpt-4.1-nano',
 			},
 			{
@@ -359,9 +528,21 @@ export const azureCatalog = [
 				outputTokenCost: 6.6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -395,6 +576,9 @@ export const azureCatalog = [
 				name: 'gpt-4.1',
 			},
 			{
+				name: 'gpt-4.1-mini',
+			},
+			{
 				name: 'gpt-4.1-nano',
 			},
 			{
@@ -404,7 +588,19 @@ export const azureCatalog = [
 				name: 'gpt-4o-mini',
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
+			},
+			{
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -435,6 +631,9 @@ export const azureCatalog = [
 				name: 'gpt-4.1',
 			},
 			{
+				name: 'gpt-4.1-mini',
+			},
+			{
 				name: 'gpt-4.1-nano',
 			},
 			{
@@ -448,9 +647,21 @@ export const azureCatalog = [
 				outputTokenCost: 6.6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -478,7 +689,7 @@ export const azureCatalog = [
 		privacyRegion: 'GDPR',
 		languageModelAvailability: [
 			{
-				name: 'gpt-4.1',
+				name: 'gpt-4.1-mini',
 			},
 			{
 				name: 'gpt-4.1-nano',
@@ -492,9 +703,21 @@ export const azureCatalog = [
 				outputTokenCost: 6.6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -529,6 +752,9 @@ export const azureCatalog = [
 				name: 'gpt-4.1',
 			},
 			{
+				name: 'gpt-4.1-mini',
+			},
+			{
 				name: 'gpt-4.1-nano',
 			},
 			{
@@ -540,6 +766,15 @@ export const azureCatalog = [
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.65e-7,
 				outputTokenCost: 6.6e-7,
+			},
+			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
 			},
 			{
 				name: 'o1',
@@ -555,7 +790,11 @@ export const azureCatalog = [
 				name: 'o4-mini',
 			},
 		],
-		imageModelAvailability: [],
+		imageModelAvailability: [
+			{
+				name: 'gpt-image-1',
+			},
+		],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -574,6 +813,17 @@ export const azureCatalog = [
 		privacyRegion: 'PDP',
 		languageModelAvailability: [
 			{
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
+			},
+			{
 				name: 'gpt-4o',
 			},
 			{
@@ -582,14 +832,31 @@ export const azureCatalog = [
 				outputTokenCost: 6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.000015,
 				outputTokenCost: 0.00005999999999999999,
 			},
 			{
+				name: 'o3',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
+			},
+			{
 				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
@@ -616,6 +883,14 @@ export const azureCatalog = [
 				outputTokenCost: 0.000008,
 			},
 			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
+			},
+			{
 				name: 'gpt-4o',
 			},
 			{
@@ -624,14 +899,31 @@ export const azureCatalog = [
 				outputTokenCost: 6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.000015,
 				outputTokenCost: 0.00005999999999999999,
 			},
 			{
+				name: 'o3',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
+			},
+			{
 				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
@@ -660,6 +952,14 @@ export const azureCatalog = [
 				outputTokenCost: 0.000008,
 			},
 			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
+			},
+			{
 				name: 'gpt-4o',
 				inputTokenCost: 0.0000025,
 				outputTokenCost: 0.00001,
@@ -670,14 +970,31 @@ export const azureCatalog = [
 				outputTokenCost: 6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.000015,
 				outputTokenCost: 0.00005999999999999999,
 			},
 			{
+				name: 'o3',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
+			},
+			{
 				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
@@ -699,6 +1016,17 @@ export const azureCatalog = [
 		privacyRegion: 'NPDA',
 		languageModelAvailability: [
 			{
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
+			},
+			{
 				name: 'gpt-4o',
 			},
 			{
@@ -707,14 +1035,31 @@ export const azureCatalog = [
 				outputTokenCost: 6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.000015,
 				outputTokenCost: 0.00005999999999999999,
 			},
 			{
+				name: 'o3',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
+			},
+			{
 				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
@@ -737,9 +1082,27 @@ export const azureCatalog = [
 		},
 		languageModelAvailability: [
 			{
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-mini',
+			},
+			{
 				name: 'gpt-4.1-nano',
 				inputTokenCost: 1e-7,
 				outputTokenCost: 4e-7,
+			},
+			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
+				name: 'o3',
 			},
 			{
 				name: 'o4-mini',
@@ -766,6 +1129,14 @@ export const azureCatalog = [
 				outputTokenCost: 0.000008,
 			},
 			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
+			},
+			{
 				name: 'gpt-4o',
 			},
 			{
@@ -774,14 +1145,31 @@ export const azureCatalog = [
 				outputTokenCost: 6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.000015,
 				outputTokenCost: 0.00005999999999999999,
 			},
 			{
+				name: 'o3',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
+			},
+			{
 				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
@@ -819,6 +1207,15 @@ export const azureCatalog = [
 				name: 'gpt-4o-mini',
 				inputTokenCost: 1.65e-7,
 				outputTokenCost: 6.6e-7,
+			},
+			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
 			},
 			{
 				name: 'o1',
@@ -875,14 +1272,83 @@ export const azureCatalog = [
 				outputTokenCost: 6.6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
 			},
 			{
-				name: 'o1-mini',
+				name: 'o3',
+			},
+			{
+				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o4-mini',
+			},
+		],
+		imageModelAvailability: [],
+		textEmbeddingModelAvailability: [
+			{
+				name: 'text-embedding-3-large',
+				tokenCost: 1.3e-7,
+			},
+			{
+				name: 'text-embedding-3-small',
+				tokenCost: 2e-8,
+			},
+		],
+	},
+	{
+		id: 'OpenAi-US-Iowa',
+		coordinate: {
+			lat: '41.5908',
+			lon: '-93.6208',
+		},
+		languageModelAvailability: [
+			{
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+			},
+			{
+				name: 'gpt-4o',
+			},
+			{
+				name: 'gpt-4o-mini',
+				inputTokenCost: 1.65e-7,
+				outputTokenCost: 6.6e-7,
+			},
+			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
+				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
+			},
+			{
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -930,14 +1396,21 @@ export const azureCatalog = [
 				outputTokenCost: 6.6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
 			},
 			{
-				name: 'o1-mini',
-				inputTokenCost: 0.0000011,
-				outputTokenCost: 0.0000044,
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -948,7 +1421,11 @@ export const azureCatalog = [
 				name: 'o4-mini',
 			},
 		],
-		imageModelAvailability: [],
+		imageModelAvailability: [
+			{
+				name: 'gpt-image-1',
+			},
+		],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -983,14 +1460,21 @@ export const azureCatalog = [
 				outputTokenCost: 6.6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
 			},
 			{
-				name: 'o1-mini',
-				inputTokenCost: 0.0000011,
-				outputTokenCost: 0.0000044,
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -1038,14 +1522,21 @@ export const azureCatalog = [
 				outputTokenCost: 6.6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
 			},
 			{
-				name: 'o1-mini',
-				inputTokenCost: 0.0000011,
-				outputTokenCost: 0.0000044,
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
@@ -1056,11 +1547,7 @@ export const azureCatalog = [
 				name: 'o4-mini',
 			},
 		],
-		imageModelAvailability: [
-			{
-				name: 'dall-e-3',
-			},
-		],
+		imageModelAvailability: [],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -1097,25 +1584,39 @@ export const azureCatalog = [
 				outputTokenCost: 6.6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
+				name: 'gpt-5.1',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.0000165,
 				outputTokenCost: 0.000066,
 			},
 			{
-				name: 'o1-mini',
-				inputTokenCost: 0.0000011,
-				outputTokenCost: 0.0000044,
+				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
-				inputTokenCost: 0.00000121,
-				outputTokenCost: 0.00000484,
+				inputTokenCost: 0.0000011,
+				outputTokenCost: 0.0000044,
 			},
 			{
 				name: 'o4-mini',
 			},
 		],
-		imageModelAvailability: [],
+		imageModelAvailability: [
+			{
+				name: 'gpt-image-1',
+			},
+		],
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
@@ -1136,6 +1637,17 @@ export const azureCatalog = [
 		privacyRegion: 'PoPIA',
 		languageModelAvailability: [
 			{
+				name: 'gpt-4.1',
+			},
+			{
+				name: 'gpt-4.1-mini',
+			},
+			{
+				name: 'gpt-4.1-nano',
+				inputTokenCost: 1e-7,
+				outputTokenCost: 4e-7,
+			},
+			{
 				name: 'gpt-4o',
 				inputTokenCost: 0.0000025,
 				outputTokenCost: 0.00001,
@@ -1146,14 +1658,31 @@ export const azureCatalog = [
 				outputTokenCost: 6e-7,
 			},
 			{
+				name: 'gpt-5',
+			},
+			{
+				name: 'gpt-5-mini',
+			},
+			{
+				name: 'gpt-5-nano',
+			},
+			{
 				name: 'o1',
 				inputTokenCost: 0.000015,
 				outputTokenCost: 0.00005999999999999999,
 			},
 			{
+				name: 'o3',
+				inputTokenCost: 0.000002,
+				outputTokenCost: 0.000008,
+			},
+			{
 				name: 'o3-mini',
 				inputTokenCost: 0.0000011,
 				outputTokenCost: 0.0000044,
+			},
+			{
+				name: 'o4-mini',
 			},
 		],
 		imageModelAvailability: [],
