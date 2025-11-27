@@ -13,13 +13,16 @@ export namespace AiModels {
 	export namespace LanguageModels {
 		export enum Azure {
 			gpt41_nano = 'azure:gpt-4.1-nano',
+			gpt5_nano = 'azure:gpt-5-nano',
 			gpt4o_mini = 'azure:gpt-4o-mini',
 			gpt41_mini = 'azure:gpt-4.1-mini',
-			o1_mini = 'azure:o1-mini',
+			gpt5_mini = 'azure:gpt-5-mini',
 			o3_mini = 'azure:o3-mini',
 			o4_mini = 'azure:o4-mini',
 			gpt4o = 'azure:gpt-4o',
 			gpt41 = 'azure:gpt-4.1',
+			gpt5 = 'azure:gpt-5',
+			gpt51 = 'azure:gpt-5.1',
 			o1 = 'azure:o1',
 			o3 = 'azure:o3',
 		}
@@ -45,13 +48,17 @@ export namespace AiModels {
 
 		export enum OpenAi {
 			gpt41_nano = 'openai:gpt-4.1-nano',
+			gpt5_nano = 'openai:gpt-5-nano',
 			gpt4o_mini = 'openai:gpt-4o-mini',
 			gpt41_mini = 'openai:gpt-4.1-mini',
+			gpt5_mini = 'openai:gpt-5-mini',
 			o1_mini = 'openai:o1-mini',
 			o3_mini = 'openai:o3-mini',
 			o4_mini = 'openai:o4-mini',
 			gpt4o = 'openai:gpt-4o',
 			gpt41 = 'openai:gpt-4.1',
+			gpt5 = 'openai:gpt-5',
+			gpt51 = 'openai:gpt-5.1',
 			o1 = 'openai:o1',
 			o3 = 'openai:o3',
 		}
@@ -60,7 +67,6 @@ export namespace AiModels {
 	export namespace ImageModels {
 		export enum Azure {
 			gpt1 = 'azure:gpt-image-1',
-			dalle3 = 'azure:dall-e-3',
 		}
 
 		export const Cloudflare = Object.freeze(Object.fromEntries(enabledCloudflareLlmImageProviders.map((model) => [model, `workersai:${model}`])) as unknown as CloudflareModelsEnum<'Text-to-Image'>);
@@ -71,8 +77,7 @@ export namespace AiModels {
 		}
 
 		export enum OpenAi {
-			openai = 'azure:gpt-image-1',
-			dalle3 = 'openai:dall-e-3',
+			gpt1 = 'openai:gpt-image-1',
 		}
 	}
 
