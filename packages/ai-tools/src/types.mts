@@ -5,11 +5,17 @@ import type { Ai, DurableObjectState, ExecutionContext, IncomingRequestCfPropert
 import type haversine from 'haversine-distance';
 
 export interface AiConfig<C extends Pick<ExecutionContext | DurableObjectState, 'waitUntil'> = Pick<ExecutionContext | DurableObjectState, 'waitUntil'>> {
-	gateway: {
-		accountId: string;
-		apiToken: string;
-		binding?: AiConfigWorkersAiBinding;
-	};
+	gateway:
+		| {
+				accountId: string;
+				apiToken: string;
+				binding: never;
+		  }
+		| {
+				accountId: never;
+				apiToken: never;
+				binding: AiConfigWorkersAiBinding;
+		  };
 	geoRouting?: {
 		userCoordinate?: Coordinate;
 		country?: IncomingRequestCfProperties['country'];
