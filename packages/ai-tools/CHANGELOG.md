@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 1.0.19
+
+### Patch Changes
+
+- [`2cd0d94`](https://github.com/ChainFuse/packages/commit/2cd0d94a36ed6688c061e0eb7e470ea34c3386b0) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix types to not need api info if binding is provided
+
 ## 1.0.18
 
 ### Patch Changes
