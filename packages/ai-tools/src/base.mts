@@ -12,10 +12,7 @@ export class AiBase {
 	public get config(): Readonly<Omit<AiConfig, 'backgroundContext'>> & Pick<AiConfig, 'backgroundContext'> {
 		return {
 			...Object.freeze(this._config),
-			gateway: {
-				...Object.freeze(this._config.gateway),
-				binding: this._config.gateway.binding,
-			},
+			gateway: this._config.gateway,
 			providers: {
 				...Object.freeze(this._config.providers),
 				workersAi: this._config.providers.workersAi,
