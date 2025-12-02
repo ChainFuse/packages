@@ -1,5 +1,22 @@
 # @chainfuse/helpers
 
+## 4.2.7
+
+### Patch Changes
+
+- [#762](https://github.com/ChainFuse/packages/pull/762) [`555260e`](https://github.com/ChainFuse/packages/commit/555260e8329e158048a106b5dd1fc39977b6d3c5) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai
+
+- [#763](https://github.com/ChainFuse/packages/pull/763) [`5f18acc`](https://github.com/ChainFuse/packages/commit/5f18acc00d7875448bf0f3a27f09c078662f394e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump prettier, typescript-eslint
+
+- [#764](https://github.com/ChainFuse/packages/pull/764) [`0ae6a45`](https://github.com/ChainFuse/packages/commit/0ae6a4544601997f7b3a771f9b22a06bb8fb8204) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/changelog-github, @changesets/cli, lerna
+
+- [#765](https://github.com/ChainFuse/packages/pull/765) [`52e9993`](https://github.com/ChainFuse/packages/commit/52e99934f95818b8565c8e4508e326035f830d0f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump tsx
+
+- [#766](https://github.com/ChainFuse/packages/pull/766) [`84b32f5`](https://github.com/ChainFuse/packages/commit/84b32f505d1120971724853eca4861767dafe8fc) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- Updated dependencies [[`555260e`](https://github.com/ChainFuse/packages/commit/555260e8329e158048a106b5dd1fc39977b6d3c5), [`5f18acc`](https://github.com/ChainFuse/packages/commit/5f18acc00d7875448bf0f3a27f09c078662f394e), [`0ae6a45`](https://github.com/ChainFuse/packages/commit/0ae6a4544601997f7b3a771f9b22a06bb8fb8204), [`52e9993`](https://github.com/ChainFuse/packages/commit/52e99934f95818b8565c8e4508e326035f830d0f), [`84b32f5`](https://github.com/ChainFuse/packages/commit/84b32f505d1120971724853eca4861767dafe8fc)]:
+    - @chainfuse/types@4.1.7
+
 ## 4.2.6
 
 ### Patch Changes
