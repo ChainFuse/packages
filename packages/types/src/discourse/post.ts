@@ -1,7 +1,7 @@
 export enum PostEvents {
 	created = 'post_created',
-	edited = 'post_edited',
 	destroyed = 'post_destroyed',
+	edited = 'post_edited',
 	recovered = 'post_recovered',
 }
 
