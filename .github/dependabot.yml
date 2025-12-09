@@ -36,6 +36,7 @@ updates:
         patterns:
           - 'changesets/*'
           - 'dependabot/*'
+          - 'actions/create-github-app-token'
       sast:
         patterns:
           - 'github/codeql-*'
