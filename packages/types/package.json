@@ -79,13 +79,9 @@
 			"import": "./dist/d1/users/index.js",
 			"types": "./dist/d1/users/index.d.ts"
 		},
-		"./discourse/post": {
-			"import": "./dist/discourse/post/index.js",
-			"types": "./dist/discourse/post/index.d.ts"
-		},
-		"./discourse/topic": {
-			"import": "./dist/discourse/topic/index.js",
-			"types": "./dist/discourse/topic/index.d.ts"
+		"./discourse": {
+			"import": "./dist/discourse/index.js",
+			"types": "./dist/discourse/index.d.ts"
 		},
 		"./zod-mini": {
 			"import": "./dist/zod-mini/index.js",
