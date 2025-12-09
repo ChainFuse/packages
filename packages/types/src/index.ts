@@ -62,6 +62,8 @@ export interface ExternallyResolvablePromise<T> {
 	reject: (reason?: any) => void;
 }
 
+export type ReplaceHyphensWithUnderscores<S extends string> = S extends `${infer H}-${infer T}` ? `${H}_${ReplaceHyphensWithUnderscores<T>}` : S;
+
 /**
  * Mark every property of an object as undefined.
  */
