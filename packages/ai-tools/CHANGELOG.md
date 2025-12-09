@@ -1,5 +1,16 @@
 # @chainfuse/ai-tools
 
+## 1.1.0
+
+### Minor Changes
+
+- [`caa63c2`](https://github.com/ChainFuse/packages/commit/caa63c271bcdaa7c2bb06c3ade9cbbf6ad4597d0) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Refine Azure API key typing
+
+### Patch Changes
+
+- Updated dependencies [[`72685cf`](https://github.com/ChainFuse/packages/commit/72685cf3c22b0f3813276edfe6810366d82c6a08)]:
+    - @chainfuse/types@4.2.1
+
 ## 1.0.20
 
 ### Patch Changes
