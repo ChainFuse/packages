@@ -1258,7 +1258,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per audio minute (websocket)',
-								price: 0,
+								price: 0.0077,
 								currency: 'USD',
 							},
 						],
