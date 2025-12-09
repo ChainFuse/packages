@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.2.1
+
+### Patch Changes
+
+- [`72685cf`](https://github.com/ChainFuse/packages/commit/72685cf3c22b0f3813276edfe6810366d82c6a08) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add ReplaceHyphensWithUnderscores string utility type
+
 ## 4.2.0
 
 ### Minor Changes
