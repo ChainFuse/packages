@@ -1,5 +1,25 @@
 # @chainfuse/types
 
+## 4.2.0
+
+### Minor Changes
+
+- [`1cf787a`](https://github.com/ChainFuse/packages/commit/1cf787a13286b025e5bcb2aef93be97963ac174f) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Refactor discourse types structure and exports
+
+### Patch Changes
+
+- [`e0f2628`](https://github.com/ChainFuse/packages/commit/e0f262839464352c2bbf3d5cb25535400664ccec) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, ai, openai
+
+- [`0f6f3c5`](https://github.com/ChainFuse/packages/commit/0f6f3c5d29ab8ab43db1a827858f11fe662cf069) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump prettier, typescript-eslint
+
+- [`acbdf40`](https://github.com/ChainFuse/packages/commit/acbdf4050f2b078ae1683dcbd6e76dfa8693570e) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump drizzle-orm
+
+- [`a8a4451`](https://github.com/ChainFuse/packages/commit/a8a4451de6e139c34ceb604544716db71f0d07da) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump jws
+
+- [`a679159`](https://github.com/ChainFuse/packages/commit/a679159eb73c4789b290ca83431fee0c85821d33) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [`39b1a27`](https://github.com/ChainFuse/packages/commit/39b1a276ac3e9970a03fdc9b54b920608135baea) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add new Discourse event types and exports
+
 ## 4.1.7
 
 ### Patch Changes
