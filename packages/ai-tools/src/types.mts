@@ -1,3 +1,4 @@
+import type { ReplaceHyphensWithUnderscores } from '@chainfuse/types';
 import type { Coordinate } from '@chainfuse/types/ai-tools';
 import type { azureCatalog } from '@chainfuse/types/ai-tools/azure/catalog';
 import type { PrefixedUuid, UuidExport } from '@chainfuse/types/d1';
@@ -54,7 +55,7 @@ export interface AiConfigAnthropic {
 	apiToken: `sk-ant-${string}`;
 }
 export interface AiConfigAzOpenai {
-	apiTokens: Record<`AZURE_API_KEY_${string}`, string>;
+	apiTokens: Partial<Record<`AZURE_API_KEY_${Uppercase<ReplaceHyphensWithUnderscores<(typeof azureCatalog)[number]['id']>>}`, string>>;
 }
 export interface AiConfigCustomBase {
 	/**
