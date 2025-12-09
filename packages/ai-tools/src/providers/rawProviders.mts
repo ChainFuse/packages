@@ -1,5 +1,7 @@
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
+import type { ReplaceHyphensWithUnderscores } from '@chainfuse/types';
+import type { azureCatalog } from '@chainfuse/types/ai-tools/azure/catalog';
 import type { cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
 import type { AIGatewayUniversalRequest, GatewayOptions } from '@cloudflare/workers-types/experimental';
 import type { APIPromise } from 'cloudflare/core';
@@ -218,7 +220,7 @@ export class AiRawProviders extends AiBase {
 										filteredServers.map(async (server) => {
 											const fallbackedHeaders: AIGatewayUniversalRequest['headers'] = {
 												...Object.fromEntries(Array.from(headers.entries()).filter(([key]) => !key.toLowerCase().startsWith('cf-aig-'))),
-												'api-key': this.config.providers.azureOpenAi.apiTokens[`AZURE_API_KEY_${server.id.toUpperCase().replaceAll('-', '_')}`]!,
+												'api-key': this.config.providers.azureOpenAi.apiTokens[`AZURE_API_KEY_${server.id.toUpperCase().replaceAll('-', '_') as Uppercase<ReplaceHyphensWithUnderscores<(typeof azureCatalog)[number]['id']>>}`]!,
 												'cf-aig-metadata': JSON.stringify({
 													...metadataHeader,
 													serverInfo: JSON.stringify({
