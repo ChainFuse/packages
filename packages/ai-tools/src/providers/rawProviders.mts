@@ -36,7 +36,7 @@ export class AiRawProviders extends AiBase {
 
 		if (logId) {
 			const updateMetadata = (() => {
-				if ('binding' in this.config.gateway && typeof this.config.gateway.binding?.gateway === 'function') {
+				if ('binding' in this.config.gateway) {
 					return this.config.gateway.binding
 						.gateway(this.gatewayName)
 						.patchLog(logId, {
@@ -50,7 +50,7 @@ export class AiRawProviders extends AiBase {
 						.catch((error) => console.warn('Not updating gateway log', error));
 				} else {
 					return import('@chainfuse/helpers')
-						.then(({ NetHelpers }) => NetHelpers.cfApi(this.config.gateway.apiToken, { logging: { level: Number(logging) } }))
+						.then(({ NetHelpers }) => NetHelpers.cfApi('apiToken' in this.config.gateway ? this.config.gateway.apiToken : '', { logging: { level: Number(logging) } }))
 						.then((cf) =>
 							(
 								cf.aiGateway.logs.edit(this.gatewayName, logId, {
@@ -89,7 +89,7 @@ export class AiRawProviders extends AiBase {
 				apiKey: this.config.providers.openAi.apiToken,
 				organization: this.config.providers.openAi.organization,
 				headers: {
-					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
+					'cf-aig-authorization': `Bearer ${'apiToken' in this.config.gateway ? this.config.gateway.apiToken : ''}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
@@ -115,7 +115,58 @@ export class AiRawProviders extends AiBase {
 
 					if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
-					return fetch(input, { ...rawInit, headers }).then(async (response) => {
+					return (() => {
+						if ('binding' in this.config.gateway) {
+							const fallbackedHeaders: AIGatewayUniversalRequest['headers'] = {
+								...Object.fromEntries(Array.from(headers.entries()).filter(([key]) => !key.toLowerCase().startsWith('cf-aig-'))),
+								'cf-aig-metadata': JSON.stringify({
+									...metadataHeader,
+									serverInfo: JSON.stringify({
+										name: 'openai',
+									} satisfies AiRequestMetadata['serverInfo']),
+								}),
+							};
+
+							// Prevent double stringification
+							let fallbackedQuery: AIGatewayUniversalRequest['query'];
+							try {
+								fallbackedQuery = JSON.parse(rawInit?.body as string);
+								// eslint-disable-next-line @typescript-eslint/no-unused-vars
+							} catch (error) {
+								fallbackedQuery = rawInit?.body;
+							}
+
+							return this.config.gateway.binding.gateway(this.gatewayName).run(
+								{
+									provider: 'openai',
+									endpoint: new URL(new Request(input).url).pathname.split('/').slice(5).join('/'),
+									headers: fallbackedHeaders,
+									query: fallbackedQuery,
+								},
+								{
+									extraHeaders: (() => {
+										// Prevent duplicates
+										headers.delete('cf-aig-authorization');
+										headers.delete('cf-aig-metadata');
+										headers.delete('cf-aig-cache-ttl');
+										headers.delete('cf-aig-skip-cache');
+
+										return headers;
+									})(),
+									gateway: {
+										id: this.gatewayName,
+										eventId: metadataHeader.idempotencyId,
+										metadata: metadataHeader,
+										...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
+										...(args.skipCache && { skipCache: true }),
+									},
+								},
+							);
+						} else {
+							return fetch(input, { ...rawInit, headers });
+						}
+					})().then(async (_response) => {
+						const response = _response as Response;
 						if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						// Inject it to have it available for retries
@@ -163,7 +214,7 @@ export class AiRawProviders extends AiBase {
 					useDeploymentBasedUrls: true,
 					baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'azure-openai', 'server-placeholder'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 					headers: {
-						'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
+						'cf-aig-authorization': `Bearer ${'apiToken' in this.config.gateway ? this.config.gateway.apiToken : ''}`,
 						'cf-aig-metadata': JSON.stringify(metadataHeader),
 						...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
 						...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
@@ -339,7 +390,7 @@ export class AiRawProviders extends AiBase {
 				baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'anthropic'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: this.config.providers.anthropic.apiToken,
 				headers: {
-					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
+					'cf-aig-authorization': `Bearer ${'apiToken' in this.config.gateway ? this.config.gateway.apiToken : ''}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
@@ -365,7 +416,58 @@ export class AiRawProviders extends AiBase {
 
 					if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
-					return fetch(input, { ...rawInit, headers }).then(async (response) => {
+					return (() => {
+						if ('binding' in this.config.gateway) {
+							const fallbackedHeaders: AIGatewayUniversalRequest['headers'] = {
+								...Object.fromEntries(Array.from(headers.entries()).filter(([key]) => !key.toLowerCase().startsWith('cf-aig-'))),
+								'cf-aig-metadata': JSON.stringify({
+									...metadataHeader,
+									serverInfo: JSON.stringify({
+										name: 'anthropic',
+									} satisfies AiRequestMetadata['serverInfo']),
+								}),
+							};
+
+							// Prevent double stringification
+							let fallbackedQuery: AIGatewayUniversalRequest['query'];
+							try {
+								fallbackedQuery = JSON.parse(rawInit?.body as string);
+								// eslint-disable-next-line @typescript-eslint/no-unused-vars
+							} catch (error) {
+								fallbackedQuery = rawInit?.body;
+							}
+
+							return this.config.gateway.binding.gateway(this.gatewayName).run(
+								{
+									provider: 'anthropic',
+									endpoint: new URL(new Request(input).url).pathname.split('/').slice(5).join('/'),
+									headers: fallbackedHeaders,
+									query: fallbackedQuery,
+								},
+								{
+									extraHeaders: (() => {
+										// Prevent duplicates
+										headers.delete('cf-aig-authorization');
+										headers.delete('cf-aig-metadata');
+										headers.delete('cf-aig-cache-ttl');
+										headers.delete('cf-aig-skip-cache');
+
+										return headers;
+									})(),
+									gateway: {
+										id: this.gatewayName,
+										eventId: metadataHeader.idempotencyId,
+										metadata: metadataHeader,
+										...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
+										...(args.skipCache && { skipCache: true }),
+									},
+								},
+							);
+						} else {
+							return fetch(input, { ...rawInit, headers });
+						}
+					})().then(async (_response) => {
+						const response = _response as Response;
 						if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						// Inject it to have it available for retries
@@ -512,7 +614,7 @@ export class AiRawProviders extends AiBase {
 				baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'google-ai-studio', 'v1beta'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: this.config.providers.googleAi.apiToken,
 				headers: {
-					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
+					'cf-aig-authorization': `Bearer ${'apiToken' in this.config.gateway ? this.config.gateway.apiToken : ''}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
@@ -538,7 +640,58 @@ export class AiRawProviders extends AiBase {
 
 					if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
-					return fetch(input, { ...rawInit, headers }).then(async (response) => {
+					return (() => {
+						if ('binding' in this.config.gateway) {
+							const fallbackedHeaders: AIGatewayUniversalRequest['headers'] = {
+								...Object.fromEntries(Array.from(headers.entries()).filter(([key]) => !key.toLowerCase().startsWith('cf-aig-'))),
+								'cf-aig-metadata': JSON.stringify({
+									...metadataHeader,
+									serverInfo: JSON.stringify({
+										name: 'googleai',
+									} satisfies AiRequestMetadata['serverInfo']),
+								}),
+							};
+
+							// Prevent double stringification
+							let fallbackedQuery: AIGatewayUniversalRequest['query'];
+							try {
+								fallbackedQuery = JSON.parse(rawInit?.body as string);
+								// eslint-disable-next-line @typescript-eslint/no-unused-vars
+							} catch (error) {
+								fallbackedQuery = rawInit?.body;
+							}
+
+							return this.config.gateway.binding.gateway(this.gatewayName).run(
+								{
+									provider: 'google-ai-studio',
+									endpoint: new URL(new Request(input).url).pathname.split('/').slice(5).join('/'),
+									headers: fallbackedHeaders,
+									query: fallbackedQuery,
+								},
+								{
+									extraHeaders: (() => {
+										// Prevent duplicates
+										headers.delete('cf-aig-authorization');
+										headers.delete('cf-aig-metadata');
+										headers.delete('cf-aig-cache-ttl');
+										headers.delete('cf-aig-skip-cache');
+
+										return headers;
+									})(),
+									gateway: {
+										id: this.gatewayName,
+										eventId: metadataHeader.idempotencyId,
+										metadata: metadataHeader,
+										...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
+										...(args.skipCache && { skipCache: true }),
+									},
+								},
+							);
+						} else {
+							return fetch(input, { ...rawInit, headers });
+						}
+					})().then(async (_response) => {
+						const response = _response as Response;
 						if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						// Inject it to have it available for retries
@@ -569,7 +722,7 @@ export class AiRawProviders extends AiBase {
 				baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'workers-ai', 'v1'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: (this.config.providers.workersAi as AiConfigWorkersaiRest).apiToken,
 				headers: {
-					'cf-aig-authorization': `Bearer ${this.config.gateway.apiToken}`,
+					'cf-aig-authorization': `Bearer ${'apiToken' in this.config.gateway ? this.config.gateway.apiToken : ''}`,
 					'cf-aig-metadata': JSON.stringify({
 						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
 						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
@@ -597,7 +750,58 @@ export class AiRawProviders extends AiBase {
 
 					if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
 
-					return fetch(input, { ...rawInit, headers }).then(async (response) => {
+					return (() => {
+						if ('binding' in this.config.gateway) {
+							const fallbackedHeaders: AIGatewayUniversalRequest['headers'] = {
+								...Object.fromEntries(Array.from(headers.entries()).filter(([key]) => !key.toLowerCase().startsWith('cf-aig-'))),
+								'cf-aig-metadata': JSON.stringify({
+									...metadataHeader,
+									serverInfo: JSON.stringify({
+										name: 'cloudflare',
+									} satisfies AiRequestMetadata['serverInfo']),
+								}),
+							};
+
+							// Prevent double stringification
+							let fallbackedQuery: AIGatewayUniversalRequest['query'];
+							try {
+								fallbackedQuery = JSON.parse(rawInit?.body as string);
+								// eslint-disable-next-line @typescript-eslint/no-unused-vars
+							} catch (error) {
+								fallbackedQuery = rawInit?.body;
+							}
+
+							return this.config.gateway.binding.gateway(this.gatewayName).run(
+								{
+									provider: 'workers-ai',
+									endpoint: new URL(new Request(input).url).pathname.split('/').slice(5).join('/'),
+									headers: fallbackedHeaders,
+									query: fallbackedQuery,
+								},
+								{
+									extraHeaders: (() => {
+										// Prevent duplicates
+										headers.delete('cf-aig-authorization');
+										headers.delete('cf-aig-metadata');
+										headers.delete('cf-aig-cache-ttl');
+										headers.delete('cf-aig-skip-cache');
+
+										return headers;
+									})(),
+									gateway: {
+										id: this.gatewayName,
+										eventId: metadataHeader.idempotencyId,
+										metadata: metadataHeader,
+										...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
+										...(args.skipCache && { skipCache: true }),
+									},
+								},
+							);
+						} else {
+							return fetch(input, { ...rawInit, headers });
+						}
+					})().then(async (_response) => {
+						const response = _response as Response;
 						if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
 
 						// Inject it to have it available for retries
