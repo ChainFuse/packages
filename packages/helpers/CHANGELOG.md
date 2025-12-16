@@ -1,5 +1,22 @@
 # @chainfuse/helpers
 
+## 4.2.9
+
+### Patch Changes
+
+- [`e08d3e9`](https://github.com/ChainFuse/packages/commit/e08d3e92a0d057e494eb7deb58e3ae5e2e6ce5a0) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#785](https://github.com/ChainFuse/packages/pull/785) [`782107b`](https://github.com/ChainFuse/packages/commit/782107b2fd9fd87cbd5aefefc31178ec60c4a773) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @eslint/js, eslint, typescript-eslint
+
+- [#788](https://github.com/ChainFuse/packages/pull/788) [`afe3627`](https://github.com/ChainFuse/packages/commit/afe3627efed8ac51f9fdf092577211c41c102964) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump drizzle-orm
+
+- [#786](https://github.com/ChainFuse/packages/pull/786) [`b879de1`](https://github.com/ChainFuse/packages/commit/b879de1bd418838abc5ac61c0d10079627859cc0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#787](https://github.com/ChainFuse/packages/pull/787) [`15ca178`](https://github.com/ChainFuse/packages/commit/15ca178b9bbe58de02f006e23b29491ae11f961c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump zod
+
+- Updated dependencies [[`e08d3e9`](https://github.com/ChainFuse/packages/commit/e08d3e92a0d057e494eb7deb58e3ae5e2e6ce5a0), [`782107b`](https://github.com/ChainFuse/packages/commit/782107b2fd9fd87cbd5aefefc31178ec60c4a773), [`afe3627`](https://github.com/ChainFuse/packages/commit/afe3627efed8ac51f9fdf092577211c41c102964), [`b879de1`](https://github.com/ChainFuse/packages/commit/b879de1bd418838abc5ac61c0d10079627859cc0), [`15ca178`](https://github.com/ChainFuse/packages/commit/15ca178b9bbe58de02f006e23b29491ae11f961c)]:
+    - @chainfuse/types@4.2.2
+
 ## 4.2.8
 
 ### Patch Changes
