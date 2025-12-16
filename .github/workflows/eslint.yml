@@ -32,7 +32,7 @@ jobs:
       security-events: write
       actions: read
     steps:
-      - uses: step-security/harden-runner@df199fb7be9f65074067a9eb93f12bb4c5547cf2 # v2.13.3
+      - uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
           disable-sudo-and-containers: true
@@ -72,7 +72,7 @@ jobs:
       - run: npm install -D @microsoft/eslint-formatter-sarif
       - run: npm run lint -- --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
         continue-on-error: true
-      - uses: github/codeql-action/upload-sarif@cf1bb45a277cb3c205638b2cd5c984db1c46a412 # v4.31.7
+      - uses: github/codeql-action/upload-sarif@1b168cd39490f61582a9beae412bb7057a6b2c4e # v4.31.8
         id: g_cql_upload
         with:
           sarif_file: eslint-results.sarif
