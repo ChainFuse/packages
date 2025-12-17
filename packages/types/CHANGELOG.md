@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.2.3
+
+### Patch Changes
+
+- [`7002d38`](https://github.com/ChainFuse/packages/commit/7002d3848410e490a7a56d8ac892e9378d03495e) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Update default AI model values to GPT-5 and Llama Guard 3
+
 ## 4.2.2
 
 ### Patch Changes
