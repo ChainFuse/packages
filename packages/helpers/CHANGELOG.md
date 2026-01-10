@@ -1,5 +1,22 @@
 # @chainfuse/helpers
 
+## 4.2.10
+
+### Patch Changes
+
+- [#806](https://github.com/ChainFuse/packages/pull/806) [`8a2798a`](https://github.com/ChainFuse/packages/commit/8a2798a269a70197e04868a82df0cae8b8185b23) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump @actions/core
+
+- [#802](https://github.com/ChainFuse/packages/pull/802) [`dc98f8e`](https://github.com/ChainFuse/packages/commit/dc98f8e918dadc6df4b176224a6b9588afb58978) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, @ai-sdk/provider, ai, workers-ai-provider, openai
+
+- [#803](https://github.com/ChainFuse/packages/pull/803) [`474ad14`](https://github.com/ChainFuse/packages/commit/474ad144d95f574060340fe335ba26a6203b41db) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#804](https://github.com/ChainFuse/packages/pull/804) [`09c42c6`](https://github.com/ChainFuse/packages/commit/09c42c6ee454c610d91fdc2ef83082ef2a5b77df) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#805](https://github.com/ChainFuse/packages/pull/805) [`30266d1`](https://github.com/ChainFuse/packages/commit/30266d12753996133e55154eb9dc70ac3d68561d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump zod, validator
+
+- Updated dependencies [[`8a2798a`](https://github.com/ChainFuse/packages/commit/8a2798a269a70197e04868a82df0cae8b8185b23), [`dc98f8e`](https://github.com/ChainFuse/packages/commit/dc98f8e918dadc6df4b176224a6b9588afb58978), [`474ad14`](https://github.com/ChainFuse/packages/commit/474ad144d95f574060340fe335ba26a6203b41db), [`09c42c6`](https://github.com/ChainFuse/packages/commit/09c42c6ee454c610d91fdc2ef83082ef2a5b77df), [`30266d1`](https://github.com/ChainFuse/packages/commit/30266d12753996133e55154eb9dc70ac3d68561d)]:
+    - @chainfuse/types@4.2.4
+
 ## 4.2.9
 
 ### Patch Changes
