@@ -1,5 +1,17 @@
 # @chainfuse/types
 
+## 4.2.5
+
+### Patch Changes
+
+- [#812](https://github.com/ChainFuse/packages/pull/812) [`3b6e1d4`](https://github.com/ChainFuse/packages/commit/3b6e1d41a6aadce6f9abf0e97a5859850fcfabc1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @actions/core
+
+- [#809](https://github.com/ChainFuse/packages/pull/809) [`baadb34`](https://github.com/ChainFuse/packages/commit/baadb34501aacb00d68d0326373766e56eda9c54) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump ai
+
+- [#810](https://github.com/ChainFuse/packages/pull/810) [`cdc5dad`](https://github.com/ChainFuse/packages/commit/cdc5dad0f61f608e3edd721b07981eaf158b5982) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [#811](https://github.com/ChainFuse/packages/pull/811) [`9e606cc`](https://github.com/ChainFuse/packages/commit/9e606cc6ab66cdb9c981d5217e4f0763546e9d89) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 4.2.4
 
 ### Patch Changes
