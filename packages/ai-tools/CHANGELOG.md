@@ -1,5 +1,17 @@
 # @chainfuse/ai-tools
 
+## 1.1.4
+
+### Patch Changes
+
+- [#814](https://github.com/ChainFuse/packages/pull/814) [`41c7693`](https://github.com/ChainFuse/packages/commit/41c769359688ff920ab0e05d37b4240d66209c85) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump ai
+
+- [#815](https://github.com/ChainFuse/packages/pull/815) [`6009566`](https://github.com/ChainFuse/packages/commit/6009566833de614114a9bf03250a0fd7e4f775dc) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- Updated dependencies [[`41c7693`](https://github.com/ChainFuse/packages/commit/41c769359688ff920ab0e05d37b4240d66209c85), [`6009566`](https://github.com/ChainFuse/packages/commit/6009566833de614114a9bf03250a0fd7e4f775dc), [`0153f6f`](https://github.com/ChainFuse/packages/commit/0153f6fdcc6c7fba90f203b5168023d994aefd67)]:
+    - @chainfuse/helpers@4.2.12
+    - @chainfuse/types@4.2.6
+
 ## 1.1.3
 
 ### Patch Changes
