@@ -151,7 +151,7 @@ export const workersAiCatalog = {
 					name: '@hf/thebloke/llamaguard-7b-awq',
 					description: 'Llama Guard is a model for classifying the safety of LLM prompts and responses, using a taxonomy of safety risks.\n',
 					created_at: '2024-02-06 18:13:59.060',
-					tags: [],
+					tags: ['moderation', 'safety', 'content-filtering', 'guardrails'],
 					properties: {
 						beta: true,
 						context_window: 4096,
@@ -177,7 +177,7 @@ export const workersAiCatalog = {
 					name: '@cf/meta/llama-guard-3-8b',
 					description: 'Llama Guard 3 is a Llama-3.1-8B pretrained model, fine-tuned for content safety classification. Similar to previous versions, it can be used to classify content in both LLM inputs (prompt classification) and in LLM responses (response classification). It acts as an LLM – it generates text in its output that indicates whether a given prompt or response is safe or unsafe, and if unsafe, it also lists the content categories violated.',
 					created_at: '2025-01-22 23:26:23.495',
-					tags: [],
+					tags: ['moderation', 'safety', 'content-filtering', 'guardrails'],
 					properties: {
 						context_window: 131072,
 						price: [
