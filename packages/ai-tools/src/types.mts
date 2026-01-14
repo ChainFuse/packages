@@ -25,19 +25,12 @@ export interface AiConfig<C extends Pick<ExecutionContext | DurableObjectState, 
 		| {
 				noCost: true;
 		  }
-		| ({
+		| {
 				noCost: false;
 				environment: 'production' | 'preview';
-		  } & (
-				| {
-						user: 'bot';
-						action: 'passive';
-				  }
-				| {
-						user: 'human' | 'bot';
-						action: 'active';
-				  }
-		  ));
+				user: 'human' | 'bot';
+				action: 'passive' | 'active';
+		  };
 	providers: AiConfigProviders;
 	backgroundContext?: C;
 }
