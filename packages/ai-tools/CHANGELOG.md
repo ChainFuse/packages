@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 1.1.5
+
+### Patch Changes
+
+- [`fc7239c`](https://github.com/ChainFuse/packages/commit/fc7239c8bb7585841b93c0e4bbb74043a27f4ee6) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix billing type combination
+
 ## 1.1.4
 
 ### Patch Changes
