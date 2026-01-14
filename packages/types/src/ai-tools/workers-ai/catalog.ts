@@ -1054,6 +1054,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						async_queue: true,
+						context_window: 153600,
 						price: [
 							{
 								unit: 'per M input tokens',
