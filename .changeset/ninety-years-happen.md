@@ -1,5 +1,0 @@
----
-'@chainfuse/ai-tools': patch
----
-
-ai-tools(fix): Fix wrong name

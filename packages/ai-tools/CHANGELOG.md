@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 1.1.6
+
+### Patch Changes
+
+- [`db4df3f`](https://github.com/ChainFuse/packages/commit/db4df3f86eba18bdb9ce6c17cb15072136eb59f6) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(fix): Fix wrong name
+
 ## 1.1.5
 
 ### Patch Changes
