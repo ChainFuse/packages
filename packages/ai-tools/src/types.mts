@@ -85,7 +85,7 @@ export type PrivacyRegion = Extract<Servers[number], { privacyRegion: string }>[
  */
 export type AiRequestIdempotencyId = UuidExport['utf8'];
 export interface AiRequestExecutor {
-	type: 'worker' | 'queue' | 'workflow' | 'githubCicd';
+	type: 'worker' | 'durableObject' | 'queue' | 'workflow' | 'githubCicd';
 	id: string;
 }
 
