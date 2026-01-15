@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 1.1.7
+
+### Patch Changes
+
+- [`b8798ec`](https://github.com/ChainFuse/packages/commit/b8798ec624e28f9a81f70e1bf4c675537037bd47) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Add 'durableObject' to `AiRequestExecutor` type
+
 ## 1.1.6
 
 ### Patch Changes
