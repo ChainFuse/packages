@@ -146,19 +146,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: 'd9b7a55c-cefa-4208-8ab3-11497a2b046c',
-					source: 2,
-					name: '@hf/thebloke/llamaguard-7b-awq',
-					description: 'Llama Guard is a model for classifying the safety of LLM prompts and responses, using a taxonomy of safety risks.\n',
-					created_at: '2024-02-06 18:13:59.060',
-					tags: ['moderation', 'safety', 'content-filtering', 'guardrails'],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
 					id: 'd2ba5c6b-bbb7-49d6-b466-900654870cd6',
 					source: 2,
 					name: '@hf/thebloke/neural-chat-7b-v3-1-awq',
@@ -1472,6 +1459,18 @@ export const workersAiCatalog = {
 						],
 						info: 'https://stability.ai/stable-diffusion',
 						terms: 'https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md',
+					},
+				},
+				{
+					id: '5cdffa8e-1b1e-48e8-85f1-ab9b943cdd32',
+					source: 1,
+					name: '@cf/black-forest-labs/flux-2-klein-4b',
+					description: 'FLUX.2 [klein] is an ultra-fast, distilled image model. It unifies image generation and editing in a single model, delivering state-of-the-art quality enabling interactive workflows, real-time previews, and latency-critical applications.',
+					created_at: '2026-01-14 12:54:55.024',
+					tags: [],
+					properties: {
+						partner: true,
+						terms: 'https://bfl.ai/legal/terms-of-service',
 					},
 				},
 				{
