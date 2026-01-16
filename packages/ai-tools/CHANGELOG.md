@@ -1,5 +1,11 @@
 # @chainfuse/ai-tools
 
+## 1.1.8
+
+### Patch Changes
+
+- [`51d99be`](https://github.com/ChainFuse/packages/commit/51d99be43e676c7f8b64cb446fd9cb2eea63ef52) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-toosl(fix): Improve error handling for gateway log updates
+
 ## 1.1.7
 
 ### Patch Changes
