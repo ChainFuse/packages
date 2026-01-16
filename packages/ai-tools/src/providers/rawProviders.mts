@@ -47,7 +47,28 @@ export class AiRawProviders extends AiBase {
 								}, {} as AiRequestMetadataStringified),
 							},
 						})
-						.catch((error) => console.warn('Not updating gateway log', error));
+						.catch((error) => {
+							if ('apiToken' in this.config.gateway) {
+								return import('@chainfuse/helpers')
+									.then(({ NetHelpers }) => NetHelpers.cfApi('apiToken' in this.config.gateway ? this.config.gateway.apiToken : '', { logging: { level: Number(logging) } }))
+									.then((cf) =>
+										(
+											cf.aiGateway.logs.edit(this.gatewayName, logId, {
+												account_id: this.config.gateway.accountId,
+												metadata: {
+													...Object.entries(rawMetadata).reduce((acc, [key, value]) => {
+														acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
+														return acc;
+													}, {} as AiRequestMetadataStringified),
+												} satisfies AiRequestMetadataStringified,
+											}) as APIPromise<void>
+										).catch((error) => console.warn('Not updating gateway log', error)),
+									);
+							} else {
+								console.warn('Not updating gateway log', error);
+								return;
+							}
+						});
 				} else {
 					return import('@chainfuse/helpers')
 						.then(({ NetHelpers }) => NetHelpers.cfApi('apiToken' in this.config.gateway ? this.config.gateway.apiToken : '', { logging: { level: Number(logging) } }))
