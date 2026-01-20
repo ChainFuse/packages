@@ -6,7 +6,6 @@ export type NamespaceEnumObject<T> = {
 type MethodKeys<T> = {
 	[P in keyof T]: T[P] extends (...args: any[]) => any ? P : never;
 }[keyof T];
-
 export type JsonParsed<T> = Omit<T, MethodKeys<T>>;
 
 /**
