@@ -49,6 +49,15 @@ export type BlockKeys<T, K extends readonly string[]> = {
 };
 
 /**
+ * Narrows an environment bindings object to keys whose values match the given type
+ * @typeParam E - The environment bindings object
+ * @typeParam T - The value type to filter on
+ */
+export type Bindings<E extends object, T extends E[keyof E]> = {
+	[K in keyof E as E[K] extends T ? K : never]: E[K];
+};
+
+/**
  * For when you have a type to conform `URLSearchParams` to, but all values are strings (as per search params spec)
  */
 export type InterfaceToSearchParams<T> = Record<keyof T, string>;
