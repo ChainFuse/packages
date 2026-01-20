@@ -1,5 +1,17 @@
 # @chainfuse/ai-tools
 
+## 1.1.9
+
+### Patch Changes
+
+- [#821](https://github.com/ChainFuse/packages/pull/821) [`b575fc6`](https://github.com/ChainFuse/packages/commit/b575fc6cc180667ab4929b1d89d3a62431aa3108) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump prettier, typescript-eslint
+
+- [#823](https://github.com/ChainFuse/packages/pull/823) [`4653867`](https://github.com/ChainFuse/packages/commit/46538677d24474a9f5b2773b52d6a642427647b3) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- Updated dependencies [[`b575fc6`](https://github.com/ChainFuse/packages/commit/b575fc6cc180667ab4929b1d89d3a62431aa3108), [`4653867`](https://github.com/ChainFuse/packages/commit/46538677d24474a9f5b2773b52d6a642427647b3), [`c19c103`](https://github.com/ChainFuse/packages/commit/c19c10366c1eb7c7d7957471695445c185fb1f35)]:
+    - @chainfuse/helpers@4.2.13
+    - @chainfuse/types@4.2.7
+
 ## 1.1.8
 
 ### Patch Changes
