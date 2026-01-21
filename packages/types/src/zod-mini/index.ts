@@ -26,22 +26,16 @@ export const ZodCoordinate = zm.string().check(zm.trim(), zm.minLength(3), zm.re
 
 export const ZodBlob = zm.union([
 	// Uint8Array
-	zm.pipe(
-		zm.instanceof(Uint8Array),
-		zm.transform((ui8a) => ui8a as Uint8Array<ArrayBufferLike>),
-	),
+	zm.instanceof(Uint8Array),
 	// ArrayBuffer
 	zm.pipe(
-		zm.pipe(
-			zm.instanceof(ArrayBuffer),
-			zm.transform((ab) => ab as ArrayBufferLike),
-		),
+		zm.instanceof(ArrayBuffer),
 		zm.transform((abl) => new Uint8Array(abl)),
 	),
 	// D0Blob
 	zm.pipe(
 		zm.tuple([zm.int().check(zm.minimum(0), zm.maximum(255))], zm.int().check(zm.minimum(0), zm.maximum(255))),
-		zm.transform((arr) => new Uint8Array(arr) as Uint8Array<ArrayBufferLike>),
+		zm.transform((arr) => new Uint8Array(arr)),
 	),
 ]);
 export const ZodBlobExport = zm.tuple([zm.int().check(zm.minimum(0), zm.maximum(255))], zm.int().check(zm.minimum(0), zm.maximum(255)));
