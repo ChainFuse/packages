@@ -21,12 +21,9 @@ export const ZodCoordinate = z4
 
 export const ZodBlob = z4.union([
 	// Uint8Array
-	z4.instanceof(Uint8Array).transform((ui8a) => ui8a as Uint8Array<ArrayBufferLike>),
+	z4.instanceof(Uint8Array),
 	// ArrayBuffer
-	z4
-		.instanceof(ArrayBuffer)
-		.transform((ab) => ab as ArrayBufferLike)
-		.transform((abl) => new Uint8Array(abl)),
+	z4.instanceof(ArrayBuffer).transform((abl) => new Uint8Array(abl)),
 	// D0Blob
 	z4.tuple([z4.int().min(0).max(255)], z4.int().min(0).max(255)).transform((arr) => new Uint8Array(arr)),
 ]);
