@@ -121,7 +121,7 @@ export const Zod4FakeUuidExport = zm.object({
 export const ZodSuruId = zm.union([
 	//
 	zm.hex().check(zm.trim(), zm.toLowerCase(), zm.length(96)),
-	ZodBlob,
+	ZodBlob.check(zm.refine((blob) => blob.byteLength === 384 / 8)),
 	zm.base64().check(zm.trim(), zm.maxLength(64)),
 	zm.base64url().check(zm.trim(), zm.maxLength(64)),
 ]);
