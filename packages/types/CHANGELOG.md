@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.2.9
+
+### Patch Changes
+
+- [`5528ff0`](https://github.com/ChainFuse/packages/commit/5528ff0fa269d14c89c9cd344f8d655819f79159) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add new shard types to `D0ShardType` enum
+
 ## 4.2.8
 
 ### Patch Changes
