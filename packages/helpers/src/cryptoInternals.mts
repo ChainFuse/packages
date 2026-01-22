@@ -2,14 +2,14 @@ import type { Crypto as CfCrypto } from '@cloudflare/workers-types/experimental'
 import { BufferHelpers } from './buffers.mjs';
 
 export class CryptoHelpersInternals {
-	public static node_secretBytes(byteSize: number): Promise<Uint8Array> {
+	public static node_secretBytes(byteSize: number): Promise<Uint8Array<ArrayBuffer>> {
 		return import('node:crypto').then(({ randomBytes }) => {
 			const mainBuffer = randomBytes(byteSize);
 			return new Uint8Array(mainBuffer.buffer.slice(mainBuffer.byteOffset, mainBuffer.byteOffset + mainBuffer.byteLength));
 		});
 	}
 
-	public static browser_secretBytes(byteSize: number): Uint8Array {
+	public static browser_secretBytes(byteSize: number): Uint8Array<ArrayBuffer> {
 		const randomBytes = new Uint8Array(byteSize);
 		crypto.getRandomValues(randomBytes);
 		return randomBytes;
