@@ -1,5 +1,14 @@
 # @chainfuse/helpers
 
+## 4.2.14
+
+### Patch Changes
+
+- [`c7330dd`](https://github.com/ChainFuse/packages/commit/c7330dd881b7971dded217f51eb07c2a7ad3844c) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Update return types for `secretBytes*` methods
+
+- Updated dependencies [[`0df54c3`](https://github.com/ChainFuse/packages/commit/0df54c34572b06e8c48681cf110e4a9eeac19e91), [`e0405c9`](https://github.com/ChainFuse/packages/commit/e0405c9884ad3dba7db7e7323e1a2bd932a2b907)]:
+    - @chainfuse/types@4.2.8
+
 ## 4.2.13
 
 ### Patch Changes
