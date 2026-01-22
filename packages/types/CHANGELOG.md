@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 4.2.8
+
+### Patch Changes
+
+- [`0df54c3`](https://github.com/ChainFuse/packages/commit/0df54c34572b06e8c48681cf110e4a9eeac19e91) Thanks [@demosjarco](https://github.com/demosjarco)! - types(fix): Add byteLength check to `ZodSuruId`for `ZodBlob`
+
+- [`e0405c9`](https://github.com/ChainFuse/packages/commit/e0405c9884ad3dba7db7e7323e1a2bd932a2b907) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Simplify `ZodBlob` type transformations
+
 ## 4.2.7
 
 ### Patch Changes
