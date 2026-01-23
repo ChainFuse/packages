@@ -8,7 +8,8 @@ export enum D0SystemType {
 	Dataspace = 1,
 	Tenant = 2,
 	User = 3,
-	Workflow = 4,
+	WebSocket = 4,
+	Workflow = 5,
 }
 
 export enum D0CombinedLocations {
