@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.2.10
+
+### Patch Changes
+
+- [`160ff7a`](https://github.com/ChainFuse/packages/commit/160ff7ad87601e7ba273d336ab893e973046efb0) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add `WebSocket` to `D0SystemType` enum
+
 ## 4.2.9
 
 ### Patch Changes
