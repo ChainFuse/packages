@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 4.2.11
+
+### Patch Changes
+
+- [`e380ef6`](https://github.com/ChainFuse/packages/commit/e380ef67b7a95b1915506279b8d9e5f13b1eca95) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add new DO jurisdiction
+
+- [`b726869`](https://github.com/ChainFuse/packages/commit/b7268693167673fb4040529e8b3ba5bb27c1a1ad) Thanks [@demosjarco](https://github.com/demosjarco)! - types(revert): Remove `WebSocket` to `D0SystemType` enum
+
 ## 4.2.10
 
 ### Patch Changes
