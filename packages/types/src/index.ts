@@ -88,6 +88,7 @@ export type CustomLoging = boolean | CustomLogCallback;
 export enum DOJurisdictions {
 	'The European Union' = 'eu',
 	'FedRAMP-compliant data centers' = 'fedramp',
+	'FedRAMP High authorization' = 'fedramp-high',
 }
 /**
  * @link https://developers.cloudflare.com/durable-objects/reference/data-location/#provide-a-location-hint
