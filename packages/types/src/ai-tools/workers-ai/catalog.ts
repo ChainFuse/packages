@@ -1128,6 +1128,209 @@ export const workersAiCatalog = {
 				},
 			],
 		},
+		'Text-to-Image': {
+			id: '3d6e1f35-341b-4915-a6c8-9a7142a9033a',
+			description: 'Generates images from input text. These models can be used to generate and modify images based on text prompts.',
+			models: [
+				{
+					id: 'e580c765-810c-4da3-936c-a2808892f14c',
+					source: 1,
+					name: '@cf/black-forest-labs/flux-2-klein-9b',
+					description: 'FLUX.2 [klein] 9B is a 9 billion parameter model that can generate images from text descriptions and supports multi-reference editing capabilities.',
+					created_at: '2026-01-14 12:55:54.294',
+					tags: [],
+					properties: {
+						partner: true,
+						terms: 'https://bfl.ai/legal/terms-of-service',
+					},
+				},
+				{
+					id: 'a9abaef0-3031-47ad-8790-d311d8684c6c',
+					source: 1,
+					name: '@cf/runwayml/stable-diffusion-v1-5-inpainting',
+					description: 'Stable Diffusion Inpainting is a latent text-to-image diffusion model capable of generating photo-realistic images given any text input, with the extra capability of inpainting the pictures by using a mask.',
+					created_at: '2024-02-27 17:23:57.528',
+					tags: [],
+					properties: {
+						beta: true,
+						price: [
+							{
+								unit: 'per step',
+								price: 0,
+								currency: 'USD',
+							},
+						],
+						info: 'https://huggingface.co/runwayml/stable-diffusion-inpainting',
+						terms: 'https://github.com/runwayml/stable-diffusion/blob/main/LICENSE',
+					},
+				},
+				{
+					id: '9e087485-23dc-47fa-997d-f5bfafc0c7cc',
+					source: 1,
+					name: '@cf/black-forest-labs/flux-1-schnell',
+					description: 'FLUX.1 [schnell] is a 12 billion parameter rectified flow transformer capable of generating images from text descriptions. ',
+					created_at: '2024-08-29 16:37:39.541',
+					tags: [],
+					properties: {
+						price: [
+							{
+								unit: 'per 512 by 512 tile',
+								price: 0.000053,
+								currency: 'USD',
+							},
+							{
+								unit: 'per step',
+								price: 0.00011,
+								currency: 'USD',
+							},
+						],
+						terms: 'https://bfl.ai/legal/terms-of-service',
+					},
+				},
+				{
+					id: '7f797b20-3eb0-44fd-b571-6cbbaa3c423b',
+					source: 1,
+					name: '@cf/bytedance/stable-diffusion-xl-lightning',
+					description: 'SDXL-Lightning is a lightning-fast text-to-image generation model. It can generate high-quality 1024px images in a few steps.',
+					created_at: '2024-02-27 17:41:29.578',
+					tags: [],
+					properties: {
+						beta: true,
+						price: [
+							{
+								unit: 'per step',
+								price: 0,
+								currency: 'USD',
+							},
+						],
+						info: 'https://huggingface.co/ByteDance/SDXL-Lightning',
+					},
+				},
+				{
+					id: '7912c0ab-542e-44b9-b9ee-3113d226a8b5',
+					source: 1,
+					name: '@cf/lykon/dreamshaper-8-lcm',
+					description: 'Stable Diffusion model that has been fine-tuned to be better at photorealism without sacrificing range.',
+					created_at: '2024-02-27 17:40:38.881',
+					tags: [],
+					properties: {
+						info: 'https://huggingface.co/Lykon/DreamShaper',
+					},
+				},
+				{
+					id: '724608fa-983e-495d-b95c-340d6b7e78be',
+					source: 1,
+					name: '@cf/leonardo/phoenix-1.0',
+					description: 'Phoenix 1.0 is a model by Leonardo.Ai that generates images with exceptional prompt adherence and coherent text.',
+					created_at: '2025-08-25 18:12:18.073',
+					tags: [],
+					properties: {
+						price: [
+							{
+								unit: 'per 512 by 512 tile',
+								price: 0.0058,
+								currency: 'USD',
+							},
+							{
+								unit: 'per step',
+								price: 0.00011,
+								currency: 'USD',
+							},
+						],
+						partner: true,
+						terms: 'https://leonardo.ai/terms-of-service/',
+					},
+				},
+				{
+					id: '6d52253a-b731-4a03-b203-cde2d4fae871',
+					source: 1,
+					name: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
+					description: 'Diffusion-based text-to-image generative model by Stability AI. Generates and modify images based on text prompts.',
+					created_at: '2023-11-10 10:54:43.694',
+					tags: [],
+					properties: {
+						beta: true,
+						price: [
+							{
+								unit: 'per step',
+								price: 0,
+								currency: 'USD',
+							},
+						],
+						info: 'https://stability.ai/stable-diffusion',
+						terms: 'https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md',
+					},
+				},
+				{
+					id: '5cdffa8e-1b1e-48e8-85f1-ab9b943cdd32',
+					source: 1,
+					name: '@cf/black-forest-labs/flux-2-klein-4b',
+					description: 'FLUX.2 [klein] is an ultra-fast, distilled image model. It unifies image generation and editing in a single model, delivering state-of-the-art quality enabling interactive workflows, real-time previews, and latency-critical applications.',
+					created_at: '2026-01-14 12:54:55.024',
+					tags: [],
+					properties: {
+						partner: true,
+						terms: 'https://bfl.ai/legal/terms-of-service',
+					},
+				},
+				{
+					id: '3ae8936e-593e-4fb2-85ee-95dd8a057588',
+					source: 1,
+					name: '@cf/black-forest-labs/flux-2-dev',
+					description: 'FLUX.2 [dev] is an image model from Black Forest Labs where you can generate highly realistic and detailed images, with multi-reference support.',
+					created_at: '2025-11-24 15:44:06.050',
+					tags: [],
+					properties: {
+						partner: true,
+						terms: 'https://bfl.ai/legal/terms-of-service',
+					},
+				},
+				{
+					id: '19547f04-7a6a-4f87-bf2c-f5e32fb12dc5',
+					source: 1,
+					name: '@cf/runwayml/stable-diffusion-v1-5-img2img',
+					description: 'Stable Diffusion is a latent text-to-image diffusion model capable of generating photo-realistic images. Img2img generate a new image from an input image with Stable Diffusion. ',
+					created_at: '2024-02-27 17:32:28.581',
+					tags: [],
+					properties: {
+						beta: true,
+						price: [
+							{
+								unit: 'per step',
+								price: 0,
+								currency: 'USD',
+							},
+						],
+						info: 'https://huggingface.co/runwayml/stable-diffusion-v1-5',
+						terms: 'https://github.com/runwayml/stable-diffusion/blob/main/LICENSE',
+					},
+				},
+				{
+					id: '0e372c11-8720-46c9-a02d-666188a22dae',
+					source: 1,
+					name: '@cf/leonardo/lucid-origin',
+					description: "Lucid Origin from Leonardo.AI is their most adaptable and prompt-responsive model to date. Whether you're generating images with sharp graphic design, stunning full-HD renders, or highly specific creative direction, it adheres closely to your prompts, renders text with accuracy, and supports a wide array of visual styles and aesthetics – from stylized concept art to crisp product mockups.\n",
+					created_at: '2025-08-25 19:21:28.770',
+					tags: [],
+					properties: {
+						price: [
+							{
+								unit: 'per 512 by 512 tile',
+								price: 0.007,
+								currency: 'USD',
+							},
+							{
+								unit: 'per step',
+								price: 0.00013,
+								currency: 'USD',
+							},
+						],
+						partner: true,
+						terms: 'https://leonardo.ai/terms-of-service/',
+					},
+				},
+			],
+		},
 		'Text-to-Speech': {
 			id: 'b52660a1-9a95-4ab2-8b1d-f232be34604a',
 			description: 'Text-to-Speech (TTS) is the task of generating natural sounding speech given text input. TTS models can be extended to have a single model that generates speech for multiple speakers and multiple languages.',
@@ -1337,197 +1540,6 @@ export const workersAiCatalog = {
 					properties: {
 						beta: true,
 						info: 'https://www.unum.cloud/',
-					},
-				},
-			],
-		},
-		'Text-to-Image': {
-			id: '3d6e1f35-341b-4915-a6c8-9a7142a9033a',
-			description: 'Generates images from input text. These models can be used to generate and modify images based on text prompts.',
-			models: [
-				{
-					id: 'a9abaef0-3031-47ad-8790-d311d8684c6c',
-					source: 1,
-					name: '@cf/runwayml/stable-diffusion-v1-5-inpainting',
-					description: 'Stable Diffusion Inpainting is a latent text-to-image diffusion model capable of generating photo-realistic images given any text input, with the extra capability of inpainting the pictures by using a mask.',
-					created_at: '2024-02-27 17:23:57.528',
-					tags: [],
-					properties: {
-						beta: true,
-						price: [
-							{
-								unit: 'per step',
-								price: 0,
-								currency: 'USD',
-							},
-						],
-						info: 'https://huggingface.co/runwayml/stable-diffusion-inpainting',
-						terms: 'https://github.com/runwayml/stable-diffusion/blob/main/LICENSE',
-					},
-				},
-				{
-					id: '9e087485-23dc-47fa-997d-f5bfafc0c7cc',
-					source: 1,
-					name: '@cf/black-forest-labs/flux-1-schnell',
-					description: 'FLUX.1 [schnell] is a 12 billion parameter rectified flow transformer capable of generating images from text descriptions. ',
-					created_at: '2024-08-29 16:37:39.541',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per 512 by 512 tile',
-								price: 0.000053,
-								currency: 'USD',
-							},
-							{
-								unit: 'per step',
-								price: 0.00011,
-								currency: 'USD',
-							},
-						],
-						terms: 'https://bfl.ai/legal/terms-of-service',
-					},
-				},
-				{
-					id: '7f797b20-3eb0-44fd-b571-6cbbaa3c423b',
-					source: 1,
-					name: '@cf/bytedance/stable-diffusion-xl-lightning',
-					description: 'SDXL-Lightning is a lightning-fast text-to-image generation model. It can generate high-quality 1024px images in a few steps.',
-					created_at: '2024-02-27 17:41:29.578',
-					tags: [],
-					properties: {
-						beta: true,
-						price: [
-							{
-								unit: 'per step',
-								price: 0,
-								currency: 'USD',
-							},
-						],
-						info: 'https://huggingface.co/ByteDance/SDXL-Lightning',
-					},
-				},
-				{
-					id: '7912c0ab-542e-44b9-b9ee-3113d226a8b5',
-					source: 1,
-					name: '@cf/lykon/dreamshaper-8-lcm',
-					description: 'Stable Diffusion model that has been fine-tuned to be better at photorealism without sacrificing range.',
-					created_at: '2024-02-27 17:40:38.881',
-					tags: [],
-					properties: {
-						info: 'https://huggingface.co/Lykon/DreamShaper',
-					},
-				},
-				{
-					id: '724608fa-983e-495d-b95c-340d6b7e78be',
-					source: 1,
-					name: '@cf/leonardo/phoenix-1.0',
-					description: 'Phoenix 1.0 is a model by Leonardo.Ai that generates images with exceptional prompt adherence and coherent text.',
-					created_at: '2025-08-25 18:12:18.073',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per 512 by 512 tile',
-								price: 0.0058,
-								currency: 'USD',
-							},
-							{
-								unit: 'per step',
-								price: 0.00011,
-								currency: 'USD',
-							},
-						],
-						partner: true,
-						terms: 'https://leonardo.ai/terms-of-service/',
-					},
-				},
-				{
-					id: '6d52253a-b731-4a03-b203-cde2d4fae871',
-					source: 1,
-					name: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
-					description: 'Diffusion-based text-to-image generative model by Stability AI. Generates and modify images based on text prompts.',
-					created_at: '2023-11-10 10:54:43.694',
-					tags: [],
-					properties: {
-						beta: true,
-						price: [
-							{
-								unit: 'per step',
-								price: 0,
-								currency: 'USD',
-							},
-						],
-						info: 'https://stability.ai/stable-diffusion',
-						terms: 'https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md',
-					},
-				},
-				{
-					id: '5cdffa8e-1b1e-48e8-85f1-ab9b943cdd32',
-					source: 1,
-					name: '@cf/black-forest-labs/flux-2-klein-4b',
-					description: 'FLUX.2 [klein] is an ultra-fast, distilled image model. It unifies image generation and editing in a single model, delivering state-of-the-art quality enabling interactive workflows, real-time previews, and latency-critical applications.',
-					created_at: '2026-01-14 12:54:55.024',
-					tags: [],
-					properties: {
-						partner: true,
-						terms: 'https://bfl.ai/legal/terms-of-service',
-					},
-				},
-				{
-					id: '3ae8936e-593e-4fb2-85ee-95dd8a057588',
-					source: 1,
-					name: '@cf/black-forest-labs/flux-2-dev',
-					description: 'FLUX.2 [dev] is an image model from Black Forest Labs where you can generate highly realistic and detailed images, with multi-reference support.',
-					created_at: '2025-11-24 15:44:06.050',
-					tags: [],
-					properties: {
-						partner: true,
-						terms: 'https://bfl.ai/legal/terms-of-service',
-					},
-				},
-				{
-					id: '19547f04-7a6a-4f87-bf2c-f5e32fb12dc5',
-					source: 1,
-					name: '@cf/runwayml/stable-diffusion-v1-5-img2img',
-					description: 'Stable Diffusion is a latent text-to-image diffusion model capable of generating photo-realistic images. Img2img generate a new image from an input image with Stable Diffusion. ',
-					created_at: '2024-02-27 17:32:28.581',
-					tags: [],
-					properties: {
-						beta: true,
-						price: [
-							{
-								unit: 'per step',
-								price: 0,
-								currency: 'USD',
-							},
-						],
-						info: 'https://huggingface.co/runwayml/stable-diffusion-v1-5',
-						terms: 'https://github.com/runwayml/stable-diffusion/blob/main/LICENSE',
-					},
-				},
-				{
-					id: '0e372c11-8720-46c9-a02d-666188a22dae',
-					source: 1,
-					name: '@cf/leonardo/lucid-origin',
-					description: "Lucid Origin from Leonardo.AI is their most adaptable and prompt-responsive model to date. Whether you're generating images with sharp graphic design, stunning full-HD renders, or highly specific creative direction, it adheres closely to your prompts, renders text with accuracy, and supports a wide array of visual styles and aesthetics – from stylized concept art to crisp product mockups.\n",
-					created_at: '2025-08-25 19:21:28.770',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per 512 by 512 tile',
-								price: 0.007,
-								currency: 'USD',
-							},
-							{
-								unit: 'per step',
-								price: 0.00013,
-								currency: 'USD',
-							},
-						],
-						partner: true,
-						terms: 'https://leonardo.ai/terms-of-service/',
 					},
 				},
 			],
