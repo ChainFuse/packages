@@ -15,6 +15,7 @@ export enum D0CombinedLocations {
 	none = 0,
 	eu = 1,
 	fedramp = 2,
+	'fedramp-high' = 3,
 	wnam = 10,
 	enam = 11,
 	sam = 12,
