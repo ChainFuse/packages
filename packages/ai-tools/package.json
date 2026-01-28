@@ -63,7 +63,7 @@
 		"zod": "^4.3.5"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20260120.0",
+		"@cloudflare/workers-types": "^4.20260128.0",
 		"openai": "^6.16.0"
 	}
 }
