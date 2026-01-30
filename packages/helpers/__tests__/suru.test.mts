@@ -1,8 +1,8 @@
+import { DOJurisdictions, DOLocations } from '@chainfuse/types';
+import { D0Environment, D0ShardType, D0SystemType, D0Version } from '@chainfuse/types/d0';
 import { ok, strictEqual } from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { SuruId } from '../src/suru.mjs';
-import { D0Version, D0SystemType, D0ShardType, D0Environment } from '@chainfuse/types/d0';
-import { DOJurisdictions, DOLocations } from '@chainfuse/types';
+import { SuruId } from '../dist/suru.mjs';
 
 void describe('SuruId', () => {
 	void describe('Create and Extract Round Trip Tests', () => {
