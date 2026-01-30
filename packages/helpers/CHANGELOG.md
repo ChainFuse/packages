@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 4.3.0
+
+### Minor Changes
+
+- [`5ce04e8`](https://github.com/ChainFuse/packages/commit/5ce04e82535f2deb20253c4db38499509072788a) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(feat): Refactor DNS Helper to support DoH and DoT
+
 ## 4.2.14
 
 ### Patch Changes

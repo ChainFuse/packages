@@ -1,5 +1,14 @@
 # @chainfuse/ai-tools
 
+## 1.1.10
+
+### Patch Changes
+
+- [`b548880`](https://github.com/ChainFuse/packages/commit/b5488804ca0b150e1785bb3d95b0e3f623c5c82a) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(feat): Migrate to new DnsHelpers
+
+- Updated dependencies [[`5ce04e8`](https://github.com/ChainFuse/packages/commit/5ce04e82535f2deb20253c4db38499509072788a)]:
+    - @chainfuse/helpers@4.3.0
+
 ## 1.1.9
 
 ### Patch Changes
