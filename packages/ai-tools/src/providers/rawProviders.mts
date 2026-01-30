@@ -1,5 +1,7 @@
 import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
-import { BufferHelpers, CryptoHelpers, Helpers } from '@chainfuse/helpers';
+import { BufferHelpers } from '@chainfuse/helpers/buffers';
+import { Helpers } from '@chainfuse/helpers/common';
+import { CryptoHelpers } from '@chainfuse/helpers/crypto';
 import type { ReplaceHyphensWithUnderscores } from '@chainfuse/types';
 import type { azureCatalog } from '@chainfuse/types/ai-tools/azure/catalog';
 import type { cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
@@ -534,18 +536,23 @@ export class AiRawProviders extends AiBase {
 						throw new Error('IP custom providers not allowed');
 					} else {
 						// Run domain through ZT policies
-						const doh = await import('@chainfuse/helpers').then(({ DnsHelpers }) => new DnsHelpers(new URL('dns-query', `https://${this.config.providers.custom?.dohId}.cloudflare-gateway.com`)));
+						const { aCheck, aaaaCheck } = await import('@chainfuse/helpers/dns').then(({ DnsHelpers, DNSRecordType }) => {
+							const doh = new DnsHelpers({ nameservers: [`https://${this.config.providers.custom?.dohId}.cloudflare-gateway.com/dns-query`] }, undefined, this.config.backgroundContext);
 
-						const aCheck = doh.query(customProviderUrl.hostname, 'A', undefined, undefined, 2 * 1000);
-						const aaaaCheck = doh.query(customProviderUrl.hostname, 'AAAA', undefined, undefined, 2 * 1000);
+							return {
+								aCheck: doh.query({ questions: [{ hostname: customProviderUrl.hostname, recordType: DNSRecordType['A (IPv4 Address)'] }], timeout: 2 * 1000 }),
+								aaaaCheck: doh.query({ questions: [{ hostname: customProviderUrl.hostname, recordType: DNSRecordType['AAAA (IPv6 Address)'] }], timeout: 2 * 1000 }),
+							};
+						});
 
 						return Promise.allSettled([aCheck, aaaaCheck]).then((checks) => {
 							const fulfulledChecks = checks.filter((check) => check.status === 'fulfilled');
+
 							/**
 							 * Blocked domains return 0.0.0.0 or :: as the answer
 							 * @link https://developers.cloudflare.com/cloudflare-one/policies/gateway/block-page/
 							 */
-							if (fulfulledChecks.length > 0 && fulfulledChecks.some((obj) => 'Answer' in obj.value && Array.isArray(obj.value.Answer) && obj.value.Answer.some((answer) => answer.data !== '0.0.0.0' && answer.data !== '::'))) {
+							if (fulfulledChecks.length > 0 && fulfulledChecks.some((obj) => 'answers' in obj.value && Array.isArray(obj.value.answers) && obj.value.answers.some((answer) => 'data' in answer && answer.data !== '0.0.0.0' && answer.data !== '::'))) {
 								// ZT Pass, perform the calls
 								return import('@ai-sdk/openai-compatible').then(async ({ createOpenAICompatible }) =>
 									createOpenAICompatible({
