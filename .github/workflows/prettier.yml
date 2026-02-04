@@ -42,7 +42,7 @@ concurrency:
 
 jobs:
   prettier:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     if: github.actor != 'sushidata-prettier[bot]'
     permissions:
       contents: write
