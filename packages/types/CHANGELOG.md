@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 4.2.12
+
+### Patch Changes
+
+- [#843](https://github.com/ChainFuse/packages/pull/843) [`95a566f`](https://github.com/ChainFuse/packages/commit/95a566fdbfcf79a36bc9eba0adace6a52d85cdfb) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @isaacs/brace-expansion
+
+- [#840](https://github.com/ChainFuse/packages/pull/840) [`d824e62`](https://github.com/ChainFuse/packages/commit/d824e623f9facbb1dbfc67892bd573271c3aead2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 4.2.11
 
 ### Patch Changes
