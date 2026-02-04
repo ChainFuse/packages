@@ -1,9 +1,4 @@
-import type { Request as CfRequest, WorkerVersionMetadata } from '@cloudflare/workers-types/experimental';
 import type { Chalk } from 'chalk';
-
-interface QwikCityPlatform<R extends CfRequest | Request = CfRequest | Request> {
-	request?: R;
-}
 
 export class Helpers {
 	/**
@@ -82,27 +77,6 @@ export class Helpers {
 		}
 
 		return true;
-	}
-
-	private static isWorkerVersionMetadata<P extends QwikCityPlatform>(metadata: WorkerVersionMetadata | P): metadata is WorkerVersionMetadata {
-		return 'id' in metadata;
-	}
-
-	/**
-	 * Determines if the provided object is running local based on its type and properties.
-	 *
-	 * For `WorkerVersionMetadata`, it checks if the `timestamp` property is absent.
-	 * For `QwikCityPlatform`, it checks if the `request` property is absent.
-	 *
-	 * @param metadataOrPlatform - The object to evaluate, which can be either `WorkerVersionMetadata` or `QwikCityPlatform`.
-	 * @returns `true` if the running local, otherwise `false`.
-	 */
-	public static isLocal<P extends QwikCityPlatform>(metadataOrPlatform: WorkerVersionMetadata | P) {
-		if (this.isWorkerVersionMetadata(metadataOrPlatform)) {
-			return !('timestamp' in metadataOrPlatform);
-		} else {
-			return !('request' in metadataOrPlatform);
-		}
 	}
 
 	/**
