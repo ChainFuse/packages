@@ -1,5 +1,20 @@
 # @chainfuse/helpers
 
+## 4.4.0
+
+### Minor Changes
+
+- [`19af2d7`](https://github.com/ChainFuse/packages/commit/19af2d76a1a731df3bfa401af037642fecc39b0e) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(deprecated): Remove Cloudflare Worker metadata helpers
+
+### Patch Changes
+
+- [#843](https://github.com/ChainFuse/packages/pull/843) [`95a566f`](https://github.com/ChainFuse/packages/commit/95a566fdbfcf79a36bc9eba0adace6a52d85cdfb) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @isaacs/brace-expansion
+
+- [#840](https://github.com/ChainFuse/packages/pull/840) [`d824e62`](https://github.com/ChainFuse/packages/commit/d824e623f9facbb1dbfc67892bd573271c3aead2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- Updated dependencies [[`95a566f`](https://github.com/ChainFuse/packages/commit/95a566fdbfcf79a36bc9eba0adace6a52d85cdfb), [`d824e62`](https://github.com/ChainFuse/packages/commit/d824e623f9facbb1dbfc67892bd573271c3aead2)]:
+    - @chainfuse/types@4.2.12
+
 ## 4.3.0
 
 ### Minor Changes
