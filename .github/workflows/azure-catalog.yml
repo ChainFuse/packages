@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   azure:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     if: github.actor != 'sushidata-azure[bot]'
     permissions:
       contents: write
