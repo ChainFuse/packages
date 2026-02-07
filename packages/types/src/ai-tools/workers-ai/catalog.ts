@@ -1503,7 +1503,15 @@ export const workersAiCatalog = {
 					description: 'Whisper is a pre-trained model for automatic speech recognition (ASR) and speech translation. ',
 					created_at: '2024-05-22 00:02:18.656',
 					tags: [],
-					properties: {},
+					properties: {
+						price: [
+							{
+								unit: 'per audio minute',
+								price: 0.00051,
+								currency: 'USD',
+							},
+						],
+					},
 				},
 			],
 		},
