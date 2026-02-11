@@ -59,9 +59,35 @@ updates:
     versioning-strategy: increase
     open-pull-requests-limit: 999
     ignore:
+      # Lock to LTS
       - dependency-name: '@types/node'
         versions:
           - '>=25.0.0'
+      # Block temporarily
+      - dependency-name: '@ai-sdk/anthropic'
+        versions:
+          - '>=3.0.0'
+      - dependency-name: '@ai-sdk/azure'
+        versions:
+          - '>=3.0.0'
+      - dependency-name: '@ai-sdk/google'
+        versions:
+          - '>=3.0.0'
+      - dependency-name: '@ai-sdk/openai'
+        versions:
+          - '>=3.0.0'
+      - dependency-name: '@ai-sdk/openai-compatible'
+        versions:
+          - '>=2.0.0'
+      - dependency-name: '@ai-sdk/provider'
+        versions:
+          - '>=3.0.0'
+      - dependency-name: 'ai'
+        versions:
+          - '>=6.0.0'
+      - dependency-name: 'workers-ai-provider'
+        versions:
+          - '>=3.0.0'
     groups:
       ai:
         patterns:
