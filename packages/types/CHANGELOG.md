@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.2.14
+
+### Patch Changes
+
+- [`b75f174`](https://github.com/ChainFuse/packages/commit/b75f1744a98f024f9dd4c82f6d111f5adcc5b0f0) Thanks [@demosjarco](https://github.com/demosjarco)! - (fix): Fix package lockfile desync
+
 ## 4.2.13
 
 ### Patch Changes
