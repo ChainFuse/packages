@@ -1,5 +1,14 @@
 # @chainfuse/helpers
 
+## 4.4.2
+
+### Patch Changes
+
+- [`b75f174`](https://github.com/ChainFuse/packages/commit/b75f1744a98f024f9dd4c82f6d111f5adcc5b0f0) Thanks [@demosjarco](https://github.com/demosjarco)! - (fix): Fix package lockfile desync
+
+- Updated dependencies [[`b75f174`](https://github.com/ChainFuse/packages/commit/b75f1744a98f024f9dd4c82f6d111f5adcc5b0f0)]:
+    - @chainfuse/types@4.2.14
+
 ## 4.4.1
 
 ### Patch Changes
