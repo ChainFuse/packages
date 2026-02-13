@@ -415,6 +415,30 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '86b3e51a-4b05-43fa-a403-0f27821919d2',
+					source: 1,
+					name: '@cf/zai-org/glm-4.7-flash',
+					description: 'GLM-4.7-Flash is a fast and efficient multilingual text generation model with a 131,072 token context window. Optimized for dialogue, instruction-following, and multi-turn tool calling across 100+ languages.',
+					created_at: '2026-01-28 16:04:39.346',
+					tags: [],
+					properties: {
+						context_window: 131072,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.06,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.4,
+								currency: 'USD',
+							},
+						],
+						function_calling: true,
+					},
+				},
+				{
 					id: '85c5a3c6-24b0-45e7-b23a-023182578822',
 					source: 2,
 					name: '@hf/thebloke/llama-2-13b-chat-awq',
