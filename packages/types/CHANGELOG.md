@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.2.15
+
+### Patch Changes
+
+- [`901ef3d`](https://github.com/ChainFuse/packages/commit/901ef3d36dd02f92234cd313269037517c0bebc1) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Swap enum values for Scheduler and Storage
+
 ## 4.2.14
 
 ### Patch Changes
