@@ -91,7 +91,7 @@
 		"zod": "^4.3.6"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20260212.0",
+		"@cloudflare/workers-types": "^4.20260214.0",
 		"@types/dns-packet": "^5.6.5"
 	}
 }
