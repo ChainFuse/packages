@@ -59,6 +59,7 @@ updates:
     versioning-strategy: increase
     open-pull-requests-limit: 999
     ignore:
+      # Lock to LTS
       - dependency-name: '@types/node'
         versions:
           - '>=25.0.0'
