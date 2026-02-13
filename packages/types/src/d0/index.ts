@@ -29,8 +29,8 @@ export enum D0CombinedLocations {
 
 export enum D0ShardType {
 	None = 0,
-	Storage = 1,
-	Scheduler = 2,
+	Scheduler = 1,
+	Storage = 2,
 	MCP = 3,
 	EphemeralAgent = 4,
 	Session = 5,
