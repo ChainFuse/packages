@@ -583,9 +583,13 @@ export const azureCatalog = [
 			},
 			{
 				name: 'gpt-4o',
+				inputTokenCost: 0.00000275,
+				outputTokenCost: 0.000011,
 			},
 			{
 				name: 'gpt-4o-mini',
+				inputTokenCost: 1.65e-7,
+				outputTokenCost: 6.6e-7,
 			},
 			{
 				name: 'gpt-5',
@@ -598,12 +602,16 @@ export const azureCatalog = [
 			},
 			{
 				name: 'o1',
+				inputTokenCost: 0.0000165,
+				outputTokenCost: 0.000066,
 			},
 			{
 				name: 'o3',
 			},
 			{
 				name: 'o3-mini',
+				inputTokenCost: 0.00000121,
+				outputTokenCost: 0.00000484,
 			},
 			{
 				name: 'o4-mini',
@@ -1112,6 +1120,7 @@ export const azureCatalog = [
 		textEmbeddingModelAvailability: [
 			{
 				name: 'text-embedding-3-large',
+				tokenCost: 1.72e-7,
 			},
 		],
 	},
