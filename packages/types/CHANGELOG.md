@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.2.16
+
+### Patch Changes
+
+- [`02a5a00`](https://github.com/ChainFuse/packages/commit/02a5a008caa8972bb7888352607cf61fcbd930e5) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add `SystemWorkflows` enums to d0
+
 ## 4.2.15
 
 ### Patch Changes
