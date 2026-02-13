@@ -70,17 +70,14 @@ updates:
           - '@ai-sdk/*'
           - 'openai'
           - 'workers-ai-provider'
-          - '@cloudflare/ai*'
           - '@azure/arm-cognitiveservices'
           - '@azure/arm-resources-subscriptions'
           - '@azure/identity'
-          - 'deepmerge'
       cloudflare:
         patterns:
           - 'cloudflare'
           - '@cloudflare/*'
         exclude-patterns:
-          - '@cloudflare/ai*'
           - '@cloudflare/workers-types'
       code-management:
         patterns:
