@@ -1,24 +1,24 @@
-import type { EmbeddingModelV2, LanguageModelV2, ProviderV2 } from '@ai-sdk/provider';
+import type { EmbeddingModelV3, LanguageModelV3, ProviderV3 } from '@ai-sdk/provider';
 import type { AzureChatModels, AzureEmbeddingModels } from '@chainfuse/types/ai-tools/azure';
 
-export interface AzureOpenAIProvider extends ProviderV2 {
-	(deploymentId: AzureChatModels): LanguageModelV2;
+export interface AzureOpenAIProvider extends ProviderV3 {
+	(deploymentId: AzureChatModels): LanguageModelV3;
 	/**
 	 * Creates an Azure OpenAI chat model for text generation.
 	 */
-	languageModel(deploymentId: AzureChatModels): LanguageModelV2;
+	languageModel(deploymentId: AzureChatModels): LanguageModelV3;
 	/**
 	 * Creates an Azure OpenAI chat model for text generation.
 	 */
-	chat(deploymentId: AzureChatModels): LanguageModelV2;
+	chat(deploymentId: AzureChatModels): LanguageModelV3;
 	/**
 	 * Creates an Azure OpenAI responses API model for text generation.
 	 */
-	responses(deploymentId: AzureChatModels): LanguageModelV2;
+	responses(deploymentId: AzureChatModels): LanguageModelV3;
 	/**
 	 * Creates an Azure OpenAI completion model for text generation.
 	 */
-	completion(deploymentId: AzureChatModels): LanguageModelV2;
+	completion(deploymentId: AzureChatModels): LanguageModelV3;
 	/**
 	 * Creates an Azure OpenAI DALL-E model for image generation.
 	 */
@@ -27,9 +27,9 @@ export interface AzureOpenAIProvider extends ProviderV2 {
 	 * Creates an Azure OpenAI DALL-E model for image generation.
 	 */
 	// imageModel(deploymentId: AzureImageModels): ImageModelV2;
-	textEmbedding(deploymentId: AzureEmbeddingModels): EmbeddingModelV2<string>;
+	textEmbedding(deploymentId: AzureEmbeddingModels): EmbeddingModelV3;
 	/**
 	 * Creates an Azure OpenAI model for text embeddings.
 	 */
-	textEmbeddingModel(deploymentId: AzureEmbeddingModels): EmbeddingModelV2<string>;
+	textEmbeddingModel(deploymentId: AzureEmbeddingModels): EmbeddingModelV3;
 }
