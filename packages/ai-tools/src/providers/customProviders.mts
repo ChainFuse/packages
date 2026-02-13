@@ -85,6 +85,7 @@ export class AiCustomProviders extends AiBase {
 								// },
 								// Fix output generation where it's correct, but encapsulated in a code fence
 								{
+									specificationVersion: 'v3',
 									wrapGenerate: async ({ doGenerate, model }) => {
 										const result = await doGenerate();
 

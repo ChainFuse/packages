@@ -1,6 +1,5 @@
-import type { LanguageModelV2Middleware } from '@ai-sdk/provider';
 import type { LanguageModelValues, TextEmbeddingModelValues } from '@chainfuse/types/ai-tools';
-import type { embed, embedMany, wrapLanguageModel } from 'ai';
+import type { embed, embedMany, LanguageModelMiddleware, wrapLanguageModel } from 'ai';
 import { AiBase } from './base.mjs';
 import type { AiRegistry } from './registry.mjs';
 import type { AiRequestConfig } from './types.mjs';
@@ -50,11 +49,13 @@ export class AiModel extends AiBase {
 			.then(({ AiRegistry }) => new AiRegistry(this.config).registry(args))
 			.then((registry) =>
 				// @ts-expect-error types are or-ed, but correct
-				registry.textEmbeddingModel(model ? `${modelOrProvider}:${model}` : modelOrProvider),
+				registry.embeddingModel(model ? `${modelOrProvider}:${model}` : modelOrProvider),
 			);
 	}
 
-	private get middleware(): LanguageModelV2Middleware {
-		return {};
+	private get middleware(): LanguageModelMiddleware {
+		return {
+			specificationVersion: 'v3',
+		};
 	}
 }
