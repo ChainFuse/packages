@@ -1,10 +1,8 @@
-import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { BufferHelpers } from '@chainfuse/helpers/buffers';
 import { Helpers } from '@chainfuse/helpers/common';
 import { CryptoHelpers } from '@chainfuse/helpers/crypto';
 import type { ReplaceHyphensWithUnderscores } from '@chainfuse/types';
 import type { azureCatalog } from '@chainfuse/types/ai-tools/azure/catalog';
-import type { cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
 import type { AIGatewayUniversalRequest, GatewayOptions } from '@cloudflare/workers-types/experimental';
 import type { APIPromise } from 'cloudflare/core';
 import * as z from 'zod/mini';
@@ -745,33 +743,32 @@ export class AiRawProviders extends AiBase {
 	}
 
 	public async workersAi(args: AiRequestConfig) {
-		return import('workers-ai-provider').then(
-			async ({ createWorkersAI }) =>
-				createWorkersAI({
-					...('apiToken' in this.config.providers.workersAi
-						? {
-								accountId: this.config.gateway.accountId,
-								apiKey: this.config.providers.workersAi.apiToken,
-							}
-						: {
-								binding: this.config.providers.workersAi,
-							}),
-					gateway: {
-						id: this.gatewayName,
-						...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
-						...(args.skipCache && { skipCache: true }),
-						metadata: {
-							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-							...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
-							serverInfo: JSON.stringify({
-								name: 'cloudflare',
-							} satisfies AiRequestMetadata['serverInfo']),
-							// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-							idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
-							executor: JSON.stringify(args.executor),
-						} satisfies AiRequestMetadataStringified,
-					} satisfies GatewayOptions,
-				}) as unknown as Promise<OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>>>,
+		return import('workers-ai-provider').then(async ({ createWorkersAI }) =>
+			createWorkersAI({
+				...('apiToken' in this.config.providers.workersAi
+					? {
+							accountId: this.config.gateway.accountId,
+							apiKey: this.config.providers.workersAi.apiToken,
+						}
+					: {
+							binding: this.config.providers.workersAi,
+						}),
+				gateway: {
+					id: this.gatewayName,
+					...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
+					...(args.skipCache && { skipCache: true }),
+					metadata: {
+						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
+						serverInfo: JSON.stringify({
+							name: 'cloudflare',
+						} satisfies AiRequestMetadata['serverInfo']),
+						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
+						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
+						executor: JSON.stringify(args.executor),
+					} satisfies AiRequestMetadataStringified,
+				} satisfies GatewayOptions,
+			}),
 		);
 	}
 }
