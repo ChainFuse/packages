@@ -40,3 +40,20 @@ export enum D0Environment {
 	Production = 0,
 	Preview = 1,
 }
+
+export namespace SystemWorkflows {
+	export enum Director {
+		WsCleanup = '17ef9c63af',
+	}
+	export enum Dataspace {
+		MessageRetentionCleanup = 'b5c7239e98',
+		SheetRetentionCleanup = 'd995c7a019',
+	}
+	export enum Tenant {
+		InviteCleanup = 'fa7eadd647',
+	}
+	export enum User {
+		SessionCleanup = '72c14c6b05',
+		LoginTokenRefresh = '57b147c395',
+	}
+}
