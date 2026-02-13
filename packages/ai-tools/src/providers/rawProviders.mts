@@ -9,7 +9,7 @@ import type { AIGatewayUniversalRequest, GatewayOptions } from '@cloudflare/work
 import type { APIPromise } from 'cloudflare/core';
 import * as z from 'zod/mini';
 import { AiBase } from '../base.mjs';
-import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified } from '../types.mjs';
+import type { AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified } from '../types.mjs';
 import type { AzureOpenAIProvider } from './types.mts';
 
 export class AiRawProviders extends AiBase {
@@ -744,127 +744,18 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public restWorkersAi(args: AiRequestConfig): Promise<OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Embeddings'>>> {
-		return import('@ai-sdk/openai-compatible').then(async ({ createOpenAICompatible }) =>
-			createOpenAICompatible({
-				baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'workers-ai', 'v1'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
-				apiKey: (this.config.providers.workersAi as AiConfigWorkersaiRest).apiToken,
-				headers: {
-					'cf-aig-authorization': `Bearer ${'apiToken' in this.config.gateway ? this.config.gateway.apiToken : ''}`,
-					'cf-aig-metadata': JSON.stringify({
-						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
-						serverInfo: JSON.stringify({
-							name: 'cloudflare',
-						} satisfies AiRequestMetadata['serverInfo']),
-						// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-						idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
-						executor: JSON.stringify(args.executor),
-					} satisfies AiRequestMetadataStringified),
-					...(args.cache && { 'cf-aig-cache-ttl': (typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache).toString() }),
-					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
-				},
-				includeUsage: true,
-				name: 'workersai',
-				fetch: async (input, rawInit) => {
-					const startRoundTrip = performance.now();
-
-					const headers = new Headers(rawInit?.headers);
-					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
-					if (metadataHeader.idempotencyId.split('-').length === 4) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
-						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
-					}
-
-					if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.magenta(rawInit?.method), this.chalk.magenta(new URL(new Request(input).url).pathname));
-
-					return (() => {
-						if ('binding' in this.config.gateway) {
-							const fallbackedHeaders: AIGatewayUniversalRequest['headers'] = {
-								...Object.fromEntries(Array.from(headers.entries()).filter(([key]) => !key.toLowerCase().startsWith('cf-aig-'))),
-								'cf-aig-metadata': JSON.stringify({
-									...metadataHeader,
-									serverInfo: JSON.stringify({
-										name: 'cloudflare',
-									} satisfies AiRequestMetadata['serverInfo']),
-								}),
-							};
-
-							// Prevent double stringification
-							let fallbackedQuery: AIGatewayUniversalRequest['query'];
-							try {
-								fallbackedQuery = JSON.parse(rawInit?.body as string);
-								// eslint-disable-next-line @typescript-eslint/no-unused-vars
-							} catch (error) {
-								fallbackedQuery = rawInit?.body;
-							}
-
-							return this.config.gateway.binding.gateway(this.gatewayName).run(
-								{
-									provider: 'workers-ai',
-									endpoint: new URL(new Request(input).url).pathname.split('/').slice(5).join('/'),
-									headers: fallbackedHeaders,
-									query: fallbackedQuery,
-								},
-								{
-									extraHeaders: (() => {
-										// Prevent duplicates
-										headers.delete('cf-aig-authorization');
-										headers.delete('cf-aig-metadata');
-										headers.delete('cf-aig-cache-ttl');
-										headers.delete('cf-aig-skip-cache');
-
-										return headers;
-									})(),
-									gateway: {
-										id: this.gatewayName,
-										eventId: metadataHeader.idempotencyId,
-										metadata: metadataHeader,
-										...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
-										...(args.skipCache && { skipCache: true }),
-									},
-								},
-							);
-						} else {
-							return fetch(input, { ...rawInit, headers });
-						}
-					})().then(async (_response) => {
-						const response = _response as Response;
-						if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), response.ok ? this.chalk.green(response.status) : this.chalk.red(response.status), response.ok ? this.chalk.green(new URL(response.url).pathname) : this.chalk.red(new URL(response.url).pathname));
-
-						// Inject it to have it available for retries
-						const mutableHeaders = new Headers(response.headers);
-
-						if (headers.get('cf-ray')) {
-							metadataHeader.serverInfo = JSON.stringify({
-								name: `cloudflare-${mutableHeaders.get('cf-ray')?.split('-')[1]}`,
-							} satisfies AiRequestMetadata['serverInfo']);
-						}
-						const serverTiming = await this.updateGatewayLog(response, metadataHeader, startRoundTrip, args.logging ?? this.gatewayLog);
-
-						mutableHeaders.set('X-Idempotency-Id', metadataHeader.idempotencyId);
-						mutableHeaders.set('Server-Timing', serverTiming);
-
-						if (response.ok) {
-							return new Response(response.body, { ...response, headers: mutableHeaders });
-						} else {
-							const [body1, body2] = response.body!.tee();
-
-							console.error(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(metadataHeader.idempotencyId))(`[${metadataHeader.idempotencyId}]`), this.chalk.red(JSON.stringify(await new Response(body1, response).json())));
-
-							return new Response(body2, { ...response, headers: mutableHeaders });
-						}
-					});
-				},
-			}),
-		);
-	}
-
-	public async bindingWorkersAi(args: AiRequestConfig) {
+	public async workersAi(args: AiRequestConfig) {
 		return import('workers-ai-provider').then(
 			async ({ createWorkersAI }) =>
 				createWorkersAI({
-					binding: this.config.providers.workersAi,
+					...('apiToken' in this.config.providers.workersAi
+						? {
+								accountId: this.config.gateway.accountId,
+								apiKey: this.config.providers.workersAi.apiToken,
+							}
+						: {
+								binding: this.config.providers.workersAi,
+							}),
 					gateway: {
 						id: this.gatewayName,
 						...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
