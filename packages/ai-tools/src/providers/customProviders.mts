@@ -1,5 +1,5 @@
-import { enabledCloudflareLlmProviders, type cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
-import { customProvider, wrapLanguageModel } from 'ai';
+import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
+import { type cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
 import { AiBase } from '../base.mjs';
 import type { AiConfigWorkersai, AiConfigWorkersaiRest, AiRequestConfig } from '../types.mjs';
 import { AiRawProviders } from './rawProviders.mjs';
@@ -10,120 +10,44 @@ export class AiCustomProviders extends AiBase {
 	}
 
 	public async azOpenai(args: AiRequestConfig) {
-		return new AiRawProviders(this.config).azOpenai(args);
+		const fallbackProvider = await new AiRawProviders(this.config).azOpenai(args);
+
+		return Promise.all([import('ai'), import('@chainfuse/types/ai-tools/azure')]).then(async ([{ customProvider }, { AzureEmbeddingModels, AzureChatModels, AzureImageModels }]) =>
+			customProvider({
+				// Rewrite to carry over types (`customProvider` overwrites to `string`)
+				embeddingModels: await AzureEmbeddingModels.reduce(
+					async (accPromise, model) => {
+						const acc = await accPromise;
+						acc[model] = fallbackProvider.embedding(model);
+						return acc;
+					},
+					Promise.resolve({} as Record<(typeof AzureEmbeddingModels)[number], ReturnType<(typeof fallbackProvider)['embedding']>>),
+				),
+				// Must use Azure's `.chat()` since CF Ai Gateway doesn't support Responses API
+				languageModels: await AzureChatModels.reduce(
+					async (accPromise, model) => {
+						const acc = await accPromise;
+						acc[model] = fallbackProvider.chat(model);
+						return acc;
+					},
+					Promise.resolve({} as Record<(typeof AzureChatModels)[number], ReturnType<(typeof fallbackProvider)['chat']>>),
+				),
+				imageModels: await AzureImageModels.reduce(
+					async (accPromise, model) => {
+						const acc = await accPromise;
+						acc[model] = fallbackProvider.image(model);
+						return acc;
+					},
+					Promise.resolve({} as Record<(typeof AzureImageModels)[number], ReturnType<(typeof fallbackProvider)['image']>>),
+				),
+				// The rest are compatible as is
+				fallbackProvider: fallbackProvider,
+			}),
+		);
 	}
 
 	public anthropic(args: AiRequestConfig) {
 		return new AiRawProviders(this.config).anthropic(args);
-	}
-
-	private static workersAiIsRest(arg: AiConfigWorkersai): arg is AiConfigWorkersaiRest {
-		return typeof arg === 'object' && 'apiToken' in arg;
-	}
-	public async cfWorkersAi(args: AiRequestConfig) {
-		const raw = new AiRawProviders(this.config);
-
-		if (AiCustomProviders.workersAiIsRest(this.config.providers.workersAi)) {
-			return customProvider({
-				// @ts-expect-error override for types
-				languageModels: await enabledCloudflareLlmProviders.reduce(
-					async (accPromise, model) => {
-						const acc = await accPromise;
-						/**
-						 * Intercept and add in missing index property to be OpenAI compatible
-						 */
-						// @ts-expect-error override for types
-						acc[model] = wrapLanguageModel({
-							model: (await raw.restWorkersAi(args))(model),
-							middleware: [
-								/**
-								 * @todo @demosjarco Rework for zod v4 error format
-								 */
-								// {
-								// 	wrapStream: async ({ doStream }) => {
-								// 		const { stream, ...rest } = await doStream();
-
-								// 		const transformStream = new TransformStream<LanguageModelV2StreamPart, LanguageModelV2StreamPart>({
-								// 			transform(chunk, controller) {
-								// 				if (chunk.type === 'error') {
-								// 					if (TypeValidationError.isInstance(chunk.error) && chunk.error.cause instanceof ZodError) {
-								// 						if (chunk.error.cause.issues.filter((issues) => issues.code === 'invalid_union')) {
-								// 							// Verify the specific error instead of assuming all errors
-								// 							const missingIndexPropertyError = chunk.error.cause.issues
-								// 								.filter((issues) => issues.code === 'invalid_union')
-								// 								.flatMap((issue) => issue.unionErrors)
-								// 								.flatMap((issue) => issue.issues)
-								// 								.filter((issue) => issue.code === 'invalid_type' && Helpers.areArraysEqual(issue.path, ['choices', 0, 'index']));
-
-								// 							if (missingIndexPropertyError.length > 0) {
-								// 								const newChunk = chunk.error.value as ChatCompletionChunk;
-
-								// 								newChunk.choices
-								// 									.filter((choice) => choice.delta.content)
-								// 									.forEach((choice) => {
-								// 										controller.enqueue({
-								// 											type: 'text-delta',
-								// 											delta: choice.delta.content!,
-								// 											id: '',
-								// 										});
-								// 									});
-								// 							}
-								// 						}
-								// 					}
-								// 				} else {
-								// 					// Passthrough untouched
-								// 					controller.enqueue(chunk);
-								// 				}
-								// 			},
-								// 		});
-
-								// 		return {
-								// 			stream: stream.pipeThrough(transformStream),
-								// 			...rest,
-								// 		};
-								// 	},
-								// },
-								// Fix output generation where it's correct, but encapsulated in a code fence
-								{
-									wrapGenerate: async ({ doGenerate, model }) => {
-										const result = await doGenerate();
-
-										/**
-										 * `chunkSchema` is undocumented but always present in `model` regardless of model
-										 * Can't use `responseFormat` (in `params`) because it isn't always present because some models don't support that part of openai api spec.
-										 */
-										if ('chunkSchema' in model) {
-											const codeFenceStart = new RegExp(/^`{1,3}\w*\s*(?=[\[{])/i);
-											const codefenceEnd = new RegExp(/(?![\]}])\s*`{1,3}$/i);
-
-											return {
-												...result,
-												/**
-												 * 1. trim initially to remove any leading/trailing whitespace
-												 * 2. Remove start and end
-												 * 3. Trim again to remove any leading/trailing whitespace
-												 */
-												content: result.content.map((content) => ({
-													...content,
-													...('text' in content && { text: content.text.trim().replace(codeFenceStart, '').replace(codefenceEnd, '').trim() }),
-												})),
-											};
-										}
-
-										return result;
-									},
-								},
-							],
-						});
-						return acc;
-					},
-					Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, Awaited<ReturnType<AiRawProviders['restWorkersAi']>>>),
-				),
-				fallbackProvider: await raw.restWorkersAi(args),
-			}) as Awaited<ReturnType<(typeof raw)['restWorkersAi']>>;
-		} else {
-			return new AiRawProviders(this.config).bindingWorkersAi(args);
-		}
 	}
 
 	public custom(args: AiRequestConfig) {
@@ -132,5 +56,128 @@ export class AiCustomProviders extends AiBase {
 
 	public async googleAi(args: AiRequestConfig) {
 		return new AiRawProviders(this.config).googleAi(args);
+	}
+
+	private static workersAiIsRest(arg: AiConfigWorkersai): arg is AiConfigWorkersaiRest {
+		return typeof arg === 'object' && 'apiToken' in arg;
+	}
+
+	public async workersAi(args: AiRequestConfig) {
+		const raw = new AiRawProviders(this.config);
+
+		if (AiCustomProviders.workersAiIsRest(this.config.providers.workersAi)) {
+			const fallbackProvider = await raw.restWorkersAi(args);
+
+			return Promise.all([import('ai'), import('@chainfuse/types/ai-tools/workers-ai')]).then(async ([{ customProvider }, { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmImageProviders, enabledCloudflareLlmProviders, enabledCloudflareLlmSpeechProviders, enabledCloudflareLlmTranscriptionProviders }]) =>
+				customProvider({
+					// Workers AI exposes it as `textEmbedding` but ai sdk expects `embeddingModel`
+					embeddingModels: await enabledCloudflareLlmEmbeddingProviders.reduce(
+						async (accPromise, model) => {
+							const acc = await accPromise;
+							acc[model] = fallbackProvider.embeddingModel(model);
+							return acc;
+						},
+						Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Embeddings'>, ReturnType<(typeof fallbackProvider)['embeddingModel']>>),
+					),
+					// Rewrite to carry over types (`workers-ai-provider` resolves to `any`)
+					imageModels: await enabledCloudflareLlmImageProviders.reduce(
+						async (accPromise, model) => {
+							const acc = await accPromise;
+							acc[model] = fallbackProvider.imageModel(model);
+							return acc;
+						},
+						Promise.resolve({} as Record<cloudflareModelPossibilities<'Text-to-Image'>, ReturnType<(typeof fallbackProvider)['imageModel']>>),
+					),
+					// Workers AI exposes it as `chat` but ai sdk expects `languageModel`
+					languageModels: await enabledCloudflareLlmProviders.reduce(
+						async (accPromise, model) => {
+							const acc = await accPromise;
+							acc[model] = fallbackProvider.chatModel(model);
+							return acc;
+						},
+						Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, ReturnType<(typeof fallbackProvider)['chatModel']>>),
+					),
+					...('speechModel' in fallbackProvider && {
+						// Rewrite to carry over types (`workers-ai-provider` resolves to `any`)
+						speechModels: await enabledCloudflareLlmSpeechProviders.reduce(
+							async (accPromise, model) => {
+								const acc = await accPromise;
+								acc[model] = fallbackProvider.speechModel!(model);
+								return acc;
+							},
+							Promise.resolve({} as Record<cloudflareModelPossibilities<'Text-to-Speech'>, ReturnType<Exclude<(typeof fallbackProvider)['speechModel'], undefined>>>),
+						),
+					}),
+					...('transcriptionModel' in fallbackProvider && {
+						// Rewrite to carry over types (`workers-ai-provider` resolves to `any`)
+						transcriptionModels: await enabledCloudflareLlmTranscriptionProviders.reduce(
+							async (accPromise, model) => {
+								const acc = await accPromise;
+								acc[model] = fallbackProvider.transcriptionModel!(model);
+								return acc;
+							},
+							Promise.resolve({} as Record<cloudflareModelPossibilities<'Automatic Speech Recognition'>, ReturnType<Exclude<(typeof fallbackProvider)['transcriptionModel'], undefined>>>),
+						),
+					}),
+					// The rest are compatible as is
+					fallbackProvider: fallbackProvider,
+				}),
+			);
+		} else {
+			const fallbackProvider = await raw.bindingWorkersAi(args);
+			type openAiCompatType = OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Embeddings'>, cloudflareModelPossibilities<'Text-to-Image'>>;
+
+			return Promise.all([import('ai'), import('@chainfuse/types/ai-tools/workers-ai')]).then(async ([{ customProvider }, { enabledCloudflareLlmEmbeddingProviders, enabledCloudflareLlmImageProviders, enabledCloudflareLlmProviders, enabledCloudflareLlmSpeechProviders, enabledCloudflareLlmTranscriptionProviders }]) =>
+				customProvider({
+					// Workers AI exposes it as `textEmbedding` but ai sdk expects `embeddingModel`
+					embeddingModels: await enabledCloudflareLlmEmbeddingProviders.reduce(
+						async (accPromise, model) => {
+							const acc = await accPromise;
+							acc[model] = fallbackProvider.textEmbedding(model);
+							return acc;
+						},
+						Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Embeddings'>, ReturnType<(typeof fallbackProvider)['textEmbedding']>>),
+					),
+					// Rewrite to carry over types (`workers-ai-provider` resolves to `any`)
+					imageModels: await enabledCloudflareLlmImageProviders.reduce(
+						async (accPromise, model) => {
+							const acc = await accPromise;
+							acc[model] = fallbackProvider.image(model);
+							return acc;
+						},
+						Promise.resolve({} as Record<cloudflareModelPossibilities<'Text-to-Image'>, ReturnType<(typeof fallbackProvider)['image']>>),
+					),
+					// Workers AI exposes it as `chat` but ai sdk expects `languageModel`
+					languageModels: await enabledCloudflareLlmProviders.reduce(
+						async (accPromise, model) => {
+							const acc = await accPromise;
+							acc[model] = fallbackProvider.chat(model);
+							return acc;
+						},
+						Promise.resolve({} as Record<cloudflareModelPossibilities<'Text Generation'>, ReturnType<(typeof fallbackProvider)['chat']>>),
+					),
+					// Rewrite to carry over types (`workers-ai-provider` resolves to `any`)
+					speechModels: await enabledCloudflareLlmSpeechProviders.reduce(
+						async (accPromise, model) => {
+							const acc = await accPromise;
+							acc[model] = fallbackProvider.speech(model);
+							return acc;
+						},
+						Promise.resolve({} as Record<cloudflareModelPossibilities<'Text-to-Speech'>, ReturnType<(typeof fallbackProvider)['speech']>>),
+					),
+					// Rewrite to carry over types (`workers-ai-provider` resolves to `any`)
+					transcriptionModels: await enabledCloudflareLlmTranscriptionProviders.reduce(
+						async (accPromise, model) => {
+							const acc = await accPromise;
+							acc[model] = fallbackProvider.transcription(model);
+							return acc;
+						},
+						Promise.resolve({} as Record<cloudflareModelPossibilities<'Automatic Speech Recognition'>, ReturnType<(typeof fallbackProvider)['transcription']>>),
+					),
+					// The rest are compatible as is
+					fallbackProvider: fallbackProvider as unknown as openAiCompatType,
+				}),
+			);
+		}
 	}
 }
