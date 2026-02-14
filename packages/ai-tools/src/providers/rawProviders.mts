@@ -50,10 +50,9 @@ export class AiRawProviders extends AiBase {
 						})
 						.catch((error) => {
 							if ('apiToken' in this.config.gateway) {
-								return import('@chainfuse/helpers')
-									.then(({ NetHelpers }) => NetHelpers.cfApi('apiToken' in this.config.gateway ? this.config.gateway.apiToken : '', { logging: { level: Number(logging) } }))
-									.then((cf) =>
-										(
+								return Promise.all([import('@chainfuse/helpers/common'), import('cloudflare'), import('@chainfuse/helpers/net').then(({ NetHelpers }) => NetHelpers.cfApi('apiToken' in this.config.gateway ? this.config.gateway.apiToken : '', { logging: { level: Number(logging) } }))]).then(([{ Helpers }, { APIError }, cf]) =>
+									Helpers.tryWhile(
+										() =>
 											cf.aiGateway.logs.edit(this.gatewayName, logId, {
 												account_id: this.config.gateway.accountId,
 												metadata: {
@@ -62,19 +61,47 @@ export class AiRawProviders extends AiBase {
 														return acc;
 													}, {} as AiRequestMetadataStringified),
 												} satisfies AiRequestMetadataStringified,
-											}) as APIPromise<void>
-										).catch((error) => console.warn('Not updating gateway log', error)),
-									);
+											}) as APIPromise<void>,
+										(err, nextAttempt) => {
+											if (err instanceof APIError) {
+												// 7002 is code for Not Found
+												const isRetryableError = err.errors.some(({ code }) => code === 7002);
+
+												if (nextAttempt <= 3 && isRetryableError) {
+													return true;
+												}
+											}
+											return false;
+										},
+										{
+											// `t=` from `Ratelimit` header
+											baseDelayMs: 1 * 1000,
+											// `w=` from `Ratelimit-Policy` header
+											maxDelayMs: 300 * 1000,
+										},
+									).catch((error) => console.warn('Not updating gateway log', error)),
+								);
 							} else {
 								console.warn('Not updating gateway log', error);
 								return;
 							}
 						});
 				} else {
-					return import('@chainfuse/helpers')
-						.then(({ NetHelpers }) => NetHelpers.cfApi('apiToken' in this.config.gateway ? this.config.gateway.apiToken : '', { logging: { level: Number(logging) } }))
-						.then((cf) =>
-							(
+					console.log(
+						'metadata',
+						JSON.stringify({
+							metadata: {
+								...Object.entries(rawMetadata).reduce((acc, [key, value]) => {
+									acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
+									return acc;
+								}, {} as AiRequestMetadataStringified),
+							},
+						}),
+					);
+
+					return Promise.all([import('@chainfuse/helpers/common'), import('cloudflare'), import('@chainfuse/helpers/net').then(({ NetHelpers }) => NetHelpers.cfApi('apiToken' in this.config.gateway ? this.config.gateway.apiToken : '', { logging: { level: Number(logging) } }))]).then(([{ Helpers }, { APIError }, cf]) =>
+						Helpers.tryWhile(
+							() =>
 								cf.aiGateway.logs.edit(this.gatewayName, logId, {
 									account_id: this.config.gateway.accountId,
 									metadata: {
@@ -83,9 +110,28 @@ export class AiRawProviders extends AiBase {
 											return acc;
 										}, {} as AiRequestMetadataStringified),
 									} satisfies AiRequestMetadataStringified,
-								}) as APIPromise<void>
-							).catch((error) => console.warn('Not updating gateway log', error)),
-						);
+								}) as APIPromise<void>,
+							(err, nextAttempt) => {
+								if (err instanceof APIError) {
+									// 7002 is code for Not Found
+									const isRetryableError = err.errors.some(({ code }) => code === 7002);
+									console.error('ooooga', nextAttempt <= 3, isRetryableError);
+
+									if (nextAttempt <= Number.MAX_SAFE_INTEGER && isRetryableError) {
+										return true;
+									}
+								}
+								return false;
+							},
+							{
+								// `t=` from `Ratelimit` header
+								baseDelayMs: 1 * 1000,
+								// `w=` from `Ratelimit-Policy` header
+								maxDelayMs: 300 * 1000,
+								verbose: true,
+							},
+						).catch((error) => console.warn('Not updating gateway log', error)),
+					);
 				}
 			})();
 
