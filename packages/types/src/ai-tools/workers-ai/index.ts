@@ -10,10 +10,11 @@ type cloudflareFilteredModelPossibilities<M extends cloudflareModelTypes = cloud
 // const enabledCloudflareLlmSummaryProviders: cloudflareModelPossibilities<'Summarization'>[] = workersAiCatalog.modelGroups.Summarization.models.map((model) => model.name);
 // const enabledCloudflareLlmClassificationProviders: cloudflareModelPossibilities<'Text Classification'>[] = workersAiCatalog.modelGroups['Text Classification'].models.map((model) => model.name);
 export const enabledCloudflareLlmEmbeddingProviders: cloudflareModelPossibilities<'Text Embeddings'>[] = workersAiCatalog.modelGroups['Text Embeddings'].models.map((model) => model.name);
+export const enabledCloudflareLlmImageProviders: cloudflareModelPossibilities<'Text-to-Image'>[] = workersAiCatalog.modelGroups['Text-to-Image'].models.map((model) => model.name);
 export const enabledCloudflareLlmProviders: cloudflareModelPossibilities<'Text Generation'>[] = workersAiCatalog.modelGroups['Text Generation'].models.map((model) => model.name);
 export const enabledCloudflareLlmFunctionProviders = workersAiCatalog.modelGroups['Text Generation'].models.filter((model) => 'function_calling' in model.properties && model.properties.function_calling).map((model) => model.name as cloudflareFilteredModelPossibilities<'Text Generation', 'function_calling', true>);
-
-export const enabledCloudflareLlmImageProviders: cloudflareModelPossibilities<'Text-to-Image'>[] = workersAiCatalog.modelGroups['Text-to-Image'].models.map((model) => model.name);
+export const enabledCloudflareLlmSpeechProviders = workersAiCatalog.modelGroups['Text-to-Speech'].models.map((model) => model.name);
+export const enabledCloudflareLlmTranscriptionProviders = workersAiCatalog.modelGroups['Automatic Speech Recognition'].models.map((model) => model.name);
 
 export type CloudflareModelsEnum<M extends cloudflareModelTypes = cloudflareModelTypes> = {
 	[K in cloudflareModelPossibilities<M>]: `workersai:${K}`;
