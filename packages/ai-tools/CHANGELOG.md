@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 2.0.1
+
+### Patch Changes
+
+- [`bf97546`](https://github.com/ChainFuse/packages/commit/bf9754606047edbda3a552df6f28084578b55afa) Thanks [@demosjarco](https://github.com/demosjarco)! - Fix lock file desync
+
+- Updated dependencies [[`bf97546`](https://github.com/ChainFuse/packages/commit/bf9754606047edbda3a552df6f28084578b55afa)]:
+    - @chainfuse/helpers@4.4.4
+    - @chainfuse/types@4.2.18
+
 ## 2.0.0
 
 ### Major Changes
