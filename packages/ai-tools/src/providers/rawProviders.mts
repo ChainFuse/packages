@@ -1,4 +1,3 @@
-import type { OpenAICompatibleProvider } from '@ai-sdk/openai-compatible';
 import { BufferHelpers } from '@chainfuse/helpers/buffers';
 import { Helpers } from '@chainfuse/helpers/common';
 import { CryptoHelpers } from '@chainfuse/helpers/crypto';
@@ -744,9 +743,9 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public restWorkersAi(args: AiRequestConfig): Promise<OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Embeddings'>>> {
+	public restWorkersAi(args: AiRequestConfig) {
 		return import('@ai-sdk/openai-compatible').then(async ({ createOpenAICompatible }) =>
-			createOpenAICompatible({
+			createOpenAICompatible<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Embeddings'>, cloudflareModelPossibilities<'Text-to-Image'>>({
 				baseURL: new URL(['v1', this.config.gateway.accountId, this.gatewayName, 'workers-ai', 'v1'].join('/'), 'https://gateway.ai.cloudflare.com').toString(),
 				apiKey: (this.config.providers.workersAi as AiConfigWorkersaiRest).apiToken,
 				headers: {
@@ -765,6 +764,7 @@ export class AiRawProviders extends AiBase {
 					...(args.skipCache && { 'cf-aig-skip-cache': 'true' }),
 				},
 				includeUsage: true,
+				supportsStructuredOutputs: true,
 				name: 'workersai',
 				fetch: async (input, rawInit) => {
 					const startRoundTrip = performance.now();
@@ -860,27 +860,29 @@ export class AiRawProviders extends AiBase {
 		);
 	}
 
-	public async bindingWorkersAi(args: AiRequestConfig) {
-		return import('workers-ai-provider').then(
-			async ({ createWorkersAI }) =>
-				createWorkersAI({
-					binding: this.config.providers.workersAi,
-					gateway: {
-						id: this.gatewayName,
-						...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
-						...(args.skipCache && { skipCache: true }),
-						metadata: {
-							dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
-							...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
-							serverInfo: JSON.stringify({
-								name: 'cloudflare',
-							} satisfies AiRequestMetadata['serverInfo']),
-							// Generate incomplete id because we don't have the body to hash yet. Fill it in in the `fetch()`
-							idempotencyId: args.idempotencyId ?? ((await BufferHelpers.generateUuid7()).utf8.slice(0, 23) as AiRequestMetadata['idempotencyId']),
-							executor: JSON.stringify(args.executor),
-						} satisfies AiRequestMetadataStringified,
-					} satisfies GatewayOptions,
-				}) as unknown as Promise<OpenAICompatibleProvider<cloudflareModelPossibilities<'Text Generation'>, cloudflareModelPossibilities<'Text Generation'>>>,
-		);
+	public bindingWorkersAi(args: AiRequestConfig) {
+		return import('workers-ai-provider').then(async ({ createWorkersAI }) => {
+			const idempotencyId = args.idempotencyId ?? (await BufferHelpers.generateUuid7()).utf8;
+
+			if (args.logging ?? this.gatewayLog) console.info(new Date().toISOString(), this.chalk.rgb(...Helpers.uniqueIdColor(idempotencyId))(`[${idempotencyId}]`), this.chalk.magenta('POST'), this.chalk.magenta('apiToken' in this.config.providers.workersAi ? new URL(`https://gateway.ai.cloudflare.com/v1/${this.config.gateway.accountId}/${this.gatewayName}/workers-ai/model-placeholder`).pathname : 'Ai.run(model-placeholder)'));
+
+			return createWorkersAI({
+				binding: this.config.providers.workersAi,
+				gateway: {
+					id: this.gatewayName,
+					...(args.cache && { cacheTtl: typeof args.cache === 'boolean' ? (args.cache ? this.cacheTtl : 0) : args.cache }),
+					...(args.skipCache && { skipCache: true }),
+					metadata: {
+						dataspaceId: (await BufferHelpers.uuidConvert(args.dataspaceId)).utf8,
+						...(args.groupBillingId && { groupBillingId: (await BufferHelpers.uuidConvert(args.groupBillingId)).utf8 }),
+						serverInfo: JSON.stringify({
+							name: 'cloudflare',
+						} satisfies AiRequestMetadata['serverInfo']),
+						idempotencyId,
+						executor: JSON.stringify(args.executor),
+					} satisfies AiRequestMetadataStringified,
+				} satisfies GatewayOptions,
+			});
+		});
 	}
 }

@@ -1,7 +1,7 @@
 import { AiModels, type LanguageModelValues } from '@chainfuse/types/ai-tools';
 import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
-import { generateObject, generateText, Output, streamObject, streamText, tool } from 'ai';
-import { doesNotReject, strictEqual } from 'node:assert/strict';
+import { generateText, Output, stepCountIs, streamText, tool, ToolLoopAgent } from 'ai';
+import { doesNotReject, ok, strictEqual } from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import test, { before, beforeEach, describe, it } from 'node:test';
 import * as z4 from 'zod/v4';
@@ -108,25 +108,26 @@ await describe('AI Tests', () => {
 			for (const models of chosenModels) {
 				for (const model of Object.values(models)) {
 					await test(['Response', 'Streaming', model].join(' '), async () => {
-						const { textStream, text } = streamText({
+						const result = streamText({
 							model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
 							messages: [
 								{
 									role: 'user',
-									content: 'Tell me about black holes',
+									content: 'In a short sentence, tell me about black holes',
 								},
 							],
 							maxOutputTokens: 128,
 						});
 
-						for await (const chunk of textStream) {
+						for await (const chunk of result.textStream) {
 							strictEqual(typeof chunk, 'string');
 
 							// console.debug('textPart', chunk);
 						}
 
-						await doesNotReject(text);
-						strictEqual(typeof (await text), 'string');
+						await doesNotReject((async () => result.text)());
+						strictEqual(typeof (await result.text), 'string');
+						ok((await result.text).trim().length > 0);
 
 						// console.debug('fullResponse', await text);
 					});
@@ -143,7 +144,7 @@ await describe('AI Tests', () => {
 							messages: [
 								{
 									role: 'user',
-									content: 'Tell me about black holes',
+									content: 'In a short sentence, tell me about black holes',
 								},
 							],
 							maxOutputTokens: 128,
@@ -151,6 +152,7 @@ await describe('AI Tests', () => {
 
 						await doesNotReject(responsePromise);
 						strictEqual(typeof (await responsePromise).text, 'string');
+						ok((await responsePromise).text.trim().length > 0);
 
 						// console.debug('fullResponse', (await responsePromise).text);
 					});
@@ -179,7 +181,7 @@ await describe('AI Tests', () => {
 							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model) || Object.values(AiModels.LanguageModels.CloudflareFunctions).includes(model),
 						},
 						async () => {
-							const { partialObjectStream, object } = streamObject({
+							const result = streamText({
 								model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
 								messages: [
 									{
@@ -192,28 +194,37 @@ await describe('AI Tests', () => {
 									},
 								],
 								maxOutputTokens: 128,
-								schema: z4.object({
-									city: z4.string().trim().describe('City of the incoming request'),
-									state: z4.string().trim().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+								output: Output.object({
+									schema: z4.object({
+										city: z4.string().trim().describe('City of the incoming request'),
+										state: z4.string().trim().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+									}),
+									description: 'Return the current city and state of the runner',
 								}),
-								schemaDescription: 'Return the current city and state of the runner',
 							});
 
-							for await (const chunk of partialObjectStream) {
+							let accumulatedOutput: AiStreamChunkType<(typeof result)['partialOutputStream']> = {};
+
+							for await (const chunk of result.partialOutputStream) {
 								strictEqual(typeof chunk, 'object');
 
 								if (chunk.city) strictEqual(typeof chunk.city, 'string');
 								if (chunk.state) strictEqual(typeof chunk.state, 'string');
 
 								// console.debug('objectPart', 'Structured', 'Buffered', model, chunk);
+
+								accumulatedOutput = { ...accumulatedOutput, ...chunk };
 							}
 
-							await doesNotReject(object);
+							await doesNotReject((async () => result.output)());
+							strictEqual(JSON.stringify(accumulatedOutput), JSON.stringify(await result.output));
 
-							strictEqual(typeof (await object).city, 'string');
-							strictEqual(typeof (await object).state, 'string');
+							strictEqual(typeof (await result.output).city, 'string');
+							ok((await result.output).city.trim().length > 0);
+							strictEqual(typeof (await result.output).state, 'string');
+							ok((await result.output).state.trim().length > 0);
 
-							// console.debug('fullObject', 'Structured', 'Streaming', model, await object);
+							// console.debug('fullObject', 'Structured', 'Streaming', model, await result.output);
 						},
 					);
 				}
@@ -230,7 +241,7 @@ await describe('AI Tests', () => {
 							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model) || Object.values(AiModels.LanguageModels.CloudflareFunctions).includes(model),
 						},
 						async () => {
-							const responsePromise = generateObject({
+							const responsePromise = generateText({
 								model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
 								messages: [
 									{
@@ -243,20 +254,24 @@ await describe('AI Tests', () => {
 									},
 								],
 								maxOutputTokens: 128,
-								schema: z4.object({
-									city: z4.string().describe('City of the incoming request'),
-									state: z4.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+								output: Output.object({
+									schema: z4.object({
+										city: z4.string().describe('City of the incoming request'),
+										state: z4.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+									}),
+									description: 'Return the current city and state of the runner',
 								}),
-								schemaDescription: 'Return the current city and state of the runner',
 							});
 
 							await doesNotReject(responsePromise);
 
-							const { object } = await responsePromise;
-							strictEqual(typeof object.city, 'string');
-							strictEqual(typeof object.state, 'string');
+							const { output } = await responsePromise;
+							strictEqual(typeof output.city, 'string');
+							ok(output.city.trim().length > 0);
+							strictEqual(typeof output.state, 'string');
+							ok(output.state.trim().length > 0);
 
-							// console.debug('fullObject', 'Structured', 'Buffered', model, object);
+							console.debug('fulloutput', 'Structured', 'Buffered', model, output);
 						},
 					);
 				}
@@ -288,8 +303,26 @@ await describe('AI Tests', () => {
 							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model) || Object.values(AiModels.LanguageModels.CloudflareFunctions).includes(model),
 						},
 						async () => {
-							const { experimental_partialOutputStream } = streamText({
+							const result = new ToolLoopAgent({
 								model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
+								maxOutputTokens: 128,
+								tools: {
+									'get-container-info': tool({
+										description: 'Get external statistics of the current container including geographical information',
+										inputSchema: z4.object({}),
+										strict: true,
+										// eslint-disable-next-line @typescript-eslint/require-await
+										execute: async () => geoJson,
+									}),
+								},
+								stopWhen: stepCountIs(20),
+								output: Output.object({
+									schema: z4.object({
+										city: z4.string().describe('City of the incoming request'),
+										state: z4.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+									}),
+								}),
+							}).stream({
 								messages: [
 									{
 										role: 'system',
@@ -300,27 +333,13 @@ await describe('AI Tests', () => {
 										content: 'Where (geographically) are you running?',
 									},
 								],
-								maxOutputTokens: 128,
-								tools: {
-									'get-container-info': tool({
-										description: 'Get external statistics of the current container including geographical information',
-										inputSchema: z4.object({}),
-										// eslint-disable-next-line @typescript-eslint/require-await
-										execute: async () => geoJson,
-									}),
-								},
-								toolChoice: 'required',
-								experimental_output: Output.object({
-									schema: z4.object({
-										city: z4.string().describe('City of the incoming request'),
-										state: z4.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
-									}),
-								}),
 							});
 
-							let experimental_output: AiStreamChunkType<typeof experimental_partialOutputStream> = {};
+							await doesNotReject((async () => result)());
 
-							for await (const chunk of experimental_partialOutputStream) {
+							let accumulatedOutput: AiStreamChunkType<Awaited<typeof result>['partialOutputStream']> = {};
+
+							for await (const chunk of (await result).partialOutputStream) {
 								strictEqual(typeof chunk, 'object');
 
 								if (chunk.city) strictEqual(typeof chunk.city, 'string');
@@ -328,19 +347,16 @@ await describe('AI Tests', () => {
 
 								// console.debug('objectPart', 'Structured with tools', 'Streaming', chunk);
 
-								experimental_output = { ...experimental_output, ...chunk };
+								accumulatedOutput = { ...accumulatedOutput, ...chunk };
 							}
 
-							/**
-							 * Doesn't support accumulated output
-							 * @link https://sdk.vercel.ai/docs/ai-sdk-core/generating-structured-data#streamtext
-							 */
-							// await doesNotReject(experimental_output);
+							await doesNotReject((async () => (await result).output)());
+							strictEqual(JSON.stringify(accumulatedOutput), JSON.stringify(await (await result).output));
 
-							strictEqual(typeof experimental_output.city, 'string');
-							strictEqual(typeof experimental_output.state, 'string');
+							strictEqual(typeof (await (await result).output).city, 'string');
+							strictEqual(typeof (await (await result).output).state, 'string');
 
-							// console.debug('fullObject', 'Structured with tools', 'Streaming', experimental_output);
+							// console.debug('fullObject', 'Structured with tools', 'Streaming', await (await result).output);
 						},
 					);
 				}
@@ -357,43 +373,45 @@ await describe('AI Tests', () => {
 							todo: Object.values(AiModels.LanguageModels.Cloudflare).includes(model) || Object.values(AiModels.LanguageModels.CloudflareFunctions).includes(model),
 						},
 						async () => {
-							const responsePromise = generateText({
+							const responsePromise = new ToolLoopAgent({
 								model: await new AiModel(config).wrappedLanguageModel(args, model as LanguageModelValues),
+								maxOutputTokens: 128,
+								tools: {
+									'get-container-info': tool({
+										description: 'Get external statistics of the current container including geographical information',
+										inputSchema: z4.object({}),
+										strict: true,
+										// eslint-disable-next-line @typescript-eslint/require-await
+										execute: async () => geoJson,
+									}),
+								},
+								stopWhen: stepCountIs(20),
+								output: Output.object({
+									schema: z4.object({
+										city: z4.string().describe('City of the incoming request'),
+										state: z4.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
+									}),
+								}),
+							}).generate({
 								messages: [
 									{
 										role: 'system',
-										content: 'You are an assistant running in a CI/CD test container running in a singular location for unit testing. Use the tool `get-container-info` to get external statistics of the container including geolocation information. Respond in json.',
+										content: 'You are an assistant running in a CI/CD test container running in a singular location for unit testing. Do not hallucinate the location, you must use the tool `get-container-info` to get external statistics of the container including geolocation information. Respond in json.',
 									},
 									{
 										role: 'user',
 										content: 'Where (geographically) are you running?',
 									},
 								],
-								maxOutputTokens: 128,
-								tools: {
-									'get-container-info': tool({
-										description: 'Get external statistics of the current container including geographical information',
-										inputSchema: z4.object({}),
-										// eslint-disable-next-line @typescript-eslint/require-await
-										execute: async () => geoJson,
-									}),
-								},
-								toolChoice: 'required',
-								experimental_output: Output.object({
-									schema: z4.object({
-										city: z4.string().describe('City of the incoming request'),
-										state: z4.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
-									}),
-								}),
 							});
 
 							await doesNotReject(responsePromise);
 
-							const { experimental_output } = await responsePromise;
-							strictEqual(typeof experimental_output.city, 'string');
-							strictEqual(typeof experimental_output.state, 'string');
+							const { output } = await responsePromise;
+							strictEqual(typeof output.city, 'string');
+							strictEqual(typeof output.state, 'string');
 
-							// console.debug('fullObject', 'Structured with tools', 'Buffered', model, experimental_output);
+							// console.debug('fullObject', 'Structured with tools', 'Buffered', model, output);
 						},
 					);
 				}
