@@ -1,5 +1,21 @@
 # @chainfuse/ai-tools
 
+## 2.0.0
+
+### Major Changes
+
+- [`9a59a75`](https://github.com/ChainFuse/packages/commit/9a59a757dbdeb16a70860e2358ed6974b878bf83) Thanks [@demosjarco](https://github.com/demosjarco)! - ai-tools(upgrade): Migrate AI providers to sdk v6
+
+### Patch Changes
+
+- [`7eaa8ce`](https://github.com/ChainFuse/packages/commit/7eaa8ced5ca9343a129c8a969406ad6387131ead) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-major): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, @ai-sdk/provider, ai, workers-ai-provider, openai
+
+- [`0ae7fad`](https://github.com/ChainFuse/packages/commit/0ae7fadff52f0f63b977fa90fc2340681de8c803) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- Updated dependencies [[`7eaa8ce`](https://github.com/ChainFuse/packages/commit/7eaa8ced5ca9343a129c8a969406ad6387131ead), [`0ae7fad`](https://github.com/ChainFuse/packages/commit/0ae7fadff52f0f63b977fa90fc2340681de8c803), [`25fb787`](https://github.com/ChainFuse/packages/commit/25fb7879b30ba2a7a2d13b679e9cec8ef35e64fb), [`3792ebd`](https://github.com/ChainFuse/packages/commit/3792ebd9c7e6a8cd09e004b5793132ee75788e84), [`4f2a471`](https://github.com/ChainFuse/packages/commit/4f2a4711f9832466e98d1b799857d1cddb693d4a)]:
+    - @chainfuse/helpers@4.4.3
+    - @chainfuse/types@4.2.17
+
 ## 1.1.13
 
 ### Patch Changes

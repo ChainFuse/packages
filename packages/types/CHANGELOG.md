@@ -1,5 +1,17 @@
 # @chainfuse/types
 
+## 4.2.17
+
+### Patch Changes
+
+- [`7eaa8ce`](https://github.com/ChainFuse/packages/commit/7eaa8ced5ca9343a129c8a969406ad6387131ead) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-major): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, @ai-sdk/provider, ai, workers-ai-provider, openai
+
+- [`0ae7fad`](https://github.com/ChainFuse/packages/commit/0ae7fadff52f0f63b977fa90fc2340681de8c803) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [`25fb787`](https://github.com/ChainFuse/packages/commit/25fb7879b30ba2a7a2d13b679e9cec8ef35e64fb) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Export Azure models as runtime consts not just types
+
+- [`3792ebd`](https://github.com/ChainFuse/packages/commit/3792ebd9c7e6a8cd09e004b5793132ee75788e84) Thanks [@demosjarco](https://github.com/demosjarco)! - types(feat): Add Cloudflare speech and transcription models
+
 ## 4.2.16
 
 ### Patch Changes
