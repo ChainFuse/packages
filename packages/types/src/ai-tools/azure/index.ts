@@ -1,5 +1,5 @@
-import type { azureCatalog } from './catalog.js';
+import { azureCatalog } from './catalog.js';
 
-export type AzureChatModels = (typeof azureCatalog)[number]['languageModelAvailability'][number]['name'];
-// type AzureImageModels = (typeof azureCatalog)[number]['imageModelAvailability'][number]['name'];
-export type AzureEmbeddingModels = (typeof azureCatalog)[number]['textEmbeddingModelAvailability'][number]['name'];
+export const AzureChatModels = azureCatalog.map(({ languageModelAvailability }) => languageModelAvailability.map(({ name }) => name)).flat();
+export const AzureImageModels = azureCatalog.map(({ imageModelAvailability }) => imageModelAvailability.map(({ name }) => name)).flat();
+export const AzureEmbeddingModels = azureCatalog.map(({ textEmbeddingModelAvailability }) => textEmbeddingModelAvailability.map(({ name }) => name)).flat();
