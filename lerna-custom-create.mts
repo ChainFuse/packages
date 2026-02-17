@@ -1,6 +1,6 @@
 import { exec } from 'node:child_process';
 import { createReadStream, createWriteStream } from 'node:fs';
-import { mkdir, readdir, rename } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rename, writeFile } from 'node:fs/promises';
 import { basename, dirname, join, normalize, relative } from 'node:path';
 
 class LernaCustomCreate {
@@ -11,7 +11,7 @@ class LernaCustomCreate {
 	public async createPackage(packageNameInput = LernaCustomCreate.arguments[0]) {
 		if (packageNameInput) {
 			const { packageName, packagePath } = await this.lernaCreate(packageNameInput);
-			await Promise.all([this.customiseReadme(packagePath, packageNameInput), this.copyTemplate(packagePath), this.editPackageJson(packagePath).then(() => this.syncPackageFiles(packagePath)), this.renameFiles(packageName, packagePath)]);
+			await Promise.all([this.customiseReadme(packagePath, packageNameInput), this.copyTemplate(packagePath).then(() => this.customiseEslintConfig(packagePath)), this.editPackageJson(packagePath).then(() => this.syncPackageFiles(packagePath)), this.renameFiles(packageName, packagePath)]);
 		} else {
 			throw new Error('No package name provided');
 		}
@@ -131,6 +131,12 @@ class LernaCustomCreate {
 
 	private copyTemplate(packageDir: string, templateDir: string = relative(process.cwd(), 'template')) {
 		return LernaCustomCreate.copyDirectory(templateDir, packageDir);
+	}
+
+	private async customiseEslintConfig(packageDir: string) {
+		const eslintConfigPath = join(packageDir, 'eslint.config.mjs');
+		const fileData = await readFile(eslintConfigPath, { encoding: 'utf8' });
+		await writeFile(eslintConfigPath, fileData.replace("from '../eslint.config.mjs';", "from '../../eslint.config.mjs';"), { encoding: 'utf8' });
 	}
 
 	private editPackageJson(packageDir: string) {
