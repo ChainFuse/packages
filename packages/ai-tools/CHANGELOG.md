@@ -1,5 +1,19 @@
 # @chainfuse/ai-tools
 
+## 2.0.2
+
+### Patch Changes
+
+- [#874](https://github.com/ChainFuse/packages/pull/874) [`665b23e`](https://github.com/ChainFuse/packages/commit/665b23ee7f3baaf979d435740942c880fae66147) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump ai
+
+- [`b13f040`](https://github.com/ChainFuse/packages/commit/b13f04077c67e082a4fac231f9a82797c8135e15) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-major): bump @eslint/js, eslint, typescript-eslint
+
+- [#870](https://github.com/ChainFuse/packages/pull/870) [`e89d948`](https://github.com/ChainFuse/packages/commit/e89d94895fcde01f618cae80b55f55f7f0c2a2f7) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- Updated dependencies [[`665b23e`](https://github.com/ChainFuse/packages/commit/665b23ee7f3baaf979d435740942c880fae66147), [`b13f040`](https://github.com/ChainFuse/packages/commit/b13f04077c67e082a4fac231f9a82797c8135e15), [`e89d948`](https://github.com/ChainFuse/packages/commit/e89d94895fcde01f618cae80b55f55f7f0c2a2f7)]:
+    - @chainfuse/helpers@4.4.5
+    - @chainfuse/types@4.2.19
+
 ## 2.0.1
 
 ### Patch Changes
