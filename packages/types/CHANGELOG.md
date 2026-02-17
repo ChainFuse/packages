@@ -1,5 +1,11 @@
 # @chainfuse/types
 
+## 4.2.20
+
+### Patch Changes
+
+- [#875](https://github.com/ChainFuse/packages/pull/875) [`ad9c88d`](https://github.com/ChainFuse/packages/commit/ad9c88d56bfe3ac85f543e9ebfe4e23f91a9a0be) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, ai
+
 ## 4.2.19
 
 ### Patch Changes

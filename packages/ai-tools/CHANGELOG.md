@@ -1,5 +1,15 @@
 # @chainfuse/ai-tools
 
+## 2.0.3
+
+### Patch Changes
+
+- [#875](https://github.com/ChainFuse/packages/pull/875) [`ad9c88d`](https://github.com/ChainFuse/packages/commit/ad9c88d56bfe3ac85f543e9ebfe4e23f91a9a0be) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, ai
+
+- Updated dependencies [[`ad9c88d`](https://github.com/ChainFuse/packages/commit/ad9c88d56bfe3ac85f543e9ebfe4e23f91a9a0be)]:
+    - @chainfuse/helpers@4.4.6
+    - @chainfuse/types@4.2.20
+
 ## 2.0.2
 
 ### Patch Changes
