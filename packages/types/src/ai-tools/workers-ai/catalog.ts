@@ -1528,6 +1528,7 @@ export const workersAiCatalog = {
 					created_at: '2024-05-22 00:02:18.656',
 					tags: [],
 					properties: {
+						async_queue: true,
 						price: [
 							{
 								unit: 'per audio minute',
