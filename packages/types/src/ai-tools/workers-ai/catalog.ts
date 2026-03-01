@@ -141,7 +141,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-						context_window: 128000,
+						context_window: 80000,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
