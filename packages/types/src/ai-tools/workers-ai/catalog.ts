@@ -1669,6 +1669,17 @@ export const workersAiCatalog = {
 						],
 					},
 				},
+				{
+					id: '1108e06e-95e5-49ab-8513-f7aff0c0bee2',
+					source: 1,
+					name: '@cf/facebook/nonomni-bart-large-cnn',
+					description: 'BART is a transformer encoder-encoder (seq2seq) model with a bidirectional (BERT-like) encoder and an autoregressive (GPT-like) decoder. You can use this model for text summarization.',
+					created_at: '2026-03-05 21:29:49.280',
+					tags: [],
+					properties: {
+						beta: true,
+					},
+				},
 			],
 		},
 	},
