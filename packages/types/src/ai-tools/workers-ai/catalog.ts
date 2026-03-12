@@ -624,6 +624,31 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '43dbadb4-2b0a-47e9-8479-34a49b971f1e',
+					source: 1,
+					name: '@cf/nvidia/nemotron-3-120b-a12b',
+					description: 'NVIDIA Nemotron 3 Super is a hybrid MoE model with leading accuracy for multi-agent applications and specialized agentic AI systems.',
+					created_at: '2026-02-24 23:22:47.215',
+					tags: [],
+					properties: {
+						context_window: 256000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0,
+								currency: 'USD',
+							},
+						],
+						function_calling: true,
+						terms: 'https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/',
+					},
+				},
+				{
 					id: '41ca173f-72d5-4420-8915-49e835d2676e',
 					source: 1,
 					name: '@cf/aisingapore/gemma-sea-lion-v4-27b-it',
@@ -1667,17 +1692,6 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-					},
-				},
-				{
-					id: '1108e06e-95e5-49ab-8513-f7aff0c0bee2',
-					source: 1,
-					name: '@cf/facebook/nonomni-bart-large-cnn',
-					description: 'BART is a transformer encoder-encoder (seq2seq) model with a bidirectional (BERT-like) encoder and an autoregressive (GPT-like) decoder. You can use this model for text summarization.',
-					created_at: '2026-03-05 21:29:49.280',
-					tags: [],
-					properties: {
-						beta: true,
 					},
 				},
 			],
