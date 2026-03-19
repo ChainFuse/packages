@@ -50,6 +50,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						reasoning: true,
 					},
 				},
 				{
@@ -310,6 +311,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						reasoning: true,
 						terms: 'https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE',
 					},
 				},
@@ -436,6 +438,7 @@ export const workersAiCatalog = {
 							},
 						],
 						function_calling: true,
+						reasoning: true,
 					},
 				},
 				{
@@ -645,6 +648,7 @@ export const workersAiCatalog = {
 							},
 						],
 						function_calling: true,
+						reasoning: true,
 						terms: 'https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/',
 					},
 				},
@@ -694,6 +698,7 @@ export const workersAiCatalog = {
 							},
 						],
 						function_calling: true,
+						reasoning: true,
 					},
 				},
 				{
@@ -833,6 +838,7 @@ export const workersAiCatalog = {
 						],
 						lora: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
+						vision: true,
 					},
 				},
 				{
@@ -883,6 +889,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						reasoning: true,
 					},
 				},
 				{
@@ -952,6 +959,7 @@ export const workersAiCatalog = {
 						],
 						function_calling: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE',
+						vision: true,
 					},
 				},
 				{
@@ -1000,6 +1008,7 @@ export const workersAiCatalog = {
 							},
 						],
 						lora: true,
+						reasoning: true,
 					},
 				},
 			],
