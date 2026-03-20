@@ -1,5 +1,26 @@
 # @chainfuse/helpers
 
+## 4.4.6
+
+### Patch Changes
+
+- [#899](https://github.com/ChainFuse/packages/pull/899) [`0bd6fea`](https://github.com/ChainFuse/packages/commit/0bd6fea4d190ab3000ad91c9be77d154b7d5aa2b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @azure/identity, @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, workers-ai-provider, openai
+
+- [#900](https://github.com/ChainFuse/packages/pull/900) [`aff6b1b`](https://github.com/ChainFuse/packages/commit/aff6b1b78fb9b312bccb0e32efc0d354e858f8ef) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump eslint, typescript-eslint
+
+- [#892](https://github.com/ChainFuse/packages/pull/892) [`2e901ac`](https://github.com/ChainFuse/packages/commit/2e901ac5b6780bf1ea934a6a62686d1113fa0382) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump flatted
+
+- [#901](https://github.com/ChainFuse/packages/pull/901) [`1383743`](https://github.com/ChainFuse/packages/commit/1383743de438a9f19339be24ea5c259d967f2905) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @changesets/changelog-github, @changesets/cli, lerna
+
+- [#886](https://github.com/ChainFuse/packages/pull/886) [`c5453f9`](https://github.com/ChainFuse/packages/commit/c5453f907309c53aa457a9637826b93a39455e07) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump strip-ansi
+
+- [#902](https://github.com/ChainFuse/packages/pull/902) [`fe4ef47`](https://github.com/ChainFuse/packages/commit/fe4ef474d597c6c9b9a254290fb8730231cdfe01) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [#891](https://github.com/ChainFuse/packages/pull/891) [`478e328`](https://github.com/ChainFuse/packages/commit/478e3281e3740647f79971cac1cad09a3c149289) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump undici
+
+- Updated dependencies [[`0bd6fea`](https://github.com/ChainFuse/packages/commit/0bd6fea4d190ab3000ad91c9be77d154b7d5aa2b), [`aff6b1b`](https://github.com/ChainFuse/packages/commit/aff6b1b78fb9b312bccb0e32efc0d354e858f8ef), [`2e901ac`](https://github.com/ChainFuse/packages/commit/2e901ac5b6780bf1ea934a6a62686d1113fa0382), [`1383743`](https://github.com/ChainFuse/packages/commit/1383743de438a9f19339be24ea5c259d967f2905), [`c5453f9`](https://github.com/ChainFuse/packages/commit/c5453f907309c53aa457a9637826b93a39455e07), [`fe4ef47`](https://github.com/ChainFuse/packages/commit/fe4ef474d597c6c9b9a254290fb8730231cdfe01), [`478e328`](https://github.com/ChainFuse/packages/commit/478e3281e3740647f79971cac1cad09a3c149289)]:
+    - @chainfuse/types@4.2.20
+
 ## 4.4.5
 
 ### Patch Changes
