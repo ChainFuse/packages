@@ -159,6 +159,7 @@ export const workersAiCatalog = {
 						context_window: 256000,
 						function_calling: true,
 						reasoning: true,
+						terms: 'https://github.com/MoonshotAI/Kimi-K2.5/blob/master/LICENSE',
 						vision: true,
 					},
 				},
