@@ -1,5 +1,19 @@
 # @chainfuse/ai-tools
 
+## 2.0.4
+
+### Patch Changes
+
+- [#905](https://github.com/ChainFuse/packages/pull/905) [`292485d`](https://github.com/ChainFuse/packages/commit/292485d4338efb29bb800ab6c1b430b4d1f9c33b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, ai, workers-ai-provider
+
+- [#906](https://github.com/ChainFuse/packages/pull/906) [`0975848`](https://github.com/ChainFuse/packages/commit/097584809f2f5f59c936090dd999861fac0ac842) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump typescript-eslint
+
+- [#907](https://github.com/ChainFuse/packages/pull/907) [`4d59db1`](https://github.com/ChainFuse/packages/commit/4d59db1212b79a98401deec4a9707b6f8caf8072) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @discordjs/rest
+
+- Updated dependencies [[`292485d`](https://github.com/ChainFuse/packages/commit/292485d4338efb29bb800ab6c1b430b4d1f9c33b), [`0975848`](https://github.com/ChainFuse/packages/commit/097584809f2f5f59c936090dd999861fac0ac842), [`4d59db1`](https://github.com/ChainFuse/packages/commit/4d59db1212b79a98401deec4a9707b6f8caf8072)]:
+    - @chainfuse/helpers@4.4.7
+    - @chainfuse/types@4.2.21
+
 ## 2.0.3
 
 ### Patch Changes
