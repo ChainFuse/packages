@@ -54,8 +54,6 @@ updates:
     schedule:
       interval: 'weekly'
       day: 'tuesday'
-    cooldown:
-      semver-major-days: 30
     versioning-strategy: increase
     open-pull-requests-limit: 999
     ignore:
