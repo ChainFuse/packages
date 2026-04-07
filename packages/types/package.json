@@ -94,7 +94,7 @@
 	},
 	"prettier": "@demosjarco/prettier-config",
 	"dependencies": {
-		"validator": "^13.15.26",
+		"validator": "^13.15.35",
 		"zod": "^4.3.6"
 	},
 	"devDependencies": {
