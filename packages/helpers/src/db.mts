@@ -24,6 +24,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	private globalTtl: z.output<(typeof SQLCache)['constructorArgs']>['cacheTTL'];
 	private ttlCutoff: z.output<(typeof SQLCache)['constructorArgs']>['cachePurge'];
 	private _strategy: z.output<(typeof SQLCache)['constructorArgs']>['strategy'];
+	private logging: z.output<(typeof SQLCache)['constructorArgs']>['logging'];
 	// This object will be used to store which query keys were used for a specific table, so we can later use it for invalidation.
 	private usedTablesPerKey: Record<string, string[]> = {};
 
@@ -39,6 +40,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 		cacheTTL: z._default(z.int().check(z.nonnegative()), 5 * 60),
 		cachePurge: z._default(z.union([z.boolean(), z.date()]), false),
 		strategy: z._default(z.enum(['explicit', 'all']), 'explicit'),
+		logging: z._default(z.boolean(), false),
 	});
 
 	/**
@@ -54,7 +56,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	 */
 	constructor(args: z.input<(typeof SQLCache)['constructorArgs']>, cacheStore?: C) {
 		super();
-		const { dbName, dbType, cacheTTL, cachePurge, strategy } = SQLCache.constructorArgs.parse(args);
+		const { dbName, dbType, cacheTTL, cachePurge, strategy, logging } = SQLCache.constructorArgs.parse(args);
 
 		this.dbName = dbName;
 		this.dbType = dbType;
@@ -68,6 +70,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 		this.globalTtl = cacheTTL;
 		this.ttlCutoff = cachePurge;
 		this._strategy = strategy;
+		this.logging = logging;
 	}
 
 	/**
@@ -102,12 +105,12 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 		const cacheKey = this.getCacheKey(isTag ? { tag: key } : { key });
 		const response = await this.cache.then(async (cache) => cache.match(cacheKey));
 
-		console.debug('SQLCache.get', isTag ? 'tag' : 'key', key, response?.ok ? 'HIT' : 'MISS');
+		if (this.logging) console.debug('SQLCache.get', isTag ? 'tag' : 'key', key, response?.ok ? 'HIT' : 'MISS');
 
 		if (response) {
 			// Check if cache should be purged
 			if (this.ttlCutoff === true) {
-				console.debug('SQLCache.get', 'cache purged', this.ttlCutoff);
+				if (this.logging) console.debug('SQLCache.get', 'cache purged', this.ttlCutoff);
 				await this.cache.then((cache) => cache.delete(cacheKey));
 				return undefined;
 			}
@@ -119,18 +122,17 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 					const cachedDate = new Date(responseDate);
 
 					if (cachedDate < this.ttlCutoff) {
-						console.debug('SQLCache.get', 'cache purged', { cachedDate, cutoff: this.ttlCutoff });
+						if (this.logging) console.debug('SQLCache.get', 'cache purged', { cachedDate, cutoff: this.ttlCutoff });
 						await this.cache.then((cache) => cache.delete(cacheKey));
 						return undefined;
 					}
 				} else {
-					console.debug('SQLCache.get', 'cache purged', { responseDate });
+					if (this.logging) console.debug('SQLCache.get', 'cache purged', { responseDate });
 					await this.cache.then((cache) => cache.delete(cacheKey));
 					return undefined;
 				}
 			}
 
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			return response.json();
 		} else {
 			return undefined;
@@ -167,7 +169,11 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 
 		cacheResponse.headers.set('ETag', await CryptoHelpers.generateETag(cacheResponse));
 
-		await this.cache.then(async (cache) => cache.put(this.getCacheKey(isTag ? { tag: hashedQuery } : { key: hashedQuery }), cacheResponse)).then(() => console.debug('SQLCache.put', isTag ? 'tag' : 'key', hashedQuery, 'SUCCESS'));
+		await this.cache
+			.then(async (cache) => cache.put(this.getCacheKey(isTag ? { tag: hashedQuery } : { key: hashedQuery }), cacheResponse))
+			.then(() => {
+				if (this.logging) console.debug('SQLCache.put', isTag ? 'tag' : 'key', hashedQuery, 'SUCCESS');
+			});
 
 		for (const table of tables) {
 			const keys = this.usedTablesPerKey[table];
@@ -197,10 +203,18 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 		}
 		if (keysToDelete.size > 0 || tagsArray.length > 0) {
 			for (const tag of tagsArray) {
-				await this.cache.then(async (cache) => cache.delete(this.getCacheKey({ tag }))).then(() => console.debug('SQLCache.delete', 'tag', tag, 'SUCCESS'));
+				await this.cache
+					.then(async (cache) => cache.delete(this.getCacheKey({ tag })))
+					.then(() => {
+						if (this.logging) console.debug('SQLCache.delete', 'tag', tag, 'SUCCESS');
+					});
 			}
 			for (const key of keysToDelete) {
-				await this.cache.then(async (cache) => cache.delete(this.getCacheKey({ key }))).then(() => console.debug('SQLCache.delete', 'key', key, 'SUCCESS'));
+				await this.cache
+					.then(async (cache) => cache.delete(this.getCacheKey({ key })))
+					.then(() => {
+						if (this.logging) console.debug('SQLCache.delete', 'key', key, 'SUCCESS');
+					});
 
 				for (const table of tablesArray) {
 					const tableName = is(table, Table) ? getTableName(table) : (table as string);
