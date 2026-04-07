@@ -29,11 +29,11 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 
 	public static constructorArgs = z.object({
 		dbName: z.pipe(
-			z.string().check(z.minLength(1)),
+			z.string().check(z.trim(), z.minLength(1)),
 			z.transform((val) => encodeURIComponent(val)),
 		),
 		dbType: z.pipe(
-			z.string().check(z.minLength(1)),
+			z.string().check(z.trim(), z.minLength(1)),
 			z.transform((val) => encodeURIComponent(val)),
 		),
 		cacheTTL: z._default(z.int().check(z.nonnegative()), 5 * 60),
