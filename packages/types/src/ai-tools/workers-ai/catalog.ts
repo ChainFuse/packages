@@ -770,6 +770,33 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '328adb49-4a7d-43e3-a2d5-802ae8100fe7',
+					source: 1,
+					name: '@cf/google/gemma-4-26b-a4b-it',
+					description: "Gemma 4 is Google's most intelligent family of open models, built from Gemini 3 research to maximize intelligence-per-parameter.",
+					created_at: '2026-04-02 15:05:22.642',
+					tags: [],
+					properties: {
+						context_window: 256000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.1,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.3,
+								currency: 'USD',
+							},
+						],
+						function_calling: true,
+						reasoning: true,
+						terms: 'https://ai.google.dev/gemma/docs/gemma_4_license',
+						vision: true,
+					},
+				},
+				{
 					id: '3222ddb3-e211-4fd9-9a6d-79a80e47b3a6',
 					source: 1,
 					name: '@cf/qwen/qwen1.5-1.8b-chat',
