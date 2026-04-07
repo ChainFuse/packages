@@ -1,5 +1,31 @@
 # @chainfuse/ai-tools
 
+## 2.0.5
+
+### Patch Changes
+
+- [`22227a2`](https://github.com/ChainFuse/packages/commit/22227a2cc14b3ea35622c3fbb8bcc77db0ba728b) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, workers-ai-provider, openai
+
+- [`c649e9b`](https://github.com/ChainFuse/packages/commit/c649e9b346b5b9d6fa8d4ad993da74776281eb6f) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump brace-expansion
+
+- [`0708485`](https://github.com/ChainFuse/packages/commit/0708485b6fb231128d5ee0d5ac3c6cc93ab60986) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump eslint, typescript-eslint
+
+- [`c44498c`](https://github.com/ChainFuse/packages/commit/c44498c241255884af9802118ad8c75041ba2f91) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump drizzle-orm
+
+- [`e7e2b5b`](https://github.com/ChainFuse/packages/commit/e7e2b5b67041c546524fd1ed37538534a5b9198f) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump handlebars
+
+- [`bfeddcb`](https://github.com/ChainFuse/packages/commit/bfeddcb03b671ebaeb69dbb1e325276a94d1110c) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-major): bump picomatch, picomatch
+
+- [`b71b917`](https://github.com/ChainFuse/packages/commit/b71b9178326fb379b52c732d0076823c32772d36) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
+- [`2bd89b7`](https://github.com/ChainFuse/packages/commit/2bd89b7a1b09b30d66a3d6dee54002473f787424) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump validator
+
+- [`576a13d`](https://github.com/ChainFuse/packages/commit/576a13d57a8d7a378ced5bc42df3ecac9941a77f) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump yaml
+
+- Updated dependencies [[`5a9b259`](https://github.com/ChainFuse/packages/commit/5a9b25923aba07a1152408b5a27539ab2ef017f2), [`22227a2`](https://github.com/ChainFuse/packages/commit/22227a2cc14b3ea35622c3fbb8bcc77db0ba728b), [`c649e9b`](https://github.com/ChainFuse/packages/commit/c649e9b346b5b9d6fa8d4ad993da74776281eb6f), [`0708485`](https://github.com/ChainFuse/packages/commit/0708485b6fb231128d5ee0d5ac3c6cc93ab60986), [`c44498c`](https://github.com/ChainFuse/packages/commit/c44498c241255884af9802118ad8c75041ba2f91), [`e7e2b5b`](https://github.com/ChainFuse/packages/commit/e7e2b5b67041c546524fd1ed37538534a5b9198f), [`bfeddcb`](https://github.com/ChainFuse/packages/commit/bfeddcb03b671ebaeb69dbb1e325276a94d1110c), [`b71b917`](https://github.com/ChainFuse/packages/commit/b71b9178326fb379b52c732d0076823c32772d36), [`2bd89b7`](https://github.com/ChainFuse/packages/commit/2bd89b7a1b09b30d66a3d6dee54002473f787424), [`576a13d`](https://github.com/ChainFuse/packages/commit/576a13d57a8d7a378ced5bc42df3ecac9941a77f), [`8d7745d`](https://github.com/ChainFuse/packages/commit/8d7745dbcdda5d4ad6baa3d7dcfaada284ff0257)]:
+    - @chainfuse/helpers@4.4.8
+    - @chainfuse/types@4.2.22
+
 ## 2.0.4
 
 ### Patch Changes
