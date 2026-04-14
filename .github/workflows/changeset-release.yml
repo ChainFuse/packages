@@ -41,7 +41,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci --ignore-scripts --include-workspace-root --workspaces
       - run: npm --include-workspace-root --workspaces run-script install --if-present
-      - uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+      - uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: |
             packages/*/.tsbuildinfo
@@ -49,7 +49,7 @@ jobs:
           key: tsc-${{ hashFiles('**/*.tsbuildinfo', '**/package-lock.json') }}
           enableCrossOsArchive: true
       - run: npm run build
-      - uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+      - uses: actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: |
             packages/*/.tsbuildinfo
