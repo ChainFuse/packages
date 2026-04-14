@@ -38,7 +38,17 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 			zm.transform((val) => encodeURIComponent(val)),
 		),
 		cacheTTL: zm._default(zm.int().check(zm.nonnegative()), 5 * 60),
-		cachePurge: zm._default(zm.union([zm.boolean(), zm.date()]), false),
+		cachePurge: zm._default(
+			zm.union([
+				zm.boolean(),
+				zm.date(),
+				zm.codec(zm.iso.datetime({ precision: 3, local: false, offset: false }), zm.date(), {
+					decode: (isoString) => new Date(isoString),
+					encode: (date) => date.toISOString(),
+				}),
+			]),
+			false,
+		),
 		strategy: zm._default(zm.enum(['explicit', 'all']), 'explicit'),
 		logging: zm._default(zm.boolean(), false),
 	});
