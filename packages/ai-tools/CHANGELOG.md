@@ -1,5 +1,23 @@
 # @chainfuse/ai-tools
 
+## 2.0.6
+
+### Patch Changes
+
+- [#939](https://github.com/ChainFuse/packages/pull/939) [`6f3cec8`](https://github.com/ChainFuse/packages/commit/6f3cec8341b6e1f9f13eb00e9910bf15b445b292) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#930](https://github.com/ChainFuse/packages/pull/930) [`b550ca8`](https://github.com/ChainFuse/packages/commit/b550ca8c088c28a4dfd6676cdeed6eb6c84cb637) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump axios
+
+- [#933](https://github.com/ChainFuse/packages/pull/933) [`89ca3c0`](https://github.com/ChainFuse/packages/commit/89ca3c069fcbb84c72f0e8a6dffbfdae036625fa) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump prettier, typescript-eslint
+
+- [#940](https://github.com/ChainFuse/packages/pull/940) [`0e4cd19`](https://github.com/ChainFuse/packages/commit/0e4cd19f7d945a10c1e125abfd72ebf57028096b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump follow-redirects
+
+- [#935](https://github.com/ChainFuse/packages/pull/935) [`28a339b`](https://github.com/ChainFuse/packages/commit/28a339bd6fa56eb36c351f02172bbbb81b31fb00) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- Updated dependencies [[`cea28b9`](https://github.com/ChainFuse/packages/commit/cea28b940c4ae180e233329bd8648120386ac20f), [`6f3cec8`](https://github.com/ChainFuse/packages/commit/6f3cec8341b6e1f9f13eb00e9910bf15b445b292), [`b550ca8`](https://github.com/ChainFuse/packages/commit/b550ca8c088c28a4dfd6676cdeed6eb6c84cb637), [`89ca3c0`](https://github.com/ChainFuse/packages/commit/89ca3c069fcbb84c72f0e8a6dffbfdae036625fa), [`0e4cd19`](https://github.com/ChainFuse/packages/commit/0e4cd19f7d945a10c1e125abfd72ebf57028096b), [`28a339b`](https://github.com/ChainFuse/packages/commit/28a339bd6fa56eb36c351f02172bbbb81b31fb00), [`f594335`](https://github.com/ChainFuse/packages/commit/f594335d27c4d5b3bb34e226d4cc65d0c551415b), [`815840c`](https://github.com/ChainFuse/packages/commit/815840cd899554f0084d62ad7d7a67565758f6b5), [`92836a4`](https://github.com/ChainFuse/packages/commit/92836a4eda30fb1710cebb819087720b8e666be8), [`d3cf777`](https://github.com/ChainFuse/packages/commit/d3cf7772dc6d9db0a80a5e5d4cad3b84412746ef)]:
+    - @chainfuse/helpers@4.5.0
+    - @chainfuse/types@4.2.23
+
 ## 2.0.5
 
 ### Patch Changes
