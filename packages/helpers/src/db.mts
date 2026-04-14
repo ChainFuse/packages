@@ -3,6 +3,7 @@ import { Cache as DrizzleCache, type MutationOption } from 'drizzle-orm/cache/co
 import type { CacheConfig } from 'drizzle-orm/cache/core/types';
 import { is } from 'drizzle-orm/entity';
 import { getTableName, Table } from 'drizzle-orm/table';
+import { channel, type Channel } from 'node:diagnostics_channel';
 import * as zm from 'zod/mini';
 import { CryptoHelpers } from './crypto.mts';
 
@@ -24,7 +25,11 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	private globalTtl: zm.output<(typeof SQLCache)['constructorArgs']>['cacheTTL'];
 	private ttlCutoff: zm.output<(typeof SQLCache)['constructorArgs']>['cachePurge'];
 	private _strategy: zm.output<(typeof SQLCache)['constructorArgs']>['strategy'];
-	private logging: zm.output<(typeof SQLCache)['constructorArgs']>['logging'];
+	private logging: Record<`SQLCache:${'GET' | 'PUT' | 'DELETE'}` | `SQLCache:${string}.${string}:${'GET' | 'PUT' | 'DELETE'}`, Channel> = {
+		'SQLCache:GET': channel('SQLCache:GET'),
+		'SQLCache:PUT': channel('SQLCache:PUT'),
+		'SQLCache:DELETE': channel('SQLCache:DELETE'),
+	};
 	// This object will be used to store which query keys were used for a specific table, so we can later use it for invalidation.
 	private usedTablesPerKey: Record<string, string[]> = {};
 
@@ -50,7 +55,6 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 			false,
 		),
 		strategy: zm._default(zm.enum(['explicit', 'all']), 'explicit'),
-		logging: zm._default(zm.boolean(), false),
 	});
 
 	/**
@@ -66,7 +70,7 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	 */
 	constructor(args: zm.input<(typeof SQLCache)['constructorArgs']>, cacheStore?: C) {
 		super();
-		const { dbName, dbType, cacheTTL, cachePurge, strategy, logging } = SQLCache.constructorArgs.parse(args);
+		const { dbName, dbType, cacheTTL, cachePurge, strategy } = SQLCache.constructorArgs.parse(args);
 
 		this.dbName = dbName;
 		this.dbType = dbType;
@@ -80,7 +84,11 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 		this.globalTtl = cacheTTL;
 		this.ttlCutoff = cachePurge;
 		this._strategy = strategy;
-		this.logging = logging;
+
+		this.logging[`SQLCache:${this.dbName}.${this.dbType}:GET`] = channel(`SQLCache:${this.dbName}.${this.dbType}:GET`);
+		this.logging[`SQLCache:${this.dbName}.${this.dbType}:PUT`] = channel(`SQLCache:${this.dbName}.${this.dbType}:PUT`);
+		this.logging[`SQLCache:${this.dbName}.${this.dbType}:DELETE`] = channel(`SQLCache:${this.dbName}.${this.dbType}:DELETE`);
+		console.debug('SQLCache available logging channels', Object.keys(this.logging));
 	}
 
 	/**
@@ -91,6 +99,11 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 	 */
 	override strategy() {
 		return this._strategy;
+	}
+
+	private log(type: 'GET' | 'PUT' | 'DELETE', message: object) {
+		this.logging[`SQLCache:${this.dbName}.${this.dbType}:${type}`]?.publish(message);
+		this.logging[`SQLCache:${type}`].publish({ db: `${this.dbName}.${this.dbType}`, ...message });
 	}
 
 	/**
@@ -115,35 +128,42 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 		const cacheKey = this.getCacheKey(isTag ? { tag: key } : { key });
 		const response = await this.cache.then(async (cache) => cache.match(cacheKey));
 
-		if (this.logging) console.debug('SQLCache.get', isTag ? 'tag' : 'key', key, response?.ok ? 'HIT' : 'MISS');
-
 		if (response) {
 			// Check if cache should be purged
 			if (this.ttlCutoff === true) {
-				if (this.logging) console.debug('SQLCache.get', 'cache purged', this.ttlCutoff);
-				await this.cache.then((cache) => cache.delete(cacheKey));
+				this.log('GET', { keyType: isTag ? 'tag' : 'key', key, status: 'EXPIRED', expires: new Date().toISOString() });
+				const deleted = await this.cache.then((cache) => cache.delete(cacheKey));
+				this.log('DELETE', { keyType: isTag ? 'tag' : 'key', key, status: deleted ? 'DELETED' : 'NOT_FOUND', reason: 'TTL Cutoff parameter is true' });
 				return undefined;
 			}
 
 			// If the response doesn't have a Date header, we can't check its age, so we will consider it malformed and remove it from the cache to avoid future issues.
 			if (!response.headers.has('Date')) {
-				if (this.logging) console.debug('SQLCache.get', 'cache purged', { responseDate: null });
-				await this.cache.then((cache) => cache.delete(cacheKey));
+				this.log('GET', { keyType: isTag ? 'tag' : 'key', key, status: 'UNKNOWN' });
+				const deleted = await this.cache.then((cache) => cache.delete(cacheKey));
+				this.log('DELETE', { keyType: isTag ? 'tag' : 'key', key, status: deleted ? 'DELETED' : 'NOT_FOUND', reason: 'Malformed cached response' });
 				return undefined;
 			}
+			const cachedDate = new Date(response.headers.get('Date')!);
 
 			if (this.ttlCutoff instanceof Date) {
-				const cachedDate = new Date(response.headers.get('Date')!);
-
 				if (cachedDate < this.ttlCutoff) {
-					if (this.logging) console.debug('SQLCache.get', 'cache purged', { cachedDate, cutoff: this.ttlCutoff });
-					await this.cache.then((cache) => cache.delete(cacheKey));
+					this.log('GET', { keyType: isTag ? 'tag' : 'key', key, status: 'EXPIRED', expires: this.ttlCutoff.toISOString() });
+					const deleted = await this.cache.then((cache) => cache.delete(cacheKey));
+					this.log('DELETE', { keyType: isTag ? 'tag' : 'key', key, status: deleted ? 'DELETED' : 'NOT_FOUND', reason: `Cached date ${cachedDate.toISOString()} is older than TTL cutoff ${this.ttlCutoff.toISOString()} by ${(this.ttlCutoff.getTime() - cachedDate.getTime()) / 1000} seconds` });
 					return undefined;
 				}
 			}
 
+			const cacheControl = response.headers.get('Cache-Control')!;
+			const sMaxAge = /(?:^|,)\s*s-maxage=(\d+)\b/i.exec(cacheControl)?.at(1);
+			const maxAge = /(?:^|,)\s*max-age=(\d+)\b/i.exec(cacheControl)?.at(1);
+			const maxAgeSeconds = sMaxAge !== undefined ? Number.parseInt(sMaxAge, 10) : maxAge !== undefined ? Number.parseInt(maxAge, 10) : undefined;
+			this.log('GET', { keyType: isTag ? 'tag' : 'key', key, status: 'HIT', ...(maxAgeSeconds !== undefined && { expires: new Date(cachedDate.getTime() + maxAgeSeconds * 1000).toISOString() }) });
+
 			return response.json();
 		} else {
+			this.log('GET', { keyType: isTag ? 'tag' : 'key', key, status: 'MISS' });
 			return undefined;
 		}
 	}
@@ -178,11 +198,8 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 
 		cacheResponse.headers.set('ETag', await CryptoHelpers.generateETag(cacheResponse));
 
-		await this.cache
-			.then(async (cache) => cache.put(this.getCacheKey(isTag ? { tag: hashedQuery } : { key: hashedQuery }), cacheResponse))
-			.then(() => {
-				if (this.logging) console.debug('SQLCache.put', isTag ? 'tag' : 'key', hashedQuery, 'SUCCESS');
-			});
+		await this.cache.then(async (cache) => cache.put(this.getCacheKey(isTag ? { tag: hashedQuery } : { key: hashedQuery }), cacheResponse));
+		this.log('PUT', { keyType: isTag ? 'tag' : 'key', key: hashedQuery, status: 'SAVED', expires: new Date(Date.now() + ttl * 1000).toISOString() });
 
 		for (const table of tables) {
 			const keys = this.usedTablesPerKey[table];
@@ -212,18 +229,12 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 		}
 		if (keysToDelete.size > 0 || tagsArray.length > 0) {
 			for (const tag of tagsArray) {
-				await this.cache
-					.then(async (cache) => cache.delete(this.getCacheKey({ tag })))
-					.then(() => {
-						if (this.logging) console.debug('SQLCache.delete', 'tag', tag, 'SUCCESS');
-					});
+				const deleted = await this.cache.then(async (cache) => cache.delete(this.getCacheKey({ tag })));
+				this.log('DELETE', { keyType: 'tag', key: tag, status: deleted ? 'DELETED' : 'NOT_FOUND', reason: 'Invalidated by tag on mutation' });
 			}
 			for (const key of keysToDelete) {
-				await this.cache
-					.then(async (cache) => cache.delete(this.getCacheKey({ key })))
-					.then(() => {
-						if (this.logging) console.debug('SQLCache.delete', 'key', key, 'SUCCESS');
-					});
+				const deleted = await this.cache.then(async (cache) => cache.delete(this.getCacheKey({ key })));
+				this.log('DELETE', { keyType: 'key', key, status: deleted ? 'DELETED' : 'NOT_FOUND', reason: 'Invalidated by affected table on mutation' });
 
 				for (const table of tablesArray) {
 					const tableName = is(table, Table) ? getTableName(table) : (table as string);
