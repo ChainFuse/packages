@@ -125,19 +125,18 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 				return undefined;
 			}
 
+			// If the response doesn't have a Date header, we can't check its age, so we will consider it malformed and remove it from the cache to avoid future issues.
+			if (!response.headers.has('Date')) {
+				if (this.logging) console.debug('SQLCache.get', 'cache purged', { responseDate: null });
+				await this.cache.then((cache) => cache.delete(cacheKey));
+				return undefined;
+			}
+
 			if (this.ttlCutoff instanceof Date) {
-				const responseDate = response.headers.get('Date');
+				const cachedDate = new Date(response.headers.get('Date')!);
 
-				if (responseDate) {
-					const cachedDate = new Date(responseDate);
-
-					if (cachedDate < this.ttlCutoff) {
-						if (this.logging) console.debug('SQLCache.get', 'cache purged', { cachedDate, cutoff: this.ttlCutoff });
-						await this.cache.then((cache) => cache.delete(cacheKey));
-						return undefined;
-					}
-				} else {
-					if (this.logging) console.debug('SQLCache.get', 'cache purged', { responseDate });
+				if (cachedDate < this.ttlCutoff) {
+					if (this.logging) console.debug('SQLCache.get', 'cache purged', { cachedDate, cutoff: this.ttlCutoff });
 					await this.cache.then((cache) => cache.delete(cacheKey));
 					return undefined;
 				}
