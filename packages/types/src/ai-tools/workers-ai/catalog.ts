@@ -157,6 +157,18 @@ export const workersAiCatalog = {
 					properties: {
 						async_queue: true,
 						context_window: 256000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.6,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 3,
+								currency: 'USD',
+							},
+						],
 						function_calling: true,
 						reasoning: true,
 						terms: 'https://github.com/MoonshotAI/Kimi-K2.5/blob/master/LICENSE',
@@ -655,12 +667,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0,
+								price: 0.5,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0,
+								price: 1.5,
 								currency: 'USD',
 							},
 						],
