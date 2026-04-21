@@ -446,6 +446,33 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '8a5d00bd-de28-4a28-b37a-ce46d01ebaeb',
+					source: 1,
+					name: '@cf/moonshotai/kimi-k2.6',
+					description: 'Kimi K2.6 is a frontier-scale open-source 1T parameter model with a 262.1k context window, multi-turn tool calling, vision inputs, and structured outputs for agentic workloads.',
+					created_at: '2026-04-20 01:40:35.001',
+					tags: [],
+					properties: {
+						context_window: 262144,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.95,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 4,
+								currency: 'USD',
+							},
+						],
+						function_calling: true,
+						reasoning: true,
+						terms: 'https://huggingface.co/moonshotai/Kimi-K2.6/blob/main/LICENSE',
+						vision: true,
+					},
+				},
+				{
 					id: '86b3e51a-4b05-43fa-a403-0f27821919d2',
 					source: 1,
 					name: '@cf/zai-org/glm-4.7-flash',
