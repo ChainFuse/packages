@@ -1,5 +1,23 @@
 # @chainfuse/ai-tools
 
+## 2.0.7
+
+### Patch Changes
+
+- [#942](https://github.com/ChainFuse/packages/pull/942) [`5fcdc91`](https://github.com/ChainFuse/packages/commit/5fcdc91f3e83b7f7f481538a6188499979c3e14b) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/google, ai, workers-ai-provider
+
+- [#944](https://github.com/ChainFuse/packages/pull/944) [`346d72c`](https://github.com/ChainFuse/packages/commit/346d72cf6d871665115cee7207b41ba0d693dce9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump eslint, prettier, typescript-eslint
+
+- [#945](https://github.com/ChainFuse/packages/pull/945) [`caa7378`](https://github.com/ChainFuse/packages/commit/caa737806d4d0ba3672c425847745965aeb7a54c) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @changesets/cli
+
+- [#946](https://github.com/ChainFuse/packages/pull/946) [`42b9f41`](https://github.com/ChainFuse/packages/commit/42b9f41c4cf9abc7cb5be48d6c065c62528a276f) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump typescript
+
+- [#948](https://github.com/ChainFuse/packages/pull/948) [`e434c66`](https://github.com/ChainFuse/packages/commit/e434c66344b101f46c9f765907ccc70cf4548ee4) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- Updated dependencies [[`5fcdc91`](https://github.com/ChainFuse/packages/commit/5fcdc91f3e83b7f7f481538a6188499979c3e14b), [`346d72c`](https://github.com/ChainFuse/packages/commit/346d72cf6d871665115cee7207b41ba0d693dce9), [`caa7378`](https://github.com/ChainFuse/packages/commit/caa737806d4d0ba3672c425847745965aeb7a54c), [`42b9f41`](https://github.com/ChainFuse/packages/commit/42b9f41c4cf9abc7cb5be48d6c065c62528a276f), [`e434c66`](https://github.com/ChainFuse/packages/commit/e434c66344b101f46c9f765907ccc70cf4548ee4)]:
+    - @chainfuse/helpers@4.5.1
+    - @chainfuse/types@4.2.24
+
 ## 2.0.6
 
 ### Patch Changes
