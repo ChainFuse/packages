@@ -1,5 +1,18 @@
 # @chainfuse/helpers
 
+## 4.5.2
+
+### Patch Changes
+
+- [#951](https://github.com/ChainFuse/packages/pull/951) [`6b06426`](https://github.com/ChainFuse/packages/commit/6b06426251082e5cbd4f1db9a878aa1091037613) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @actions/core
+
+- [#950](https://github.com/ChainFuse/packages/pull/950) [`e1b630d`](https://github.com/ChainFuse/packages/commit/e1b630d6824dffcd6f848054067df6f8222e5f31) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#954](https://github.com/ChainFuse/packages/pull/954) [`176496b`](https://github.com/ChainFuse/packages/commit/176496b9193530bdc1f64233a165b9a0289ee666) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump uuid
+
+- Updated dependencies [[`6b06426`](https://github.com/ChainFuse/packages/commit/6b06426251082e5cbd4f1db9a878aa1091037613), [`e1b630d`](https://github.com/ChainFuse/packages/commit/e1b630d6824dffcd6f848054067df6f8222e5f31), [`176496b`](https://github.com/ChainFuse/packages/commit/176496b9193530bdc1f64233a165b9a0289ee666)]:
+    - @chainfuse/types@4.2.25
+
 ## 4.5.1
 
 ### Patch Changes
