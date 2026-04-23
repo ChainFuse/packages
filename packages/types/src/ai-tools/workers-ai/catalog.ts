@@ -168,6 +168,11 @@ export const workersAiCatalog = {
 								price: 3,
 								currency: 'USD',
 							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.1,
+								currency: 'USD',
+							},
 						],
 						function_calling: true,
 						reasoning: true,
@@ -463,6 +468,11 @@ export const workersAiCatalog = {
 							{
 								unit: 'per M output tokens',
 								price: 4,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.16,
 								currency: 'USD',
 							},
 						],
