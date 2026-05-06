@@ -1,5 +1,23 @@
 # @chainfuse/types
 
+## 4.2.26
+
+### Patch Changes
+
+- [#966](https://github.com/ChainFuse/packages/pull/966) [`a805dca`](https://github.com/ChainFuse/packages/commit/a805dca65283427520f47ef0eeb2bba8620a0829) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, @ai-sdk/provider, ai, openai, workers-ai-provider
+
+- [#965](https://github.com/ChainFuse/packages/pull/965) [`5839e8f`](https://github.com/ChainFuse/packages/commit/5839e8fc1caa6b93d55fc604e1b5494d277a06f9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump axios
+
+- [#967](https://github.com/ChainFuse/packages/pull/967) [`bf7a18e`](https://github.com/ChainFuse/packages/commit/bf7a18e2535cf5e7a71b052df315ecb2d9ab212e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump eslint, typescript-eslint
+
+- [#972](https://github.com/ChainFuse/packages/pull/972) [`dc4ac7b`](https://github.com/ChainFuse/packages/commit/dc4ac7b5c1ddc99c463cbe7e098b4e6bed8a20c3) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump ip-address
+
+- [#968](https://github.com/ChainFuse/packages/pull/968) [`e789656`](https://github.com/ChainFuse/packages/commit/e789656581af54ce7319eacac07ebfb974b8576e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @changesets/changelog-github
+
+- [#969](https://github.com/ChainFuse/packages/pull/969) [`2a8aa2f`](https://github.com/ChainFuse/packages/commit/2a8aa2ff46a70fda7d4558b69ea54ca05327b6b0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [#970](https://github.com/ChainFuse/packages/pull/970) [`a7baa68`](https://github.com/ChainFuse/packages/commit/a7baa68a3e69dc14ed8c1c1c23ffb84d8fc8b213) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump zod
+
 ## 4.2.25
 
 ### Patch Changes
