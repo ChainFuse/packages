@@ -39,11 +39,11 @@
 		"@demosjarco/prettier-config": "^1.0.2",
 		"@eslint/js": "^10.0.1",
 		"@types/node": "^24.12.2",
-		"eslint": "^10.2.1",
+		"eslint": "^10.3.0",
 		"lerna": "^9.0.7",
 		"prettier": "^3.8.3",
 		"tsx": "^4.21.0",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.59.0"
+		"typescript-eslint": "^8.59.2"
 	}
 }
