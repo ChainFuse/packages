@@ -131,7 +131,7 @@ export class AiRawProviders extends AiBase {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}`;
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
@@ -331,7 +331,7 @@ export class AiRawProviders extends AiBase {
 												endpoint: `${[server.id.toLowerCase(), ...fallbackedEndpointParts].join('/')}${fallbackedUrl.search}${fallbackedUrl.hash}`,
 												headers: fallbackedHeaders,
 												query: fallbackedQuery,
-											} as AIGatewayUniversalRequest;
+											};
 										}),
 									),
 								);
@@ -432,7 +432,7 @@ export class AiRawProviders extends AiBase {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}`;
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
@@ -661,7 +661,7 @@ export class AiRawProviders extends AiBase {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}`;
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
@@ -772,7 +772,7 @@ export class AiRawProviders extends AiBase {
 					const headers = new Headers(rawInit?.headers);
 					const metadataHeader = JSON.parse(headers.get('cf-aig-metadata')!) as AiRequestMetadataStringified;
 					if (metadataHeader.idempotencyId.split('-').length === 4) {
-						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}` as AiRequestMetadata['idempotencyId'];
+						metadataHeader.idempotencyId = `${metadataHeader.idempotencyId}-${(await CryptoHelpers.getHash('SHA-256', await new Request(input, rawInit).arrayBuffer())).slice(0, 12)}`;
 						headers.set('cf-aig-metadata', JSON.stringify(metadataHeader));
 					}
 
