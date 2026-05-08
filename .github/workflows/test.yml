@@ -139,7 +139,7 @@ jobs:
           GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
           OPENAI_ORGANIZATION: ${{ secrets.OPENAI_ORGANIZATION }}
           WORKERS_AI_API_KEY: ${{ secrets.CICD_CF_API_TOKEN }}
-      - uses: test-summary/action@31493c76ec9e7aa675f1585d3ed6f1da69269a86 # v2.4
+      - uses: test-summary/action@37b508cfee6d4d080eedd00b5bb240a6a784a6a5 # v2.6
         if: always()
         with:
           paths: packages/*/test-output.xml
