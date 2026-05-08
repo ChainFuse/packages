@@ -313,6 +313,7 @@ export const workersAiCatalog = {
 						max_batch_prefill_tokens: 8192,
 						max_input_length: 3072,
 						max_total_tokens: 4096,
+						planned_deprecation_date: '2026-05-30',
 					},
 				},
 				{
@@ -834,18 +835,6 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						context_window: 256000,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.1,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.3,
-								currency: 'USD',
-							},
-						],
 						function_calling: true,
 						reasoning: true,
 						terms: 'https://ai.google.dev/gemma/docs/gemma_4_license',
@@ -1008,6 +997,7 @@ export const workersAiCatalog = {
 						context_window: 8192,
 						info: 'https://ai.google.dev/gemma/docs',
 						lora: true,
+						planned_deprecation_date: '2026-05-30',
 						terms: 'https://ai.google.dev/gemma/terms',
 					},
 				},
@@ -1088,6 +1078,7 @@ export const workersAiCatalog = {
 							},
 						],
 						lora: true,
+						planned_deprecation_date: '2026-05-30',
 					},
 				},
 				{
