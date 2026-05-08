@@ -399,10 +399,10 @@ export class NetHelpers {
 				const requestLoggingItems: any[] = [new Date(), id, init?.method ?? Methods.GET, this.isRequestLike(info) ? info.url : info.toString()];
 
 				if (init.logging.level >= 2) {
-					requestLoggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) as Record<string, string>);
+					requestLoggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()));
 				}
 				if (init.logging.error >= 2) {
-					requestErrorItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()) as Record<string, string>);
+					requestErrorItems.push(Object.fromEntries(this.stripSensitiveHeaders(new Headers(init?.headers)).entries()));
 				}
 
 				if (init.logging.level >= 3 && init?.body) {
@@ -472,10 +472,10 @@ export class NetHelpers {
 							const responseErrorItems: any[] = [new Date(), id, response.status, response.url];
 
 							if (init.logging.level >= 2) {
-								responseLoggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()) as Record<string, string>);
+								responseLoggingItems.push(Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()));
 							}
 							if (init.logging.error >= 2) {
-								responseErrorItems.push(Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()) as Record<string, string>);
+								responseErrorItems.push(Object.fromEntries(this.stripSensitiveHeaders(response.headers).entries()));
 							}
 
 							if (init.logging.level >= 3 && init?.body) {
