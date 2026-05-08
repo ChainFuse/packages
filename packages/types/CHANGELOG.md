@@ -1,5 +1,15 @@
 # @chainfuse/types
 
+## 4.2.27
+
+### Patch Changes
+
+- [`72064fc`](https://github.com/ChainFuse/packages/commit/72064fcb25b90b9a6cf082cd900ac137738bbd2c) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai, workers-ai-provider
+
+- [`5fc1db5`](https://github.com/ChainFuse/packages/commit/5fc1db5f2152d046fec718c5dc9ab3e0e48dd6aa) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-major): bump cloudflare
+
+- [`6cbc933`](https://github.com/ChainFuse/packages/commit/6cbc933ed3e5c7c57a30b0b8073cb4c247e65646) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump @types/node, @cloudflare/workers-types
+
 ## 4.2.26
 
 ### Patch Changes
