@@ -102,7 +102,7 @@ export namespace AiModels {
 
 const ZodLanguageModelValuesRaw = Object.entries(AiModels.LanguageModels).reduce(
 	(acc, [, value]) => {
-		acc.push(value as unknown as EnumOrEnumLike<typeof AiModels.LanguageModels>);
+		acc.push(value);
 		return acc;
 	},
 	[] as EnumOrEnumLike<typeof AiModels.LanguageModels>[],
@@ -112,7 +112,7 @@ export const ZodLanguageModelValues4 = z4.enum(ZodLanguageModelValuesRaw.map((pr
 export type LanguageModelValues = zm.infer<typeof ZodLanguageModelValues>;
 const ZodImageModelValuesRaw = Object.entries(AiModels.ImageModels).reduce(
 	(acc, [, value]) => {
-		acc.push(value as unknown as EnumOrEnumLike<typeof AiModels.ImageModels>);
+		acc.push(value);
 		return acc;
 	},
 	[] as EnumOrEnumLike<typeof AiModels.ImageModels>[],
@@ -122,7 +122,7 @@ export const ZodImageModelValues4 = z4.enum(ZodImageModelValuesRaw.map((provider
 export type ImageModelValues = zm.infer<typeof ZodImageModelValues>;
 const ZodTextEmbeddingModelValuesRaw = Object.entries(AiModels.TextEmbeddingModels).reduce(
 	(acc, [, value]) => {
-		acc.push(value as unknown as EnumOrEnumLike<typeof AiModels.TextEmbeddingModels>);
+		acc.push(value);
 		return acc;
 	},
 	[] as EnumOrEnumLike<typeof AiModels.TextEmbeddingModels>[],
