@@ -176,7 +176,7 @@ export const workersAiCatalog = {
 							},
 						],
 						function_calling: true,
-						planned_deprecation_date: '2026-05-10',
+						planned_deprecation_date: '2026-05-30',
 						reasoning: true,
 						terms: 'https://github.com/MoonshotAI/Kimi-K2.5/blob/master/LICENSE',
 						vision: true,
