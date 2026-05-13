@@ -835,6 +835,18 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						context_window: 256000,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.1,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.3,
+								currency: 'USD',
+							},
+						],
 						function_calling: true,
 						reasoning: true,
 						terms: 'https://ai.google.dev/gemma/docs/gemma_4_license',
