@@ -16,7 +16,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per audio minute',
-								price: 0.00034,
+								price: 0.000338,
 								currency: 'USD',
 							},
 						],
@@ -55,20 +55,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: 'f8703a00-ed54-4f98-bdc3-cd9a813286f3',
-					source: 1,
-					name: '@cf/qwen/qwen1.5-0.5b-chat',
-					description: 'Qwen1.5 is the improved version of Qwen, the large language model series developed by Alibaba Cloud.',
-					created_at: '2024-02-27 18:23:37.344',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 32000,
-						info: 'https://huggingface.co/qwen/qwen1.5-0.5b-chat',
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
 					id: 'e8e8abe4-a372-4c13-815f-4688ba655c8e',
 					source: 1,
 					name: '@cf/google/gemma-2b-it-lora',
@@ -82,23 +68,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: 'e5ca943b-720f-4e66-aa8f-40e3d2770933',
-					source: 2,
-					name: '@hf/nexusflow/starling-lm-7b-beta',
-					description: 'We introduce Starling-LM-7B-beta, an open large language model (LLM) trained by Reinforcement Learning from AI Feedback (RLAIF). Starling-LM-7B-beta is trained from Openchat-3.5-0106 with our new reward model Nexusflow/Starling-RM-34B and policy optimization method Fine-Tuning Language Models from Human Preferences (PPO).',
-					created_at: '2024-04-01 23:49:31.797',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						info: 'https://huggingface.co/Nexusflow/Starling-LM-7B-beta',
-						max_batch_prefill_tokens: 8192,
-						max_input_length: 3072,
-						max_total_tokens: 4096,
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
 					id: 'e11d8f45-7b08-499a-9eeb-71d4d3c8cbf9',
 					source: 1,
 					name: '@cf/meta/llama-3-8b-instruct',
@@ -109,12 +78,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.28,
+								price: 0.282,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.83,
+								price: 0.827,
 								currency: 'USD',
 							},
 						],
@@ -135,12 +104,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.051,
+								price: 0.0509,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.34,
+								price: 0.335,
 								currency: 'USD',
 							},
 						],
@@ -183,19 +152,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: 'd2ba5c6b-bbb7-49d6-b466-900654870cd6',
-					source: 2,
-					name: '@hf/thebloke/neural-chat-7b-v3-1-awq',
-					description: 'This model is a fine-tuned 7B parameter LLM on the Intel Gaudi 2 processor from the mistralai/Mistral-7B-v0.1 on the open source dataset Open-Orca/SlimOrca.',
-					created_at: '2024-02-06 18:12:30.722',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
 					id: 'cc80437b-9a8d-4f1a-9c77-9aaf0d226922',
 					source: 1,
 					name: '@cf/meta/llama-guard-3-8b',
@@ -207,7 +163,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.48,
+								price: 0.484,
 								currency: 'USD',
 							},
 							{
@@ -230,12 +186,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.56,
+								price: 0.556,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 6.67,
+								price: 6.667,
 								currency: 'USD',
 							},
 						],
@@ -285,20 +241,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: 'bf6ddd21-6477-4681-bbbe-24c3d5423e78',
-					source: 1,
-					name: '@cf/tinyllama/tinyllama-1.1b-chat-v1.0',
-					description: 'The TinyLlama project aims to pretrain a 1.1B Llama model on 3 trillion tokens. This is the chat model finetuned on top of TinyLlama/TinyLlama-1.1B-intermediate-step-1431k-3T.',
-					created_at: '2024-02-27 18:25:37.524',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 2048,
-						info: 'https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0',
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
 					id: 'b97d7069-48d9-461c-80dd-445d20a632eb',
 					source: 2,
 					name: '@hf/mistral/mistral-7b-instruct-v0.2',
@@ -317,19 +259,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: 'b7fe7ad2-aeaf-47d2-8bfa-7a5ae22a2ab4',
-					source: 1,
-					name: '@cf/fblgit/una-cybertron-7b-v2-bf16',
-					description: "Cybertron 7B v2 is a 7B MistralAI based model, best on it's series. It was trained with SFT, DPO and UNA (Unified Neural Alignment) on multiple datasets.",
-					created_at: '2024-04-24 14:37:19.494',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 15000,
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
 					id: 'ad01ab83-baf8-4e7b-8fed-a0a219d4eb45',
 					source: 1,
 					name: '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b',
@@ -341,31 +270,17 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.5,
+								price: 0.497,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 4.88,
+								price: 4.881,
 								currency: 'USD',
 							},
 						],
 						reasoning: true,
 						terms: 'https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE',
-					},
-				},
-				{
-					id: '9d2ab560-065e-4d0d-a789-d4bc7468d33e',
-					source: 1,
-					name: '@cf/thebloke/discolm-german-7b-v1-awq',
-					description: 'DiscoLM German 7b is a Mistral-based large language model with a focus on German-language applications. AWQ is an efficient, accurate and blazing-fast low-bit weight quantization method, currently supporting 4-bit quantization.',
-					created_at: '2024-02-27 18:23:05.178',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						info: 'https://huggingface.co/TheBloke/DiscoLM_German_7b_v1-AWQ',
-						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -391,45 +306,17 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.15,
+								price: 0.152,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.29,
+								price: 0.287,
 								currency: 'USD',
 							},
 						],
 						context_window: 32000,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
-					},
-				},
-				{
-					id: '980ec5e9-33c2-483a-a2d8-cd092fdf273f',
-					source: 2,
-					name: '@hf/thebloke/mistral-7b-instruct-v0.1-awq',
-					description: 'Mistral 7B Instruct v0.1 AWQ is an efficient, accurate and blazing-fast low-bit weight quantized Mistral variant.',
-					created_at: '2023-11-24 00:27:15.869',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						info: 'https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-AWQ',
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
-					id: '90a20ae7-7cf4-4eb3-8672-8fc4ee580635',
-					source: 1,
-					name: '@cf/qwen/qwen1.5-7b-chat-awq',
-					description: 'Qwen1.5 is the improved version of Qwen, the large language model series developed by Alibaba Cloud. AWQ is an efficient, accurate and blazing-fast low-bit weight quantization method, currently supporting 4-bit quantization.',
-					created_at: '2024-02-27 18:24:11.709',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 20000,
-						info: 'https://huggingface.co/qwen/qwen1.5-7b-chat-awq',
-						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -448,7 +335,7 @@ export const workersAiCatalog = {
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.2,
+								price: 0.201,
 								currency: 'USD',
 							},
 						],
@@ -501,7 +388,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.06,
+								price: 0.0605,
 								currency: 'USD',
 							},
 							{
@@ -512,34 +399,6 @@ export const workersAiCatalog = {
 						],
 						function_calling: true,
 						reasoning: true,
-					},
-				},
-				{
-					id: '85c5a3c6-24b0-45e7-b23a-023182578822',
-					source: 2,
-					name: '@hf/thebloke/llama-2-13b-chat-awq',
-					description: 'Llama 2 13B Chat AWQ is an efficient, accurate and blazing-fast low-bit weight quantized Llama 2 variant.',
-					created_at: '2023-11-24 00:27:15.869',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						info: 'https://huggingface.co/TheBloke/Llama-2-13B-chat-AWQ',
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
-					id: '7f180530-2e16-4116-9d26-f49fbed9d372',
-					source: 2,
-					name: '@hf/thebloke/deepseek-coder-6.7b-base-awq',
-					description: 'Deepseek Coder is composed of a series of code language models, each trained from scratch on 2T tokens, with a composition of 87% code and 13% natural language in both English and Chinese.',
-					created_at: '2024-02-06 18:16:27.183',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						planned_deprecation_date: '2025-10-01',
-						terms: 'https://huggingface.co/TheBloke/deepseek-coder-6.7B-base-AWQ',
 					},
 				},
 				{
@@ -568,12 +427,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.29,
+								price: 0.293,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 2.25,
+								price: 2.253,
 								currency: 'USD',
 							},
 						],
@@ -598,38 +457,11 @@ export const workersAiCatalog = {
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.11,
+								price: 0.112,
 								currency: 'USD',
 							},
 						],
 						function_calling: true,
-					},
-				},
-				{
-					id: '673c56cc-8553-49a1-b179-dd549ec9209a',
-					source: 2,
-					name: '@hf/thebloke/openhermes-2.5-mistral-7b-awq',
-					description: 'OpenHermes 2.5 Mistral 7B is a state of the art Mistral Fine-tune, a continuation of OpenHermes 2 model, which trained on additional code datasets.',
-					created_at: '2024-02-06 18:04:22.846',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
-					id: '60474554-f03b-4ff4-8ecc-c1b7c71d7b29',
-					source: 2,
-					name: '@hf/thebloke/deepseek-coder-6.7b-instruct-awq',
-					description: 'Deepseek Coder is composed of a series of code language models, each trained from scratch on 2T tokens, with a composition of 87% code and 13% natural language in both English and Chinese.',
-					created_at: '2024-02-06 18:18:27.462',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						planned_deprecation_date: '2025-10-01',
-						terms: 'https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-AWQ',
 					},
 				},
 				{
@@ -654,35 +486,6 @@ export const workersAiCatalog = {
 							},
 						],
 						lora: true,
-					},
-				},
-				{
-					id: '4c3a544e-da47-4336-9cea-c7cbfab33f16',
-					source: 1,
-					name: '@cf/deepseek-ai/deepseek-math-7b-instruct',
-					description: 'DeepSeekMath-Instruct 7B is a mathematically instructed tuning model derived from DeepSeekMath-Base 7B. DeepSeekMath is initialized with DeepSeek-Coder-v1.5 7B and continues pre-training on math-related tokens sourced from Common Crawl, together with natural language and code data for 500B tokens.',
-					created_at: '2024-02-27 17:54:17.459',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						info: 'https://huggingface.co/deepseek-ai/deepseek-math-7b-instruct',
-						planned_deprecation_date: '2025-10-01',
-						terms: 'https://github.com/deepseek-ai/DeepSeek-Math/blob/main/LICENSE-MODEL',
-					},
-				},
-				{
-					id: '48dd2443-0c61-43b2-8894-22abddf1b081',
-					source: 1,
-					name: '@cf/tiiuae/falcon-7b-instruct',
-					description: 'Falcon-7B-Instruct is a 7B parameters causal decoder-only model built by TII based on Falcon-7B and finetuned on a mixture of chat/instruct datasets.',
-					created_at: '2024-02-27 18:21:15.796',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						info: 'https://huggingface.co/tiiuae/falcon-7b-instruct',
-						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -738,12 +541,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.35,
+								price: 0.351,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.56,
+								price: 0.555,
 								currency: 'USD',
 							},
 						],
@@ -762,12 +565,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.051,
+								price: 0.0509,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.34,
+								price: 0.335,
 								currency: 'USD',
 							},
 						],
@@ -786,32 +589,18 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.12,
+								price: 0.123,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.27,
+								price: 0.266,
 								currency: 'USD',
 							},
 						],
 						context_window: 8192,
 						planned_deprecation_date: '2026-05-30',
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
-					},
-				},
-				{
-					id: '3976bab8-3810-4ad8-8580-ab1e22de7823',
-					source: 2,
-					name: '@hf/thebloke/zephyr-7b-beta-awq',
-					description: 'Zephyr 7B Beta AWQ is an efficient, accurate and blazing-fast low-bit weight quantized Zephyr model variant.',
-					created_at: '2023-11-24 00:27:15.869',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 4096,
-						info: 'https://huggingface.co/TheBloke/zephyr-7B-beta-AWQ',
-						planned_deprecation_date: '2025-10-01',
 					},
 				},
 				{
@@ -855,20 +644,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '3222ddb3-e211-4fd9-9a6d-79a80e47b3a6',
-					source: 1,
-					name: '@cf/qwen/qwen1.5-1.8b-chat',
-					description: 'Qwen1.5 is the improved version of Qwen, the large language model series developed by Alibaba Cloud.',
-					created_at: '2024-02-27 18:30:31.723',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 32000,
-						info: 'https://huggingface.co/qwen/qwen1.5-1.8b-chat',
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
 					id: '31690291-ebdc-4f98-bcfc-a44844e215b7',
 					source: 1,
 					name: '@cf/mistralai/mistral-small-3.1-24b-instruct',
@@ -880,12 +655,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.35,
+								price: 0.351,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.56,
+								price: 0.555,
 								currency: 'USD',
 							},
 						],
@@ -903,12 +678,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.12,
+								price: 0.123,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.27,
+								price: 0.266,
 								currency: 'USD',
 							},
 						],
@@ -930,12 +705,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.049,
+								price: 0.0485,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.68,
+								price: 0.676,
 								currency: 'USD',
 							},
 						],
@@ -1015,34 +790,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '09d113a9-03c4-420e-b6f2-52ad4b3bed45',
-					source: 1,
-					name: '@cf/qwen/qwen1.5-14b-chat-awq',
-					description: 'Qwen1.5 is the improved version of Qwen, the large language model series developed by Alibaba Cloud. AWQ is an efficient, accurate and blazing-fast low-bit weight quantization method, currently supporting 4-bit quantization.',
-					created_at: '2024-02-27 18:24:45.316',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 7500,
-						info: 'https://huggingface.co/qwen/qwen1.5-14b-chat-awq',
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
-					id: '081054cd-a254-4349-855e-6dc0996277fa',
-					source: 1,
-					name: '@cf/openchat/openchat-3.5-0106',
-					description: 'OpenChat is an innovative library of open-source language models, fine-tuned with C-RLFT - a strategy inspired by offline reinforcement learning.',
-					created_at: '2024-02-27 18:20:39.169',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 8192,
-						info: 'https://huggingface.co/openchat/openchat-3.5-0106',
-						planned_deprecation_date: '2025-10-01',
-					},
-				},
-				{
 					id: '06455e78-19f7-487b-93cd-c05a3dd07813',
 					source: 1,
 					name: '@cf/meta/llama-4-scout-17b-16e-instruct',
@@ -1081,12 +828,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.35,
+								price: 0.345,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.56,
+								price: 0.556,
 								currency: 'USD',
 							},
 						],
@@ -1137,7 +884,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.012,
+								price: 0.0118,
 								currency: 'USD',
 							},
 						],
@@ -1155,7 +902,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.012,
+								price: 0.0118,
 								currency: 'USD',
 							},
 						],
@@ -1172,7 +919,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.019,
+								price: 0.0186,
 								currency: 'USD',
 							},
 						],
@@ -1190,7 +937,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.02,
+								price: 0.0202,
 								currency: 'USD',
 							},
 						],
@@ -1212,7 +959,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.067,
+								price: 0.0666,
 								currency: 'USD',
 							},
 						],
@@ -1242,7 +989,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.2,
+								price: 0.204,
 								currency: 'USD',
 							},
 						],
@@ -1268,7 +1015,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.026,
+								price: 0.0263,
 								currency: 'USD',
 							},
 						],
@@ -1286,7 +1033,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.0031,
+								price: 0.00311,
 								currency: 'USD',
 							},
 						],
@@ -1341,12 +1088,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per 512 by 512 tile',
-								price: 0.000053,
+								price: 0.0000528,
 								currency: 'USD',
 							},
 							{
 								unit: 'per step',
-								price: 0.00011,
+								price: 0.000106,
 								currency: 'USD',
 							},
 						],
@@ -1394,7 +1141,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per 512 by 512 tile',
-								price: 0.0058,
+								price: 0.00583,
 								currency: 'USD',
 							},
 							{
@@ -1487,7 +1234,7 @@ export const workersAiCatalog = {
 							},
 							{
 								unit: 'per step',
-								price: 0.00013,
+								price: 0.000132,
 								currency: 'USD',
 							},
 						],
@@ -1512,7 +1259,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per audio minute',
-								price: 0.0002,
+								price: 0.000205,
 								currency: 'USD',
 							},
 						],
@@ -1598,7 +1345,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per audio minute',
-								price: 0.00045,
+								price: 0.000453,
 								currency: 'USD',
 							},
 						],
@@ -1674,7 +1421,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per audio minute',
-								price: 0.00051,
+								price: 0.000513,
 								currency: 'USD',
 							},
 						],
@@ -1727,7 +1474,7 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per inference request',
-								price: 0.0000025,
+								price: 0.00000251,
 								currency: 'USD',
 							},
 						],
@@ -1752,12 +1499,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.34,
+								price: 0.342,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.34,
+								price: 0.342,
 								currency: 'USD',
 							},
 						],
@@ -1777,12 +1524,12 @@ export const workersAiCatalog = {
 						price: [
 							{
 								unit: 'per M input tokens',
-								price: 0.34,
+								price: 0.342,
 								currency: 'USD',
 							},
 							{
 								unit: 'per M output tokens',
-								price: 0.34,
+								price: 0.342,
 								currency: 'USD',
 							},
 						],
