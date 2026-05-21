@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 4.2.29
+
+### Patch Changes
+
+- [#992](https://github.com/ChainFuse/packages/pull/992) [`08b09a0`](https://github.com/ChainFuse/packages/commit/08b09a0a164d902fb2286ec2b14e3755a92d7d60) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump tsx
+
+- [#993](https://github.com/ChainFuse/packages/pull/993) [`b4bc472`](https://github.com/ChainFuse/packages/commit/b4bc472df6e9ac9d6924c08dec7cf9e4e816edc2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
 ## 4.2.28
 
 ### Patch Changes
