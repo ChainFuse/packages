@@ -114,6 +114,7 @@ export const workersAiCatalog = {
 							},
 						],
 						context_window: 80000,
+						lora: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
@@ -353,6 +354,10 @@ export const workersAiCatalog = {
 					properties: {
 						async_queue: true,
 						context_window: 262144,
+						function_calling: true,
+						reasoning: true,
+						terms: 'https://huggingface.co/moonshotai/Kimi-K2.6/blob/main/LICENSE',
+						vision: true,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -370,10 +375,6 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-						function_calling: true,
-						reasoning: true,
-						terms: 'https://huggingface.co/moonshotai/Kimi-K2.6/blob/main/LICENSE',
-						vision: true,
 					},
 				},
 				{
