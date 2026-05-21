@@ -96,12 +96,20 @@ export class SQLCache<C extends CacheStorageLike> extends DrizzleCache {
 
 	private async log(type: 'GET' | 'PUT' | 'DELETE', message: object) {
 		if (!(`SQLCache:${this.dbName}.${this.dbType}:${type}` in this.logging)) {
-			this.logging[`SQLCache:${this.dbName}.${this.dbType}:${type}`] = await import('node:diagnostics_channel').then(({ channel }) => channel(`SQLCache:${this.dbName}.${this.dbType}:${type}`));
+			await import('node:diagnostics_channel')
+				.then(({ channel }) => (this.logging[`SQLCache:${this.dbName}.${this.dbType}:${type}`] = channel(`SQLCache:${this.dbName}.${this.dbType}:${type}`)))
+				.catch(() => {
+					/* Do nothing */
+				});
 		}
 		this.logging[`SQLCache:${this.dbName}.${this.dbType}:${type}`]?.publish(message);
 
 		if (!(`SQLCache:${type}` in this.logging)) {
-			this.logging[`SQLCache:${type}`] = await import('node:diagnostics_channel').then(({ channel }) => channel(`SQLCache:${type}`));
+			await import('node:diagnostics_channel')
+				.then(({ channel }) => (this.logging[`SQLCache:${type}`] = channel(`SQLCache:${type}`)))
+				.catch(() => {
+					/* Do nothing */
+				});
 		}
 		this.logging[`SQLCache:${type}`]?.publish({ db: `${this.dbName}.${this.dbType}`, ...message });
 	}
