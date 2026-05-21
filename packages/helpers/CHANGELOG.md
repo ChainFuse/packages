@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 5.0.3
+
+### Patch Changes
+
+- [`d407155`](https://github.com/ChainFuse/packages/commit/d40715525b5e1ea50b096155ba678c27628e0ae9) Thanks [@demosjarco](https://github.com/demosjarco)! - helpers(fix): Catch error from JIT logging
+
 ## 5.0.2
 
 ### Patch Changes
