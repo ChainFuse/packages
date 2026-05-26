@@ -63,6 +63,12 @@ updates:
       - dependency-name: '@types/node'
         versions:
           - '>=25.0.0'
+      - dependency-name: 'drizzle-orm'
+        versions:
+          - '>=1.0.0-rc.4'
+      - dependency-name: 'drizzle-kit'
+        versions:
+          - '>=1.0.0-rc.4'
     groups:
       ai:
         patterns:
