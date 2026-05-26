@@ -1,5 +1,23 @@
 # @chainfuse/ai-tools
 
+## 2.0.13
+
+### Patch Changes
+
+- [#999](https://github.com/ChainFuse/packages/pull/999) [`9206c34`](https://github.com/ChainFuse/packages/commit/9206c3497eb76f7200232532fd05f24561866b11) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, ai, openai
+
+- [#1000](https://github.com/ChainFuse/packages/pull/1000) [`9ba23aa`](https://github.com/ChainFuse/packages/commit/9ba23aa00acbdf7bf0357a86d5f2cafba2c61cae) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump cloudflare
+
+- [#1001](https://github.com/ChainFuse/packages/pull/1001) [`3a8c793`](https://github.com/ChainFuse/packages/commit/3a8c79337a234aef9339e595756d56ab805b34c4) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump typescript-eslint
+
+- [`1445d67`](https://github.com/ChainFuse/packages/commit/1445d674c8ca4a5102fc0274af80b6aa5abc2b59) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump drizzle-orm
+
+- [#1003](https://github.com/ChainFuse/packages/pull/1003) [`0521caf`](https://github.com/ChainFuse/packages/commit/0521cafbbe9e34db1bbe791e774f62b9e9861e63) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- Updated dependencies [[`9206c34`](https://github.com/ChainFuse/packages/commit/9206c3497eb76f7200232532fd05f24561866b11), [`9ba23aa`](https://github.com/ChainFuse/packages/commit/9ba23aa00acbdf7bf0357a86d5f2cafba2c61cae), [`3a8c793`](https://github.com/ChainFuse/packages/commit/3a8c79337a234aef9339e595756d56ab805b34c4), [`1445d67`](https://github.com/ChainFuse/packages/commit/1445d674c8ca4a5102fc0274af80b6aa5abc2b59), [`0521caf`](https://github.com/ChainFuse/packages/commit/0521cafbbe9e34db1bbe791e774f62b9e9861e63)]:
+    - @chainfuse/helpers@5.0.4
+    - @chainfuse/types@4.2.30
+
 ## 2.0.12
 
 ### Patch Changes
