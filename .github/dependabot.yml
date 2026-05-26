@@ -88,6 +88,9 @@ updates:
           - 'eslint-plugin-*'
           - '@eslint/*'
           - 'typescript-eslint'
+      db:
+        patterns:
+          - 'drizzle-*'
       monorepo-management:
         patterns:
           - 'lerna'
