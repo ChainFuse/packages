@@ -68,32 +68,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: 'e11d8f45-7b08-499a-9eeb-71d4d3c8cbf9',
-					source: 1,
-					name: '@cf/meta/llama-3-8b-instruct',
-					description: 'Generation over generation, Meta Llama 3 demonstrates state-of-the-art performance on a wide range of industry benchmarks and offers new capabilities, including improved reasoning.',
-					created_at: '2024-04-18 20:31:47.273',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.282,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.827,
-								currency: 'USD',
-							},
-						],
-						context_window: 7968,
-						info: 'https://llama.meta.com',
-						planned_deprecation_date: '2026-05-30',
-						terms: 'https://llama.meta.com/llama3/license/#',
-					},
-				},
-				{
 					id: 'd9dc8363-66f4-4bb0-8641-464ee7bfc131',
 					source: 1,
 					name: '@cf/meta/llama-3.2-3b-instruct',
@@ -116,40 +90,6 @@ export const workersAiCatalog = {
 						context_window: 80000,
 						lora: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
-					},
-				},
-				{
-					id: 'd7948af7-749a-4fa3-8480-2a9f4215f427',
-					source: 1,
-					name: '@cf/moonshotai/kimi-k2.5',
-					description: 'Kimi K2.5 is a frontier-scale open-source model with a 256k context window, multi-turn tool calling, vision inputs, and structured outputs for agentic workloads.',
-					created_at: '2026-02-02 21:11:49.874',
-					tags: [],
-					properties: {
-						async_queue: true,
-						context_window: 256000,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.6,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 3,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M cached input tokens',
-								price: 0.1,
-								currency: 'USD',
-							},
-						],
-						function_calling: true,
-						planned_deprecation_date: '2026-05-30',
-						reasoning: true,
-						terms: 'https://github.com/MoonshotAI/Kimi-K2.5/blob/master/LICENSE',
-						vision: true,
 					},
 				},
 				{
@@ -177,58 +117,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: 'ca54bcd6-0d98-4739-9b3b-5c8b4402193d',
-					source: 1,
-					name: '@cf/meta/llama-2-7b-chat-fp16',
-					description: 'Full precision (fp16) generative text model with 7 billion parameters from Meta',
-					created_at: '2023-11-07 11:54:20.229',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.556,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 6.667,
-								currency: 'USD',
-							},
-						],
-						context_window: 4096,
-						info: 'https://ai.meta.com/llama/',
-						planned_deprecation_date: '2026-05-30',
-						terms: 'https://ai.meta.com/resources/models-and-libraries/llama-downloads/',
-					},
-				},
-				{
-					id: 'c907d0f9-d69d-4e93-b501-4daeb4fd69eb',
-					source: 1,
-					name: '@cf/mistral/mistral-7b-instruct-v0.1',
-					description: 'Instruct fine-tuned version of the Mistral-7b generative text model with 7 billion parameters',
-					created_at: '2023-11-07 11:54:20.229',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.11,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.19,
-								currency: 'USD',
-							},
-						],
-						context_window: 2824,
-						info: 'https://mistral.ai/news/announcing-mistral-7b/',
-						lora: true,
-						planned_deprecation_date: '2026-05-30',
-					},
-				},
-				{
 					id: 'c58c317b-0c15-4bda-abb6-93e275f282d9',
 					source: 1,
 					name: '@cf/mistral/mistral-7b-instruct-v0.2-lora',
@@ -239,24 +127,6 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 15000,
 						lora: true,
-					},
-				},
-				{
-					id: 'b97d7069-48d9-461c-80dd-445d20a632eb',
-					source: 2,
-					name: '@hf/mistral/mistral-7b-instruct-v0.2',
-					description: 'The Mistral-7B-Instruct-v0.2 Large Language Model (LLM) is an instruct fine-tuned version of the Mistral-7B-v0.2. Mistral-7B-v0.2 has the following changes compared to Mistral-7B-v0.1: 32k context window (vs 8k context in v0.1), rope-theta = 1e6, and no Sliding-Window Attention.',
-					created_at: '2024-04-02 13:00:59.244',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 3072,
-						info: 'https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2',
-						lora: true,
-						max_batch_prefill_tokens: 8192,
-						max_input_length: 3072,
-						max_total_tokens: 4096,
-						planned_deprecation_date: '2026-05-30',
 					},
 				},
 				{
@@ -282,18 +152,6 @@ export const workersAiCatalog = {
 						],
 						reasoning: true,
 						terms: 'https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE',
-					},
-				},
-				{
-					id: '9c95c39d-45b3-4163-9631-22f0c0dc3b14',
-					source: 1,
-					name: '@cf/meta/llama-2-7b-chat-int8',
-					description: 'Quantized (int8) generative text model with 7 billion parameters from Meta',
-					created_at: '2023-09-25 19:21:11.898',
-					tags: [],
-					properties: {
-						context_window: 8192,
-						planned_deprecation_date: '2026-05-30',
 					},
 				},
 				{
@@ -490,21 +348,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '44774b85-08c8-4bb8-8d2a-b06ebc538a79',
-					source: 2,
-					name: '@hf/nousresearch/hermes-2-pro-mistral-7b',
-					description: 'Hermes 2 Pro on Mistral 7B is the new flagship 7B Hermes! Hermes 2 Pro is an upgraded, retrained version of Nous Hermes 2, consisting of an updated and cleaned version of the OpenHermes 2.5 Dataset, as well as a newly introduced Function Calling and JSON Mode dataset developed in-house.',
-					created_at: '2024-04-01 23:45:53.800',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 24000,
-						function_calling: true,
-						info: 'https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B',
-						planned_deprecation_date: '2026-05-30',
-					},
-				},
-				{
 					id: '43dbadb4-2b0a-47e9-8479-34a49b971f1e',
 					source: 1,
 					name: '@cf/nvidia/nemotron-3-120b-a12b',
@@ -580,31 +423,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '3dcb4f2d-26a8-412b-b6e3-2a368beff66b',
-					source: 1,
-					name: '@cf/meta/llama-3.1-8b-instruct-awq',
-					description: 'Quantized (int4) generative text model with 8 billion parameters from Meta.\n',
-					created_at: '2024-07-25 17:46:04.304',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.123,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.266,
-								currency: 'USD',
-							},
-						],
-						context_window: 8192,
-						planned_deprecation_date: '2026-05-30',
-						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
-					},
-				},
-				{
 					id: '337170b7-bd2f-4631-9a57-688b579cf6d3',
 					source: 1,
 					name: '@cf/google/gemma-7b-it-lora',
@@ -669,32 +487,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '31097538-a3ff-4e6e-bb56-ad0e1f428b61',
-					source: 1,
-					name: '@cf/meta/llama-3-8b-instruct-awq',
-					description: 'Quantized (int4) generative text model with 8 billion parameters from Meta.',
-					created_at: '2024-05-09 23:32:47.584',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.123,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.266,
-								currency: 'USD',
-							},
-						],
-						context_window: 8192,
-						info: 'https://llama.meta.com',
-						planned_deprecation_date: '2026-05-30',
-						terms: 'https://llama.meta.com/llama3/license/#',
-					},
-				},
-				{
 					id: '2cbc033b-ded8-4e02-bbb2-47cf05d5cfe5',
 					source: 1,
 					name: '@cf/meta/llama-3.2-11b-vision-instruct',
@@ -718,35 +510,6 @@ export const workersAiCatalog = {
 						lora: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 						vision: true,
-					},
-				},
-				{
-					id: '1dc9e589-df6b-4e66-ac9f-ceff42d64983',
-					source: 1,
-					name: '@cf/defog/sqlcoder-7b-2',
-					description: 'This model is intended to be used by non-technical users to understand data inside their SQL databases. ',
-					created_at: '2024-02-27 18:18:46.095',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 10000,
-						info: 'https://huggingface.co/defog/sqlcoder-7b-2',
-						planned_deprecation_date: '2026-05-30',
-						terms: 'https://creativecommons.org/licenses/by-sa/4.0/deed.en',
-					},
-				},
-				{
-					id: '1d933df3-680f-4280-940d-da87435edb07',
-					source: 1,
-					name: '@cf/microsoft/phi-2',
-					description: 'Phi-2 is a Transformer-based model with a next-word prediction objective, trained on 1.4T tokens from multiple passes on a mixture of Synthetic and Web datasets for NLP and coding.',
-					created_at: '2024-02-27 18:26:21.126',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 2048,
-						info: 'https://huggingface.co/microsoft/phi-2',
-						planned_deprecation_date: '2026-05-30',
 					},
 				},
 				{
@@ -775,22 +538,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '0f002249-7d86-4698-aabf-8529ed86cefb',
-					source: 2,
-					name: '@hf/google/gemma-7b-it',
-					description: 'Gemma is a family of lightweight, state-of-the-art open models from Google, built from the same research and technology used to create the Gemini models. They are text-to-text, decoder-only large language models, available in English, with open weights, pre-trained variants, and instruction-tuned variants.',
-					created_at: '2024-04-01 23:51:35.866',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 8192,
-						info: 'https://ai.google.dev/gemma/docs',
-						lora: true,
-						planned_deprecation_date: '2026-05-30',
-						terms: 'https://ai.google.dev/gemma/terms',
-					},
-				},
-				{
 					id: '06455e78-19f7-487b-93cd-c05a3dd07813',
 					source: 1,
 					name: '@cf/meta/llama-4-scout-17b-16e-instruct',
@@ -815,31 +562,6 @@ export const workersAiCatalog = {
 						function_calling: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE',
 						vision: true,
-					},
-				},
-				{
-					id: '053d5ac0-861b-4d3b-8501-e58d00417ef8',
-					source: 1,
-					name: '@cf/google/gemma-3-12b-it',
-					description: 'Gemma 3 models are well-suited for a variety of text generation and image understanding tasks, including question answering, summarization, and reasoning. Gemma 3 models are multimodal, handling text and image input and generating text output, with a large, 128K context window, multilingual support in over 140 languages, and is available in more sizes than previous versions.',
-					created_at: '2025-03-18 03:58:02.423',
-					tags: [],
-					properties: {
-						context_window: 80000,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.345,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.556,
-								currency: 'USD',
-							},
-						],
-						lora: true,
-						planned_deprecation_date: '2026-05-30',
 					},
 				},
 				{
@@ -1445,19 +1167,6 @@ export const workersAiCatalog = {
 						beta: true,
 					},
 				},
-				{
-					id: '3dca5889-db3e-4973-aa0c-3a4a6bd22d29',
-					source: 1,
-					name: '@cf/unum/uform-gen2-qwen-500m',
-					description: 'UForm-Gen is a small generative vision-language model primarily designed for Image Captioning and Visual Question Answering. The model was pre-trained on the internal image captioning dataset and fine-tuned on public instructions datasets: SVIT, LVIS, VQAs datasets.',
-					created_at: '2024-02-27 18:28:52.485',
-					tags: [],
-					properties: {
-						beta: true,
-						info: 'https://www.unum.cloud/',
-						planned_deprecation_date: '2026-05-30',
-					},
-				},
 			],
 		},
 		'Image Classification': {
@@ -1534,31 +1243,6 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-					},
-				},
-			],
-		},
-		Summarization: {
-			id: '6f4e65d8-da0f-40d2-9aa4-db582a5a04fd',
-			description: 'Summarization is the task of producing a shorter version of a document while preserving its important information. Some models can extract text from the original input, while other models can generate entirely new text.',
-			models: [
-				{
-					id: '19bd38eb-bcda-4e53-bec2-704b4689b43a',
-					source: 1,
-					name: '@cf/facebook/bart-large-cnn',
-					description: 'BART is a transformer encoder-encoder (seq2seq) model with a bidirectional (BERT-like) encoder and an autoregressive (GPT-like) decoder. You can use this model for text summarization.',
-					created_at: '2024-02-27 18:28:11.833',
-					tags: [],
-					properties: {
-						beta: true,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0,
-								currency: 'USD',
-							},
-						],
-						planned_deprecation_date: '2026-05-30',
 					},
 				},
 			],
