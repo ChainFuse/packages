@@ -130,6 +130,38 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: 'c29c7295-ff20-4b9b-bdcc-25136c19b21d',
+					source: 1,
+					name: '@cf/moonshotai/kimi-k2.7-code',
+					description: 'Kimi K2.7 is a frontier-scale open-source 1T parameter model with a 262.1k context window, multi-turn tool calling, vision inputs, and structured outputs for agentic workloads.',
+					created_at: '2026-06-12 11:45:20.582',
+					tags: [],
+					properties: {
+						context_window: 262144,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.95,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 4,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.19,
+								currency: 'USD',
+							},
+						],
+						function_calling: true,
+						reasoning: true,
+						terms: 'https://huggingface.co/moonshotai/Kimi-K2.7-Code/blob/main/LICENSE',
+						vision: true,
+					},
+				},
+				{
 					id: 'ad01ab83-baf8-4e7b-8fed-a0a219d4eb45',
 					source: 1,
 					name: '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b',
