@@ -380,6 +380,36 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '4edc7dfe-de78-4156-890c-85b79227694e',
+					source: 1,
+					name: '@cf/zai-org/glm-5.2',
+					description: "Z.ai's flagship agentic coding model",
+					created_at: '2026-06-15 09:51:05.921',
+					tags: [],
+					properties: {
+						context_window: 262144,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 1.4,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 4.4,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.26,
+								currency: 'USD',
+							},
+						],
+						function_calling: true,
+						reasoning: true,
+					},
+				},
+				{
 					id: '43dbadb4-2b0a-47e9-8479-34a49b971f1e',
 					source: 1,
 					name: '@cf/nvidia/nemotron-3-120b-a12b',
