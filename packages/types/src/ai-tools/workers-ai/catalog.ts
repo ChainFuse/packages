@@ -1230,6 +1230,30 @@ export const workersAiCatalog = {
 						beta: true,
 					},
 				},
+				{
+					id: '1161560b-87f9-4795-afb3-a905cf21bcf8',
+					source: 1,
+					name: '@cf/moondream/moondream3.1-9B-A2B',
+					description: 'Moondream 3 is a fast, efficient 9B mixture-of-experts vision language model (2B active parameters) that delivers frontier-level visual reasoning for tasks like object detection, pointing, OCR, and structured output.',
+					created_at: '2026-07-07 14:39:02.726',
+					tags: [],
+					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.3,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 1,
+								currency: 'USD',
+							},
+						],
+						terms: 'https://moondream.ai/licenses/model/1.0',
+						vision: true,
+					},
+				},
 			],
 		},
 		'Image Classification': {
