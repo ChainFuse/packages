@@ -89,6 +89,7 @@ export enum DOJurisdictions {
 	'The European Union' = 'eu',
 	'FedRAMP-compliant data centers' = 'fedramp',
 	'FedRAMP High authorization' = 'fedramp-high',
+	'The United States' = 'us',
 }
 /**
  * @link https://developers.cloudflare.com/durable-objects/reference/data-location/#provide-a-location-hint
@@ -100,6 +101,8 @@ export enum DOLocations {
 	'Western Europe' = 'weur',
 	'Eastern Europe' = 'eeur',
 	'Asia-Pacific' = 'apac',
+	'Northeast Asia-Pacific' = 'apac-ne',
+	'Southeast Asia-Pacific' = 'apac-se',
 	'Oceania' = 'oc',
 	'Africa' = 'afr',
 	'Middle East' = 'me',

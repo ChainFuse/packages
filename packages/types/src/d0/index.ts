@@ -16,15 +16,18 @@ export enum D0CombinedLocations {
 	eu = 1,
 	fedramp = 2,
 	'fedramp-high' = 3,
+	us = 4,
 	wnam = 10,
 	enam = 11,
 	sam = 12,
 	weur = 13,
 	eeur = 14,
 	apac = 15,
-	oc = 16,
-	afr = 17,
-	me = 18,
+	'apac-ne' = 16,
+	'apac-se' = 17,
+	oc = 18,
+	afr = 19,
+	me = 20,
 }
 
 export enum D0ShardType {
