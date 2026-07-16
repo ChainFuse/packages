@@ -81,7 +81,7 @@
 	"prettier": "@demosjarco/prettier-config",
 	"dependencies": {
 		"@chainfuse/types": "^4.2.31",
-		"@discordjs/rest": "^2.6.1",
+		"@discordjs/rest": "^2.6.2",
 		"chalk": "^5.6.2",
 		"cloudflare": "^6.3.0",
 		"dns-packet": "^5.6.1",
