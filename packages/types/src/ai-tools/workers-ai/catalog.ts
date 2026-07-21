@@ -138,6 +138,10 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						context_window: 262144,
+						function_calling: true,
+						reasoning: true,
+						terms: 'https://huggingface.co/moonshotai/Kimi-K2.7-Code/blob/main/LICENSE',
+						vision: true,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -155,10 +159,6 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-						function_calling: true,
-						reasoning: true,
-						terms: 'https://huggingface.co/moonshotai/Kimi-K2.7-Code/blob/main/LICENSE',
-						vision: true,
 					},
 				},
 				{
@@ -388,6 +388,8 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						context_window: 262144,
+						function_calling: true,
+						reasoning: true,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -405,8 +407,6 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-						function_calling: true,
-						reasoning: true,
 					},
 				},
 				{
@@ -507,6 +507,10 @@ export const workersAiCatalog = {
 					properties: {
 						async_queue: true,
 						context_window: 256000,
+						function_calling: true,
+						reasoning: true,
+						terms: 'https://ai.google.dev/gemma/docs/gemma_4_license',
+						vision: true,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -519,10 +523,6 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-						function_calling: true,
-						reasoning: true,
-						terms: 'https://ai.google.dev/gemma/docs/gemma_4_license',
-						vision: true,
 					},
 				},
 				{
