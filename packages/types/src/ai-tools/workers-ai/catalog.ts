@@ -609,7 +609,6 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						async_queue: true,
-						context_window: 131000,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -622,6 +621,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						context_window: 131000,
 						function_calling: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE',
 						vision: true,
