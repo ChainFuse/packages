@@ -137,6 +137,7 @@ export const workersAiCatalog = {
 					created_at: '2026-06-12 11:45:20.582',
 					tags: [],
 					properties: {
+						require_workers_paid: true,
 						context_window: 262144,
 						function_calling: true,
 						reasoning: true,
@@ -243,6 +244,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						async_queue: true,
+						require_workers_paid: true,
 						context_window: 262144,
 						function_calling: true,
 						reasoning: true,
@@ -387,6 +389,7 @@ export const workersAiCatalog = {
 					created_at: '2026-06-15 09:51:05.921',
 					tags: [],
 					properties: {
+						require_workers_paid: true,
 						context_window: 262144,
 						function_calling: true,
 						reasoning: true,
