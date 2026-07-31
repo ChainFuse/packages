@@ -764,7 +764,9 @@ export const workersAiCatalog = {
 					description: 'EmbeddingGemma is a 300M parameter, state-of-the-art for its size, open embedding model from Google, built from Gemma 3 (with T5Gemma initialization) and the same research and technology used to create Gemini models. EmbeddingGemma produces vector representations of text, making it well-suited for search and retrieval tasks, including classification, clustering, and semantic similarity search. This model was trained with data in 100+ spoken languages.',
 					created_at: '2025-09-04 16:38:44.980',
 					tags: [],
-					properties: {},
+					properties: {
+						beta: true,
+					},
 				},
 				{
 					id: '01bc2fb0-4bca-4598-b985-d2584a3f46c0',
