@@ -358,6 +358,38 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '7276b330-b4ae-4662-81d1-3a8bea8368f8',
+					source: 1,
+					name: '@cf/deepseek-ai/deepseek-v4-flash-0731',
+					description: 'DeepSeek-V4-Flash-0731 is the official release of DeepSeek-V4-Flash, superseding the preview version, with substantially enhanced agentic capabilities. ',
+					created_at: '2026-07-31 14:10:43.440',
+					tags: [],
+					properties: {
+						require_workers_paid: true,
+						context_window: 1048576,
+						function_calling: true,
+						reasoning: true,
+						vision: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.44,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 1.32,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.014,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+				{
 					id: '51b71d5b-8bc0-4489-a107-95e542b69914',
 					source: 1,
 					name: '@cf/qwen/qwen2.5-coder-32b-instruct',
@@ -550,6 +582,38 @@ export const workersAiCatalog = {
 							},
 						],
 						function_calling: true,
+					},
+				},
+				{
+					id: '2d50837b-2dc7-4994-a690-a38e25c16d74',
+					source: 1,
+					name: '@cf/deepseek-ai/deepseek-v4-pro-0813',
+					description: 'deepseek-ai/deepseek-v4-pro-0813',
+					created_at: '2026-08-13 17:15:08.489',
+					tags: [],
+					properties: {
+						require_workers_paid: true,
+						context_window: 1048576,
+						function_calling: true,
+						reasoning: true,
+						vision: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 1.32,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 3.96,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.044,
+								currency: 'USD',
+							},
+						],
 					},
 				},
 				{
