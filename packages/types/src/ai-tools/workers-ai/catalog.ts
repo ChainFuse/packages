@@ -940,18 +940,6 @@ export const workersAiCatalog = {
 					created_at: '2024-08-29 16:37:39.541',
 					tags: [],
 					properties: {
-						price: [
-							{
-								unit: 'per 512 by 512 tile',
-								price: 0.0000528,
-								currency: 'USD',
-							},
-							{
-								unit: 'per step',
-								price: 0.000106,
-								currency: 'USD',
-							},
-						],
 						terms: 'https://bfl.ai/legal/terms-of-service',
 					},
 				},
