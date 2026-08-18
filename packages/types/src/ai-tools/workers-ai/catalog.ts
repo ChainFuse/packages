@@ -366,7 +366,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						require_workers_paid: true,
-						context_window: 1048576,
+						context_window: 1310720,
 						function_calling: true,
 						reasoning: true,
 						vision: true,
@@ -588,7 +588,7 @@ export const workersAiCatalog = {
 					id: '2d50837b-2dc7-4994-a690-a38e25c16d74',
 					source: 1,
 					name: '@cf/deepseek-ai/deepseek-v4-pro-0813',
-					description: 'deepseek-ai/deepseek-v4-pro-0813',
+					description: 'DeepSeek V4 Pro is a high-capability reasoning model from DeepSeek with a one million token context window, built for long-horizon agentic workflows and complex, multi-step problem-solving',
 					created_at: '2026-08-13 17:15:08.489',
 					tags: [],
 					properties: {
@@ -1384,6 +1384,43 @@ export const workersAiCatalog = {
 							{
 								unit: 'per M output tokens',
 								price: 0.342,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+			],
+		},
+		'Image-Text-to-Text': {
+			id: 'c372195b-d33e-4fb2-887e-b2ded9081094',
+			description: 'Image Text to Text models output a text from a given image and a prompt. Image captioning or optical character recognition can be considered as the most common applications of image text to text.',
+			models: [
+				{
+					id: '22338608-b54d-4f04-884e-ab06f3dbbf3e',
+					source: 1,
+					name: '@cf/qwen/qwen3.8-27b',
+					description: "Qwen 3.8 27B is a 27-billion-parameter instruction-tuned language model from Alibaba's Qwen family, designed for vision, efficient general-purpose text generation and agentic workloads.",
+					created_at: '2026-08-17 07:13:11.641',
+					tags: [],
+					properties: {
+						context_window: 262144,
+						function_calling: true,
+						reasoning: true,
+						vision: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.45,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 3.2,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.05,
 								currency: 'USD',
 							},
 						],
