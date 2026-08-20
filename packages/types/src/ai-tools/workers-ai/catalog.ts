@@ -124,7 +124,6 @@ export const workersAiCatalog = {
 					created_at: '2024-04-01 22:14:40.529',
 					tags: [],
 					properties: {
-						beta: true,
 						context_window: 15000,
 						lora: true,
 					},
