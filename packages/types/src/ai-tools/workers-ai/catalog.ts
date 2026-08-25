@@ -368,7 +368,6 @@ export const workersAiCatalog = {
 						context_window: 1310720,
 						function_calling: true,
 						reasoning: true,
-						vision: true,
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -595,7 +594,6 @@ export const workersAiCatalog = {
 						context_window: 1048576,
 						function_calling: true,
 						reasoning: true,
-						vision: true,
 						price: [
 							{
 								unit: 'per M input tokens',
