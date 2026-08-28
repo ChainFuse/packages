@@ -211,6 +211,39 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '95666467-f984-4211-b48a-7c246dd4adb7',
+					source: 1,
+					name: '@cf/zai-org/glm-5.3-flash',
+					description: 'The first natively multimodal model in the GLM-5 series. With 320B total parameters and just 18B active parameters, it outperforms GLM-5.2 across benchmarks and real-world workloads at one-tenth the price, while approaching Claude Opus 4.8 on coding and agentic benchmarks.',
+					created_at: '2026-08-26 14:21:42.917',
+					tags: [],
+					properties: {
+						require_workers_paid: true,
+						context_window: 1310720,
+						function_calling: true,
+						reasoning: true,
+						terms: 'https://huggingface.co/zai-org/GLM-5.3-Flash/blob/main/LICENSE',
+						vision: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.15,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 0.5,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.03,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+				{
 					id: '906a57fd-b018-4d6c-a43e-a296d4cc5839',
 					source: 1,
 					name: '@cf/meta/llama-3.2-1b-instruct',
