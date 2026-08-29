@@ -162,6 +162,37 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: 'c05fea67-c5a9-49ca-a7ab-446a0d62cb7a',
+					source: 1,
+					name: '@cf/zai-org/glm-5.3',
+					description: "GLM-5.3 is Z.ai's flagship agentic coding model, pairing a 1M-token context window with reasoning, function calling, and structured outputs to power multi-step, tool-driven development workflows.",
+					created_at: '2026-08-14 12:07:32.346',
+					tags: [],
+					properties: {
+						require_workers_paid: true,
+						context_window: 1310720,
+						function_calling: true,
+						reasoning: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 1.4,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 4.4,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.26,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+				{
 					id: 'ad01ab83-baf8-4e7b-8fed-a0a219d4eb45',
 					source: 1,
 					name: '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b',
@@ -1100,26 +1131,6 @@ export const workersAiCatalog = {
 					properties: {
 						partner: true,
 						terms: 'https://bfl.ai/legal/terms-of-service',
-					},
-				},
-				{
-					id: '19547f04-7a6a-4f87-bf2c-f5e32fb12dc5',
-					source: 1,
-					name: '@cf/runwayml/stable-diffusion-v1-5-img2img',
-					description: 'Stable Diffusion is a latent text-to-image diffusion model capable of generating photo-realistic images. Img2img generate a new image from an input image with Stable Diffusion. ',
-					created_at: '2024-02-27 17:32:28.581',
-					tags: [],
-					properties: {
-						beta: true,
-						price: [
-							{
-								unit: 'per step',
-								price: 0,
-								currency: 'USD',
-							},
-						],
-						info: 'https://huggingface.co/runwayml/stable-diffusion-v1-5',
-						terms: 'https://github.com/runwayml/stable-diffusion/blob/main/LICENSE',
 					},
 				},
 				{
