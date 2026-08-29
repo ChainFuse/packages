@@ -57,7 +57,7 @@
 		"@chainfuse/helpers": "^5.0.6",
 		"@chainfuse/types": "^4.2.32",
 		"ai": "^6.0.196",
-		"chalk": "^5.6.2",
+		"chalk": "^6.0.0",
 		"haversine-distance": "^1.2.4",
 		"workers-ai-provider": "^3.1.14",
 		"zod": "^4.4.3"
