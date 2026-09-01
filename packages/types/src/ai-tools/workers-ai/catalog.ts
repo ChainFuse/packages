@@ -428,6 +428,7 @@ export const workersAiCatalog = {
 					created_at: '2026-07-31 14:10:43.440',
 					tags: [],
 					properties: {
+						async_queue: true,
 						require_workers_paid: true,
 						context_window: 1310720,
 						function_calling: true,
@@ -711,6 +712,7 @@ export const workersAiCatalog = {
 					created_at: '2026-08-17 07:13:11.641',
 					tags: [],
 					properties: {
+						async_queue: true,
 						context_window: 262144,
 						function_calling: true,
 						reasoning: true,
