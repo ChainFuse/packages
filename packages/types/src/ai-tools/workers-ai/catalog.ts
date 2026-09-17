@@ -489,6 +489,19 @@ export const workersAiCatalog = {
 						context_window: 262144,
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['max', 'high', 'none'],
+							default_effort: 'max',
+							default_enabled: true,
+							mandatory: false,
+							normalizes_to: {
+								null: 'high',
+								low: 'high',
+								medium: 'high',
+								xhigh: 'max',
+								minimal: 'none',
+							},
+						},
 						price: [
 							{
 								unit: 'per M input tokens',
