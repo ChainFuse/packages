@@ -141,6 +141,19 @@ export const workersAiCatalog = {
 						context_window: 262144,
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['high'],
+							default_effort: 'high',
+							normalizes_to: {
+								none: 'high',
+								low: 'high',
+								medium: 'high',
+								max: 'high',
+								null: 'high',
+							},
+							mandatory: true,
+							default_enabled: true,
+						},
 						terms: 'https://huggingface.co/moonshotai/Kimi-K2.7-Code/blob/main/LICENSE',
 						vision: true,
 						price: [
@@ -174,6 +187,17 @@ export const workersAiCatalog = {
 						context_window: 1310720,
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['max', 'high', 'low'],
+							default_effort: 'max',
+							normalizes_to: {
+								none: 'max',
+								medium: 'max',
+								null: 'max',
+							},
+							mandatory: true,
+							default_enabled: true,
+						},
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -254,6 +278,19 @@ export const workersAiCatalog = {
 						context_window: 1310720,
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['max', 'high', 'low'],
+							default_effort: 'max',
+							normalizes_to: {
+								none: 'max',
+								minimal: 'max',
+								medium: 'max',
+								xhigh: 'max',
+								null: 'max',
+							},
+							mandatory: true,
+							default_enabled: true,
+						},
 						terms: 'https://huggingface.co/zai-org/GLM-5.3-Flash/blob/main/LICENSE',
 						vision: true,
 						price: [
@@ -312,6 +349,18 @@ export const workersAiCatalog = {
 						context_window: 262144,
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['high', 'none'],
+							default_effort: 'high',
+							normalizes_to: {
+								low: 'high',
+								medium: 'high',
+								max: 'high',
+								null: 'high',
+							},
+							mandatory: false,
+							default_enabled: true,
+						},
 						terms: 'https://huggingface.co/moonshotai/Kimi-K2.6/blob/main/LICENSE',
 						vision: true,
 						price: [
@@ -434,6 +483,18 @@ export const workersAiCatalog = {
 						context_window: 1310720,
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['max', 'high', 'low', 'none'],
+							default_effort: 'high',
+							default_enabled: true,
+							mandatory: false,
+							normalizes_to: {
+								null: 'high',
+								minimal: 'low',
+								medium: 'high',
+								xhigh: 'high',
+							},
+						},
 						price: [
 							{
 								unit: 'per M input tokens',
@@ -621,6 +682,20 @@ export const workersAiCatalog = {
 						context_window: 256000,
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['high', 'none'],
+							default_effort: 'none',
+							normalizes_to: {
+								minimal: 'none',
+								low: 'high',
+								medium: 'high',
+								max: 'high',
+								auto: 'high',
+								null: 'none',
+							},
+							mandatory: false,
+							default_enabled: false,
+						},
 						terms: 'https://ai.google.dev/gemma/docs/gemma_4_license',
 						vision: true,
 						price: [
@@ -673,6 +748,18 @@ export const workersAiCatalog = {
 						context_window: 1048576,
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['max', 'high', 'low', 'none'],
+							default_effort: 'high',
+							default_enabled: true,
+							mandatory: false,
+							normalizes_to: {
+								null: 'high',
+								minimal: 'low',
+								medium: 'high',
+								xhigh: 'high',
+							},
+						},
 						price: [
 							{
 								unit: 'per M input tokens',
