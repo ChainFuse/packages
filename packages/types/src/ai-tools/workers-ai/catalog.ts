@@ -53,6 +53,12 @@ export const workersAiCatalog = {
 						],
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['high', 'medium', 'low'],
+							default_effort: 'medium',
+							mandatory: true,
+							default_enabled: true,
+						},
 					},
 				},
 				{
@@ -405,6 +411,10 @@ export const workersAiCatalog = {
 						],
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							mandatory: false,
+							default_enabled: true,
+						},
 					},
 				},
 				{
@@ -861,6 +871,12 @@ export const workersAiCatalog = {
 						],
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['high', 'medium', 'low'],
+							default_effort: 'medium',
+							mandatory: true,
+							default_enabled: true,
+						},
 					},
 				},
 				{
