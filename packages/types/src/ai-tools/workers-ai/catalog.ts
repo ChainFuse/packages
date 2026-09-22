@@ -148,15 +148,6 @@ export const workersAiCatalog = {
 						function_calling: true,
 						reasoning: true,
 						reasoning_effort: {
-							supported_efforts: ['high'],
-							default_effort: 'high',
-							normalizes_to: {
-								none: 'high',
-								low: 'high',
-								medium: 'high',
-								max: 'high',
-								null: 'high',
-							},
 							mandatory: true,
 							default_enabled: true,
 						},
@@ -566,7 +557,7 @@ export const workersAiCatalog = {
 							default_enabled: true,
 							mandatory: false,
 							normalizes_to: {
-								null: 'high',
+								null: 'max',
 								low: 'high',
 								medium: 'high',
 								xhigh: 'max',
@@ -827,6 +818,16 @@ export const workersAiCatalog = {
 						context_window: 262144,
 						function_calling: true,
 						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['xhigh', 'medium', 'low'],
+							default_effort: 'xhigh',
+							normalizes_to: {
+								null: 'xhigh',
+							},
+							mandatory: false,
+							default_enabled: true,
+							supports_max_tokens: false,
+						},
 						vision: true,
 						price: [
 							{
