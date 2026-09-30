@@ -181,7 +181,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						require_workers_paid: true,
-						context_window: 1310720,
+						context_window: 1048576,
 						function_calling: true,
 						reasoning: true,
 						reasoning_effort: {
@@ -274,7 +274,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						require_workers_paid: true,
-						context_window: 1310720,
+						context_window: 1048576,
 						function_calling: true,
 						reasoning: true,
 						reasoning_effort: {
@@ -483,7 +483,7 @@ export const workersAiCatalog = {
 					properties: {
 						async_queue: true,
 						require_workers_paid: true,
-						context_window: 1310720,
+						context_window: 1048576,
 						function_calling: true,
 						reasoning: true,
 						reasoning_effort: {
