@@ -217,6 +217,19 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: 'bf419b23-844f-4a2c-8111-89dbd63152eb',
+					source: 1,
+					name: '@cf/utter-project/eurollm-9b-it',
+					description: 'EuroLLM-9B is a 9B parameter model trained on 4 trillion tokens divided across the considered languages and several data sources: Web data, parallel data (en-xx and xx-en), and high-quality datasets. For access, please fill out this form: https://forms.gle/kgvmkr6ucHN3xNuH6',
+					created_at: '2026-09-30 14:09:31.518',
+					tags: [],
+					properties: {
+						context_window: 32000,
+						function_calling: true,
+						languages: 'Bulgarian,Croatian,Czech,Danish,Dutch,English,Estonian,Finnish,French,German,Greek,Hungarian,Irish,Italian,Latvian,Lithuanian,Maltese,Polish,Portuguese,Romanian,Slovak,Slovenian,Spanish,Swedish,Arabic,Catalan,Chinese,Galician,Hindi,Japanese,Korean,Norwegian,Russian,Turkish,Ukrainian',
+					},
+				},
+				{
 					id: 'ad01ab83-baf8-4e7b-8fed-a0a219d4eb45',
 					source: 1,
 					name: '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b',
@@ -515,6 +528,19 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+					},
+				},
+				{
+					id: '56482a5b-020e-488d-9c56-11a3ed40719c',
+					source: 1,
+					name: '@cf/swiss-ai/apertus-v1.5-8b',
+					description: 'Apertus 1.5 is an 8B parameter language model designed to advance the state of multilingual, multimodal, fully open, and transparent AI. The models support a wide range of languages, handle contexts of up to 262,144 tokens, and it uses only fully open training data whilst delivering performance comparable to other models of similar size. For access, please fill out this form: https://forms.gle/kgvmkr6ucHN3xNuH6',
+					created_at: '2026-09-30 14:20:40.668',
+					tags: [],
+					properties: {
+						context_window: 262144,
+						function_calling: true,
+						vision: true,
 					},
 				},
 				{
