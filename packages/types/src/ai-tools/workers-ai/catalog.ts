@@ -395,6 +395,27 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '87f39d62-116c-4b26-b2cd-562a9ba01f2f',
+					source: 1,
+					name: '@cf/cloudflare/clef',
+					description: 'Clef is a 27B multimodal decision model that turns a state and a schema of typed questions into decisions. It reads the state as text, JSON, images, or video, and returns a probability for every allowed option of every question.',
+					created_at: '2026-09-29 14:05:24.552',
+					tags: [],
+					properties: {
+						context_window: 65536,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.24,
+								currency: 'USD',
+							},
+						],
+						info: 'https://huggingface.co/Cloudflare/clef',
+						terms: 'https://huggingface.co/Cloudflare/clef/blob/main/LICENSE',
+						vision: true,
+					},
+				},
+				{
 					id: '86b3e51a-4b05-43fa-a403-0f27821919d2',
 					source: 1,
 					name: '@cf/zai-org/glm-4.7-flash',
@@ -922,6 +943,27 @@ export const workersAiCatalog = {
 						context_window: 131000,
 						function_calling: true,
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE',
+						vision: true,
+					},
+				},
+				{
+					id: '059de3ad-d350-4cb6-8b31-e4f34847d10a',
+					source: 1,
+					name: '@cf/cloudflare/clef-flash',
+					description: 'Clef-flash is a fast 9B multimodal decision model that turns a state and a schema of typed questions into decisions. It reads the state as text, JSON, images, or video, and returns a probability for every allowed option of every question.',
+					created_at: '2026-09-29 09:25:44.258',
+					tags: [],
+					properties: {
+						context_window: 65536,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.09,
+								currency: 'USD',
+							},
+						],
+						info: 'https://huggingface.co/Cloudflare/clef-flash',
+						terms: 'https://huggingface.co/Cloudflare/clef-flash/blob/main/LICENSE',
 						vision: true,
 					},
 				},
