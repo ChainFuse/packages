@@ -749,6 +749,11 @@ export const workersAiCatalog = {
 								price: 0.3,
 								currency: 'USD',
 							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.05,
+								currency: 'USD',
+							},
 						],
 					},
 				},
