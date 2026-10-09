@@ -75,6 +75,20 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: 'de6f3eb2-0bde-4d65-8a7d-854267690440',
+					source: 1,
+					name: '@cf/cloudflare/clef-v2',
+					description: 'Clef is a 27B multimodal decision model that turns a state and a schema of typed questions into decisions. It reads the state as text, JSON, images, or video, and returns a probability for every allowed option of every question.',
+					created_at: '2026-10-09 04:31:43.862',
+					tags: [],
+					properties: {
+						context_window: 65536,
+						info: 'https://huggingface.co/Cloudflare/clef',
+						terms: 'https://huggingface.co/Cloudflare/clef/blob/main/LICENSE',
+						vision: true,
+					},
+				},
+				{
 					id: 'd9dc8363-66f4-4bb0-8641-464ee7bfc131',
 					source: 1,
 					name: '@cf/meta/llama-3.2-3b-instruct',
