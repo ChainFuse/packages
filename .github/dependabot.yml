@@ -54,6 +54,39 @@ updates:
       - dependency-name: 'typescript'
         versions:
           - '>=7.0.0, <7.1.0'
+      - dependency-name: '@azure/arm-resources-subscriptions'
+        versions:
+          - '>=3.0.0'
+      - dependency-name: '@azure/identity'
+        versions:
+          - '>=5.0.0'
+      - dependency-name: '@ai-sdk/anthropic'
+        versions:
+          - '>=4.0.0'
+      - dependency-name: '@ai-sdk/azure'
+        versions:
+          - '>=4.0.0'
+      - dependency-name: '@ai-sdk/google'
+        versions:
+          - '>=4.0.0'
+      - dependency-name: '@ai-sdk/openai'
+        versions:
+          - '>=4.0.0'
+      - dependency-name: '@ai-sdk/openai-compatible'
+        versions:
+          - '>=3.0.0'
+      - dependency-name: '@ai-sdk/provider'
+        versions:
+          - '>=4.0.0'
+      - dependency-name: 'ai'
+        versions:
+          - '>=7.0.0'
+      - dependency-name: 'workers-ai-provider'
+        versions:
+          - '>=4.0.0'
+      - dependency-name: 'openai'
+        versions:
+          - '>=7.0.0'
     groups:
       ai:
         patterns:
