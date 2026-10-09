@@ -1,5 +1,47 @@
 # @chainfuse/helpers
 
+## 5.0.7
+
+### Patch Changes
+
+- [`f97ba33`](https://github.com/ChainFuse/packages/commit/f97ba33c11ab41c9603ecc61c17f42acacab6f9c) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-major): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, @ai-sdk/provider, @azure/arm-resources-subscriptions, @azure/identity, ai, openai, workers-ai-provider
+
+- [`3a501dc`](https://github.com/ChainFuse/packages/commit/3a501dcefb4cda72cbc99f6bc4b5f6e72285b7d0) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump brace-expansion
+
+- [`272a35e`](https://github.com/ChainFuse/packages/commit/272a35e30035174c2d37f0a2313460176f03b9c1) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-major): bump chalk
+
+- [`4de4bd6`](https://github.com/ChainFuse/packages/commit/4de4bd61c9eb812c4b63a6f8f56dcf0579e09844) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump cloudflare
+
+- [#1109](https://github.com/ChainFuse/packages/pull/1109) [`3c23290`](https://github.com/ChainFuse/packages/commit/3c232902b5672b697897486d6075fb3401502ec1) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump cloudflare
+
+- [`a0c1f84`](https://github.com/ChainFuse/packages/commit/a0c1f841e046d8c80b8277387521989e13b1d92a) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump eslint, prettier, typescript-eslint
+
+- [`422a78c`](https://github.com/ChainFuse/packages/commit/422a78c9d19d7f2faa99706b97528764dff79f8d) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump @discordjs/rest
+
+- [`e8e6ae0`](https://github.com/ChainFuse/packages/commit/e8e6ae0ce5d48f5d9ede30e51028e56474c6e407) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump http-cache-semantics
+
+- [`7cf3420`](https://github.com/ChainFuse/packages/commit/7cf3420b1de35a67581447fb035a5507b036df37) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump @humanfs/node
+
+- [`da44123`](https://github.com/ChainFuse/packages/commit/da4412342e79a162f07a990504b2a04790c2304f) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-minor): bump ip-address
+
+- [`2214dd3`](https://github.com/ChainFuse/packages/commit/2214dd3373364a29780e7091b2e8534e11f443bf) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-major): bump @changesets/changelog-github, @changesets/cli, lerna
+
+- [#1110](https://github.com/ChainFuse/packages/pull/1110) [`3267cd2`](https://github.com/ChainFuse/packages/commit/3267cd23c02050d9447df000eaf5f2623fb316c0) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @changesets/cli
+
+- [`734c1db`](https://github.com/ChainFuse/packages/commit/734c1db2010f86fad70afe4bd6179adeac7165b3) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump postcss-selector-parser
+
+- [`7327d0b`](https://github.com/ChainFuse/packages/commit/7327d0b714bff0b2c7a82d9d16b926d932efec4f) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump tsx
+
+- [#1111](https://github.com/ChainFuse/packages/pull/1111) [`cfeecd5`](https://github.com/ChainFuse/packages/commit/cfeecd5865cf3a0ae92a6423b79a282739ba6eee) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+
+- [`3f74464`](https://github.com/ChainFuse/packages/commit/3f74464f9ae71362feb2da2ecbb0358ed4fc5ea7) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-major): bump @types/node, @cloudflare/workers-types
+
+- [`91af0a6`](https://github.com/ChainFuse/packages/commit/91af0a64bc990dca94ea8a4d958ebcaf00e8a86b) Thanks [@dependabot[bot]](https://github.com/dependabot%5Bbot%5D)! - deps(semver-patch): bump uuid
+
+- [#1107](https://github.com/ChainFuse/packages/pull/1107) [`e750121`](https://github.com/ChainFuse/packages/commit/e750121a868b00a2d2c597fcf77cd501fd0313d9) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump zod
+- Updated dependencies [[`f97ba33`](https://github.com/ChainFuse/packages/commit/f97ba33c11ab41c9603ecc61c17f42acacab6f9c), [`3a501dc`](https://github.com/ChainFuse/packages/commit/3a501dcefb4cda72cbc99f6bc4b5f6e72285b7d0), [`272a35e`](https://github.com/ChainFuse/packages/commit/272a35e30035174c2d37f0a2313460176f03b9c1), [`4de4bd6`](https://github.com/ChainFuse/packages/commit/4de4bd61c9eb812c4b63a6f8f56dcf0579e09844), [`3c23290`](https://github.com/ChainFuse/packages/commit/3c232902b5672b697897486d6075fb3401502ec1), [`a0c1f84`](https://github.com/ChainFuse/packages/commit/a0c1f841e046d8c80b8277387521989e13b1d92a), [`422a78c`](https://github.com/ChainFuse/packages/commit/422a78c9d19d7f2faa99706b97528764dff79f8d), [`e8e6ae0`](https://github.com/ChainFuse/packages/commit/e8e6ae0ce5d48f5d9ede30e51028e56474c6e407), [`7cf3420`](https://github.com/ChainFuse/packages/commit/7cf3420b1de35a67581447fb035a5507b036df37), [`da44123`](https://github.com/ChainFuse/packages/commit/da4412342e79a162f07a990504b2a04790c2304f), [`2214dd3`](https://github.com/ChainFuse/packages/commit/2214dd3373364a29780e7091b2e8534e11f443bf), [`3267cd2`](https://github.com/ChainFuse/packages/commit/3267cd23c02050d9447df000eaf5f2623fb316c0), [`734c1db`](https://github.com/ChainFuse/packages/commit/734c1db2010f86fad70afe4bd6179adeac7165b3), [`7327d0b`](https://github.com/ChainFuse/packages/commit/7327d0b714bff0b2c7a82d9d16b926d932efec4f), [`cfeecd5`](https://github.com/ChainFuse/packages/commit/cfeecd5865cf3a0ae92a6423b79a282739ba6eee), [`3f74464`](https://github.com/ChainFuse/packages/commit/3f74464f9ae71362feb2da2ecbb0358ed4fc5ea7), [`91af0a6`](https://github.com/ChainFuse/packages/commit/91af0a64bc990dca94ea8a4d958ebcaf00e8a86b), [`e750121`](https://github.com/ChainFuse/packages/commit/e750121a868b00a2d2c597fcf77cd501fd0313d9)]:
+    - @chainfuse/types@4.2.33
+
 ## 5.0.6
 
 ### Patch Changes
