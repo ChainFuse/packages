@@ -58,8 +58,6 @@ jobs:
           enableCrossOsArchive: true
       - uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          publish: npx lerna publish from-package --yes
-          createGithubReleases: true
-          commitMode: github-api
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+          publish-script: npx lerna publish from-package --yes
+          create-github-releases: true
+          github-token: ${{ github.token }}
