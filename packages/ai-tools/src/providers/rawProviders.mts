@@ -5,7 +5,6 @@ import type { ReplaceHyphensWithUnderscores } from '@chainfuse/types';
 import type { azureCatalog } from '@chainfuse/types/ai-tools/azure/catalog';
 import type { cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
 import type { AIGatewayUniversalRequest, GatewayOptions } from '@cloudflare/workers-types';
-import type { APIPromise } from 'cloudflare/core';
 import * as z from 'zod/mini';
 import { AiBase } from '../base.mjs';
 import type { AiConfigWorkersaiRest, AiRequestConfig, AiRequestMetadata, AiRequestMetadataStringified } from '../types.mjs';
@@ -54,15 +53,16 @@ export class AiRawProviders extends AiBase {
 									.then(({ NetHelpers }) => NetHelpers.cfApi('apiToken' in this.config.gateway ? this.config.gateway.apiToken : '', { logging: { level: Number(logging) } }))
 									.then((cf) =>
 										(
-											cf.aiGateway.logs.edit(this.gatewayName, logId, {
+											cf.aiGateway.logs.edit(logId, {
 												account_id: this.config.gateway.accountId,
+												gateway_id: this.gatewayName,
 												metadata: {
 													...Object.entries(rawMetadata).reduce((acc, [key, value]) => {
 														acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
 														return acc;
 													}, {} as AiRequestMetadataStringified),
 												} satisfies AiRequestMetadataStringified,
-											}) as APIPromise<void>
+											})
 										).catch((error) => console.warn('Not updating gateway log', error)),
 									);
 							} else {
@@ -75,15 +75,16 @@ export class AiRawProviders extends AiBase {
 						.then(({ NetHelpers }) => NetHelpers.cfApi('apiToken' in this.config.gateway ? this.config.gateway.apiToken : '', { logging: { level: Number(logging) } }))
 						.then((cf) =>
 							(
-								cf.aiGateway.logs.edit(this.gatewayName, logId, {
+								cf.aiGateway.logs.edit(logId, {
 									account_id: this.config.gateway.accountId,
+									gateway_id: this.gatewayName,
 									metadata: {
 										...Object.entries(rawMetadata).reduce((acc, [key, value]) => {
 											acc[key as keyof AiRequestMetadata] = typeof value === 'string' ? value : JSON.stringify(value);
 											return acc;
 										}, {} as AiRequestMetadataStringified),
 									} satisfies AiRequestMetadataStringified,
-								}) as APIPromise<void>
+								})
 							).catch((error) => console.warn('Not updating gateway log', error)),
 						);
 				}
