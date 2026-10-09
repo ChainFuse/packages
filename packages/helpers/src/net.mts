@@ -1,4 +1,4 @@
-import type { RequestInitCfProperties } from '@cloudflare/workers-types/experimental';
+import type { RequestInitCfProperties } from '@cloudflare/workers-types';
 import * as z from 'zod/mini';
 
 export type LoggingFetchInitType<RI extends RequestInit = RequestInit> = RI & z.input<typeof NetHelpers.loggingFetchInit>;

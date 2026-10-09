@@ -4,7 +4,7 @@ import { CryptoHelpers } from '@chainfuse/helpers/crypto';
 import type { ReplaceHyphensWithUnderscores } from '@chainfuse/types';
 import type { azureCatalog } from '@chainfuse/types/ai-tools/azure/catalog';
 import type { cloudflareModelPossibilities } from '@chainfuse/types/ai-tools/workers-ai';
-import type { AIGatewayUniversalRequest, GatewayOptions } from '@cloudflare/workers-types/experimental';
+import type { AIGatewayUniversalRequest, GatewayOptions } from '@cloudflare/workers-types';
 import type { APIPromise } from 'cloudflare/core';
 import * as z from 'zod/mini';
 import { AiBase } from '../base.mjs';
