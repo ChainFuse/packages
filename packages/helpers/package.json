@@ -1,6 +1,6 @@
 {
 	"name": "@chainfuse/helpers",
-	"version": "5.0.6",
+	"version": "5.0.7",
 	"description": "",
 	"author": "ChainFuse",
 	"homepage": "https://github.com/ChainFuse/packages/tree/main/packages/helpers#readme",
@@ -80,7 +80,7 @@
 	},
 	"prettier": "@demosjarco/prettier-config",
 	"dependencies": {
-		"@chainfuse/types": "^4.2.32",
+		"@chainfuse/types": "^4.2.33",
 		"@discordjs/rest": "^2.6.3",
 		"chalk": "^6.0.0",
 		"cloudflare": "^7.3.0",
