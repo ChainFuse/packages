@@ -779,6 +779,7 @@ export const workersAiCatalog = {
 							},
 						],
 						function_calling: true,
+						vision: true,
 					},
 				},
 				{
