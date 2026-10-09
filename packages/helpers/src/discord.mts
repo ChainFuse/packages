@@ -1,4 +1,4 @@
-import type { ExecutionContext } from '@cloudflare/workers-types/experimental';
+import type { ExecutionContext } from '@cloudflare/workers-types';
 import { CDN, type RESTOptions } from '@discordjs/rest';
 import * as z from 'zod/mini';
 import { CryptoHelpers } from './crypto.mjs';

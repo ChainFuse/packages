@@ -1,5 +1,5 @@
 import type { CacheStorageLike } from '@chainfuse/types';
-import type { DurableObjectState, ExecutionContext } from '@cloudflare/workers-types/experimental';
+import type { DurableObjectState, ExecutionContext } from '@cloudflare/workers-types';
 import * as dnsPacket from 'dns-packet';
 import type { Buffer } from 'node:buffer';
 import * as zm from 'zod/mini';

@@ -1,4 +1,4 @@
-import type { Crypto as CfCrypto } from '@cloudflare/workers-types/experimental';
+import type { Crypto as CfCrypto } from '@cloudflare/workers-types';
 import { BufferHelpers } from './buffers.mjs';
 
 export class CryptoHelpersInternals {

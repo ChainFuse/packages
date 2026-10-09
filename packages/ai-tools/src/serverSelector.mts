@@ -1,5 +1,5 @@
 import type { Coordinate } from '@chainfuse/types/ai-tools';
-import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
+import type { IncomingRequestCfProperties } from '@cloudflare/workers-types';
 import { AiBase } from './base.mts';
 import type { PrivacyRegion, Servers } from './types.mjs';
 

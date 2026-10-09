@@ -1,5 +1,5 @@
 import { AiModels, type LanguageModelValues } from '@chainfuse/types/ai-tools';
-import type { IncomingRequestCfProperties } from '@cloudflare/workers-types/experimental';
+import type { IncomingRequestCfProperties } from '@cloudflare/workers-types';
 import { generateText, Output, stepCountIs, streamText, tool, ToolLoopAgent } from 'ai';
 import { doesNotReject, ok, strictEqual } from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';

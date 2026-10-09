@@ -1,4 +1,4 @@
-import type { RequestInitCfProperties } from '@cloudflare/workers-types/experimental';
+import type { RequestInitCfProperties } from '@cloudflare/workers-types';
 import * as z from 'zod/mini';
 
 export type LoggingFetchInitType<RI extends RequestInit = RequestInit> = RI & z.input<typeof NetHelpers.loggingFetchInit>;
@@ -9,15 +9,15 @@ export type LoggingFetchInitType<RI extends RequestInit = RequestInit> = RI & z.
  * Each member of the enum corresponds to a standard HTTP method, which can be used to specify the desired action to be performed on a given resource.
  */
 export enum Methods {
-	'GET' = 'GET',
-	'HEAD' = 'HEAD',
-	'POST' = 'POST',
-	'PUT' = 'PUT',
-	'DELETE' = 'DELETE',
-	'CONNECT' = 'CONNECT',
-	'OPTIONS' = 'OPTIONS',
-	'TRACE' = 'TRACE',
-	'PATCH' = 'PATCH',
+	GET = 'GET',
+	HEAD = 'HEAD',
+	POST = 'POST',
+	PUT = 'PUT',
+	DELETE = 'DELETE',
+	CONNECT = 'CONNECT',
+	OPTIONS = 'OPTIONS',
+	TRACE = 'TRACE',
+	PATCH = 'PATCH',
 }
 
 export class NetHelpers {
