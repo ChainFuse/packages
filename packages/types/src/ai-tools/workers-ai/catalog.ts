@@ -979,7 +979,7 @@ export const workersAiCatalog = {
 					created_at: '2026-09-29 09:25:44.258',
 					tags: [],
 					properties: {
-						context_window: 65536,
+						context_window: 24576,
 						price: [
 							{
 								unit: 'per M input tokens',
