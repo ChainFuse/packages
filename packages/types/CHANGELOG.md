@@ -1,5 +1,13 @@
 # @chainfuse/types
 
+## 4.2.34
+
+### Patch Changes
+
+- [`32e8b7d`](https://github.com/ChainFuse/packages/commit/32e8b7d79160554b1dd5a44b84389f9b46f239cc) Thanks [@demosjarco](https://github.com/demosjarco)! - Add `D0ShardType.Memory` for the dataspace Agent Memory shard. d0 already references it, which evaluated to `undefined` at runtime and made the dataspace director's memory shard lookup match any shard type.
+
+- [#1115](https://github.com/ChainFuse/packages/pull/1115) [`d59a205`](https://github.com/ChainFuse/packages/commit/d59a2050da4a200eefc08ab9297b1b437a313bcb) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump js-yaml, lerna
+
 ## 4.2.33
 
 ### Patch Changes
