@@ -1,5 +1,14 @@
 # @chainfuse/ai-tools
 
+## 2.0.17
+
+### Patch Changes
+
+- [#1115](https://github.com/ChainFuse/packages/pull/1115) [`d59a205`](https://github.com/ChainFuse/packages/commit/d59a2050da4a200eefc08ab9297b1b437a313bcb) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-major): bump js-yaml, lerna
+- Updated dependencies [[`32e8b7d`](https://github.com/ChainFuse/packages/commit/32e8b7d79160554b1dd5a44b84389f9b46f239cc), [`d59a205`](https://github.com/ChainFuse/packages/commit/d59a2050da4a200eefc08ab9297b1b437a313bcb)]:
+    - @chainfuse/types@4.2.34
+    - @chainfuse/helpers@5.0.8
+
 ## 2.0.16
 
 ### Patch Changes
