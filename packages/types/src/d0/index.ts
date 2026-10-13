@@ -30,13 +30,15 @@ export enum D0CombinedLocations {
 	me = 20,
 }
 
+// Leaving implied values for not-yet implemented features
 export enum D0ShardType {
 	None = 0,
 	Scheduler = 1,
 	Storage = 2,
-	MCP = 3,
-	EphemeralAgent = 4,
-	Session = 5,
+	Memory = 3,
+	MCP,
+	EphemeralAgent,
+	Session,
 }
 
 export enum D0Environment {
