@@ -1463,13 +1463,6 @@ export const workersAiCatalog = {
 					created_at: '2023-09-25 19:21:11.898',
 					tags: [],
 					properties: {
-						price: [
-							{
-								unit: 'per audio minute',
-								price: 0.000453,
-								currency: 'USD',
-							},
-						],
 						info: 'https://openai.com/research/whisper',
 					},
 				},
