@@ -871,6 +871,18 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '2b2b6dfb-2cd0-433f-802c-533d40508d9b',
+					source: 1,
+					name: '@cf/daily-co/phonellm-mini-alpha-2',
+					description: 'PhoneLLM is an open model tuned for voice agents. The model is based on Nemotron Nano 30B base capabilities and excels at typical voice agent tasks with thinking disabled.',
+					created_at: '2026-10-13 09:36:59.162',
+					tags: [],
+					properties: {
+						context_window: 262140,
+						function_calling: true,
+					},
+				},
+				{
 					id: '22338608-b54d-4f04-884e-ab06f3dbbf3e',
 					source: 1,
 					name: '@cf/qwen/qwen3.8-27b',
