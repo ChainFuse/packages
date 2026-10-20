@@ -1,5 +1,25 @@
 # @chainfuse/types
 
+## 4.2.35
+
+### Patch Changes
+
+- [#1131](https://github.com/ChainFuse/packages/pull/1131) [`bb919d2`](https://github.com/ChainFuse/packages/commit/bb919d2a604e546f0de5bf952f6cc34474147f4d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, @ai-sdk/provider, @azure/identity, ai
+
+- [#1124](https://github.com/ChainFuse/packages/pull/1124) [`64fe694`](https://github.com/ChainFuse/packages/commit/64fe6944a0c97c4af67dc5b78110fc41cf550df2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump chalk
+
+- [#1130](https://github.com/ChainFuse/packages/pull/1130) [`32396d9`](https://github.com/ChainFuse/packages/commit/32396d9a19266a66ef1391ad881d40f6475451a2) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump eslint, prettier, typescript-eslint
+
+- [#1125](https://github.com/ChainFuse/packages/pull/1125) [`e2f0e4e`](https://github.com/ChainFuse/packages/commit/e2f0e4ea1b1f3097d2ec18dee4d37eba13e3bde8) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump lerna
+
+- [#1123](https://github.com/ChainFuse/packages/pull/1123) [`564ced7`](https://github.com/ChainFuse/packages/commit/564ced76251f0121036f8a7afcd0b03032b8ad1e) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types, @types/node
+
+- [#1126](https://github.com/ChainFuse/packages/pull/1126) [`198326c`](https://github.com/ChainFuse/packages/commit/198326c2b59e580eae20e9e38b449e50c9ada578) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump uuid
+
+- [#1122](https://github.com/ChainFuse/packages/pull/1122) [`1130757`](https://github.com/ChainFuse/packages/commit/1130757efde27e01fcbf76b60b85435b4a8db45a) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump zod
+
+- [`6e14e35`](https://github.com/ChainFuse/packages/commit/6e14e35973d04bda50fd363799a7d6d444ee17a4) Thanks [@demosjarco](https://github.com/demosjarco)! - Add MCP and agent system types, reserve implicit values for future system types, and assign explicit shard IDs to MCP and Agent.
+
 ## 4.2.34
 
 ### Patch Changes
