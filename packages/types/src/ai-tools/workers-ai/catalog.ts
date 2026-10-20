@@ -552,6 +552,25 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: '6b0b79c1-25e6-4498-bb62-5161df39f0ef',
+					source: 1,
+					name: '@cf/cloudflare/clairic',
+					description: 'Clairic is a System One-style model that can extract, compute, estimate, and forecast values from inputs. It is strongly typed and outputs confidence scores and probabilities against its outputs. This model is in early research preview from the Cloudflare Workers AI team.',
+					created_at: '2026-10-14 05:34:04.680',
+					tags: [],
+					properties: {
+						context_window: 65536,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.1,
+								currency: 'USD',
+							},
+						],
+						vision: true,
+					},
+				},
+				{
 					id: '56482a5b-020e-488d-9c56-11a3ed40719c',
 					source: 1,
 					name: '@cf/swiss-ai/apertus-v1.5-8b',
@@ -919,6 +938,54 @@ export const workersAiCatalog = {
 							{
 								unit: 'per M cached input tokens',
 								price: 0.05,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+				{
+					id: '215ee9cf-aaa0-48bd-a084-00da8da2fbeb',
+					source: 1,
+					name: '@cf/deepseek-ai/deepseek-v4.1-flash-1017',
+					description: 'We introduce DeepSeek-V4.1-Flash, a multimodal Mixture-of-Experts (MoE) model with 552B backbone parameters and support for contexts of up to one million tokens. The model natively processes images and text, and generates text autoregressively.',
+					created_at: '2026-10-17 03:51:20.275',
+					tags: [],
+					properties: {
+						require_workers_paid: true,
+						context_window: 1048576,
+						function_calling: true,
+						hugging_face_id: 'deepseek-ai/DeepSeek-V4.1-Flash-1017',
+						openrouter_slug: 'deepseek/deepseek-v4.1-flash-1017',
+						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['max', 'high', 'low', 'none'],
+							default_effort: 'high',
+							default_enabled: true,
+							mandatory: false,
+							normalizes_to: {
+								null: 'high',
+								auto: 'high',
+								minimal: 'none',
+								medium: 'high',
+								xhigh: 'max',
+							},
+						},
+						terms: 'https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017/blob/main/LICENSE',
+						vision: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.3,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 1.2,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.006,
 								currency: 'USD',
 							},
 						],
