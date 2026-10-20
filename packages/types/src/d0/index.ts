@@ -4,11 +4,15 @@ export enum D0Version {
 	v1 = 0,
 }
 
+// Leaving implied values for not-yet implemented features
 export enum D0SystemType {
 	Dataspace = 1,
 	Tenant = 2,
 	User = 3,
-	Workflow = 4,
+	MCP = 4,
+	EnrichmentAgent = 5,
+	EphemeralAgent,
+	Workflow,
 }
 
 export enum D0CombinedLocations {
@@ -36,8 +40,8 @@ export enum D0ShardType {
 	Scheduler = 1,
 	Storage = 2,
 	Memory = 3,
-	MCP,
-	EphemeralAgent,
+	MCP = 4,
+	Agent = 5,
 	Session,
 }
 
