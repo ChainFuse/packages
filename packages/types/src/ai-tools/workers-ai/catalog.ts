@@ -492,18 +492,6 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						context_window: 131000,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.017,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.112,
-								currency: 'USD',
-							},
-						],
 						function_calling: true,
 					},
 				},
