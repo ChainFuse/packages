@@ -201,6 +201,7 @@ await describe('AI Tests', () => {
 									}),
 									description: 'Return the current city and state of the runner',
 								}),
+								allowSystemInMessages: true,
 							});
 
 							let accumulatedOutput: AiStreamChunkType<(typeof result)['partialOutputStream']> = {};
@@ -261,6 +262,7 @@ await describe('AI Tests', () => {
 									}),
 									description: 'Return the current city and state of the runner',
 								}),
+								allowSystemInMessages: true,
 							});
 
 							await doesNotReject(responsePromise);
@@ -322,6 +324,7 @@ await describe('AI Tests', () => {
 										state: z4.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
 									}),
 								}),
+								allowSystemInMessages: true,
 							}).stream({
 								messages: [
 									{
@@ -392,6 +395,7 @@ await describe('AI Tests', () => {
 										state: z4.string().describe('The ISO 3166-2 name for the first level region of the incoming request'),
 									}),
 								}),
+								allowSystemInMessages: true,
 							}).generate({
 								messages: [
 									{
