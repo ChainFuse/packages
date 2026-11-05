@@ -1,5 +1,22 @@
 # @chainfuse/ai-tools
 
+## 2.0.19
+
+### Patch Changes
+
+- [#1146](https://github.com/ChainFuse/packages/pull/1146) [`38f88cb`](https://github.com/ChainFuse/packages/commit/38f88cb2b9d49bf11fbb16080178994fd19d0ef6) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump @ai-sdk/anthropic, @ai-sdk/azure, @ai-sdk/google, @ai-sdk/openai, @ai-sdk/openai-compatible, @azure/identity, ai
+
+- [#1147](https://github.com/ChainFuse/packages/pull/1147) [`32f8094`](https://github.com/ChainFuse/packages/commit/32f809429a68fa7107686551bef5871abd03c048) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump eslint, typescript-eslint
+
+- [#1148](https://github.com/ChainFuse/packages/pull/1148) [`da9cb59`](https://github.com/ChainFuse/packages/commit/da9cb5913b91c7d933edf56c15e04e94a0cc3975) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump drizzle-orm
+
+- [#1138](https://github.com/ChainFuse/packages/pull/1138) [`e9bf951`](https://github.com/ChainFuse/packages/commit/e9bf951003caf5901076815063926e6f97ee0dee) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-patch): bump ip-address
+
+- [#1149](https://github.com/ChainFuse/packages/pull/1149) [`a358165`](https://github.com/ChainFuse/packages/commit/a358165e1d12e0de1f15bc9fd15a3044ed39719d) Thanks [@dependabot](https://github.com/apps/dependabot)! - deps(semver-minor): bump @cloudflare/workers-types
+- Updated dependencies [[`38f88cb`](https://github.com/ChainFuse/packages/commit/38f88cb2b9d49bf11fbb16080178994fd19d0ef6), [`32f8094`](https://github.com/ChainFuse/packages/commit/32f809429a68fa7107686551bef5871abd03c048), [`da9cb59`](https://github.com/ChainFuse/packages/commit/da9cb5913b91c7d933edf56c15e04e94a0cc3975), [`e9bf951`](https://github.com/ChainFuse/packages/commit/e9bf951003caf5901076815063926e6f97ee0dee), [`a358165`](https://github.com/ChainFuse/packages/commit/a358165e1d12e0de1f15bc9fd15a3044ed39719d)]:
+    - @chainfuse/helpers@5.0.10
+    - @chainfuse/types@4.2.36
+
 ## 2.0.18
 
 ### Patch Changes
