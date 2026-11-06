@@ -72,6 +72,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 8192,
 						lora: true,
+						planned_deprecation_date: '2026-11-15',
 					},
 				},
 				{
@@ -96,6 +97,7 @@ export const workersAiCatalog = {
 						],
 						context_window: 80000,
 						lora: true,
+						planned_deprecation_date: '2026-11-15',
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
@@ -146,6 +148,7 @@ export const workersAiCatalog = {
 						require_workers_paid: true,
 						context_window: 262144,
 						function_calling: true,
+						planned_deprecation_date: '2026-11-15',
 						reasoning: true,
 						reasoning_effort: {
 							mandatory: true,
@@ -250,6 +253,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						planned_deprecation_date: '2026-11-15',
 						reasoning: true,
 						terms: 'https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE',
 					},
@@ -275,6 +279,7 @@ export const workersAiCatalog = {
 							},
 						],
 						context_window: 32000,
+						planned_deprecation_date: '2026-11-15',
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
 					},
 				},
@@ -289,6 +294,7 @@ export const workersAiCatalog = {
 						require_workers_paid: true,
 						context_window: 1048576,
 						function_calling: true,
+						planned_deprecation_date: '2026-11-15',
 						reasoning: true,
 						reasoning_effort: {
 							supported_efforts: ['max', 'high', 'low'],
@@ -345,6 +351,7 @@ export const workersAiCatalog = {
 							},
 						],
 						context_window: 60000,
+						planned_deprecation_date: '2026-11-15',
 						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
 					},
 				},
@@ -360,6 +367,7 @@ export const workersAiCatalog = {
 						require_workers_paid: true,
 						context_window: 262144,
 						function_calling: true,
+						planned_deprecation_date: '2026-11-15',
 						reasoning: true,
 						reasoning_effort: {
 							supported_efforts: ['high', 'none'],
@@ -455,6 +463,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 8192,
 						lora: true,
+						planned_deprecation_date: '2026-11-15',
 					},
 				},
 				{
@@ -507,6 +516,7 @@ export const workersAiCatalog = {
 						require_workers_paid: true,
 						context_window: 1048576,
 						function_calling: true,
+						planned_deprecation_date: '2026-11-15',
 						reasoning: true,
 						reasoning_effort: {
 							supported_efforts: ['max', 'high', 'low', 'none'],
@@ -625,6 +635,7 @@ export const workersAiCatalog = {
 						require_workers_paid: true,
 						context_window: 262144,
 						function_calling: true,
+						planned_deprecation_date: '2026-11-15',
 						reasoning: true,
 						reasoning_effort: {
 							supported_efforts: ['max', 'high', 'none'],
@@ -680,6 +691,7 @@ export const workersAiCatalog = {
 							},
 						],
 						function_calling: true,
+						planned_deprecation_date: '2026-11-15',
 						reasoning: true,
 						terms: 'https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/',
 					},
@@ -730,6 +742,7 @@ export const workersAiCatalog = {
 							},
 						],
 						function_calling: true,
+						planned_deprecation_date: '2026-11-15',
 						reasoning: true,
 					},
 				},
@@ -744,6 +757,7 @@ export const workersAiCatalog = {
 						beta: true,
 						context_window: 3500,
 						lora: true,
+						planned_deprecation_date: '2026-11-15',
 					},
 				},
 				{
@@ -819,6 +833,7 @@ export const workersAiCatalog = {
 						require_workers_paid: true,
 						context_window: 1048576,
 						function_calling: true,
+						planned_deprecation_date: '2026-11-15',
 						reasoning: true,
 						reasoning_effort: {
 							supported_efforts: ['max', 'high', 'low', 'none'],
@@ -1081,6 +1096,7 @@ export const workersAiCatalog = {
 							},
 						],
 						lora: true,
+						planned_deprecation_date: '2026-11-15',
 						reasoning: true,
 					},
 				},
@@ -1195,6 +1211,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						planned_deprecation_date: '2026-11-15',
 					},
 				},
 				{
@@ -1294,6 +1311,7 @@ export const workersAiCatalog = {
 							},
 						],
 						info: 'https://huggingface.co/runwayml/stable-diffusion-inpainting',
+						planned_deprecation_date: '2026-11-15',
 						terms: 'https://github.com/runwayml/stable-diffusion/blob/main/LICENSE',
 					},
 				},
@@ -1325,6 +1343,7 @@ export const workersAiCatalog = {
 							},
 						],
 						info: 'https://huggingface.co/ByteDance/SDXL-Lightning',
+						planned_deprecation_date: '2026-11-15',
 					},
 				},
 				{
@@ -1336,6 +1355,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						info: 'https://huggingface.co/Lykon/DreamShaper',
+						planned_deprecation_date: '2026-11-15',
 					},
 				},
 				{
@@ -1379,6 +1399,7 @@ export const workersAiCatalog = {
 							},
 						],
 						info: 'https://stability.ai/stable-diffusion',
+						planned_deprecation_date: '2026-11-15',
 						terms: 'https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md',
 					},
 				},
@@ -1451,6 +1472,7 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+						planned_deprecation_date: '2026-11-15',
 					},
 				},
 				{
@@ -1588,6 +1610,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						planned_deprecation_date: '2026-11-15',
 					},
 				},
 				{
@@ -1623,6 +1646,7 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						beta: true,
+						planned_deprecation_date: '2026-11-15',
 					},
 				},
 				{
