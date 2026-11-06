@@ -1,5 +1,11 @@
 # @chainfuse/helpers
 
+## 5.0.11
+
+### Patch Changes
+
+- [`545a2ac`](https://github.com/ChainFuse/packages/commit/545a2ac9045528ce301a17889dd5e31d77828488) Thanks [@demosjarco](https://github.com/demosjarco)! - `SuruId.suruCreate` / `suruCreateSync` drew their default `suffixRandom` and `stableRandom` once per process instead of once per call: the byte-length `.check()` sat on the `_default` wrapper, and cloning the schema evaluated the default getter a single time. The check now sits on the input union, so every call without an explicit random gets fresh bytes.
+
 ## 5.0.10
 
 ### Patch Changes
