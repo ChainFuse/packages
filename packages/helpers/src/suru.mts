@@ -44,9 +44,9 @@ export class SuruId {
 		shardType: z._default(this.extractOutputBase.def.shape.shardType, D0ShardType.None),
 		// Location
 		suffixRandom: z.lazy(() =>
-			z
-				._default(
-					z.union([
+			z._default(
+				z
+					.union([
 						// hex
 						z.pipe(
 							this.extractOutputBase.def.shape.suffixRandom.shape.hex,
@@ -64,16 +64,16 @@ export class SuruId {
 							this.extractOutputBase.def.shape.suffixRandom.shape.base64url,
 							z.transform((base64url) => new Uint8Array(BufferHelpers.base64ToBufferSync(base64url))),
 						),
-					]),
-					() => CryptoHelpers.secretBytesSync(40 / 8),
-				)
-				.check(z.refine((b) => b.byteLength === 40 / 8)),
+					])
+					.check(z.refine((b) => b.byteLength === 40 / 8)),
+				() => CryptoHelpers.secretBytesSync(40 / 8),
+			),
 		),
 		// environment
 		stableRandom: z.lazy(() =>
-			z
-				._default(
-					z.union([
+			z._default(
+				z
+					.union([
 						// hex
 						z.pipe(
 							this.extractOutputBase.def.shape.stableRandom.shape.hex,
@@ -91,10 +91,10 @@ export class SuruId {
 							this.extractOutputBase.def.shape.stableRandom.shape.base64url,
 							z.transform((base64url) => new Uint8Array(BufferHelpers.base64ToBufferSync(base64url))),
 						),
-					]),
-					() => CryptoHelpers.secretBytesSync(256 / 8),
-				)
-				.check(z.refine((b) => b.byteLength === 256 / 8)),
+					])
+					.check(z.refine((b) => b.byteLength === 256 / 8)),
+				() => CryptoHelpers.secretBytesSync(256 / 8),
+			),
 		),
 	});
 	public static createInput = z.union([

@@ -1,6 +1,6 @@
 import { DOJurisdictions, DOLocations } from '@chainfuse/types';
 import { D0Environment, D0ShardType, D0SystemType, D0Version } from '@chainfuse/types/d0';
-import { ok, strictEqual } from 'node:assert/strict';
+import { ok, rejects, strictEqual } from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { SuruId } from '../dist/suru.mjs';
 
@@ -131,6 +131,29 @@ void describe('SuruId', () => {
 			strictEqual(extracted.locationHint, null);
 			strictEqual(extracted.environment, D0Environment.Production);
 			ok(extracted.date instanceof Date);
+		});
+
+		void it('should draw fresh suffix and stable randoms on every call (async)', async () => {
+			const input = {
+				systemType: D0SystemType.Dataspace,
+				environment: D0Environment.Preview,
+			};
+
+			// A zod default with a function value must be re-evaluated per parse; a wrapper that clones the schema (e.g. `.check()`) can freeze it to one draw
+			const extracted = await Promise.all(Array.from({ length: 8 }, () => SuruId.suruCreate(input).then((created) => SuruId.suruExtract(created.hex))));
+
+			strictEqual(new Set(extracted.map((e) => e.suffixRandom.hex)).size, extracted.length);
+			strictEqual(new Set(extracted.map((e) => e.stableRandom.hex)).size, extracted.length);
+		});
+
+		void it('should reject a suffix or stable random of the wrong length', async () => {
+			const base = {
+				systemType: D0SystemType.Dataspace,
+				environment: D0Environment.Preview,
+			};
+
+			await rejects(SuruId.suruCreate({ ...base, suffixRandom: new Uint8Array(4) }));
+			await rejects(SuruId.suruCreate({ ...base, stableRandom: new Uint8Array(31) }));
 		});
 	});
 
