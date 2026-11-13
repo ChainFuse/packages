@@ -30,6 +30,50 @@ export const workersAiCatalog = {
 			description: 'Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks.',
 			models: [
 				{
+					id: 'fd81c856-07a9-4965-9241-a124f369826c',
+					source: 1,
+					name: '@cf/thinkingmachines/inkling-2-small',
+					description: 'Inkling 2 Small is a multimodal Mixture-of-Experts model from Thinking Machines Lab with 594B total and 18B active parameters and up to 1M tokens of context. It accepts text and image inputs and generates text, with built-in reasoning and tool calling.',
+					created_at: '2026-11-09 23:34:25.355',
+					tags: [],
+					properties: {
+						require_workers_paid: true,
+						context_window: 1048576,
+						function_calling: true,
+						reasoning: true,
+						reasoning_effort: {
+							supported_efforts: ['max', 'high', 'medium', 'low', 'minimal', 'none'],
+							default_effort: 'high',
+							default_enabled: true,
+							mandatory: false,
+							normalizes_to: {
+								null: 'high',
+								auto: 'high',
+								xhigh: 'max',
+							},
+						},
+						terms: 'https://www.apache.org/licenses/LICENSE-2.0',
+						vision: true,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.3,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 1,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M cached input tokens',
+								price: 0.1,
+								currency: 'USD',
+							},
+						],
+					},
+				},
+				{
 					id: 'f9f2250b-1048-4a52-9910-d0bf976616a1',
 					source: 1,
 					name: '@cf/openai/gpt-oss-120b',
@@ -1750,6 +1794,21 @@ export const workersAiCatalog = {
 							},
 						],
 					},
+				},
+			],
+		},
+		'Multimodal Embeddings': {
+			id: 'e8fd402c-337b-4c7a-b6f8-5f596805378b',
+			description: 'Multimodal embeddings represent data from different sources, like text and images, in a shared vector space, enabling semantic understanding across modalities.',
+			models: [
+				{
+					id: '0446c408-a932-495f-9ab6-9744760dbbe8',
+					source: 1,
+					name: '@cf/google/embeddinggemma-2',
+					description: 'EmbeddingGemma 2 is an open multimodal embedding model built by Google DeepMind which maps text (incl. code), images, video, and audio inputs—and combinations thereof—into a single, unified 768-dimensional vector space.',
+					created_at: '2026-10-08 12:39:40.122',
+					tags: [],
+					properties: {},
 				},
 			],
 		},
