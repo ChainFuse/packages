@@ -146,6 +146,25 @@ export const workersAiCatalog = {
 					},
 				},
 				{
+					id: 'd27e5c9c-9bbb-41b7-9ef9-6beceeeb07ef',
+					source: 1,
+					name: '@cf/cloudflare/clairic-flash',
+					description: 'Clairic is a System One-style model that can extract, compute, estimate, and forecast values from inputs. It is strongly typed and outputs confidence scores and probabilities against its outputs. This model is in early research preview from the Cloudflare Workers AI team.',
+					created_at: '2026-10-29 20:16:58.443',
+					tags: [],
+					properties: {
+						context_window: 65536,
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.1,
+								currency: 'USD',
+							},
+						],
+						vision: true,
+					},
+				},
+				{
 					id: 'cc80437b-9a8d-4f1a-9c77-9aaf0d226922',
 					source: 1,
 					name: '@cf/meta/llama-guard-3-8b',
