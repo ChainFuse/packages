@@ -36,7 +36,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04-arm
     steps:
-      - uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
+      - uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
         with:
           egress-policy: audit
           disable-sudo-and-containers: true
@@ -85,7 +85,7 @@ jobs:
         os: [ubuntu-24.04-arm, windows-11-arm, macos-latest]
         version: ['lts/*', latest]
     steps:
-      - uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
+      - uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
         if: matrix.os == 'ubuntu-24.04-arm'
         with:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
