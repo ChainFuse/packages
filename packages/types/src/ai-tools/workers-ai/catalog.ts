@@ -106,46 +106,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: 'e8e8abe4-a372-4c13-815f-4688ba655c8e',
-					source: 1,
-					name: '@cf/google/gemma-2b-it-lora',
-					description: 'This is a Gemma-2B base model that Cloudflare dedicates for inference with LoRA adapters. Gemma is a family of lightweight, state-of-the-art open models from Google, built from the same research and technology used to create the Gemini models.',
-					created_at: '2024-04-02 00:19:34.669',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 8192,
-						lora: true,
-						planned_deprecation_date: '2026-11-20',
-					},
-				},
-				{
-					id: 'd9dc8363-66f4-4bb0-8641-464ee7bfc131',
-					source: 1,
-					name: '@cf/meta/llama-3.2-3b-instruct',
-					description: 'The Llama 3.2 instruction-tuned text only models are optimized for multilingual dialogue use cases, including agentic retrieval and summarization tasks.',
-					created_at: '2024-09-25 20:05:43.986',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.0509,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.335,
-								currency: 'USD',
-							},
-						],
-						context_window: 80000,
-						lora: true,
-						planned_deprecation_date: '2026-11-20',
-						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
-					},
-				},
-				{
 					id: 'd27e5c9c-9bbb-41b7-9ef9-6beceeeb07ef',
 					source: 1,
 					name: '@cf/cloudflare/clairic-flash',
@@ -198,44 +158,6 @@ export const workersAiCatalog = {
 					properties: {
 						context_window: 15000,
 						lora: true,
-					},
-				},
-				{
-					id: 'c29c7295-ff20-4b9b-bdcc-25136c19b21d',
-					source: 1,
-					name: '@cf/moonshotai/kimi-k2.7-code',
-					description: 'Kimi K2.7 is a frontier-scale open-source 1T parameter model with a 262.1k context window, multi-turn tool calling, vision inputs, and structured outputs for agentic workloads.',
-					created_at: '2026-06-12 11:45:20.582',
-					tags: [],
-					properties: {
-						require_workers_paid: true,
-						context_window: 262144,
-						function_calling: true,
-						planned_deprecation_date: '2026-11-20',
-						reasoning: true,
-						reasoning_effort: {
-							mandatory: true,
-							default_enabled: true,
-						},
-						terms: 'https://huggingface.co/moonshotai/Kimi-K2.7-Code/blob/main/LICENSE',
-						vision: true,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.95,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 4,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M cached input tokens',
-								price: 0.19,
-								currency: 'USD',
-							},
-						],
 					},
 				},
 				{
@@ -296,176 +218,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: 'ad01ab83-baf8-4e7b-8fed-a0a219d4eb45',
-					source: 1,
-					name: '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b',
-					description: 'DeepSeek-R1-Distill-Qwen-32B is a model distilled from DeepSeek-R1 based on Qwen2.5. It outperforms OpenAI-o1-mini across various benchmarks, achieving new state-of-the-art results for dense models.',
-					created_at: '2025-01-22 19:48:55.776',
-					tags: [],
-					properties: {
-						context_window: 80000,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.497,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 4.881,
-								currency: 'USD',
-							},
-						],
-						planned_deprecation_date: '2026-11-20',
-						reasoning: true,
-						terms: 'https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE',
-					},
-				},
-				{
-					id: '9b9c87c6-d4b7-494c-b177-87feab5904db',
-					source: 1,
-					name: '@cf/meta/llama-3.1-8b-instruct-fp8',
-					description: 'Llama 3.1 8B quantized to FP8 precision',
-					created_at: '2024-07-25 17:28:43.328',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.152,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.287,
-								currency: 'USD',
-							},
-						],
-						context_window: 32000,
-						planned_deprecation_date: '2026-11-20',
-						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE',
-					},
-				},
-				{
-					id: '95666467-f984-4211-b48a-7c246dd4adb7',
-					source: 1,
-					name: '@cf/zai-org/glm-5.3-flash',
-					description: 'The first natively multimodal model in the GLM-5 series. With 320B total parameters and just 18B active parameters, it outperforms GLM-5.2 across benchmarks and real-world workloads at one-tenth the price, while approaching Claude Opus 4.8 on coding and agentic benchmarks.',
-					created_at: '2026-08-26 14:21:42.917',
-					tags: [],
-					properties: {
-						require_workers_paid: true,
-						context_window: 1048576,
-						function_calling: true,
-						planned_deprecation_date: '2026-11-20',
-						reasoning: true,
-						reasoning_effort: {
-							supported_efforts: ['max', 'high', 'low'],
-							default_effort: 'max',
-							normalizes_to: {
-								none: 'max',
-								minimal: 'max',
-								medium: 'max',
-								xhigh: 'max',
-								null: 'max',
-							},
-							mandatory: true,
-							default_enabled: true,
-						},
-						terms: 'https://huggingface.co/zai-org/GLM-5.3-Flash/blob/main/LICENSE',
-						vision: true,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.15,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.5,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M cached input tokens',
-								price: 0.03,
-								currency: 'USD',
-							},
-						],
-					},
-				},
-				{
-					id: '906a57fd-b018-4d6c-a43e-a296d4cc5839',
-					source: 1,
-					name: '@cf/meta/llama-3.2-1b-instruct',
-					description: 'The Llama 3.2 instruction-tuned text only models are optimized for multilingual dialogue use cases, including agentic retrieval and summarization tasks.',
-					created_at: '2024-09-25 21:36:32.050',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.027,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.201,
-								currency: 'USD',
-							},
-						],
-						context_window: 60000,
-						planned_deprecation_date: '2026-11-20',
-						terms: 'https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE',
-					},
-				},
-				{
-					id: '8a5d00bd-de28-4a28-b37a-ce46d01ebaeb',
-					source: 1,
-					name: '@cf/moonshotai/kimi-k2.6',
-					description: 'Kimi K2.6 is a frontier-scale open-source 1T parameter model with a 262.1k context window, multi-turn tool calling, vision inputs, and structured outputs for agentic workloads.',
-					created_at: '2026-04-20 01:40:35.001',
-					tags: [],
-					properties: {
-						async_queue: true,
-						require_workers_paid: true,
-						context_window: 262144,
-						function_calling: true,
-						planned_deprecation_date: '2026-11-20',
-						reasoning: true,
-						reasoning_effort: {
-							supported_efforts: ['high', 'none'],
-							default_effort: 'high',
-							normalizes_to: {
-								low: 'high',
-								medium: 'high',
-								max: 'high',
-								null: 'high',
-							},
-							mandatory: false,
-							default_enabled: true,
-						},
-						terms: 'https://huggingface.co/moonshotai/Kimi-K2.6/blob/main/LICENSE',
-						vision: true,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.95,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 4,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M cached input tokens',
-								price: 0.16,
-								currency: 'USD',
-							},
-						],
-					},
-				},
-				{
 					id: '87f39d62-116c-4b26-b2cd-562a9ba01f2f',
 					source: 1,
 					name: '@cf/cloudflare/clef',
@@ -516,20 +268,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '7ed8d8e8-6040-4680-843a-aef402d6b013',
-					source: 1,
-					name: '@cf/meta-llama/llama-2-7b-chat-hf-lora',
-					description: 'This is a Llama2 base model that Cloudflare dedicated for inference with LoRA adapters. Llama 2 is a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. This is the repository for the 7B fine-tuned model, optimized for dialogue use cases and converted for the Hugging Face Transformers format. ',
-					created_at: '2024-04-02 00:17:18.579',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 8192,
-						lora: true,
-						planned_deprecation_date: '2026-11-20',
-					},
-				},
-				{
 					id: '7a143886-c9bb-4a1c-be95-377b1973bc3b',
 					source: 1,
 					name: '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
@@ -565,51 +303,6 @@ export const workersAiCatalog = {
 					properties: {
 						context_window: 131000,
 						function_calling: true,
-					},
-				},
-				{
-					id: '7276b330-b4ae-4662-81d1-3a8bea8368f8',
-					source: 1,
-					name: '@cf/deepseek-ai/deepseek-v4-flash-0731',
-					description: 'DeepSeek-V4-Flash-0731 is the official release of DeepSeek-V4-Flash, superseding the preview version, with substantially enhanced agentic capabilities. ',
-					created_at: '2026-07-31 14:10:43.440',
-					tags: [],
-					properties: {
-						async_queue: true,
-						require_workers_paid: true,
-						context_window: 1048576,
-						function_calling: true,
-						planned_deprecation_date: '2026-11-20',
-						reasoning: true,
-						reasoning_effort: {
-							supported_efforts: ['max', 'high', 'low', 'none'],
-							default_effort: 'high',
-							default_enabled: true,
-							mandatory: false,
-							normalizes_to: {
-								null: 'high',
-								minimal: 'low',
-								medium: 'high',
-								xhigh: 'high',
-							},
-						},
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.44,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 1.32,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M cached input tokens',
-								price: 0.014,
-								currency: 'USD',
-							},
-						],
 					},
 				},
 				{
@@ -688,78 +381,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '4edc7dfe-de78-4156-890c-85b79227694e',
-					source: 1,
-					name: '@cf/zai-org/glm-5.2',
-					description: "Z.ai's flagship agentic coding model",
-					created_at: '2026-06-15 09:51:05.921',
-					tags: [],
-					properties: {
-						require_workers_paid: true,
-						context_window: 262144,
-						function_calling: true,
-						planned_deprecation_date: '2026-11-20',
-						reasoning: true,
-						reasoning_effort: {
-							supported_efforts: ['max', 'high', 'none'],
-							default_effort: 'max',
-							default_enabled: true,
-							mandatory: false,
-							normalizes_to: {
-								null: 'max',
-								low: 'high',
-								medium: 'high',
-								xhigh: 'max',
-								minimal: 'none',
-							},
-						},
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 1.4,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 4.4,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M cached input tokens',
-								price: 0.26,
-								currency: 'USD',
-							},
-						],
-					},
-				},
-				{
-					id: '43dbadb4-2b0a-47e9-8479-34a49b971f1e',
-					source: 1,
-					name: '@cf/nvidia/nemotron-3-120b-a12b',
-					description: 'NVIDIA Nemotron 3 Super is a hybrid MoE model with leading accuracy for multi-agent applications and specialized agentic AI systems.',
-					created_at: '2026-02-24 23:22:47.215',
-					tags: [],
-					properties: {
-						context_window: 256000,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.5,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 1.5,
-								currency: 'USD',
-							},
-						],
-						function_calling: true,
-						planned_deprecation_date: '2026-11-20',
-						reasoning: true,
-						terms: 'https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/',
-					},
-				},
-				{
 					id: '41ca173f-72d5-4420-8915-49e835d2676e',
 					source: 1,
 					name: '@cf/aisingapore/gemma-sea-lion-v4-27b-it',
@@ -780,47 +401,6 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-					},
-				},
-				{
-					id: '4090e54c-eee4-4221-b410-10c1c0f92f17',
-					source: 1,
-					name: '@cf/qwen/qwen3-30b-a3b-fp8',
-					description: 'Qwen3 is the latest generation of large language models in Qwen series, offering a comprehensive suite of dense and mixture-of-experts (MoE) models. Built upon extensive training, Qwen3 delivers groundbreaking advancements in reasoning, instruction-following, agent capabilities, and multilingual support.',
-					created_at: '2025-04-30 21:36:10.009',
-					tags: [],
-					properties: {
-						async_queue: true,
-						context_window: 32768,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.0509,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 0.335,
-								currency: 'USD',
-							},
-						],
-						function_calling: true,
-						planned_deprecation_date: '2026-11-20',
-						reasoning: true,
-					},
-				},
-				{
-					id: '337170b7-bd2f-4631-9a57-688b579cf6d3',
-					source: 1,
-					name: '@cf/google/gemma-7b-it-lora',
-					description: '  This is a Gemma-7B base model that Cloudflare dedicates for inference with LoRA adapters. Gemma is a family of lightweight, state-of-the-art open models from Google, built from the same research and technology used to create the Gemini models.',
-					created_at: '2024-04-02 00:20:19.633',
-					tags: [],
-					properties: {
-						beta: true,
-						context_window: 3500,
-						lora: true,
-						planned_deprecation_date: '2026-11-20',
 					},
 				},
 				{
@@ -883,50 +463,6 @@ export const workersAiCatalog = {
 						],
 						function_calling: true,
 						vision: true,
-					},
-				},
-				{
-					id: '2d50837b-2dc7-4994-a690-a38e25c16d74',
-					source: 1,
-					name: '@cf/deepseek-ai/deepseek-v4-pro-0813',
-					description: 'DeepSeek V4 Pro is a high-capability reasoning model from DeepSeek with a one million token context window, built for long-horizon agentic workflows and complex, multi-step problem-solving',
-					created_at: '2026-08-13 17:15:08.489',
-					tags: [],
-					properties: {
-						require_workers_paid: true,
-						context_window: 1048576,
-						function_calling: true,
-						planned_deprecation_date: '2026-11-20',
-						reasoning: true,
-						reasoning_effort: {
-							supported_efforts: ['max', 'high', 'low', 'none'],
-							default_effort: 'high',
-							default_enabled: true,
-							mandatory: false,
-							normalizes_to: {
-								null: 'high',
-								minimal: 'low',
-								medium: 'high',
-								xhigh: 'high',
-							},
-						},
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 1.32,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 3.96,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M cached input tokens',
-								price: 0.044,
-								currency: 'USD',
-							},
-						],
 					},
 				},
 				{
@@ -1137,32 +673,6 @@ export const workersAiCatalog = {
 						vision: true,
 					},
 				},
-				{
-					id: '02c16efa-29f5-4304-8e6c-3d188889f875',
-					source: 1,
-					name: '@cf/qwen/qwq-32b',
-					description: 'QwQ is the reasoning model of the Qwen series. Compared with conventional instruction-tuned models, QwQ, which is capable of thinking and reasoning, can achieve significantly enhanced performance in downstream tasks, especially hard problems. QwQ-32B is the medium-sized reasoning model, which is capable of achieving competitive performance against state-of-the-art reasoning models, e.g., DeepSeek-R1, o1-mini.',
-					created_at: '2025-03-05 21:52:40.974',
-					tags: [],
-					properties: {
-						context_window: 24000,
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.66,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 1,
-								currency: 'USD',
-							},
-						],
-						lora: true,
-						planned_deprecation_date: '2026-11-20',
-						reasoning: true,
-					},
-				},
 			],
 		},
 		'Text Embeddings': {
@@ -1266,18 +776,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '15631501-2742-4346-a469-22fe202188a2',
-					source: 1,
-					name: '@cf/google/embeddinggemma-300m',
-					description: 'EmbeddingGemma is a 300M parameter, state-of-the-art for its size, open embedding model from Google, built from Gemma 3 (with T5Gemma initialization) and the same research and technology used to create Gemini models. EmbeddingGemma produces vector representations of text, making it well-suited for search and retrieval tasks, including classification, clustering, and semantic similarity search. This model was trained with data in 100+ spoken languages.',
-					created_at: '2025-09-04 16:38:44.980',
-					tags: [],
-					properties: {
-						beta: true,
-						planned_deprecation_date: '2026-11-20',
-					},
-				},
-				{
 					id: '01bc2fb0-4bca-4598-b985-d2584a3f46c0',
 					source: 1,
 					name: '@cf/baai/bge-large-en-v1.5',
@@ -1358,27 +856,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: 'a9abaef0-3031-47ad-8790-d311d8684c6c',
-					source: 1,
-					name: '@cf/runwayml/stable-diffusion-v1-5-inpainting',
-					description: 'Stable Diffusion Inpainting is a latent text-to-image diffusion model capable of generating photo-realistic images given any text input, with the extra capability of inpainting the pictures by using a mask.',
-					created_at: '2024-02-27 17:23:57.528',
-					tags: [],
-					properties: {
-						beta: true,
-						price: [
-							{
-								unit: 'per step',
-								price: 0,
-								currency: 'USD',
-							},
-						],
-						info: 'https://huggingface.co/runwayml/stable-diffusion-inpainting',
-						planned_deprecation_date: '2026-11-20',
-						terms: 'https://github.com/runwayml/stable-diffusion/blob/main/LICENSE',
-					},
-				},
-				{
 					id: '9e087485-23dc-47fa-997d-f5bfafc0c7cc',
 					source: 1,
 					name: '@cf/black-forest-labs/flux-1-schnell',
@@ -1387,38 +864,6 @@ export const workersAiCatalog = {
 					tags: [],
 					properties: {
 						terms: 'https://bfl.ai/legal/terms-of-service',
-					},
-				},
-				{
-					id: '7f797b20-3eb0-44fd-b571-6cbbaa3c423b',
-					source: 1,
-					name: '@cf/bytedance/stable-diffusion-xl-lightning',
-					description: 'SDXL-Lightning is a lightning-fast text-to-image generation model. It can generate high-quality 1024px images in a few steps.',
-					created_at: '2024-02-27 17:41:29.578',
-					tags: [],
-					properties: {
-						beta: true,
-						price: [
-							{
-								unit: 'per step',
-								price: 0,
-								currency: 'USD',
-							},
-						],
-						info: 'https://huggingface.co/ByteDance/SDXL-Lightning',
-						planned_deprecation_date: '2026-11-20',
-					},
-				},
-				{
-					id: '7912c0ab-542e-44b9-b9ee-3113d226a8b5',
-					source: 1,
-					name: '@cf/lykon/dreamshaper-8-lcm',
-					description: 'Stable Diffusion model that has been fine-tuned to be better at photorealism without sacrificing range.',
-					created_at: '2024-02-27 17:40:38.881',
-					tags: [],
-					properties: {
-						info: 'https://huggingface.co/Lykon/DreamShaper',
-						planned_deprecation_date: '2026-11-20',
 					},
 				},
 				{
@@ -1443,27 +888,6 @@ export const workersAiCatalog = {
 						],
 						partner: true,
 						terms: 'https://leonardo.ai/terms-of-service/',
-					},
-				},
-				{
-					id: '6d52253a-b731-4a03-b203-cde2d4fae871',
-					source: 1,
-					name: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
-					description: 'Diffusion-based text-to-image generative model by Stability AI. Generates and modify images based on text prompts.',
-					created_at: '2023-11-10 10:54:43.694',
-					tags: [],
-					properties: {
-						beta: true,
-						price: [
-							{
-								unit: 'per step',
-								price: 0,
-								currency: 'USD',
-							},
-						],
-						info: 'https://stability.ai/stable-diffusion',
-						planned_deprecation_date: '2026-11-20',
-						terms: 'https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md',
 					},
 				},
 				{
@@ -1520,24 +944,6 @@ export const workersAiCatalog = {
 			id: 'b52660a1-9a95-4ab2-8b1d-f232be34604a',
 			description: 'Text-to-Speech (TTS) is the task of generating natural sounding speech given text input. TTS models can be extended to have a single model that generates speech for multiple speakers and multiple languages.',
 			models: [
-				{
-					id: 'c837b2ac-4d9b-4d37-8811-34de60f0c44f',
-					source: 1,
-					name: '@cf/myshell-ai/melotts',
-					description: 'MeloTTS is a high-quality multi-lingual text-to-speech library by MyShell.ai.',
-					created_at: '2024-07-19 15:51:04.819',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per audio minute',
-								price: 0.000205,
-								currency: 'USD',
-							},
-						],
-						planned_deprecation_date: '2026-11-20',
-					},
-				},
 				{
 					id: 'c5255b94-2161-4779-bd25-54f061829a2a',
 					source: 1,
@@ -1665,18 +1071,6 @@ export const workersAiCatalog = {
 					},
 				},
 				{
-					id: '2169496d-9c0e-4e49-8399-c44ee66bff7d',
-					source: 1,
-					name: '@cf/openai/whisper-tiny-en',
-					description: 'Whisper is a pre-trained model for automatic speech recognition (ASR) and speech translation. Trained on 680k hours of labelled data, Whisper models demonstrate a strong ability to generalize to many datasets and domains without the need for fine-tuning. This is the English-only version of the Whisper Tiny model which was trained on the task of speech recognition.',
-					created_at: '2024-04-22 20:59:02.731',
-					tags: [],
-					properties: {
-						beta: true,
-						planned_deprecation_date: '2026-11-20',
-					},
-				},
-				{
 					id: '200f0812-148c-48c1-915d-fb3277a94a08',
 					source: 1,
 					name: '@cf/openai/whisper-large-v3-turbo',
@@ -1692,48 +1086,6 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
-					},
-				},
-			],
-		},
-		'Image-to-Text': {
-			id: '882a91d1-c331-4eec-bdad-834c919942a8',
-			description: 'Image to text models output a text from a given image. Image captioning or optical character recognition can be considered as the most common applications of image to text.',
-			models: [
-				{
-					id: 'af274959-cb47-4ba8-9d8e-5a0a58b6b402',
-					source: 1,
-					name: '@cf/llava-hf/llava-1.5-7b-hf',
-					description: 'LLaVA is an open-source chatbot trained by fine-tuning LLaMA/Vicuna on GPT-generated multimodal instruction-following data. It is an auto-regressive language model, based on the transformer architecture.',
-					created_at: '2024-05-01 18:00:39.971',
-					tags: [],
-					properties: {
-						beta: true,
-						planned_deprecation_date: '2026-11-20',
-					},
-				},
-				{
-					id: '1161560b-87f9-4795-afb3-a905cf21bcf8',
-					source: 1,
-					name: '@cf/moondream/moondream3.1-9B-A2B',
-					description: 'Moondream 3 is a fast, efficient 9B mixture-of-experts vision language model (2B active parameters) that delivers frontier-level visual reasoning for tasks like object detection, pointing, OCR, and structured output.',
-					created_at: '2026-07-07 14:39:02.726',
-					tags: [],
-					properties: {
-						price: [
-							{
-								unit: 'per M input tokens',
-								price: 0.3,
-								currency: 'USD',
-							},
-							{
-								unit: 'per M output tokens',
-								price: 1,
-								currency: 'USD',
-							},
-						],
-						terms: 'https://moondream.ai/licenses/model/1.0',
-						vision: true,
 					},
 				},
 			],
@@ -1812,6 +1164,36 @@ export const workersAiCatalog = {
 								currency: 'USD',
 							},
 						],
+					},
+				},
+			],
+		},
+		'Image-to-Text': {
+			id: '882a91d1-c331-4eec-bdad-834c919942a8',
+			description: 'Image to text models output a text from a given image. Image captioning or optical character recognition can be considered as the most common applications of image to text.',
+			models: [
+				{
+					id: '1161560b-87f9-4795-afb3-a905cf21bcf8',
+					source: 1,
+					name: '@cf/moondream/moondream3.1-9B-A2B',
+					description: 'Moondream 3 is a fast, efficient 9B mixture-of-experts vision language model (2B active parameters) that delivers frontier-level visual reasoning for tasks like object detection, pointing, OCR, and structured output.',
+					created_at: '2026-07-07 14:39:02.726',
+					tags: [],
+					properties: {
+						price: [
+							{
+								unit: 'per M input tokens',
+								price: 0.3,
+								currency: 'USD',
+							},
+							{
+								unit: 'per M output tokens',
+								price: 1,
+								currency: 'USD',
+							},
+						],
+						terms: 'https://moondream.ai/licenses/model/1.0',
+						vision: true,
 					},
 				},
 			],
